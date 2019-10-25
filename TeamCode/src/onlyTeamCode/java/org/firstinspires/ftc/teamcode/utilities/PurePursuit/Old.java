@@ -2,7 +2,7 @@
 //
 //import android.speech.tts.TextToSpeech;
 //import org.firstinspires.ftc.teamcode.AllConstants;
-//import org.firstinspires.ftc.teamcode.OtherStuff.Point;
+//import org.firstinspires.ftc.teamcode.utilities.Point;
 //
 //import java.util.ArrayList;
 ////Largely taken from: file:///C:/Users/MOE%20365%20FTC/Downloads/be0e06de00e07db66f97686505c3f4dde2e332dc.pdf

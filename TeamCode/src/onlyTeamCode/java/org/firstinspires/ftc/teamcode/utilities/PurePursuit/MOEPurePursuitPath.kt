@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.utilities.PurePursuit
 
 //package org.firstinspires.ftc.teamcode.utilities.PurePursuit
 //
-//import org.firstinspires.ftc.teamcode.OtherStuff.Point
+//import org.firstinspires.ftc.teamcode.utilities.Point
 //import java.util.ArrayList
 //import kotlin.math.*
 //

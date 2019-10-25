@@ -1,13 +1,10 @@
 package org.firstinspires.ftc.teamcode.constants
 
 import com.qualcomm.robotcore.hardware.Servo
-import com.qualcomm.robotcore.hardware.DcMotor
-import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
-import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MotorConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.ServoConfig
 import com.qualcomm.robotcore.hardware.DcMotorSimple as Motor
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.OdometryWheelConfig as OWC
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.odometry.OdometryWheelConfig as OWC
 
 object MOEConstants {
 
@@ -39,11 +36,14 @@ object MOEConstants {
             }
 
             object Circumference {
-                val AXIAL = 0.0 //TODO: Calculate.
+                const val AXIAL = 0.0 //TODO: Calculate.
 
-                val STRAFE = 0.0  //TODO: Calculate.
+                const val STRAFE = 0.0  //TODO: Calculate.
             }
 
+            const val MIN_VOLTAGE = 0.0
+            const val MAX_VOLTAGE = 0.0
+            const val VOLTS_TO_HALF_INCH: Double = 0.0 //TODO:idk
 
         }
     }
