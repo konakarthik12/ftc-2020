@@ -70,13 +70,13 @@ class MOEdometrySystem {
     }
 
     private fun updatePosition() {
-        val discordance = axialPair.getDistanceDiscordance()
+        val angle = axialPair.getDistanceDiscordance()
         //TODO: the whole point of odometry is to not use gyro
         val axialTheta = Math.toRadians(robot.gyro.angle)
         val strafeTheta = Math.toRadians(robot.gyro.angle - 90) // Transforming angle 90 degrees to the right.
 
-        val axialVector = axialPair.getDistanceVector(discordance, axialTheta)
-        val strafeVector = strafePair.getDistanceVector(discordance, strafeTheta)
+        val axialVector = axialPair.getDistanceVector(angle, axialTheta)
+        val strafeVector = strafePair.getDistanceVector(angle, strafeTheta)
 
         val xChange = axialVector.first + strafeVector.first
         val yChange = axialVector.second + strafeVector.second
