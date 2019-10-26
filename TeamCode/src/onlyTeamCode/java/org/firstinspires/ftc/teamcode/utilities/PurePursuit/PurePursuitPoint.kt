@@ -1,12 +1,14 @@
-package org.firstinspires.ftc.teamcode.utilities
+package org.firstinspires.ftc.teamcode.utilities.PurePursuit
 
+import org.firstinspires.ftc.teamcode.utilities.Point
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 class PurePursuitPoint(x: Double, y: Double) : Point(x, y) {
-    var prefixDistance: Double = 0.toDouble()
-    var velocity: Double = 0.toDouble()
+    var prefixDistance: Double = 0.0
+    var velocity: Double = 0.0
     var isCriticalPoint: Boolean = false
+    var magnitude: Double = 0.0
 
 
     override fun toString(): String = "Point [x=$x, y=$y, velocity=$velocity]"

@@ -2,20 +2,14 @@ package org.firstinspires.ftc.teamcode.subsystems.imu
 
 import com.qualcomm.hardware.bosch.BNO055IMU
 import com.qualcomm.hardware.bosch.BNO055IMU.AngleUnit
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator
-import com.qualcomm.robotcore.util.ReadWriteFile
-import org.firstinspires.ftc.robotcore.internal.system.AppUtil
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
-
-import java.io.File
 
 class MOEGyro {
     private val imu = hardwareMap.get(BNO055IMU::class.java, "imu")
 
     private var offset: Double = 0.toDouble()
-    //TODO: check angles
 
+    //TODO: check angles, first,second, third?
     val angle: Double
         get() = -imu.angularOrientation.firstAngle - offset
 

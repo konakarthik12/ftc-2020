@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.utilities.PurePursuit
 
 import kotlin.math.sqrt
 
-class MOEVector(private var x: Double, private var y: Double) {
-    var magnitude: Double = 0.toDouble()
-        private set
+class PurePursuitVector(private var x: Double, private var y: Double) {
+    var magnitude: Double = 0.0
+
 
     init {
         updateMagnitude()
@@ -44,12 +44,12 @@ class MOEVector(private var x: Double, private var y: Double) {
 
     companion object {
 
-        fun addVectors(a: MOEVector, b: MOEVector): MOEVector {
-            return MOEVector(a.x + b.x, a.y + b.y)
+        fun addVectors(a: PurePursuitVector, b: PurePursuitVector): PurePursuitVector {
+            return PurePursuitVector(a.x + b.x, a.y + b.y)
         }
 
-        fun subtractVectors(a: MOEVector, b: MOEVector): MOEVector {
-            return MOEVector(a.x - b.x, a.y - b.y)
+        fun subtractVectors(a: PurePursuitVector, b: PurePursuitVector): PurePursuitVector {
+            return PurePursuitVector(a.x - b.x, a.y - b.y)
         }
     }
 }

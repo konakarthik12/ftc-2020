@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
 import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.utilities.lerp
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
-import kotlinx.coroutines.*
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.lerp
 
 data class ServoConfig(val name: String, val min: Double, val max: Double, val direction: Servo.Direction)
 class MOEServo(config: ServoConfig) {
@@ -18,7 +20,7 @@ class MOEServo(config: ServoConfig) {
     private fun getPosition(): Double = mServo.position
 
     fun setPosition(position: Double) {
-        mServo.position = position;
+        mServo.position = position
     }
 
     fun setPositionOverTime(destPosition: Double, duration: Double, async: Boolean) {
@@ -41,6 +43,6 @@ class MOEServo(config: ServoConfig) {
     }
 
     fun setDirection(direction: Servo.Direction) {
-        mServo.direction = direction;
+        mServo.direction = direction
     }
 }

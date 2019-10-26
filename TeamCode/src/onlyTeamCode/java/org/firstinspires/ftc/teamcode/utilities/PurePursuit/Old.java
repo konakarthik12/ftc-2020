@@ -35,14 +35,14 @@
 //        if (onLastSegment) {
 //            //TODO: add last segment code
 //        }
-//        Point intersectVector = Point.sub(endPoint, startPoint);
+//        Point intersectVector = Point.minus(endPoint, startPoint);
 //        Point vectorSegment = Point.multiply(intersectVector, progress);
-//        return Point.add(startPoint, vectorSegment);
+//        return Point.plus(startPoint, vectorSegment);
 //    }
 //
 //    private static double getCircleLineIntersection(Point pointA, Point pointB, Point currentPosition, double lookaheadDistance) {
-//        Point d = Point.sub(pointB, pointA);
-//        Point f = Point.sub(pointA, currentPosition);
+//        Point d = Point.minus(pointB, pointA);
+//        Point f = Point.minus(pointA, currentPosition);
 //
 //        double a = d.dot(d);
 //        double b = 2 * f.dot(d);

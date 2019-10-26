@@ -8,7 +8,6 @@ data class MOEPurePursuitOptions(
         val smoothingB: Double,
         val turningConstant: Double,
         val lookBack: Int,
-        val lookForward: Int
-) {
-
-}
+        val lookForward: Int,
+        val lookAheadDistance: Double
+)
