@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.odometry
+package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry
 
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.and
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
@@ -24,6 +25,6 @@ class MOEdometryWheelPair(private val first: MOEdometryWheel, private val second
         val x = cos(theta) * distanceChanged
         val y = sin(theta) * distanceChanged
 
-        return Pair(x, y)
+        return x and y
     }
 }

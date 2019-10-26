@@ -23,6 +23,7 @@ Thumbs.db
 .idea
 .gradle
 build/
-
+.floo
+.flooignore
 *ASUS_PC_01*
 

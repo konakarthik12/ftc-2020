@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.odometry
+package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry
 
 import com.qualcomm.robotcore.hardware.AnalogInput
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.odometry.OdometryWheelConfig.Direction
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.odometry.OdometryWheelConfig.Orientation
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.OdometryWheelConfig.Direction
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.OdometryWheelConfig.Orientation
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Odometry.Wheels
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Odometry.Wheels.MAX_VOLTAGE
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Odometry.Wheels.VOLTS_TO_HALF_INCH

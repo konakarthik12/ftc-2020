@@ -1,10 +1,8 @@
-package org.firstinspires.ftc.teamcode.OtherStuff.MOEBotStuff
+package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEServo
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.odometry.MOEdometryWheel
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.odometry.MOEdometryWheelPair
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Odometry
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode

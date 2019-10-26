@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MotorConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.ServoConfig
 import com.qualcomm.robotcore.hardware.DcMotorSimple as Motor
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.odometry.OdometryWheelConfig as OWC
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.OdometryWheelConfig as OWC
 
 object MOEConstants {
 
