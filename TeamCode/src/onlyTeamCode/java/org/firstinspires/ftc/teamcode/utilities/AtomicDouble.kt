@@ -48,25 +48,20 @@ import java.util.concurrent.atomic.AtomicLongFieldUpdater
  * @author Martin Buchholz
  * @since 11.0
  */
-class AtomicDouble : Number, java.io.Serializable {
+class AtomicDouble
+/**
+ * Creates a new `AtomicDouble` with the given initial value.
+ *
+ * @param initialValue the initial value
+ */(initialValue: Double = 0.0) : Number(), java.io.Serializable {
 
 
     @Volatile
     @Transient
     private var value: Long = 0
 
-    /**
-     * Creates a new `AtomicDouble` with the given initial value.
-     *
-     * @param initialValue the initial value
-     */
-    constructor(initialValue: Double) {
+    init {
         value = doubleToRawLongBits(initialValue)
-    }
-
-    /** Creates a new `AtomicDouble` with initial value `0.0`.  */
-    constructor() {
-        // assert doubleToRawLongBits(0.0) == 0L;
     }
 
     /**

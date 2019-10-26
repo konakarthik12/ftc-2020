@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.constants.MOEConstants.Odometry.Wheels.MAX
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Odometry.Wheels.VOLTS_TO_HALF_INCH
 
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
+import java.lang.Math.abs
 
 data class OdometryWheelConfig(val name: String, val direction: Direction, val orientation: Orientation) {
     enum class Direction {
@@ -71,14 +72,12 @@ class MOEdometryWheel(config: OdometryWheelConfig) {
     fun update() {
         val currentVoltage = voltage
 
+        val innerRange = abs(currentVoltage - prevVoltage)
+        val outerRange = MAX_VOLTAGE - innerRange
+
         voltageChange = if (prevVoltage < currentVoltage) {
-            val innerRange = currentVoltage - prevVoltage
-            val outerRange = MAX_VOLTAGE - innerRange
             if (innerRange < outerRange) innerRange else -outerRange
         } else {
-            val innerRange = prevVoltage - currentVoltage
-            //TODO: ROHAN, is this right? is MIN_VOLTAGE used
-            val outerRange = MAX_VOLTAGE - innerRange
             if (innerRange < outerRange) -innerRange else outerRange
         }
 
