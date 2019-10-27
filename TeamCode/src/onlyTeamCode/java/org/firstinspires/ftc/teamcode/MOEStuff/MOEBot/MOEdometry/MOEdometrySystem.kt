@@ -24,7 +24,6 @@ class MOEdometrySystem(initialTheta: Double = 0.0) {
     private val strafePair = MOEdometryWheelPair(wheels.strafeRight, wheels.strafeRight)
 
     fun reset() {
-
         atomicX.set(0.0)
         atomicY.set(0.0)
     }

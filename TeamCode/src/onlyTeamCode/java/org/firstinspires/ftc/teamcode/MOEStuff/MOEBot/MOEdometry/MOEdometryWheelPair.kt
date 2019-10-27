@@ -11,7 +11,7 @@ class MOEdometryWheelPair(private val first: MOEdometryWheel, private val second
 
     fun getAngleDifference(): Double {
         val avgDistanceChanged = averageDistanceChanged
-
+        //TODO:Needed?
         val firstDistanceChanged = first
         val firstDifference = abs(first.getDistanceChanged() - avgDistanceChanged)
         val secondDifference = abs(second.getDistanceChanged() - avgDistanceChanged)
