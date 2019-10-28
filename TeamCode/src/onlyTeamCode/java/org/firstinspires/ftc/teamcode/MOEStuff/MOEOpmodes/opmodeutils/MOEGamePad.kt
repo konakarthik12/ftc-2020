@@ -8,8 +8,8 @@ import java.lang.reflect.Field
 class MOEGamePad(private val gamepad: Gamepad) {
 
     private var callbackEnabled: Boolean = false
-    private val callback = MOEGamepadCallback()
-    private val listenerMap = ArrayMap<String, ArrayList<(state: Boolean) -> Unit>>().withDefault { ArrayList() }
+    private val callback by lazy { MOEGamepadCallback(this) }
+    private val listenerMap = ArrayMap<String, ArrayList<(state: Boolean) -> Unit>>().withDefault { ArrayList(1) }
     private val buttonFields = ArrayMap<String, Field>(6)
     private val gamePadClass = Gamepad::class.java
     private val callbackField = gamePadClass.getField("callback")
@@ -33,6 +33,7 @@ class MOEGamePad(private val gamepad: Gamepad) {
     private fun addFieldForButton(button: String) {
         try {
             val field = gamePadClass.getField(button.toLowerCase())
+            buttonFields[button] = field
         } catch (e: NoSuchFieldException) {
             throw IllegalArgumentException("Gamepad does not have field: $button")
         }
@@ -62,15 +63,18 @@ class MOEGamePad(private val gamepad: Gamepad) {
 
     private fun reflectCallback() {
         callbackField.isAccessible = true
-
         callbackField.set(gamepad, callback)
     }
 
-    private fun getButtonState(): ArrayMap<String, Boolean> {
+    fun getButtonState(): ArrayMap<String, Boolean> {
         val state = ArrayMap<String, Boolean>(buttonFields.size)
         for ((key, value) in buttonFields) {
             state[key] = value.get(gamepad) as Boolean
         }
         return state
+    }
+
+    fun callListener(key: String, newState: Boolean) {
+        listenerMap[key]?.forEach { it(newState) }
     }
 }

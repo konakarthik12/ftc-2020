@@ -44,8 +44,8 @@ fun getCircleLineIntersection(pointA: Point, pointB: Point, circleCenter: Point,
     return java.lang.Double.NaN
 }
 
-infix fun <T> T.and(second: T): Pair<T, T> {
-    return Pair(this, second);
+infix fun <A, B> A.and(second: B): Pair<A, B> {
+    return Pair(this, second)
 }
 
 fun ClosedFloatingPointRange<Double>.lerp(t: Double): Double {
