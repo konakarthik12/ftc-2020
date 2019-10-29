@@ -15,8 +15,8 @@ class MOEGamepadCallback(var moePad: MOEGamePad) : Gamepad.GamepadCallback {
     }
 
     private fun callChanges(oldState: ArrayMap<Button, Boolean>, newState: ArrayMap<Button, Boolean>) {
-        for ((key, value) in oldState) {
-            val b = newState[key]
+        for ((key, value) in newState) {
+            val b = oldState[key]
             if (b != null && b != value) {
                 moePad.callListener(key, b)
             }
