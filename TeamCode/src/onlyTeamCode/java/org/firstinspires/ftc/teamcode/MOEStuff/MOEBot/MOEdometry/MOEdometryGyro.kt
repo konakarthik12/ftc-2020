@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry
 
 import java.lang.Math.PI
 
-class MOEdometryGyro(initialTheta: Double) {
+class MOEdometryGyro {
     private var theta: Double = initialTheta
 
     val degrees: Double

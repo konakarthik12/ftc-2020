@@ -88,7 +88,7 @@ class MOEGamePad(private val gamepad: Gamepad) {
         return state
     }
 
-    fun callListener(key: Button, newState: Boolean) {
+    fun callListeners(key: Button, newState: Boolean) {
         listenerMap[key]?.forEach { it(newState) }
     }
 }

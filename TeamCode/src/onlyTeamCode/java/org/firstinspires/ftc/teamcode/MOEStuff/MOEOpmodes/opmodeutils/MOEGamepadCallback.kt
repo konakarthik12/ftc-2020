@@ -18,7 +18,7 @@ class MOEGamepadCallback(var moePad: MOEGamePad) : Gamepad.GamepadCallback {
         for ((key, value) in newState) {
             val b = oldState[key]
             if (b != null && b != value) {
-                moePad.callListener(key, b)
+                moePad.callListeners(key, b)
             }
         }
     }
