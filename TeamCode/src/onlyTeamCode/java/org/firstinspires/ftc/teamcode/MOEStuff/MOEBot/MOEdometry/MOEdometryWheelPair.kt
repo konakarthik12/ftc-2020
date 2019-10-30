@@ -11,16 +11,19 @@ class MOEdometryWheelPair(private val first: MOEdometryWheel, private val second
 
     fun getAngleDifference(): Double {
         val avgDistanceChanged = averageDistanceChanged
-        //TODO:Needed?
-        val firstDistanceChanged = first
-        val firstDifference = abs(first.getDistanceChanged() - avgDistanceChanged)
-        val secondDifference = abs(second.getDistanceChanged() - avgDistanceChanged)
+        val firstDistanceChanged = first.getDistanceChanged()
+        val secondDistanceChanged = second.getDistanceChanged()
+        val firstDifference = abs(firstDistanceChanged - avgDistanceChanged)
+        val secondDifference = abs(secondDistanceChanged - avgDistanceChanged)
+
         val avgDifference = (firstDifference + secondDifference) / 2
-        return avgDifference / first.circumference
+        val percentage = avgDifference / first.circumference
+
+        return if (firstDistanceChanged > 0) -percentage else percentage
     }
 
-    fun getDistanceVector(discordance: Double, theta: Double): Pair<Double, Double> {
-        val distanceRemoval = first.circumference * discordance
+    fun getDistanceVector(angleDifference: Double, theta: Double): Pair<Double, Double> {
+        val distanceRemoval = first.circumference * angleDifference
         // TODO: Determine whether this is a + or a - !!!
         val distanceChanged = first.getDistanceChanged() - distanceRemoval
 

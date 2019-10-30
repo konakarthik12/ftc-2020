@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOESlam
 
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamT265Handler
+import java.util.*
 
 class MOESlam {
     lateinit var handler: SlamT265Handler;
@@ -18,4 +19,8 @@ class MOESlam {
     }
 
     public fun getPose() = handler.curPose
+    override fun toString(): String {
+
+        return Arrays.toString(getPose())
+    }
 }

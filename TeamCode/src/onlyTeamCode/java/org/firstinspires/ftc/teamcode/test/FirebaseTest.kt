@@ -9,11 +9,7 @@ import org.firstinspires.ftc.teamcode.utilities.get
 
 @TeleOp(name = "FirebaseTest")
 class FirebaseTest : MOETeleOp() {
-    override fun run() {
-        while (opModeIsActive()) {
-            loopStuff()
-        }
-    }
+
 
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return ref["tests"]["firebase"];
@@ -24,7 +20,7 @@ class FirebaseTest : MOETeleOp() {
         telemetry.addData("testagain")
     }
 
-    private fun loopStuff() {
+    override fun loopStuff() {
     }
 
     override fun onConfigChanged(dataSnapshot: DataSnapshot) {

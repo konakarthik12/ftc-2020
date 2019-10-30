@@ -7,11 +7,9 @@ import org.firstinspires.ftc.teamcode.utilities.addData
 
 @TeleOp(name = "SlamTest")
 class SlamTest : MOETeleOp() {
-    override fun run() {
-        while (opModeIsActive()) {
-            telemetry.addData("slam", robot.slam)
-            telemetry.update()
-        }
+    override fun loopStuff() {
+        telemetry.addData("slam", robot.slam.toString())
+        telemetry.update()
     }
 
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {

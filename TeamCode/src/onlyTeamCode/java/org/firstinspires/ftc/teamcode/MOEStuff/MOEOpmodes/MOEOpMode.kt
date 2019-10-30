@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEEventListener
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEFirebase
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad
+//import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOETelemetry
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRobotRef
@@ -17,7 +17,7 @@ abstract class MOEOpMode : LinearOpMode(), MOEFirebase {
     val firelog = MOETelemetry(telemetry)
     lateinit var ref: DatabaseReference
     lateinit var robot: MOEBot
-    lateinit var mainGamepad: MOEGamePad
+//    lateinit var mainGamepad: MOEGamePad
     final override fun runOpMode() {
         moeDoubleInternalInit()
         moeInternalInit()
@@ -35,7 +35,7 @@ abstract class MOEOpMode : LinearOpMode(), MOEFirebase {
     }
 
     private fun createGamePads() {
-        mainGamepad = MOEGamePad(gamepad1)
+//        mainGamepad = MOEGamePad(gamepad1)
     }
 
 

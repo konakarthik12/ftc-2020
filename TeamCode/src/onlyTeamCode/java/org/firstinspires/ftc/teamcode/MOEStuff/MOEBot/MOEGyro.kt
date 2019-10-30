@@ -9,6 +9,8 @@ abstract class MOEGyro {
      * @param offset the offset to set
      */
 
+    val radians: Double
+        get() = Math.toRadians(getRawAngle())
 
     /**
      * Set the current angle as 0

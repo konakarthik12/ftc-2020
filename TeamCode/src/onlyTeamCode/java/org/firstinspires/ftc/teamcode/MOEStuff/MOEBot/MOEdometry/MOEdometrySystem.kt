@@ -5,17 +5,21 @@ import kotlinx.coroutines.launch
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 import org.firstinspires.ftc.teamcode.utilities.AtomicDouble
+import org.firstinspires.ftc.teamcode.utilities.Point
 
-class MOEdometrySystem(initialTheta: Double = 0.0) {
+class MOEdometrySystem {
+
     val servos = ServosHolder()
-    val wheels = WheelsHolder()
+    private val wheels = WheelsHolder()
+
     val x: Double
         get() = atomicX.get()
 
     val y: Double
         get() = atomicY.get()
-
-    val gyro: MOEdometryGyro = MOEdometryGyro(0.0)
+    val position
+        get() = Point(x, y)
+    val gyro: MOEdometryGyro = MOEdometryGyro()
 
     private val atomicX: AtomicDouble = AtomicDouble(0.0)
     private val atomicY: AtomicDouble = AtomicDouble(0.0)
