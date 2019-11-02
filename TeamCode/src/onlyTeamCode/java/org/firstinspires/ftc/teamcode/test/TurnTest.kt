@@ -7,11 +7,7 @@ import org.firstinspires.ftc.teamcode.utilities.addData
 
 @TeleOp(name = "TurnTest")
 class TurnTest : MOETeleOp() {
-    override fun run() {
-        while (opModeIsActive()) {
-            loopStuff()
-        }
-    }
+
 
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return null
@@ -22,7 +18,7 @@ class TurnTest : MOETeleOp() {
         robot.odometry.servos.initServosUp()
     }
 
-    private fun loopStuff() {
+    override fun loopStuff() {
 
         robot.chassis.turnPower(gamepad1.left_stick_x.toDouble())
     }

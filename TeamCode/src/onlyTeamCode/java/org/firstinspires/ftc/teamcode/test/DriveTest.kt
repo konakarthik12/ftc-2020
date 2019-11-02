@@ -1,17 +1,12 @@
 package org.firstinspires.ftc.teamcode.test
 
-import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 import org.firstinspires.ftc.teamcode.utilities.addData
 
 @TeleOp(name = "DriveTest")
 class DriveTest : MOETeleOp() {
-    override fun run() {
-        while (opModeIsActive()) {
-            loopStuff()
-        }
-    }
+
 
 
     override fun initOpMode() {
@@ -19,7 +14,7 @@ class DriveTest : MOETeleOp() {
         robot.odometry.servos.initServosUp()
     }
 
-    private fun loopStuff() {
+    override fun loopStuff() {
         val rawY = (-gamepad1.left_stick_y).toDouble()
         val rawX = gamepad1.left_stick_x.toDouble()
 

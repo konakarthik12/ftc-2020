@@ -1,15 +1,15 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry
 
-import java.lang.Math.PI
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro
 
-class MOEdometryGyro {
-    private var theta: Double = initialTheta
+class MOEdometryGyro : MOEGyro() {
+    private var theta = 0.0
 
-    val degrees: Double
+    private val degrees: Double
         get() = theta * 360
 
-    val radians: Double
-        get() = theta * 2 * PI
+
+    override fun getRawAngle(): Double = degrees
 
     fun update(angleDifference: Double) {
         theta = (theta + angleDifference) % 1

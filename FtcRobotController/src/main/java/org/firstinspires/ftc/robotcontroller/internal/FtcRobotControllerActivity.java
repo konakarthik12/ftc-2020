@@ -309,7 +309,6 @@ public class FtcRobotControllerActivity extends Activity {
             ClassManagerFactory.registerFilters();
             ClassManagerFactory.processAllClasses();
         }
-
         cfgFileMgr = new RobotConfigFileManager(this);
 
         // Clean up 'dirty' status after a possible crash

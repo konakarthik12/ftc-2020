@@ -3,12 +3,11 @@ package org.firstinspires.ftc.teamcode.constants
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MotorConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.ServoConfig
+import kotlin.math.PI
 import com.qualcomm.robotcore.hardware.DcMotorSimple as Motor
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.OdometryWheelConfig as OWC
 
 object MOEConstants {
-
-
     object DriveTrain {
         object Motors {
             object Configs {
@@ -37,14 +36,13 @@ object MOEConstants {
 
             object Circumference {
                 const val AXIAL = 0.0 //TODO: Calculate.
-
                 const val STRAFE = 0.0  //TODO: Calculate.
             }
 
             const val MIN_VOLTAGE = 0.0
-            const val MAX_VOLTAGE = 0.0
-            const val VOLTS_TO_HALF_INCH: Double = 0.0 //TODO:idk
-
+            const val MAX_VOLTAGE = 5.0
+            const val WHEEL_CIRCUMFERENCE = 2 * PI * 2  // 2PI * (half inch conversion factor)
+            const val VOLTS_TO_HALF_INCH: Double = WHEEL_CIRCUMFERENCE / 5
         }
     }
 }
