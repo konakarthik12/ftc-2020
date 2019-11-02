@@ -9,5 +9,6 @@ data class MOEPurePursuitOptions(
         val turningConstant: Double,
         val lookBack: Int,
         val lookForward: Int,
-        val lookAheadDistance: Double
+        val lookAheadDistance: Double,
+        val track_width: Double
 )

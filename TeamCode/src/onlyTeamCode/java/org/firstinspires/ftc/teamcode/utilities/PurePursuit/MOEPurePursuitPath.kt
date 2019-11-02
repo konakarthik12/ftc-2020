@@ -20,27 +20,21 @@ class MOEPurePursuitPath(var points: List<PurePursuitPoint>, private val options
         val newPathing = ArrayList<PurePursuitPoint>()
 
         for (i in 0 until points.size - 1) {
-            val vector = PurePursuitVector(
-                    points[i + 1].x - points[i].x,
-                    points[i + 1].y - points[i].y
-            )
+            var vector = PurePursuitVector(points[i + 1] - points[i])
 
             val numberOfPointsThatFit = ceil(vector.magnitude / options.spacing).toInt()
             vector.normalize()
-            vector.multiplyBy(options.spacing)
+            vector *= options.spacing
 
-            val originalPoint = PurePursuitPoint(
-                    points[i].x,
-                    points[i].y
-            )
+            val originalPoint = PurePursuitPoint(points[i].x, points[i].y)
             originalPoint.isCriticalPoint = true
             newPathing.add(originalPoint)
 
             for (a in 1 until numberOfPointsThatFit) {
                 newPathing.add(
                         PurePursuitPoint(
-                                points[i].x + vector.getX() * a,
-                                points[i].y + vector.getY() * a
+                                points[i].x + vector.x * a,
+                                points[i].y + vector.y * a
                         )
                 )
             }
@@ -98,9 +92,7 @@ class MOEPurePursuitPath(var points: List<PurePursuitPoint>, private val options
         }
     }
 
-    fun getClosestPointIndex(
-            lastKnownPointIndex: Int, currentPoint: PurePursuitPoint
-    ): Int {
+    fun getClosestPointIndex(lastKnownPointIndex: Int, currentPoint: PurePursuitPoint): Int {
         var closestPointIndex = 0
         var closestDistance = java.lang.Double.MAX_VALUE
 
@@ -152,5 +144,4 @@ class MOEPurePursuitPath(var points: List<PurePursuitPoint>, private val options
 
     operator fun get(index: Int): PurePursuitPoint = points[index]
     fun getSize() = points.size
-
 }

@@ -1,55 +1,22 @@
 package org.firstinspires.ftc.teamcode.utilities.PurePursuit
 
+import org.firstinspires.ftc.teamcode.utilities.Point
 import kotlin.math.sqrt
 
-class PurePursuitVector(private var x: Double, private var y: Double) {
-    var magnitude: Double = 0.0
+class PurePursuitVector(x: Double, y: Double) : Point(x, y) {
+    operator fun plus(other: PurePursuitVector): PurePursuitVector = PurePursuitVector(this.x + other.x, this.y + other.y)
+    operator fun minus(other: PurePursuitVector): PurePursuitVector = PurePursuitVector(this.x - other.x, this.y - other.y)
+    override operator fun times(value: Double): PurePursuitVector = PurePursuitVector(this.x * value, this.y * value)
+    operator fun times(value: PurePursuitVector): Double = dot(value)
+    override operator fun div(value: Double): PurePursuitVector = PurePursuitVector(this.x / value, this.y / value)
 
+    val magnitude: Double
+        get() = sqrt(x * x + y * y)
 
-    init {
-        updateMagnitude()
-    }
-
-    fun setX(x: Double) {
-        this.x = x
-        updateMagnitude()
-    }
-
-    fun setY(y: Double) {
-        this.y = y
-        updateMagnitude()
-    }
-
-    fun getX(): Double {
-        return x
-    }
-
-    fun getY(): Double {
-        return y
-    }
-
-    fun updateMagnitude() {
-        this.magnitude = sqrt(x * x + y * y)
-    }
+    constructor(point: Point) : this(point.x, point.y)
 
     fun normalize() {
         this.x /= this.magnitude
         this.y /= this.magnitude
-    }
-
-    fun multiplyBy(scalar: Double) {
-        this.x *= scalar
-        this.y *= scalar
-    }
-
-    companion object {
-
-        fun addVectors(a: PurePursuitVector, b: PurePursuitVector): PurePursuitVector {
-            return PurePursuitVector(a.x + b.x, a.y + b.y)
-        }
-
-        fun subtractVectors(a: PurePursuitVector, b: PurePursuitVector): PurePursuitVector {
-            return PurePursuitVector(a.x - b.x, a.y - b.y)
-        }
     }
 }

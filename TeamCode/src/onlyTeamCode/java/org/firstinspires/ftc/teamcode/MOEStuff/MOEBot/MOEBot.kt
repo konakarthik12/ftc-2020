@@ -16,5 +16,4 @@ class MOEBot(opMode: MOEOpMode, useOdometryForGyro: Boolean, useCamera: Boolean 
         if (useCamera) camera = MOECamera(opMode)
         if (useSlam) slam = MOESlam()
     }
-
 }

@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.constants.MOEConstants.Odometry.Wheels.VOL
 
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
 import java.lang.Math.abs
+import kotlin.math.abs
 
 data class OdometryWheelConfig(val name: String, val direction: Direction, val orientation: Orientation) {
     enum class Direction {
@@ -37,19 +38,6 @@ data class OdometryWheelConfig(val name: String, val direction: Direction, val o
 }
 
 class MOEdometryWheel(config: OdometryWheelConfig) {
-    companion object {
-//        const val MIN_VOLTAGE: Double = 0.0
-//        const val MAX_VOLTAGE: Double = 5.0
-//
-//        private const val AXIAL_CIRCUMFERENCE: Double = 0.0
-//        private const val AXIAL_ROTATION_SCALAR: Double = AXIAL_CIRCUMFERENCE / (2 * Math.PI)
-//
-//        private const val STRAFE_CIRCUMFERENCE: Double = 0.0
-//        private const val STRAFE_ROTATION_SCALAR: Double = STRAFE_CIRCUMFERENCE / (2 * Math.PI)
-
-
-    }
-
     val odometry: AnalogInput = hardwareMap.get(AnalogInput::class.java, config.name)
 
     private val direction: Direction = config.direction

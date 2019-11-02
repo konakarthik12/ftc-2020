@@ -45,4 +45,10 @@ object MOEConstants {
             const val VOLTS_TO_HALF_INCH: Double = WHEEL_CIRCUMFERENCE / 5
         }
     }
+
+    object PurePursuit {
+        const val K_V = 0.0
+        const val K_A = 0.0
+        const val K_P = 0.0
+    }
 }

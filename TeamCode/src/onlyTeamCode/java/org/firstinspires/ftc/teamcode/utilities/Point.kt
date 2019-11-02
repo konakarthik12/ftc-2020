@@ -7,10 +7,9 @@ import kotlin.math.sqrt
 open class Point(var x: Double, var y: Double) {
     operator fun plus(other: Point): Point = Point(this.x + other.x, this.y + other.y)
     operator fun minus(other: Point): Point = Point(this.x - other.x, this.y - other.y)
-    operator fun times(value: Double): Point = Point(this.x * value, this.y * value)
+    open operator fun times(value: Double): Point = Point(this.x * value, this.y * value)
     operator fun times(value: Point): Double = dot(value)
-    operator fun div(value: Double): Point = Point(this.x / value, this.y / value)
-
+    open operator fun div(value: Double): Point = Point(this.x / value, this.y / value)
 
     fun dot(p: Point): Double {
         return x * p.x + y * p.y
