@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry
 
 import com.qualcomm.robotcore.hardware.AnalogInput
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.OdometryWheelConfig.Direction
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.OdometryWheelConfig.Orientation
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Odometry.Wheels
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Odometry.Wheels.MAX_VOLTAGE
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Odometry.Wheels.VOLTS_TO_HALF_INCH
-
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
-import java.lang.Math.abs
 import kotlin.math.abs
 
 data class OdometryWheelConfig(val name: String, val direction: Direction, val orientation: Orientation) {
@@ -40,7 +37,6 @@ data class OdometryWheelConfig(val name: String, val direction: Direction, val o
 class MOEdometryWheel(config: OdometryWheelConfig) {
     val odometry: AnalogInput = hardwareMap.get(AnalogInput::class.java, config.name)
 
-    private val direction: Direction = config.direction
     private val directionScalar: Double = config.direction.scalar()
     val orientation: Orientation = config.orientation
     val circumference = orientation.circumference()
