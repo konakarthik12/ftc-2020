@@ -28,7 +28,7 @@ public class DexHandler {
     public DexHandler(File fireCodeFile, Map<String, OpModeMeta> opModes) {
         if (!fireCodeFile.exists()) throw new IllegalStateException("Missing file:" + fireCodeFile);
         FtcRobotControllerActivity context = activityRef.get();
-        DexClassLoader classLoader = new DexClassLoader(fireCodeFile.getAbsolutePath(), ContextCompat.getCodeCacheDir(context).getAbsolutePath(), null, context.getClassLoader());
+        DexClassLoader classLoader = new DexClassLoader(fireCodeFile.getAbsolutePath(), ContextCompat.getCodeCacheDir(context).getAbsolutePath(), null, new TeamLessClassLoader(context.getClassLoader()));
         opModeMetaAndClassMap = getOpModesFromClassLoader(classLoader, opModes);
     }
 

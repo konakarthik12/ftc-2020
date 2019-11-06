@@ -34,7 +34,7 @@ public class OpModeLoading {
     public static void init(FtcRobotControllerActivity activity) {
 
         activityRef = new WeakReference<>(activity);
-        verifyStatus();
+//        verifyStatus();
         ReflectionHolder.initReflection();
     }
 
