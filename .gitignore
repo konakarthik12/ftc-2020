@@ -28,3 +28,5 @@ build/
 *ASUS_PC_01*
 PushCode
 MOETime.iml
+/JsApp/node_modules/
+/JsApp/node/index/

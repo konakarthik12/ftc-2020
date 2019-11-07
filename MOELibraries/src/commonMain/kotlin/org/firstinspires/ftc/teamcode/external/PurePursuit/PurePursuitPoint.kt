@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.utilities.PurePursuit
 
-import org.firstinspires.ftc.teamcode.utilities.Point
+import org.firstinspires.ftc.teamcode.external.AdvancedMath.Point
 import kotlin.math.pow
 import kotlin.math.sqrt
 

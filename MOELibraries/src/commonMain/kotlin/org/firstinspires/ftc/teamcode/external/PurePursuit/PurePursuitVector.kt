@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.external.PurePursuit
 
-import org.firstinspires.ftc.teamcode.utilities.Point
+import org.firstinspires.ftc.teamcode.external.AdvancedMath.Point
 import kotlin.math.sqrt
 
 class PurePursuitVector(x: Double, y: Double) : Point(x, y) {

@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.external.AdvancedMath
 
-import org.firstinspires.ftc.teamcode.utilities.Point
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt

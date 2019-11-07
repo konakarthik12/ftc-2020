@@ -17,6 +17,11 @@
 
 import java.util.regex.Pattern
 
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint")) {
+        task.enabled = false
+    }
+}
 apply plugin: 'com.android.application'
 
 android {
@@ -93,9 +98,8 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
     lintOptions {
-
         checkReleaseBuilds false
-
+        abortOnError false
     }
     sourceSets.main {
         jni.srcDirs = []
@@ -109,4 +113,3 @@ repositories {
     }
 }
 apply from: 'build.release.gradle'
-apply plugin: 'com.google.gms.google-services'

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.utilities
+package org.firstinspires.ftc.teamcode.external.AdvancedMath
 
 import kotlin.math.atan2
 import kotlin.math.pow
@@ -19,13 +19,13 @@ open class Point(var x: Double, var y: Double) {
         return sqrt((this.x - point.x).pow(2.0) + (this.y - point.y).pow(2.0))
     }
 
-    fun Point.angleFrom(other: Point): Double {
-        throw IllegalArgumentException("convert to degrees")
-        var angle = (atan2(other.y - this.y, other.x - this.x))
-
-        if (angle < 0) angle += 360.0
-        return angle
-    }
+//    fun Point.angleFrom(other: Point): Double {
+//        throw IllegalArgumentException("convert to degrees")
+//        var angle = (atan2(other.y - this.y, other.x - this.x))
+//
+//        if (angle < 0) angle += 360.0
+//        return angle
+//    }
 
     override fun toString(): String {
         return "Point [x=$x, y=$y]"
