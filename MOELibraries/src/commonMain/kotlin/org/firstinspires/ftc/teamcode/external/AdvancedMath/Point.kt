@@ -19,8 +19,9 @@ open class Point(var x: Double, var y: Double) {
         return sqrt((this.x - point.x).pow(2.0) + (this.y - point.y).pow(2.0))
     }
 
-    fun angleFrom(other: Point): Double {
-        var angle = Math.toDegrees(atan2(other.y - this.y, other.x - this.x))
+    fun Point.angleFrom(other: Point): Double {
+        throw IllegalArgumentException("convert to degrees")
+        var angle = (atan2(other.y - this.y, other.x - this.x))
 
         if (angle < 0) angle += 360.0
         return angle

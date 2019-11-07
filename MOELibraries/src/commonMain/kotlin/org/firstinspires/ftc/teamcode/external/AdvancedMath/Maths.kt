@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.utilities.AdvancedMath
+package org.firstinspires.ftc.teamcode.external.AdvancedMath
 
 import org.firstinspires.ftc.teamcode.utilities.Point
 import kotlin.math.abs
@@ -33,7 +33,7 @@ fun getCircleLineIntersection(pointA: Point, pointB: Point, circleCenter: Point,
     var discriminant = b.pow(2.0) - 4.0 * a * c
 
     if (discriminant < 0) {
-        return java.lang.Double.NaN
+        return Double.NaN
     } else {
         discriminant = sqrt(discriminant)
         val t1 = (-b - discriminant) / (2 * a)
@@ -41,7 +41,7 @@ fun getCircleLineIntersection(pointA: Point, pointB: Point, circleCenter: Point,
         if (t1 in 0.0..1.0) return t1
         else if (t2 in 0.0..1.0) return t2
     }
-    return java.lang.Double.NaN
+    return Double.NaN
 }
 
 infix fun <A, B> A.and(second: B): Pair<A, B> {

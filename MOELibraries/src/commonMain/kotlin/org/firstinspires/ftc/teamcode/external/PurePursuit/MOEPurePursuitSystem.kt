@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.utilities.PurePursuit
 
-import org.firstinspires.ftc.teamcode.constants.MOEConstants
 
 
 class MOEPurePursuitSystem(points: List<PurePursuitPoint>, private val options: MOEPurePursuitOptions) {
@@ -38,8 +37,8 @@ class MOEPurePursuitSystem(points: List<PurePursuitPoint>, private val options: 
         lastLeftVelocity = leftTV
         lastRightVelocity = rightTV
 
-        val leftFeedforward = (MOEConstants.PurePursuit.K_V * leftTV) + (MOEConstants.PurePursuit.K_A * leftTA)
-        val rightFeedforward = (MOEConstants.PurePursuit.K_V * rightTV) + (MOEConstants.PurePursuit.K_A * rightTA)
+        val leftFeedforward = (options.K_V * leftTV) + (options.K_A * leftTA)
+        val rightFeedforward = (options.K_V * rightTV) + (options.K_A * rightTA)
 
         //            leftWheelTargetVelocity = normalizeVelocity(leftWheelTargetVelocity);
         //            rightWheelTargetVelocity = normalizeVelocity(rightWheelTargetVelocity);
@@ -56,12 +55,12 @@ class MOEPurePursuitSystem(points: List<PurePursuitPoint>, private val options: 
         //            double rightFeedback = getWheelFeedbackVelocity(rightWheelTargetVelocity,
         //                                                            robot.chassis.getAStarVelocity(robot.chassis.frontRightMotor));
 
-        val leftFeedback = MOEConstants.PurePursuit.K_P * (leftTV - leftActualVelocity)
-        val rightFeedback = MOEConstants.PurePursuit.K_P * (rightTV - rightActualVelocity)
+        val leftFeedback = options.K_P * (leftTV - leftActualVelocity)
+        val rightFeedback =options.K_P * (rightTV - rightActualVelocity)
 
         val leftFinalVelocity = leftFeedforward + leftFeedback
         val rightFinalVelocity = rightFeedforward + rightFeedback
-
+//TODO: Fins
         val scaleDown = 0.4
 
         return Pair(leftFinalVelocity, rightFinalVelocity)

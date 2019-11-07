@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.utilities.PurePursuit
 
 
-import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.getCircleLineIntersection
+import org.firstinspires.ftc.teamcode.external.AdvancedMath.getCircleLineIntersection
+import org.firstinspires.ftc.teamcode.external.PurePursuit.PurePursuitVector
 import org.firstinspires.ftc.teamcode.utilities.Point
-import java.util.*
 import kotlin.math.*
 
 
@@ -94,7 +94,7 @@ class MOEPurePursuitPath(var points: List<PurePursuitPoint>, private val options
 
     fun getClosestPointIndex(lastKnownPointIndex: Int, currentPoint: PurePursuitPoint): Int {
         var closestPointIndex = 0
-        var closestDistance = java.lang.Double.MAX_VALUE
+        var closestDistance = Double.MAX_VALUE
 
         for (i in lastKnownPointIndex - options.lookBack until lastKnownPointIndex + options.lookForward + 1) {
             if (i >= 0 && i < points.size) {
@@ -117,7 +117,7 @@ class MOEPurePursuitPath(var points: List<PurePursuitPoint>, private val options
             onLastSegment: Boolean
     ): Point? {
         val progress = getCircleLineIntersection(startPoint, endPoint, currentPosition, lookaheadDistance)
-        if (java.lang.Double.isNaN(progress)) {
+        if (progress.isNaN()) {
             return null
         }
         if (onLastSegment) {

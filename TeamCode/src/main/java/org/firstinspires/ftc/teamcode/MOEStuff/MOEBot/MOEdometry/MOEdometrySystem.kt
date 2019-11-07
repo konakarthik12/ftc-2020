@@ -4,7 +4,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
-import org.firstinspires.ftc.teamcode.utilities.AtomicDouble
 import org.firstinspires.ftc.teamcode.utilities.Point
 
 class MOEdometrySystem {
@@ -13,23 +12,24 @@ class MOEdometrySystem {
     private val wheels = WheelsHolder()
 
     val x: Double
-        get() = atomicX.get()
+        get() = atomicX
 
     val y: Double
-        get() = atomicY.get()
+        get() = atomicY
     val position
         get() = Point(x, y)
     val gyro: MOEdometryGyro = MOEdometryGyro()
-
-    private val atomicX: AtomicDouble = AtomicDouble(0.0)
-    private val atomicY: AtomicDouble = AtomicDouble(0.0)
+    @Volatile
+    private var atomicX = 0.0
+    @Volatile
+    private var atomicY = 0.0
 
     private val axialPair = MOEdometryWheelPair(wheels.axialLeft, wheels.axialRight)
     private val strafePair = MOEdometryWheelPair(wheels.strafeRight, wheels.strafeRight)
 
     fun reset() {
-        atomicX.set(0.0)
-        atomicY.set(0.0)
+        atomicX = 0.0
+        atomicY = 0.0
     }
 
     fun init() {
@@ -57,7 +57,7 @@ class MOEdometrySystem {
         val xChange = axialVector.first + strafeVector.first
         val yChange = axialVector.second + strafeVector.second
 
-        atomicX.add(xChange)
-        atomicY.add(yChange)
+        atomicX += xChange
+        atomicY += yChange
     }
 }

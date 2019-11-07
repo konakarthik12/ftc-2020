@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.utilities.PurePursuit
+package org.firstinspires.ftc.teamcode.external.PurePursuit
 
 import org.firstinspires.ftc.teamcode.utilities.Point
 import kotlin.math.sqrt

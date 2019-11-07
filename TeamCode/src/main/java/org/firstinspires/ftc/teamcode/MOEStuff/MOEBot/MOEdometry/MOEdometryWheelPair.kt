@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry
 
-import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.and
+import org.firstinspires.ftc.teamcode.external.AdvancedMath.and
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
