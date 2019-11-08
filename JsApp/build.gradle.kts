@@ -50,17 +50,31 @@ tasks {
             }
         }
     }
+      val pullLibs by registering(Copy::class) {
+        group = "build"
+
+        includeEmptyDirs = false
+      val libPath = rootProject.buildDir.toString()+"/js/packages/MOETime-MOELibraries/kotlin"
+        from(libPath){
+         exclude("**/*.kjsm")
+        }
+        into("$buildDir/web/node_modules")
+    }
     val assembleWeb by registering(Copy::class) {
         group = "build"
         description = "Assemble the web application"
         includeEmptyDirs = false
 //        val libPath = rootProject.buildDir.toString()+"/js/packages/MOETime-MOELibraries")
-
+     //   println(project.file(package.json))
+        //from()
         from(unpackKotlinJsStdlib)
         from(sourceSets.main.get().output) {
             exclude("**/*.kjsm")
         }
         into("$buildDir/web")
+    }
+    assembleWeb {
+        dependsOn(pullLibs)
     }
     assemble {
         dependsOn(assembleWeb)
@@ -76,8 +90,8 @@ tasks {
     val npmRun by registering(Exec::class) {
    
 
-        commandLine("node", "JsApp/node/index.js")
+        commandLine("node", "build/web/JsApp.js")
     }
 
-    npmRun.dependsOn(build)
+    npmRun.dependsOn(assemble)
 }
