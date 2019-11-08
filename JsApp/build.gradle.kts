@@ -55,6 +55,7 @@ tasks {
 
         includeEmptyDirs = false
       val libPath = rootProject.buildDir.toString()+"/js/packages/MOETime-MOELibraries/kotlin"
+ from(unpackKotlinJsStdlib)
         from(libPath){
          exclude("**/*.kjsm")
         }
@@ -67,7 +68,7 @@ tasks {
 //        val libPath = rootProject.buildDir.toString()+"/js/packages/MOETime-MOELibraries")
      //   println(project.file(package.json))
         //from()
-        from(unpackKotlinJsStdlib)
+        
         from(sourceSets.main.get().output) {
             exclude("**/*.kjsm")
         }
