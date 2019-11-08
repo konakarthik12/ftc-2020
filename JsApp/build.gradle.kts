@@ -21,7 +21,7 @@ tasks {
     compileKotlin2Js {
         kotlinOptions {
             moduleKind = "commonjs"
-            outputFile = "node/index.js"
+//            outputFile = "node/index.js"
             sourceMap = true
         }
     }
@@ -54,6 +54,8 @@ tasks {
         group = "build"
         description = "Assemble the web application"
         includeEmptyDirs = false
+//        val libPath = rootProject.buildDir.toString()+"/js/packages/MOETime-MOELibraries")
+
         from(unpackKotlinJsStdlib)
         from(sourceSets.main.get().output) {
             exclude("**/*.kjsm")
