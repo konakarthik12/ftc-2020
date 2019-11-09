@@ -10,9 +10,8 @@ import org.firstinspires.ftc.teamcode.utilities.addData
 class ControllerTest : MOETeleOp() {
 
 
-
     override fun initOpMode() {
-        Log.e("stuffe","stuffe")
+        Log.e("stuffe", "stuffe")
         telemetry.addData("testagain")
     }
 
