@@ -1,8 +1,12 @@
 package org.firstinspires.ftc.teamcode.constants
 
 import com.qualcomm.robotcore.hardware.Servo
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
+import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MotorConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.ServoConfig
+import org.firstinspires.ftc.teamcode.utilities.Distance
+import org.firstinspires.ftc.teamcode.utilities.feet
 import kotlin.math.PI
 import com.qualcomm.robotcore.hardware.DcMotorSimple as Motor
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.OdometryWheelConfig as OWC
@@ -50,5 +54,18 @@ object MOEConstants {
         const val K_V = 0.0
         const val K_A = 0.0
         const val K_P = 0.0
+    }
+
+    object Units {
+        const val FEET_PER_METER = 0.3048
+        const val SLAMS_PER_TILE = 2 * FEET_PER_METER
+        const val ASTARS_PER_TILE = 48
+        const val SLAMS_PER_ASTAR = SLAMS_PER_TILE / ASTARS_PER_TILE
+        const val ASTAR_PER_SLAM = ASTARS_PER_TILE / SLAMS_PER_TILE
+    }
+
+    object Slam {
+
+
     }
 }

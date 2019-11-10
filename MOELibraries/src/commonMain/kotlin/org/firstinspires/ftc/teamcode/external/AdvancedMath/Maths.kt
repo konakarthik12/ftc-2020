@@ -3,10 +3,13 @@ package org.firstinspires.ftc.teamcode.external.AdvancedMath
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
+//import kotlin.text.format
 
-//fun lerp(min: Double, max: Double, f: Double) = min + f * (max - min)
+//fun round()
+//fun lerp(min: Doux`ble, max: Double, f: Double) = min + f * (max - min)
 
 //fun clamp(x: Double, a: Double, b: Double): Double = if (x < a) a else min(x, b)
+
 
 fun closestAngleDifference(ang1: Double, ang2: Double): Double {
     val difference = abs(ang2 - ang1)

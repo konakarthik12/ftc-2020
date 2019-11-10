@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.utilities
 import android.graphics.Bitmap
 import com.google.firebase.database.DatabaseReference
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.firstinspires.ftc.teamcode.external.AdvancedMath.Point3
 import org.firstinspires.ftc.teamcode.misc.Rectangle
 import java.io.File
 import java.io.FileOutputStream
@@ -25,6 +26,13 @@ fun Bitmap.crop(frame: Rectangle): Bitmap {
 fun Bitmap.saveTo(file: String) {
     saveTo(File(file))
 }
+fun DatabaseReference.delete() {
+    this.setValue(null)
+}
+
+fun DatabaseReference.pushData(function: () -> Any?) {
+    this.push().setValue(function())
+}
 
 fun Bitmap.saveTo(file: File) {
     try {
@@ -37,6 +45,8 @@ fun Bitmap.saveTo(file: File) {
     }
 
 }
+
+fun Double.roundToString(digits: Int): String = "%.${digits}f".format(this)
 
 fun Bitmap.scale(width: Int, height: Int): Bitmap? =
         Bitmap.createScaledBitmap(this, width, height, false)

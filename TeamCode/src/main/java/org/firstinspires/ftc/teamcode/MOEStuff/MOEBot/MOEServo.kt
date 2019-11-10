@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwa
 import org.firstinspires.ftc.teamcode.external.AdvancedMath.lerp
 
 data class ServoConfig(val name: String, val min: Double, val max: Double, val direction: Servo.Direction)
+
 class MOEServo(config: ServoConfig) {
     private var mServo: Servo = hardwareMap.get(Servo::class.java, config.name)
 

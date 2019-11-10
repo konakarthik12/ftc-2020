@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.utilities.PurePursuit
 
+import org.firstinspires.ftc.teamcode.external.PurePursuit.MOEPurePursuitPath
 
 
 class MOEPurePursuitSystem(points: List<PurePursuitPoint>, private val options: MOEPurePursuitOptions) {

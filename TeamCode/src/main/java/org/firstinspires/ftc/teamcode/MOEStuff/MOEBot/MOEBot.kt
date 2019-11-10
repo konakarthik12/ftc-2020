@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometryGyro
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySystem
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEOpMode
-import org.firstinspires.ftc.teamcode.MOEStuff.MOESlam.MOESlam
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlam
 
 class MOEBot(opMode: MOEOpMode, useOdometryForGyro: Boolean, useCamera: Boolean = false, useSlam: Boolean = false) {
     var chassis: MOEChassis = MOEChassis()
@@ -15,5 +15,8 @@ class MOEBot(opMode: MOEOpMode, useOdometryForGyro: Boolean, useCamera: Boolean 
     init {
         if (useCamera) camera = MOECamera(opMode)
         if (useSlam) slam = MOESlam()
+    }
+    fun resetValues(){
+        slam.resetValues();
     }
 }

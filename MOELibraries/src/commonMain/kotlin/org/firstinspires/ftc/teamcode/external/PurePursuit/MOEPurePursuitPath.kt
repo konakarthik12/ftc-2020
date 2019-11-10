@@ -1,9 +1,10 @@
-package org.firstinspires.ftc.teamcode.utilities.PurePursuit
+package org.firstinspires.ftc.teamcode.external.PurePursuit
 
 
 import org.firstinspires.ftc.teamcode.external.AdvancedMath.getCircleLineIntersection
-import org.firstinspires.ftc.teamcode.external.PurePursuit.PurePursuitVector
 import org.firstinspires.ftc.teamcode.external.AdvancedMath.Point
+import org.firstinspires.ftc.teamcode.utilities.PurePursuit.MOEPurePursuitOptions
+import org.firstinspires.ftc.teamcode.utilities.PurePursuit.PurePursuitPoint
 import kotlin.math.*
 
 

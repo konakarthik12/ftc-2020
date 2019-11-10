@@ -12,6 +12,7 @@ public class MOEGlobalProcesses {
         OpModeLoading.init(activity);
         MOEFirebase.init(activity);
         SlamHandler.init(activity);
+        MOESocketHandler.init(activity);
 
     }
 

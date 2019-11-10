@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.robotcontroller.moeglobal.slam;
 
 import android.hardware.usb.*;
+import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -11,12 +12,13 @@ import static android.os.Process.setThreadPriority;
 import static org.firstinspires.ftc.robotcontroller.moeglobal.slam.Constants.*;
 
 public class SlamT265Handler {
+    private volatile boolean initCodeSent = false;
     private UsbDeviceConnection connection;
     private UsbInterface usbInterface;
     private UsbEndpoint control, outEndpoint2, outEndpoint3, inEndpoint129, inEndpoint130, inEndpoint131;
     private byte[] tempSlam = new byte[104];
-    private float[] curPose = new float[3];
-    private boolean isRunning = false;
+    private volatile float[] curPose = new float[3];
+    private volatile boolean isRunning = false;
 
 
     SlamT265Handler(UsbDevice device) {
@@ -69,16 +71,23 @@ public class SlamT265Handler {
     }
 
     public void startStream() {
-        sendInitCode();
+        if (!initCodeSent) {
+            sendInitCode();
+            initCodeSent = true;
+        }
+
         isRunning = true;
         new Thread(new SlamRunnable()).start();
     }
 
     private void updateSlam() {
         connection.bulkTransfer(inEndpoint131, tempSlam, 0, tempSlam.length, 100);
-        ByteBuffer order = ByteBuffer.wrap(tempSlam, 8, 12).order(ByteOrder.LITTLE_ENDIAN);
+        ByteBuffer order = ByteBuffer.wrap(tempSlam, 8, 96).order(ByteOrder.LITTLE_ENDIAN);
         for (int i = 0; i < 3; i++) {
             curPose[i] = order.getFloat();
+        }
+        for (int i = 0; i < 24; i++) {
+            Log.e("part: +i", String.valueOf(order.getFloat()));
         }
     }
 
@@ -99,10 +108,10 @@ public class SlamT265Handler {
         isRunning = false;
     }
 
-    private void closeConnection() {
-        connection.releaseInterface(usbInterface);
-        connection.close();
-    }
+//    private void closeConnection() {
+//        connection.releaseInterface(usbInterface);
+//        connection.close();
+//    }
 
     public float[] getCurPose() {
         return curPose;
@@ -114,7 +123,7 @@ public class SlamT265Handler {
             while (isRunning) {
                 updateSlam();
             }
-            closeConnection();
+//            closeConnection();
         }
     }
 }

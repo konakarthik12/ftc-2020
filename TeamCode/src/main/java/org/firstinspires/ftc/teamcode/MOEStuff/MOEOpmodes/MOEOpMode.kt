@@ -25,7 +25,12 @@ abstract class MOEOpMode : LinearOpMode(), MOEFirebase {
         initOpMode()
         notifyTelemetry()
         waitForStart()
+        resetRobotValues()
         run()
+    }
+
+    private fun resetRobotValues() {
+        robot.resetValues()
     }
 
     private fun moeDoubleInternalInit() {
