@@ -4,7 +4,7 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
 
 abstract class MOETeleOp(val useSlam: Boolean = false) : MOEOpMode() {
     final override fun moeInternalInit() {
-        robot = MOEBot(opMode = this, useOdometryForGyro = false, useSlam = true)
+        robot = MOEBot(opMode = this, useOdometryForGyro = false, useSlam = useSlam)
     }
 
     final override fun run() {

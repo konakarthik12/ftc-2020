@@ -58,7 +58,8 @@ object MOEConstants {
 
     object Units {
         const val FEET_PER_METER = 0.3048
-        const val SLAMS_PER_TILE = 2 * FEET_PER_METER
+        const val FEET_PER_TILE = 2
+        const val SLAMS_PER_TILE = FEET_PER_TILE * FEET_PER_METER
         const val ASTARS_PER_TILE = 48
         const val SLAMS_PER_ASTAR = SLAMS_PER_TILE / ASTARS_PER_TILE
         const val ASTAR_PER_SLAM = ASTARS_PER_TILE / SLAMS_PER_TILE

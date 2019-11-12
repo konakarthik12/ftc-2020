@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySyste
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEOpMode
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlam
 
-class MOEBot(opMode: MOEOpMode, useOdometryForGyro: Boolean, useCamera: Boolean = false, useSlam: Boolean = false) {
+class MOEBot(opMode: MOEOpMode, useOdometryForGyro: Boolean, useCamera: Boolean = false, val useSlam: Boolean = false) {
     var chassis: MOEChassis = MOEChassis()
     var odometry: MOEdometrySystem = MOEdometrySystem()
     var gyro: MOEGyro = if (useOdometryForGyro) MOEdometryGyro() else MOEIMUGyro()
@@ -16,7 +16,9 @@ class MOEBot(opMode: MOEOpMode, useOdometryForGyro: Boolean, useCamera: Boolean 
         if (useCamera) camera = MOECamera(opMode)
         if (useSlam) slam = MOESlam()
     }
-    fun resetValues(){
-        slam.resetValues();
+
+    fun resetValues() {
+        if (useSlam)
+            slam.resetValues();
     }
 }
