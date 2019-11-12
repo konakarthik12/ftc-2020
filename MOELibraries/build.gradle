@@ -25,7 +25,7 @@ kotlin {
         kotlinOptions.verbose = true
         kotlinOptions.main = "call"
         kotlinOptions.moduleKind = "commonjs"
-//        kotlinOptions.outputFile = "../JsApp/node_modules/MOETime-MOELibraries/MOETime-MOELibraries.js"
+//        kotlinOptions.outputDir = "../JsApp/node_modules/MOETime-MOELibraries/MOETime-MOELibraries.js"
 
     }
     // For ARM, should be changed to iosArm32 or iosArm64

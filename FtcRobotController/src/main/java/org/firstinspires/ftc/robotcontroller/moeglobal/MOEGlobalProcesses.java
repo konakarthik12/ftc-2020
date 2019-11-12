@@ -3,6 +3,7 @@ package org.firstinspires.ftc.robotcontroller.moeglobal;
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEFirebase;
 import org.firstinspires.ftc.robotcontroller.moeglobal.opmodeloading.OpModeLoading;
+import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler;
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler;
 
 public class MOEGlobalProcesses {

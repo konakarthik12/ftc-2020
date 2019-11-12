@@ -44,7 +44,14 @@ dependencies {
 
     testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
 }
-
+task linkify(type: Exec) {
+    workingDir = buildDir
+//    println rootProject.buildDir.toString()+file('js/packages')
+    commandLine 'npm', 'link', 'MOETime-MOELibraries'
+}
+//tasks.findByName("npm-deps") {
+//    dependsOn linkify
+//}
 kotlinFrontend {
     npm {
         dependency('webpack-cli', 'v2.0.12')
@@ -63,16 +70,16 @@ kotlinFrontend {
 }
 
 compileKotlin2Js {
-    kotlinOptions.metaInfo = true
+//    kotlinOptions.metaInfo = true
     kotlinOptions.outputFile = "${project.buildDir.path}/js/${project.name}.js"
     kotlinOptions.sourceMap = true
     kotlinOptions.moduleKind = 'commonjs'
     kotlinOptions.main = 'call'
 }
 compileTestKotlin2Js {
-    kotlinOptions.sourceMap = false
+    kotlinOptions.sourceMap = true
 //    kotlinOptions.metaInfo = true
-//    kotlinOptions.outputFile = "${project.buildDir.path}/js/${project.name}.js"
+//    kotlinOptions.outputDir = "${project.buildDir.path}/js/${project.name}.js"
 //    kotlinOptions.sourceMap = true
 //    kotlinOptions.moduleKind = 'commonjs'
 //    kotlinOptions.main = 'call'
@@ -82,5 +89,9 @@ task serverPrepare(type: Copy, dependsOn: ['bundle']) {
     from "$projectDir/build/bundle", "$projectDir/src/main/web"
     into "$projectDir/static"
 }
-
+//task libsPull(type: Copy) {
+//
+//}
+//build.dependsOn libsPull
 build.dependsOn serverPrepare
+run.dependsOn build
