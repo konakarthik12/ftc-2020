@@ -15,10 +15,19 @@ object MOEConstants {
     object DriveTrain {
         object Motors {
             object Configs {
-                val FrontLeft = MotorConfig("FLDM11")
+                val FrontLeft = MotorConfig("FLDM11", Motor.Direction.FORWARD)
                 val FrontRight = MotorConfig("FRDM13", Motor.Direction.REVERSE)
-                val BackLeft = MotorConfig("BLDM10")
+                val BackLeft = MotorConfig("BLDM10", Motor.Direction.FORWARD)
                 val BackRight = MotorConfig("BRDM12", Motor.Direction.REVERSE)
+            }
+        }
+    }
+
+    object IntakeSystem {
+        object Motors {
+            object Configs {
+                val LeftIntake = MotorConfig("LIIMxx", Motor.Direction.FORWARD)
+                val RightIntake = MotorConfig("RIIMxx", Motor.Direction.FORWARD)
             }
         }
     }
@@ -50,6 +59,11 @@ object MOEConstants {
         }
     }
 
+    object Localization {
+        const val CAMERA_DISTANCE = 5.0
+        const val CAMERA_THETA = 30
+    }
+
     object PurePursuit {
         const val K_V = 0.0
         const val K_A = 0.0
@@ -66,7 +80,5 @@ object MOEConstants {
     }
 
     object Slam {
-
-
     }
 }

@@ -7,10 +7,8 @@ import kotlin.browser.window
 
 fun main() {
     window.onload = {
-        render(document.getElementById("root")!!) {
-            h1 { +"Hello World!e" }
-
-//            child(App::class) {}
+        render(document.getElementById("root")) {
+            child(App::class) {}
         }
     }
 }

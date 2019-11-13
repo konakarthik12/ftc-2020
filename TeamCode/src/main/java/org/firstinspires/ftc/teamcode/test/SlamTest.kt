@@ -11,17 +11,9 @@ import org.firstinspires.ftc.teamcode.utilities.get
 class SlamTest : MOETeleOp(useSlam = true) {
     val laped = ElapsedTime()
     override fun loopStuff() {
-//        count++
-//        telemetry.addData("loop", count++)
-        telemetry.addData("slam", robot.slam.slamOffset.contentToString())
-        telemetry.addData("slam", robot.slam.getRawPose().contentToString())
-        telemetry.addData("slam", robot.slam.toString())
-        telemetry.addData("slam", laped.seconds())
-        if (laped.seconds() > 5) {
-            ref.setValue(robot.slam.getCameraPose())
-            laped.reset()
-        }
-
+        //        count++
+        //        telemetry.addData("loop", count++)
+        telemetry.addData("slam", robot.slam.getRawTheta())
         telemetry.update()
 
     }

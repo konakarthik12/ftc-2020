@@ -2,7 +2,12 @@ package org.firstinspires.ftc.robotcontroller.moeglobal.slam;
 
 import android.hardware.usb.*;
 import android.util.Log;
+import org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEConfig;
+import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOEServer;
+import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler;
 
+import java.nio.BufferOverflowException;
+import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -19,7 +24,7 @@ public class SlamT265Handler {
     private byte[] tempSlam = new byte[104];
     private volatile float[] curPose = new float[3];
     private volatile boolean isRunning = false;
-
+    private double[] quatAngle = new double[4];
 
     SlamT265Handler(UsbDevice device) {
         initVariables(device);
@@ -82,12 +87,13 @@ public class SlamT265Handler {
 
     private void updateSlam() {
         connection.bulkTransfer(inEndpoint131, tempSlam, 0, tempSlam.length, 100);
-        ByteBuffer order = ByteBuffer.wrap(tempSlam, 8, 96).order(ByteOrder.LITTLE_ENDIAN);
+        ByteBuffer order = ByteBuffer.wrap(tempSlam, 8, 7 * 4).order(ByteOrder.LITTLE_ENDIAN);
+
         for (int i = 0; i < 3; i++) {
             curPose[i] = order.getFloat();
         }
-        for (int i = 0; i < 24; i++) {
-            Log.e("part: +i", String.valueOf(order.getFloat()));
+        for (int i = 0; i < 4; i++) {
+            quatAngle[i] = order.getFloat();
         }
     }
 
@@ -115,6 +121,10 @@ public class SlamT265Handler {
 
     public float[] getCurPose() {
         return curPose;
+    }
+
+    public double[] getQuatAngle() {
+        return quatAngle;
     }
 
     public class SlamRunnable implements Runnable {
