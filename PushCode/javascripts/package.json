@@ -1,0 +1,10 @@
+{
+  "name": "MOESocketFireCode",
+  "version": "1.0.0",
+  "dependencies": {
+    "adbkit": "^2.11.1",
+    "chokidar": "^3.3.0",
+    "is-ip": "^3.1.0",
+    "ws": "latest"
+  }
+}

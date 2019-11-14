@@ -27,33 +27,36 @@ tasks.register("firecode") {
     dependsOn("compileClasses")
 }
 tasks.register("clearClassesCache", Delete::class) {
-    doFirst {
-        delete("$buildDir/firecode/classes")
-        delete("$buildDir/firecode/classes.dex")
+    delete("$buildDir/classes")
+    delete("$buildDir/dex/classes.dex")
+    doLast {
+        mkdir("$buildDir/dex/")
+        mkdir("$buildDir/classes/")
     }
 }
 tasks.register("copyClasses", Copy::class) {
     dependsOn(":TeamCode:compileDebugKotlin")
     dependsOn("clearClassesCache")
-    doFirst {
-        includeEmptyDirs = false
-        val mainPath = "${project(":TeamCode").buildDir}/tmp/kotlin-classes/debug"
-        val libPath = "${project(":MOELibraries").buildDir}/classes/kotlin/jvm/main"
-        //    println(message)
-        from(mainPath)
-        from(libPath)
-        include("**/*.class")
-        into("$buildDir/firecode/classes")
-    }
+    includeEmptyDirs = false
+    val mainPath = "${project(":TeamCode").buildDir}/tmp/kotlin-classes/debug"
+    val libPath = "${project(":MOELibraries").buildDir}/classes/kotlin/jvm/main"
+    from(mainPath)
+    from(libPath)
+    include("**/*.class")
+    into("$buildDir/classes")
+    //    doFirst {
+    //
+    //    }
     //    delete( buildDir.toString()+('/classes'))
 }
 tasks.register("compileClasses") {
     dependsOn("copyClasses")
+    val buildDir = this.project.buildDir
+    val inputDir = File("$buildDir/classes")
+    val outputDir = File("$buildDir/dex")
     doFirst {
-        val buildDir = this.project.buildDir
-        val inputDir = File("$buildDir/firecode/classes")
-        val outputDir = File("$buildDir/firecode/")
-        println("starting" + outputDir)
+
+        //        println("starting" + outputDir)
         val files = inputDir.walkTopDown().filter { it.isFile }.map { it.toPath() }.toList()
 
         val build = D8Command.builder()
@@ -67,6 +70,6 @@ tasks.register("compileClasses") {
         } catch (e: RuntimeException) {
             println(e.toString())
         }
-        println("done" + outputDir)
+        //        println("done" + outputDir)
     }
 }
