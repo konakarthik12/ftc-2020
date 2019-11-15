@@ -1,10 +1,19 @@
 {
   "name": "MOESocketFireCode",
   "version": "1.0.0",
+  "scripts": {
+    "start": "npx ts-node src/firecode.ts",
+    "dev": "npx nodemon"
+  },
   "dependencies": {
+    "@types/ws": "^6.0.3",
     "adbkit": "^2.11.1",
     "chokidar": "^3.3.0",
     "is-ip": "^3.1.0",
     "ws": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.7",
+    "typescript": "^3.7.2"
   }
 }

@@ -4,6 +4,7 @@ import android.util.Log;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
+import org.slf4j.event.LoggingEvent;
 
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -25,7 +26,7 @@ public class MOEServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, ByteBuffer message) {
-
+        Log.e("stuff", String.valueOf(message.remaining()));
     }
 
     @Override

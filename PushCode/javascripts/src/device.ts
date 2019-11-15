@@ -1,4 +1,3 @@
-const adb = require('adbkit');
 module.exports = function (client, internal) {
     function tcpip() {
         // console.log(adb);
