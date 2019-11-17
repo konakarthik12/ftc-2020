@@ -23,10 +23,15 @@ abstract class MOEOpMode : LinearOpMode(), MOEFirebase {
         moeInternalInit()
         setRobotRef(robot)
         initOpMode()
-        notifyTelemetry()
         waitForStart()
         resetRobotValues()
         run()
+    }
+
+    override fun waitForStart() {
+        while (!isStarted) {
+            notifyTelemetry()
+        }
     }
 
     private fun resetRobotValues() {
@@ -40,7 +45,7 @@ abstract class MOEOpMode : LinearOpMode(), MOEFirebase {
     }
 
     private fun createGamePads() {
-//        mainGamepad = MOEGamePad(gamepad1)
+        //        mainGamepad = MOEGamePad(gamepad1)
     }
 
 
@@ -60,9 +65,8 @@ abstract class MOEOpMode : LinearOpMode(), MOEFirebase {
     }
 
     private fun notifyTelemetry() {
-        telemetry.addData("waiting for init")
+        telemetry.addData("waiting for start")
         telemetry.update()
-
     }
 
     abstract fun moeInternalInit()

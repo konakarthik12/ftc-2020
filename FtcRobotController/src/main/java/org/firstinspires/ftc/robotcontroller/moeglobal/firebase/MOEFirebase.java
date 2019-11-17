@@ -12,6 +12,7 @@ public class MOEFirebase {
         MOEDatabase.init();
         MOECommands.init();
         MOEConfig.init();
-        OpModesFrame.init();
+        // TODO: 11/16/2019 check
+        //OpModesFrame.init();
     }
 }

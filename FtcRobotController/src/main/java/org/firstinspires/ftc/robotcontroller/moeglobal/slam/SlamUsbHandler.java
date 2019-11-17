@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.robotcontroller.moeglobal.slam;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.usb.*;
+import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
+import static org.firstinspires.ftc.robotcontroller.moeglobal.ActivityReferenceHolder.activityRef;
 import static org.firstinspires.ftc.robotcontroller.moeglobal.slam.Constants.CHUNK_SIZE;
 import static org.firstinspires.ftc.robotcontroller.moeglobal.slam.Constants.SMALL_TIMEOUT;
 
@@ -69,7 +69,32 @@ public class SlamUsbHandler {
     }
 
     public static UsbDevice getDevice(int vid) {
+        boolean b = activityRef.get().getPackageManager().hasSystemFeature(PackageManager.FEATURE_USB_HOST);
+        boolean b1 = activityRef.get().getPackageManager().hasSystemFeature(PackageManager.FEATURE_USB_ACCESSORY);
+        UsbAccessory[] accessoryList = usbManager.getAccessoryList();
         HashMap<String, UsbDevice> deviceList = usbManager.getDeviceList();
+//        usbManager.openDevice()
+//        UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+
+//        HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
+        Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
+        while (deviceIterator.hasNext()) {
+            UsbDevice device = deviceIterator.next();
+
+//            manager.requestPermission(device, mPermissionIntent);
+            String Model = device.getDeviceName();
+
+            int DeviceID = device.getDeviceId();
+            int Vendor = device.getVendorId();
+            int Product = device.getProductId();
+            int Class = device.getDeviceClass();
+            int Subclass = device.getDeviceSubclass();
+
+        }
+        Log.e("devices", String.valueOf(deviceList.size()));
+        for (UsbDevice device : deviceList.values()) {
+            Log.e("devices", String.valueOf(device.getVendorId()));
+        }
         for (UsbDevice device : deviceList.values()) {
             if (device.getVendorId() == vid) {
                 return device;

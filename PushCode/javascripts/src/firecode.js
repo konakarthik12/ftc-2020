@@ -1,12 +1,12 @@
-import {resolve} from "path";
-import * as fs from "fs";
-import WS from "ws";
+const resolve = require('path').resolve;
+const fs = require('fs');
+const WS = require('ws');
 
 const socketHandler = require('./socketHandler');
 const chokidar = require('chokidar');
-let adb = require('./adbHandler');
+let adbHandler = require('./adbHandler');
 const constants = require('../other/constants');
-let client: WS;
+let client;
 initServer().then(ready => {
 
     client = ready;
@@ -16,18 +16,18 @@ initServer().then(ready => {
 });
 
 async function getNetworkDevice() {
-    let allDevices = await adb.getDevices();
+    let allDevices = await adbHandler.getDevices();
     // console.log(allDevices.length);
     if (allDevices.length === 0) {
         throw "No android device connected"
     } else {
-        let networkDevices = await adb.getNetworkDevices();
+        let networkDevices = await adbHandler.getNetworkDevices();
         if (networkDevices.length === 0) {
             // console.log(allDevices[0].tcpip);
-            allDevices[0].tcpip();
-            await adb.connect(allDevices[0].getIp())
+
+            await allDevices[0].connectTcpip();
         }
-        let networkDevices1 = await adb.getNetworkDevices();
+        let networkDevices1 = await adbHandler.getNetworkDevices();
         // console.log(networkDevices1);
         return (networkDevices1)[0];
         // console.log(networkDevices);
@@ -36,13 +36,13 @@ async function getNetworkDevice() {
 }
 
 
-async function initServer(): Promise<WS> {
+async function initServer() {
     console.info("Connecting to Device...");
     let device = (await getNetworkDevice());
 
     try {
         console.info("Initialing Websocket Server...");
-        client = await socketHandler.createServer(device.id.split(':')[0], constants.port);
+        client = await socketHandler.createServer(device.id.split(':')[0], constants.port, sendOpModes);
     } catch (e) {
         throw `Unable to connect to ${device.id.split(':')[0]}:${constants.port}`
     }
@@ -55,19 +55,25 @@ function watchFiles() {
         .on('change', pushCode);
 }
 
-async function pushCode(path: string) {
+
+async function pushCode(path) {
     // console.log(path);
 
-    if (!path.endsWith('classes.dex')) {
-        return
+    if (!path.endsWith('classes.txt')) {
+        return;
     }
     console.log(`Sending ${path}`);
-
-    client.send(fs.readFileSync(path), (err) => {
+    client.send(fs.readFileSync(resolve(__dirname, constants.dexFile)), (err) => {
         if (err) throw err;
-        console.log("Sent")
+        console.log("Sent Dex")
+        // client.send()
     });
-    console.log(client.bufferedAmount)
+    // console.log(client.bufferedAmount)
 }
 
-
+function sendOpModes() {
+    let s = fs.readFileSync(resolve(__dirname, constants.listFile), 'utf8');
+    console.log(s);
+    return s;
+    // console.log("asked");
+}

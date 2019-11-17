@@ -2,11 +2,14 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.DriveTrain.Motors.Configs
 
-class MOEChassis {
+class MOEChassis : ListIterator<MOEtor> {
+
+
     private var frontLeftMotor = MOEtor(Configs.FrontLeft)
     private var frontRightMotor = MOEtor(Configs.FrontRight)
     private var backLeftMotor = MOEtor(Configs.BackLeft)
     private var backRightMotor = MOEtor(Configs.BackRight)
+    private val motors = listOf(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor)
 
     fun setPower(P: Double) = setPower(P, P)
     fun setVelocity(V: Double) = setVelocity(V, V)
@@ -32,4 +35,21 @@ class MOEChassis {
 
     fun turnRightPower(power: Double) = turnPower(power)
     fun turnRightLeft(power: Double) = turnPower(-power)
+
+    fun stop() {
+        setPower(0.0)
+    }
+
+    private val listIterator = motors.listIterator()
+
+    override fun hasNext(): Boolean = listIterator.hasNext()
+
+    override fun hasPrevious(): Boolean = listIterator.hasPrevious()
+
+    override fun next(): MOEtor = listIterator.next()
+
+    override fun nextIndex(): Int = listIterator.nextIndex()
+
+    override fun previous(): MOEtor = listIterator.previous()
+    override fun previousIndex(): Int = listIterator.previousIndex()
 }

@@ -1,20 +1,17 @@
 import adb from "adbkit";
-declare type AdbDevice ={
-    id: string;
 
-}
 const device = require('./device');
 const isIp = require('is-ip');
 const client = adb.createClient();
 
 
-export async function getDevices(): Promise<Array<AdbDevice>> {
+async function getDevices() {
 
     let newVar = await client.listDevices();
     return newVar.map(it => device(client, it));
 }
 
-export async function getNetworkDevices(): Promise<Array<AdbDevice>> {
+async function getNetworkDevices() {
 
     let devices = await getDevices();
     // console.log(devices);
@@ -26,4 +23,11 @@ export async function getNetworkDevices(): Promise<Array<AdbDevice>> {
     // console.log(devices);
     return devices
 }
+
+function connect(ip) {
+    console.log(ip);
+    client.connect(ip)
+}
+
+module.exports = {getDevices, getNetworkDevices, connect};
 

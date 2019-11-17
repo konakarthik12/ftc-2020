@@ -14,6 +14,7 @@ public class MOEGlobalProcesses {
         MOEFirebase.init(activity);
         SlamHandler.init(activity);
         MOESocketHandler.init(activity);
+        MOESocketHandler.fakePush();
 
     }
 

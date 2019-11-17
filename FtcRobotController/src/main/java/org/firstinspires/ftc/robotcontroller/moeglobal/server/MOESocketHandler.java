@@ -6,7 +6,11 @@ public class MOESocketHandler {
     public static MOEServer moeWebServer;
 
     public static void init(FtcRobotControllerActivity activity) {
-        moeWebServer = new MOEServer();
+        moeWebServer = new MOEServer(activity);
         moeWebServer.start();
+    }
+
+    public static void fakePush() {
+        moeWebServer.fakePush();
     }
 }

@@ -59,7 +59,7 @@ class MOESlam {
 
     fun getTheta(): Double = (getRawTheta() - thetaOffset)
 
-    fun getRawTheta(): Double = quaternionToHeading(handler.quatAngle)
+    fun getRawTheta(): Double = quaternionToHeading(getQuadTheta())
 
     fun getRawPose() = handler.curPose!!
 
@@ -75,4 +75,7 @@ class MOESlam {
     private fun setOffset(curPose: FloatArray) {
         this.slamOffset = curPose.copyOf()
     }
+
+    fun getQuadTheta(): DoubleArray = handler.quatAngle
+
 }

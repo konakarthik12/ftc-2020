@@ -45,6 +45,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -178,6 +179,7 @@ public class FtcRobotControllerActivity extends Activity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        Log.e("usb connect", intent.toString());
         if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(intent.getAction())) {
             UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
             RobotLog.vv(TAG, "ACTION_USB_DEVICE_ATTACHED: %s", usbDevice.getDeviceName());
@@ -307,7 +309,11 @@ public class FtcRobotControllerActivity extends Activity {
         if (permissionsValidated) {
             ClassManager.getInstance().setOnBotJavaClassHelper(new OnBotJavaHelperImpl());
             ClassManagerFactory.registerFilters();
-            ClassManagerFactory.processAllClasses();
+            try {
+                ClassManagerFactory.processAllClasses();
+            } catch (NoClassDefFoundError e) {
+
+            }
         }
         cfgFileMgr = new RobotConfigFileManager(this);
 

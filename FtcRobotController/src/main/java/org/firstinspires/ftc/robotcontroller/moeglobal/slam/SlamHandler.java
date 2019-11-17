@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.util.Log;
 
 import static android.hardware.usb.UsbManager.ACTION_USB_DEVICE_ATTACHED;
 
@@ -27,10 +28,14 @@ public class SlamHandler {
      * checks if devices are already connected
      */
     private static void checkPreConnection() {
+        Log.e("checking","connection");
         UsbDevice device = SlamLizardHandler.getDevice();
         if (device != null) {
             usbReceiver.handleLizardDeviceAdded(device);
+            Log.e("found Lizard", "foundy");
         } else {
+            Log.e("no lizard", "np");
+
             device = SlamT265Handler.getDevice();
             if (device != null) {
                 usbReceiver.handleT265DeviceAdded(device);

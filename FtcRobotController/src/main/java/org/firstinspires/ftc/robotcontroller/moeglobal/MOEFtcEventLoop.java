@@ -28,7 +28,7 @@ public class MOEFtcEventLoop extends FtcEventLoop {
     public void init(EventLoopManager eventLoopManager) throws RobotCoreException, InterruptedException {
         super.init(eventLoopManager);
         MOEDatabase.codeStatusSync.setValue(false);
-        OpModeLoading.loadOpModes();
+//        OpModeLoading.loadOpModes();
     }
 
     @Override

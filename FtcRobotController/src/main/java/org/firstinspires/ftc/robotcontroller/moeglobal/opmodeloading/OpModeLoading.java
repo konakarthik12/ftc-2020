@@ -27,7 +27,7 @@ public class OpModeLoading {
         playInstalledSound();
     }
 
-    private static void playInstalledSound() {
+    public static void playInstalledSound() {
         SoundPlayer.getInstance().startPlaying(activityRef.get(), R.raw.firecode);
     }
 

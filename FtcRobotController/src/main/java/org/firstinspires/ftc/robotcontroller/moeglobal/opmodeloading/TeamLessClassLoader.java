@@ -3,7 +3,7 @@ package org.firstinspires.ftc.robotcontroller.moeglobal.opmodeloading;
 import android.util.Log;
 
 public class TeamLessClassLoader extends ClassLoader {
-    TeamLessClassLoader(ClassLoader parent) {
+    public TeamLessClassLoader(ClassLoader parent) {
         super(parent);
     }
 

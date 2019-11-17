@@ -13,6 +13,10 @@ class IntakeTest : MOETeleOp() {
     }
 
     override fun loopStuff() {
-        robot.harvester.setPower((gamepad1.left_trigger - gamepad1.right_trigger).toDouble())
+        val P = (gamepad1.left_trigger - gamepad1.right_trigger).toDouble() * 0.4
+        telemetry.addData("Power: ", P)
+        telemetry.update()
+        robot.harvester.setPower(P)
+
     }
 }

@@ -6,6 +6,8 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEOpMode
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlam
 
 class MOEBot(opMode: MOEOpMode, useOdometryForGyro: Boolean, useCamera: Boolean = false, val useSlam: Boolean = false, val thetaOffset: Double = 0.0) {
+    val foundation = MOEFoundation()
+    val outTake = MOEOutTake()
     var chassis: MOEChassis = MOEChassis()
     var harvester: MOEHarvester = MOEHarvester()
     var odometry: MOEdometrySystem = MOEdometrySystem()

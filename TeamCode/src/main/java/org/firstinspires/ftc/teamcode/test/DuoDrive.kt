@@ -1,29 +1,22 @@
 package org.firstinspires.ftc.teamcode.test
 
-import com.google.firebase.database.DatabaseReference
+import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 import org.firstinspires.ftc.teamcode.utilities.addData
-import org.firstinspires.ftc.teamcode.utilities.delete
-import org.firstinspires.ftc.teamcode.utilities.get
-import org.firstinspires.ftc.teamcode.utilities.pushData
 
-@TeleOp(name = "DriveTest")
-class DriveTest : MOETeleOp(useSlam = false) {
-    val laped = ElapsedTime()
+@TeleOp(name = "DuoDrive")
+class DuoDrive : MOETeleOp() {
     override fun initOpMode() {
-        ref.delete()
+        Log.e("stuffe", "stuffe")
         telemetry.addData("testagain")
-        robot.odometry.servos.initServosUp()
     }
 
     override fun loopStuff() {
-        for (motor in robot.chassis) {
-            //telemetry.addData(motor)
-        }
-        //        telemetry.addData("slam", robot.slam)
+        val P = (gamepad2.left_trigger - gamepad2.right_trigger).toDouble() * 0.4
+        telemetry.addData("Power: ", P)
         telemetry.update()
+        robot.harvester.setPower(P)
 
         val maxPower = 1.0
         val scaleX = 1
@@ -33,9 +26,9 @@ class DriveTest : MOETeleOp(useSlam = false) {
         var rawX = gamepad1.left_stick_x.toDouble()
         var rawY = (-gamepad1.left_stick_y).toDouble()
         var rot = gamepad1.right_stick_x.toDouble()
-        rawX *= scaleX;
-        rawY *= scaleY;
-        rot *= scaleRot;
+        rawX *= scaleX * gamepad1.right_trigger;
+        rawY *= scaleY * gamepad1.right_trigger;
+        rot *= scaleRot * gamepad1.right_trigger;
 
         var fwd = rawY
         fwd *= fwd * fwd
@@ -65,17 +58,4 @@ class DriveTest : MOETeleOp(useSlam = false) {
 
         robot.chassis.setPower(FLP, FRP, BLP, BRP)
     }
-
-    override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
-        return ref["slamlist"]
-    }
-
 }
-
-//private fun DatabaseReference.pushData(function: () -> Point3) {
-//
-//}
-
-
-
-

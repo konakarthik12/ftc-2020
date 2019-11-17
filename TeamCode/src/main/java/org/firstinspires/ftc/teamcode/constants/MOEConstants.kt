@@ -11,7 +11,8 @@ import kotlin.math.PI
 import com.qualcomm.robotcore.hardware.DcMotorSimple as Motor
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.OdometryWheelConfig as OWC
 
-object MOEConstants {
+object
+MOEConstants {
     object DriveTrain {
         object Motors {
             object Configs {
@@ -26,8 +27,28 @@ object MOEConstants {
     object IntakeSystem {
         object Motors {
             object Configs {
-                val LeftIntake = MotorConfig("LIIMxx", Motor.Direction.FORWARD)
-                val RightIntake = MotorConfig("RIIMxx", Motor.Direction.FORWARD)
+                val LeftIntake = MotorConfig("LHVM20", Motor.Direction.REVERSE)
+                val RightIntake = MotorConfig("RHVM21", Motor.Direction.FORWARD)
+            }
+            const val MaxPower = 0.56
+        }
+
+
+
+    }
+
+    object OutTakeSystem {
+        object Servos {
+            object Configs {
+                val DispenserServo = ServoConfig("OUTS12")
+            }
+        }
+    }
+
+    object FoundationSystem {
+        object Servos {
+            object Configs {
+                val FoundationServo = ServoConfig("FNDS23")
             }
         }
     }

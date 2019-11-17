@@ -8,7 +8,7 @@ import kotlinx.coroutines.runBlocking
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
 import org.firstinspires.ftc.teamcode.external.AdvancedMath.lerp
 
-data class ServoConfig(val name: String, val min: Double, val max: Double, val direction: Servo.Direction)
+data class ServoConfig(val name: String, val min: Double = 0.0, val max: Double = 1.0, val direction: Servo.Direction = Servo.Direction.FORWARD)
 
 class MOEServo(config: ServoConfig) {
     private var mServo: Servo = hardwareMap.get(Servo::class.java, config.name)
