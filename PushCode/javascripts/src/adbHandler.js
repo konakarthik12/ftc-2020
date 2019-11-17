@@ -1,4 +1,4 @@
-import adb from "adbkit";
+const adb = require('adbkit');
 
 const device = require('./device');
 const isIp = require('is-ip');
@@ -18,7 +18,7 @@ async function getNetworkDevices() {
     devices = devices.filter(device => {
         let strings = device.id.split(':');
         if (strings.length !== 2) return false;
-        return isIp(strings[0]) && (!isNaN(strings[1] as unknown as number))
+        return isIp(strings[0]) && (!isNaN(strings[1]))
     });
     // console.log(devices);
     return devices
