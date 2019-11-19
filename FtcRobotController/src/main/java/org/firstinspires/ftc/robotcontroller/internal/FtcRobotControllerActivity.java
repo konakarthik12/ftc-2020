@@ -61,7 +61,6 @@ import com.google.blocks.ftcrobotcontroller.runtime.BlocksOpMode;
 import com.qualcomm.ftccommon.*;
 import com.qualcomm.ftccommon.FtcRobotControllerService.FtcRobotControllerBinder;
 import com.qualcomm.ftccommon.LaunchActivityConstantsList.RequestCode;
-import com.qualcomm.ftccommon.ProgrammingModeController;
 import com.qualcomm.ftccommon.Restarter;
 import com.qualcomm.ftccommon.UpdateUI;
 import com.qualcomm.ftccommon.configuration.EditParameters;
@@ -89,6 +88,7 @@ import org.firstinspires.ftc.onbotjava.OnBotJavaProgrammingMode;
 import org.firstinspires.ftc.robotcontroller.moeglobal.MOEFtcEventLoop;
 import org.firstinspires.ftc.robotcontroller.moeglobal.MOEGlobalProcesses;
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler;
+import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamUsbListener;
 import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
 import org.firstinspires.ftc.robotcore.internal.hardware.android.AndroidBoard;
 import org.firstinspires.ftc.robotcore.internal.network.*;
@@ -183,14 +183,15 @@ public class FtcRobotControllerActivity extends Activity {
             UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
             RobotLog.vv(TAG, "ACTION_USB_DEVICE_ATTACHED: %s", usbDevice.getDeviceName());
 
-            if (usbDevice != null) {  // paranoia
-                // We might get attachment notifications before the event loop is set up, so
-                // we hold on to them and pass them along only when we're good and ready.
-                if (receivedUsbAttachmentNotifications != null) { // *total* paranoia
-                    receivedUsbAttachmentNotifications.add(usbDevice);
-                    passReceivedUsbAttachmentsToEventLoop();
-                }
+            // We might get attachment notifications before the event loop is set up, so
+            // we hold on to them and pass them along only when we're good and ready.
+            if (receivedUsbAttachmentNotifications != null) { // *total* paranoia
+                receivedUsbAttachmentNotifications.add(usbDevice);
+                passReceivedUsbAttachmentsToEventLoop();
             }
+        } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(intent.getAction())) {
+            UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+            SlamHandler.handleDeviceRemoved(usbDevice);
         }
     }
 
@@ -406,14 +407,12 @@ public class FtcRobotControllerActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        SlamHandler.initUsbListener(this);
         RobotLog.vv(TAG, "onResume()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        SlamHandler.unRegisterListener(this);
         RobotLog.vv(TAG, "onPause()");
 
     }
@@ -539,59 +538,7 @@ public class FtcRobotControllerActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-    if (id == R.id.action_program_and_manage) {
-      if (isRobotRunning()) {
-        Intent programmingModeIntent = new Intent(AppUtil.getDefContext(), ProgramAndManageActivity.class);
-        RobotControllerWebInfo webInfo = programmingModeManager.getWebServer().getConnectionInformation();
-        programmingModeIntent.putExtra(LaunchActivityConstantsList.RC_WEB_INFO, webInfo.toJson());
-        startActivity(programmingModeIntent);
-      } else {
-        AppUtil.getInstance().showToast(UILocation.ONLY_LOCAL, context.getString(R.string.toastWifiUpBeforeProgrammingMode));
-      }
-    } else if (id == R.id.action_inspection_mode) {
-      Intent inspectionModeIntent = new Intent(AppUtil.getDefContext(), RcInspectionActivity.class);
-      startActivity(inspectionModeIntent);
-      return true;
-    } else if (id == R.id.action_restart_robot) {
-      dimmer.handleDimTimer();
-      AppUtil.getInstance().showToast(UILocation.BOTH, context.getString(R.string.toastRestartingRobot));
-      requestRobotRestart();
-      return true;
-    }
-    else if (id == R.id.action_configure_robot) {
-      EditParameters parameters = new EditParameters();
-      Intent intentConfigure = new Intent(AppUtil.getDefContext(), FtcLoadFileActivity.class);
-      parameters.putIntent(intentConfigure);
-      startActivityForResult(intentConfigure, RequestCode.CONFIGURE_ROBOT_CONTROLLER.ordinal());
-    }
-    else if (id == R.id.action_settings) {
-	  // historical: this once erroneously used FTC_CONFIGURE_REQUEST_CODE_ROBOT_CONTROLLER
-      Intent settingsIntent = new Intent(AppUtil.getDefContext(), FtcRobotControllerSettingsActivity.class);
-      startActivityForResult(settingsIntent, RequestCode.SETTINGS_ROBOT_CONTROLLER.ordinal());
-      return true;
-    }
-    else if (id == R.id.action_about) {
-      Intent intent = new Intent(AppUtil.getDefContext(), FtcAboutActivity.class);
-      startActivity(intent);
-      return true;
-    }
-    else if (id == R.id.action_exit_app) {
-      finish();
-      return true;
-    }
-        if (id == R.id.action_programming_mode) {
-            if (cfgFileMgr.getActiveConfig().isNoConfig()) {
-                // Tell the user they must configure the robot before starting programming mode.
-                AppUtil.getInstance().showToast(UILocation.BOTH, context.getString(R.string.toastConfigureRobotBeforeProgrammingMode));
-            } else {
-                Intent programmingModeIntent = new Intent(AppUtil.getDefContext(), ProgrammingModeActivity.class);
-                programmingModeIntent.putExtra(
-                        LaunchActivityConstantsList.PROGRAMMING_MODE_ACTIVITY_PROGRAMMING_WEB_HANDLERS,
-                        new LocalByRefIntentExtraHolder(programmingModeManager));
-                startActivity(programmingModeIntent);
-            }
-            return true;
-        } else if (id == R.id.action_program_and_manage) {
+        if (id == R.id.action_program_and_manage) {
             if (isRobotRunning()) {
                 Intent programmingModeIntent = new Intent(AppUtil.getDefContext(), ProgramAndManageActivity.class);
                 RobotControllerWebInfo webInfo = programmingModeManager.getWebServer().getConnectionInformation();
@@ -603,10 +550,6 @@ public class FtcRobotControllerActivity extends Activity {
         } else if (id == R.id.action_inspection_mode) {
             Intent inspectionModeIntent = new Intent(AppUtil.getDefContext(), RcInspectionActivity.class);
             startActivity(inspectionModeIntent);
-            return true;
-        } else if (id == R.id.action_blocks) {
-            Intent blocksIntent = new Intent(AppUtil.getDefContext(), BlocksActivity.class);
-            startActivity(blocksIntent);
             return true;
         } else if (id == R.id.action_restart_robot) {
             dimmer.handleDimTimer();

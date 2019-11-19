@@ -106,4 +106,5 @@ public class SlamUsbHandler {
     static void init(Context context) {
         usbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
     }
+
 }

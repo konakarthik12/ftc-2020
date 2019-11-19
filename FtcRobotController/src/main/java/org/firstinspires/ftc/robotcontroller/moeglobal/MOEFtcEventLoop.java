@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.util.Log;
 import com.qualcomm.ftccommon.CommandList;
 import com.qualcomm.ftccommon.FtcEventLoop;
-import com.qualcomm.ftccommon.ProgrammingModeController;
 import com.qualcomm.ftccommon.UpdateUI;
 import com.qualcomm.hardware.HardwareFactory;
 import com.qualcomm.robotcore.eventloop.EventLoopManager;
@@ -18,8 +17,8 @@ import org.firstinspires.ftc.robotcore.internal.network.CallbackResult;
 public class MOEFtcEventLoop extends FtcEventLoop {
 
 
-    public MOEFtcEventLoop(HardwareFactory hardwareFactory, OpModeRegister userOpmodeRegister, UpdateUI.Callback callback, Activity activityContext, ProgrammingModeController programmingModeController) {
-        super(hardwareFactory, userOpmodeRegister, callback, activityContext, programmingModeController);
+    public MOEFtcEventLoop(HardwareFactory hardwareFactory, OpModeRegister userOpmodeRegister, UpdateUI.Callback callback, Activity activityContext) {
+        super(hardwareFactory, userOpmodeRegister, callback, activityContext);
 
     }
 
@@ -27,7 +26,7 @@ public class MOEFtcEventLoop extends FtcEventLoop {
     @Override
     public void init(EventLoopManager eventLoopManager) throws RobotCoreException, InterruptedException {
         super.init(eventLoopManager);
-        MOEDatabase.codeStatusSync.setValue(false);
+//        MOEDatabase.codeStatusSync.setValue(false);
 //        OpModeLoading.loadOpModes();
     }
 
@@ -42,7 +41,7 @@ public class MOEFtcEventLoop extends FtcEventLoop {
 
     @Override
     protected void handleCommandRestartRobot() {
-        MOEDatabase.codeStatusSync.setValue(false);
+//        MOEDatabase.codeStatusSync.setValue(false);
         super.handleCommandRestartRobot();
     }
 

@@ -1,17 +1,14 @@
 package org.firstinspires.ftc.teamcode.utilities
 
+import kotlin.math.PI
 import kotlin.math.asin
 import kotlin.math.atan2
 
-fun quaternionToHeading(q: DoubleArray): Double = quaternionToHeading(q[0], q[1], q[2], q[3])
-
-fun quaternionToHeading(qw: Double, qx: Double, qy: Double, qz: Double): Double {
-    val sqw = qw * qw
-    val sqx = qx * qx
-    val sqy = qy * qy
-    val sqz = qz * qz
-    val heading = atan2(2.0 * (qx * qy + qz * qw), sqx - sqy - sqz + sqw)
-    val bank = atan2(2.0 * (qy * qz + qx * qw), -sqx - sqy + sqz + sqw)
-    val attitude = asin(-2.0 * (qx * qz - qy * qw) / (sqx + sqy + sqz + sqw))
-    return attitude
+fun quaternionToHeading(q: DoubleArray): Double {
+    val (w, y, z, x) = q
+    //    val pitch = asin(2.0 * (x * z - w * y)) * 180.0 / PI
+    //    val roll = atan2(2.0 * (w * x + y * z), w * w - x * x - y * y + z * z) * 180.0 / PI
+    val yaw = atan2(2.0 * (w * z + x * y), w * w + x * x - y * y - z * z) * 180.0 / PI
+    return yaw
 }
+

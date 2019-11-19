@@ -7,15 +7,17 @@ import android.hardware.usb.UsbManager;
 import android.util.Log;
 
 import static android.hardware.usb.UsbManager.ACTION_USB_DEVICE_ATTACHED;
+import static android.hardware.usb.UsbManager.ACTION_USB_DEVICE_DETACHED;
+import static org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamUsbListener.handleLizardDeviceAdded;
 
 public class SlamHandler {
     public static SlamT265Handler t265Handler;
     public static IntentFilter USBAddOrRemove = new IntentFilter();
-    private static SlamUsbListener usbReceiver = new SlamUsbListener();
+//    private static SlamUsbListener usbReceiver = new SlamUsbListener();
 
     static {
         USBAddOrRemove.addAction(ACTION_USB_DEVICE_ATTACHED);
-        USBAddOrRemove.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
+        USBAddOrRemove.addAction(ACTION_USB_DEVICE_DETACHED);
     }
 
     public static void init(Context context) {
@@ -28,26 +30,35 @@ public class SlamHandler {
      * checks if devices are already connected
      */
     private static void checkPreConnection() {
-        Log.e("checking","connection");
+        Log.e("checking", "connection");
         UsbDevice device = SlamLizardHandler.getDevice();
         if (device != null) {
-            usbReceiver.handleLizardDeviceAdded(device);
+            SlamUsbListener.handleLizardDeviceAdded(device);
             Log.e("found Lizard", "foundy");
         } else {
             Log.e("no lizard", "np");
 
             device = SlamT265Handler.getDevice();
             if (device != null) {
-                usbReceiver.handleT265DeviceAdded(device);
+                SlamUsbListener.handleT265DeviceAdded(device);
             }
         }
     }
 
-    public static void initUsbListener(Context context) {
-        context.registerReceiver(usbReceiver, USBAddOrRemove);
+//    public static void initUsbListener(Context context) {
+//        context.registerReceiver(usbReceiver, USBAddOrRemove);
+//    }
+
+//    public static void unRegisterListener(Context context) {
+//        context.unregisterReceiver(usbReceiver);
+//    }
+
+    public static void handleDeviceAdded(UsbDevice usbDevice) {
+        SlamUsbListener.handleDeviceAdded(usbDevice);
+
     }
 
-    public static void unRegisterListener(Context context) {
-        context.unregisterReceiver(usbReceiver);
+    public static void handleDeviceRemoved(UsbDevice usbDevice) {
+        SlamUsbListener.handleDeviceRemoved(usbDevice);
     }
 }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
+package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro
 
 abstract class MOEGyro {
     private var eulerOffset = 0.0
@@ -20,8 +20,16 @@ abstract class MOEGyro {
         offset = -getRawAngle()
     }
 
+    /** 0 to 360*/
     abstract fun getRawAngle(): Double
-    abstract fun init(sync: Boolean = false)
+
+    /** -179 to 180*/
+    abstract fun getRawEulerAngle(): Double
+
+
+    open fun init(sync: Boolean = false) {
+
+    }
 
 
     var eulerAngle: Double
@@ -31,17 +39,6 @@ abstract class MOEGyro {
         set(it) {
             eulerOffset = getRawEulerAngle() - it
         }
-
-
-    private fun getRawEulerAngle(): Double {
-        var eulerAng = -getRawAngle()
-        if (eulerAng > 180) {
-            eulerAng = -(180 + (180 - eulerAng))
-        } else if (eulerAng < -180) {
-            eulerAng += 360
-        }
-        return eulerAng
-    }
 
     fun resetEulerAngle() {
         eulerAngle = 0.0

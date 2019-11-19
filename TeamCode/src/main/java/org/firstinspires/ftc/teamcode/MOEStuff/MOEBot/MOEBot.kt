@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOEGyro
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOEIMUGyro
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometryGyro
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySystem
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEOpMode
