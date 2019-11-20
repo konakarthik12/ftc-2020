@@ -1,19 +1,23 @@
 package org.firstinspires.ftc.teamcode.utilities.PurePursuit
 
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 import org.firstinspires.ftc.teamcode.external.PurePursuit.MOEPurePursuitPath
 
 
 class MOEPurePursuitSystem(points: List<PurePursuitPoint>, private val options: MOEPurePursuitOptions) {
+    constructor(srcX: Double, srcY: Double, destX: Double, destY: Double, options: MOEPurePursuitOptions):
+            this(arrayListOf(PurePursuitPoint(srcX, srcY), PurePursuitPoint(destX, destY)), options)
+
     private var path: MOEPurePursuitPath = MOEPurePursuitPath(points, options)
     private var lastLeftVelocity: Double = 0.0
     private var lastRightVelocity: Double = 0.0
 
     fun getWheelVelocities(currentPosition: PurePursuitPoint,
-                           currentHeading: Int,
-                           leftActualVelocity: Int,
-                           rightActualVelocity: Int): Pair<Double, Double> {
+                           currentHeading: Double,
+                           leftActualVelocity: Double,
+                           rightActualVelocity: Double): Pair<Double, Double> {
         var lastKnownPointIndex = 0
-        var closestPoint: PurePursuitPoint
+        val closestPoint: PurePursuitPoint
 
         lastKnownPointIndex = path.getClosestPointIndex(lastKnownPointIndex, currentPosition)
         closestPoint = path[lastKnownPointIndex]
@@ -23,14 +27,14 @@ class MOEPurePursuitSystem(points: List<PurePursuitPoint>, private val options: 
         val lookaheadPoint = path.getLookaheadPointFromPathing(lastKnownPointIndex, currentPosition)
 
         val curvature = getSignedCurvatureFromLookaheadPoint(
-                lookaheadPoint,
-                currentPosition,
-                heading.toDouble(),
-                options.lookAheadDistance
+                lookahead = lookaheadPoint,
+                currPos = currentPosition,
+                heading = heading.toDouble(),
+                lookaheadDistance = options.lookAheadDistance
         )
 
-        val leftTV = getLeftWheelTargetVelocity(closestPoint.velocity, curvature)
-        val rightTV = getRightWheelTargetVelocity(closestPoint.velocity, curvature)
+        val leftTV = getLeftWheelTargetVelocity(targetVelocity = closestPoint.velocity, curvature = curvature)
+        val rightTV = getRightWheelTargetVelocity(targetVelocity = closestPoint.velocity, curvature = curvature)
 
         val leftTA = 0.0 //leftTV - lastLeftVelocity
         val rightTA = 0.0 //rightTV - lastRightVelocity

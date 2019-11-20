@@ -183,6 +183,7 @@ public class FtcRobotControllerActivity extends Activity {
             UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
             RobotLog.vv(TAG, "ACTION_USB_DEVICE_ATTACHED: %s", usbDevice.getDeviceName());
 
+            SlamHandler.handleDeviceAdded(usbDevice);
             // We might get attachment notifications before the event loop is set up, so
             // we hold on to them and pass them along only when we're good and ready.
             if (receivedUsbAttachmentNotifications != null) { // *total* paranoia
@@ -191,6 +192,7 @@ public class FtcRobotControllerActivity extends Activity {
             }
         } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(intent.getAction())) {
             UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+            Log.e("Device disconnected", String.valueOf(usbDevice.getVendorId()));
             SlamHandler.handleDeviceRemoved(usbDevice);
         }
     }

@@ -15,7 +15,6 @@ class MOEtor(config: MotorConfig) {
             DcMotorEx::class.java, config.name)
 
     init {
-
         setDirection(config.direction)
         setZeroPowerBehavior(config.zeroPowerBehavior)
     }
@@ -31,4 +30,6 @@ class MOEtor(config: MotorConfig) {
     fun setZeroPowerBehavior(zeroPowerBehavior: ZeroPowerBehavior) {
         mMotor.zeroPowerBehavior = zeroPowerBehavior;
     }
+
+    fun getVelocity() = mMotor.getVelocity()  // TODO: Check if this is in ticks or angles.
 }

@@ -50,7 +50,9 @@ async function initServer() {
 }
 
 function watchFiles() {
-    chokidar.watch(resolve(__dirname, constants.dexFolder))
+    let paths = resolve(__dirname, constants.dexFolder);
+   console.log(paths)
+    chokidar.watch(paths)
         .on('add', pushCode)
         .on('change', pushCode);
 }

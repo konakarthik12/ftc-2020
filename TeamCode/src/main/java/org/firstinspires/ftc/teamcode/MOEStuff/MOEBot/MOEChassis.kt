@@ -3,13 +3,14 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.DriveTrain.Motors.Configs
 
 class MOEChassis : ListIterator<MOEtor> {
-
-
     private var frontLeftMotor = MOEtor(Configs.FrontLeft)
     private var frontRightMotor = MOEtor(Configs.FrontRight)
     private var backLeftMotor = MOEtor(Configs.BackLeft)
     private var backRightMotor = MOEtor(Configs.BackRight)
     private val motors = listOf(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor)
+
+    fun getFrontVelocities() = Pair(frontLeftMotor.getVelocity(), frontRightMotor.getVelocity())
+    fun getBackVelocities() = Pair(backLeftMotor.getVelocity(), backRightMotor.getVelocity())
 
     fun setPower(P: Double) = setPower(P, P)
     fun setVelocity(V: Double) = setVelocity(V, V)

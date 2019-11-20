@@ -5,9 +5,7 @@ import toNormalAngle
 
 
 class MOESlamGyro : MOEGyro() {
-    override fun getRawEulerAngle(): Double = robot.slam.getTheta()
-
-    override fun getRawAngle(): Double = robot.slam.getTheta().toNormalAngle()
-
+    override fun getRawEulerAngle(): Double = -robot.slam.getTheta()
+    override fun getRawAngle(): Double = getRawEulerAngle().toNormalAngle()
 }
 

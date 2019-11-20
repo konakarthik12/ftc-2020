@@ -40,7 +40,8 @@ class MOESlam {
         val rawPose = getRawOffsetPose()
         val x = rawPose.x * cos(angle) - rawPose.y * sin(angle)
         val y = rawPose.x * sin(angle) + rawPose.y * cos(angle)
-        return Point(x, y)
+        // flipped on purpose
+        return Point(y, x)
     }
 
     fun getRobotPose(): Point {
@@ -50,11 +51,6 @@ class MOESlam {
 
         val cameraPose = getCameraPose()
         return Point(cameraPose.x - cameraX, cameraPose.y - cameraY)
-    }
-
-    fun getPose(): Point {
-        //TODO: work on this
-        return getCameraPose()
     }
 
     fun getTheta(): Double = (getRawTheta() - thetaOffset)
@@ -77,5 +73,4 @@ class MOESlam {
     }
 
     fun getQuadTheta(): DoubleArray = handler.quatAngle
-
 }

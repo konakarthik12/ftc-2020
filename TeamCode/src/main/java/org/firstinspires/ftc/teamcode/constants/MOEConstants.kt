@@ -1,12 +1,9 @@
 package org.firstinspires.ftc.teamcode.constants
 
 import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
-import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MotorConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.ServoConfig
-import org.firstinspires.ftc.teamcode.utilities.Distance
-import org.firstinspires.ftc.teamcode.utilities.feet
+import org.firstinspires.ftc.teamcode.utilities.PurePursuit.MOEPurePursuitOptions
 import kotlin.math.PI
 import com.qualcomm.robotcore.hardware.DcMotorSimple as Motor
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.OdometryWheelConfig as OWC
@@ -30,9 +27,9 @@ MOEConstants {
                 val LeftIntake = MotorConfig("LHVM20", Motor.Direction.REVERSE)
                 val RightIntake = MotorConfig("RHVM21", Motor.Direction.FORWARD)
             }
+
             const val MaxPower = 0.56
         }
-
 
 
     }
@@ -81,14 +78,28 @@ MOEConstants {
     }
 
     object Localization {
-        const val CAMERA_DISTANCE = 5.0
-        const val CAMERA_THETA = 30
+        const val CAMERA_DISTANCE = 15.0
+        const val CAMERA_THETA = -10.0  // Angle relative to robot from camera
     }
 
     object PurePursuit {
-        const val K_V = 0.0
-        const val K_A = 0.0
-        const val K_P = 0.0
+        val DefaultOptions = MOEPurePursuitOptions(
+                overallMaxVelocity = -1.0,
+                spacing = -1.0,
+                tolerance = -1.0,
+                smoothingA = -1.0,
+                smoothingB = -1.0,
+                turningConstant = 0.0,
+                lookBack = 0,
+                lookForward = 0,
+                lookAheadDistance = 0.0,
+                track_width = 0.0,
+                K_V = 0.0,
+                K_A = 0.0,
+                K_P = 0.0
+        )
+
+        val FINISHED_TOLERANCE: Double = 0.5
     }
 
     object Units {

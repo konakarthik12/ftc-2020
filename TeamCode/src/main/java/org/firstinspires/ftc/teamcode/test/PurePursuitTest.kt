@@ -8,8 +8,6 @@ import org.firstinspires.ftc.teamcode.utilities.addData
 
 @TeleOp(name = "PurePursuitTest")
 class PurePursuitTest : MOETeleOp() {
-
-
     override fun initOpMode() {
         val string = Point(2.0, 4.0)
         Log.e("string", string.toString())
@@ -17,9 +15,6 @@ class PurePursuitTest : MOETeleOp() {
     }
 
     override fun loopStuff() {
-//        mainGamepad.onButton(Button.A) {
-//            Log.e("stuff", "A is $it")
-//        }
+        robot.purePursuit.move(0.0, 50.0, 0.0)
     }
-
 }

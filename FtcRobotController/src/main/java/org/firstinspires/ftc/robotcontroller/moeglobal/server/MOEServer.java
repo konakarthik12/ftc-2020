@@ -87,7 +87,7 @@ public class MOEServer extends WebSocketServer {
     }
 
     private void saveOpModes(String substring) {
-        String[] split = substring.split("\r\n");
+        String[] split = substring.split("\n");
         saveOpModes("Autonomous", split[0]);
         saveOpModes("TeleOp", split[1]);
         editor.apply();

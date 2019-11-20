@@ -49,7 +49,7 @@ tasks.register("writeOpModes") {
                                 out.write(it.name)
                                 out.write("/")
                             }
-                            out.write("/n")
+                            out.write("\n")
                         }
                     }
                 }

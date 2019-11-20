@@ -9,6 +9,8 @@ import kotlin.math.*
 
 
 class MOEPurePursuitPath(var points: List<PurePursuitPoint>, private val options: MOEPurePursuitOptions) {
+    constructor(srcX: Double, srcY: Double, destX: Double, destY: Double, options: MOEPurePursuitOptions):
+            this(arrayListOf(PurePursuitPoint(srcX, srcY), PurePursuitPoint(destX, destY)), options)
 
     init {
         injectPoints()

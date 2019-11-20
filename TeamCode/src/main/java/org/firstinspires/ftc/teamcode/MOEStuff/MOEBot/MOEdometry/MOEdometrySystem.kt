@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 import org.firstinspires.ftc.teamcode.external.AdvancedMath.Point
 
 class MOEdometrySystem {
-
     val servos = ServosHolder()
     private val wheels = WheelsHolder()
 
@@ -16,11 +15,15 @@ class MOEdometrySystem {
 
     val y: Double
         get() = atomicY
+
     val position
         get() = Point(x, y)
-    val gyro: MOEdometryGyro = MOEdometryGyro()
+
+//    val gyro: MOEdometryGyro = MOEdometryGyro()
+
     @Volatile
     private var atomicX = 0.0
+
     @Volatile
     private var atomicY = 0.0
 
@@ -45,7 +48,7 @@ class MOEdometrySystem {
 
     private fun updatePosition() {
         val angleDifference = axialPair.getAngleDifference()
-        gyro.update(angleDifference)
+//        gyro.update(angleDifference)
 
         //TODO: the whole point of odometry is to not use gyro
         val axialTheta = Math.toRadians(robot.gyro.angle)
