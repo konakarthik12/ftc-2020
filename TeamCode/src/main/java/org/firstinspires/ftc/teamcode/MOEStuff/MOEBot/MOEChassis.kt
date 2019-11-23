@@ -1,8 +1,14 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
+import org.firstinspires.ftc.robotcontroller.moeglobal.ActivityReferenceHolder.activityRef
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEPid
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.DriveTrain.Motors.Configs
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
+import org.firstinspires.ftc.teamcode.utilities.addData
 
-class MOEChassis : ListIterator<MOEtor> {
+class MOEChassis {
     private var frontLeftMotor = MOEtor(Configs.FrontLeft)
     private var frontRightMotor = MOEtor(Configs.FrontRight)
     private var backLeftMotor = MOEtor(Configs.BackLeft)
@@ -41,16 +47,16 @@ class MOEChassis : ListIterator<MOEtor> {
         setPower(0.0)
     }
 
-    private val listIterator = motors.listIterator()
+    fun turn(degrees: Double) {
+        val pid = MOEPid(1.0, 0.0, 0.0)
+        pid.setOutputLimits(0.0, 1.0)
+        pid.setSetpoint(degrees)
+        while (moeOpMode.opModeIsActive()) {
+            val output = pid.getOutput(robot.gyro.getRawAngle())
+            telemetry.addData(output)
+            telemetry.update();
+        }
+    }
 
-    override fun hasNext(): Boolean = listIterator.hasNext()
 
-    override fun hasPrevious(): Boolean = listIterator.hasPrevious()
-
-    override fun next(): MOEtor = listIterator.next()
-
-    override fun nextIndex(): Int = listIterator.nextIndex()
-
-    override fun previous(): MOEtor = listIterator.previous()
-    override fun previousIndex(): Int = listIterator.previousIndex()
 }

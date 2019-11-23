@@ -2,11 +2,14 @@ package org.firstinspires.ftc.robotcontroller.moeglobal.server;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.wifi.WifiManager;
 import android.os.Environment;
+import android.text.format.Formatter;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.widget.TextView;
 import androidx.core.content.ContextCompat;
+import com.google.firebase.database.DatabaseReference;
 import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import dalvik.system.DexClassLoader;
@@ -24,11 +27,16 @@ import org.java_websocket.server.WebSocketServer;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.channels.FileChannel;
 import java.util.Map;
 
+import static android.content.Context.WIFI_SERVICE;
 import static org.firstinspires.ftc.robotcontroller.moeglobal.ActivityReferenceHolder.activityRef;
 import static org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEDatabase.dataRef;
 
@@ -154,7 +162,36 @@ public class MOEServer extends WebSocketServer {
     @Override
     public void onStart() {
         Log.e("websockets", String.valueOf(getPort()));
-        dataRef.child("ws").child("port").setValue(getPort());
+
+        DatabaseReference ws = dataRef.child("ws");
+//        WifiManager wm = (WifiManager) activityRef.get().getSystemService(WIFI_SERVICE);
+//        wm.getDhcpInfo()
+//        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+        ws.child("ip").setValue(getIpAddress());
+        ws.child("port").setValue(getPort());
+    }
+
+    private Object getIpAddress() {
+        Context context = activityRef.get();
+        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(WIFI_SERVICE);
+        int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
+
+        // Convert little-endian to big-endianif needed
+        if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
+            ipAddress = Integer.reverseBytes(ipAddress);
+        }
+
+        byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
+
+        String ipAddressString;
+        try {
+            ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
+        } catch (UnknownHostException ex) {
+            Log.e("WIFIIP", "Unable to get host address.");
+            ipAddressString = null;
+        }
+
+        return ipAddressString;
     }
 
     @SuppressWarnings("ConstantConditions")

@@ -28,7 +28,7 @@ MOEConstants {
                 val RightIntake = MotorConfig("RHVM21", Motor.Direction.FORWARD)
             }
 
-            const val MaxPower = 0.56
+            const val MaxPower = 0.9
         }
 
 

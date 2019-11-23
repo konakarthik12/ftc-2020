@@ -1,4 +1,4 @@
-const ReconnectingWebSocket =require('reconnecting-websocket');
+const ReconnectingWebSocket = require('reconnecting-websocket');
 
 const WS = require("ws");
 const options = {
@@ -7,17 +7,20 @@ const options = {
     // maxRetries: 10,
 };
 
-async function createServer(address, port, getOpModes) {
+function createServer(address, port, getOpModes) {
+    console.info(address);
     return new Promise((resolve, reject) => {
-        const client = new ReconnectingWebSocket(`ws://${address}:${port}`, null, options);
-        client.on('open', () => {
+        let full = `ws://${address}:${port}`;
+        console.log(full);
+        const client = new ReconnectingWebSocket(full, null, options);
+        client.addEventListener('open', () => {
             // console.log("yes");
             resolve(client);
         });
-        client.on('error', (err) => {
-            reject(err)
+        client.addEventListener('error', (err) => {
+            // reject(err)
         });
-        client.on('message', (message) => {
+        client.addEventListener('message', (message) => {
             if (message === 'ops') {
                 client.send('ops/' + getOpModes(), (err) => {
                     if (err) {
