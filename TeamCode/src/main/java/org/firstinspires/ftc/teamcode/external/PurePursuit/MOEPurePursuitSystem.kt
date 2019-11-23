@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.external.PurePursuit.MOEPurePursuitPath
 
 
 class MOEPurePursuitSystem(points: List<PurePursuitPoint>, private val options: MOEPurePursuitOptions) {
-    constructor(srcX: Double, srcY: Double, destX: Double, destY: Double, options: MOEPurePursuitOptions):
+    constructor(srcX: Double, srcY: Double, destX: Double, destY: Double, options: MOEPurePursuitOptions) :
             this(arrayListOf(PurePursuitPoint(srcX, srcY), PurePursuitPoint(destX, destY)), options)
 
     private var path: MOEPurePursuitPath = MOEPurePursuitPath(points, options)
@@ -61,11 +61,11 @@ class MOEPurePursuitSystem(points: List<PurePursuitPoint>, private val options: 
         //                                                            robot.chassis.getAStarVelocity(robot.chassis.frontRightMotor));
 
         val leftFeedback = options.K_P * (leftTV - leftActualVelocity)
-        val rightFeedback =options.K_P * (rightTV - rightActualVelocity)
+        val rightFeedback = options.K_P * (rightTV - rightActualVelocity)
 
         val leftFinalVelocity = leftFeedforward + leftFeedback
         val rightFinalVelocity = rightFeedforward + rightFeedback
-//TODO: Fins
+        //TODO: Fins
         val scaleDown = 0.4
 
         return Pair(leftFinalVelocity, rightFinalVelocity)

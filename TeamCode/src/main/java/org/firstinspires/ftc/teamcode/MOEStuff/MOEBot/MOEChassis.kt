@@ -50,13 +50,12 @@ class MOEChassis {
     fun turn(degrees: Double) {
         val pid = MOEPid(1.0, 0.0, 0.0)
         pid.setOutputLimits(0.0, 1.0)
-        pid.setSetpoint(degrees)
+        pid.setpoint = degrees
         while (moeOpMode.opModeIsActive()) {
             val output = pid.getOutput(robot.gyro.getRawAngle())
+            robot.chassis.turnPower(output)
             telemetry.addData(output)
             telemetry.update();
         }
     }
-
-
 }

@@ -27,7 +27,7 @@ class MOEPid {
     private var maxOutput = 0.0
     private var minOutput = 0.0
 
-    private var setpoint = 0.0
+    var setpoint = 0.0
 
     private var lastActual = 0.0
 
@@ -256,9 +256,9 @@ class MOEPid {
      * @see MiniPID.getOutput
      * @param setpoint
      */
-    fun setSetpoint(setpoint: Double) {
-        this.setpoint = setpoint
-    }
+//    fun setSetpoint(setpoint: Double) {
+//        this.setpoint = setpoint
+//    }
 
     /**
      * Calculate the output value for the current PID cycle.<br></br>
@@ -286,7 +286,6 @@ class MOEPid {
      * @param setpoint The target value for the system
      * @return calculated output value for driving the system
      */
-    @JvmOverloads
     fun getOutput(actual: Double = lastActual, newSetPoint: Double = setpoint): Double {
         var tempSetPoint = newSetPoint
         var output: Double
@@ -367,8 +366,8 @@ class MOEPid {
 
         // Get a test printline with lots of details about the internal
         // calculations. This can be useful for debugging.
-        // System.out.printf("Final output %5.2f [ %5.2f, %5.2f , %5.2f  ], eSum %.2f\n",output,Poutput, Ioutput, Doutput,errorSum );
-        // System.out.printf("%5.2f\t%5.2f\t%5.2f\t%5.2f\n",output,Poutput, Ioutput, Doutput );
+//         System.out.printf("Final output %5.2f [ %5.2f, %5.2f , %5.2f  ], eSum %.2f\n",output,Poutput, Ioutput, Doutput,errorSum );
+//         System.out.printf("%5.2f\t%5.2f\t%5.2f\t%5.2f\n",output,Poutput, Ioutput, Doutput );
 
         lastOutput = output
         return output

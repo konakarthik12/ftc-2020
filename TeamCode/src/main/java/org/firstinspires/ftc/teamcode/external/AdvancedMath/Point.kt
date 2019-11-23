@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.external.AdvancedMath
 
+import org.firstinspires.ftc.teamcode.utilities.toFixed
 import kotlin.math.*
 
 open class Point(var x: Double, var y: Double) {
@@ -20,7 +21,7 @@ open class Point(var x: Double, var y: Double) {
         val cameraX = cos(theta) * distanceFromThis
         val cameraY = sin(theta) * distanceFromThis
 
-        return Point(this.x - cameraX, this.y - cameraY)
+        return Point(this.x + cameraX, this.y + cameraY)
     }
 
     fun distanceFrom(point: Point): Double {
@@ -35,6 +36,6 @@ open class Point(var x: Double, var y: Double) {
     }
 
     override fun toString(): String {
-        return "Point [x=$x, y=$y]"
+        return "Point [x=${x.toFixed(3)}, y=${y.toFixed(3)}]"
     }
 }

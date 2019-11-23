@@ -23,10 +23,13 @@ abstract class MOEOpMode : LinearOpMode(), MOEFirebase {
         moeInternalInit()
         setRobotRef(robot)
         initOpMode()
+        moeInternalPostInit()
         waitForStart()
         resetRobotValues()
         run()
     }
+
+    abstract fun moeInternalPostInit()
 
     override fun waitForStart() {
         while (!isStarted) {

@@ -78,8 +78,9 @@ MOEConstants {
     }
 
     object Localization {
-        const val CAMERA_DISTANCE = 15.0
+        const val CAMERA_DISTANCE = 15.0 * Units.METERS_PER_ASTAR
         const val CAMERA_THETA = -10.0  // Angle relative to robot from camera
+        const val INITIAL_CAMERA_THETA = -100.0
     }
 
     object PurePursuit {
@@ -103,12 +104,13 @@ MOEConstants {
     }
 
     object Units {
-        const val FEET_PER_METER = 0.3048
+        const val METER_PER_FEET = 0.3048
         const val FEET_PER_TILE = 2
-        const val SLAMS_PER_TILE = FEET_PER_TILE * FEET_PER_METER
+        const val METERS_PER_TILE = FEET_PER_TILE * METER_PER_FEET
         const val ASTARS_PER_TILE = 48
-        const val SLAMS_PER_ASTAR = SLAMS_PER_TILE / ASTARS_PER_TILE
-        const val ASTAR_PER_SLAM = ASTARS_PER_TILE / SLAMS_PER_TILE
+//        const val METERS_PER_ASTAR = 0.0127
+        const val METERS_PER_ASTAR = METERS_PER_TILE / ASTARS_PER_TILE
+        const val ASTARS_PER_METER = ASTARS_PER_TILE / METERS_PER_TILE
     }
 
     object Slam {

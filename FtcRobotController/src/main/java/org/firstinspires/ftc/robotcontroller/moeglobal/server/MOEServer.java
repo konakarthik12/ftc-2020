@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
-import android.text.format.Formatter;
 import android.util.ArrayMap;
 import android.util.Log;
-import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import com.google.firebase.database.DatabaseReference;
 import com.qualcomm.ftcrobotcontroller.R;
@@ -72,6 +70,7 @@ public class MOEServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, ByteBuffer message) {
+        Log.e("plz", "why");
         writeDex(message);
         conn.send("ops");
     }
@@ -88,6 +87,7 @@ public class MOEServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket webSocket, String s) {
+        System.out.println("recieved: " + s);
 //        String[] split = s.split("/");
         if (s.startsWith("ops")) {
             saveOpModes(s.substring(4));
@@ -110,6 +110,7 @@ public class MOEServer extends WebSocketServer {
         DexClassLoader classLoader = getClassLoader();
         Map<String, OpModeMetaAndClass> opModeMetaAndClassMap = new ArrayMap<>();
         String[] autoDetails = auto.split("/");
+        Log.e("socket", opModeMetaAndClassMap.toString());
         for (int i = 0; i < autoDetails.length; i += 2) {
             opModeMetaAndClassMap.put(autoDetails[i], getOpModeMetaAndClass(classLoader, autoDetails[i], autoDetails[i + 1], true));
         }

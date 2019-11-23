@@ -1,6 +1,6 @@
 dependencies {
     implementation project(':FtcRobotController')
-    implementation project(':MOELibraries')
+//    implementation project(':MOELibraries')
     implementation (name: 'RobotCore-release', ext: 'aar')
     implementation (name:'RobotServer-release', ext: 'aar')
 

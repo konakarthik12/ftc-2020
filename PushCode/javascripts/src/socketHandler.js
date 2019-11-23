@@ -21,13 +21,9 @@ function createServer(address, port, getOpModes) {
             // reject(err)
         });
         client.addEventListener('message', (message) => {
-            if (message === 'ops') {
-                client.send('ops/' + getOpModes(), (err) => {
-                    if (err) {
-                        throw err;
-                    }
-                    console.info("Sent opmodes")
-                })
+            if (message.data === 'ops') {
+                client.send('ops/' + getOpModes());
+                console.log("sent opmodes")
             }
         });
         // client["sendFile"] = sendFile;

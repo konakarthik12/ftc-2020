@@ -25,6 +25,7 @@ public class SlamT265Handler {
     private volatile float[] curPose = new float[3];
     private volatile boolean isRunning = false;
     private double[] quatAngle = new double[4];
+    private boolean needsRestart = false;
 
     SlamT265Handler(UsbDevice device) {
         initVariables(device);
@@ -77,6 +78,7 @@ public class SlamT265Handler {
 
     public void startStream() {
         if (!initCodeSent) {
+            connection.claimInterface(usbInterface, true);
             sendInitCode();
             initCodeSent = true;
         }
@@ -98,7 +100,6 @@ public class SlamT265Handler {
     }
 
     private void sendInitCode() {
-        connection.claimInterface(usbInterface, true);
         sendCode(SLAM_CONTROL);
         sendCode(POSE_CONTROL);
         sendCode(DEV_START);
@@ -127,13 +128,39 @@ public class SlamT265Handler {
         return quatAngle;
     }
 
+    public void restart() {
+        needsRestart = true;
+    }
+
     public class SlamRunnable implements Runnable {
         public void run() {
             setThreadPriority(THREAD_PRIORITY_BACKGROUND);
             while (isRunning) {
                 updateSlam();
+                checkRestart();
             }
 //            closeConnection();
         }
+    }
+
+    private void checkRestart() {
+        if (needsRestart) {
+            Log.e("restarting", "restart");
+            sendCode(DEV_STOP);
+//            try {
+//                //TODO: Maybe remove
+////                Thread.sleep();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            sendInitCode();
+        }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        needsRestart = false;
     }
 }

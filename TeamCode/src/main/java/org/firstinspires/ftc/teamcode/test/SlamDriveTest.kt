@@ -6,10 +6,14 @@ import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler.moeWebServer
+import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlamOptions
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
+import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.utilities.addData
 import org.firstinspires.ftc.teamcode.utilities.delete
 import org.firstinspires.ftc.teamcode.utilities.get
+import org.firstinspires.ftc.teamcode.utilities.toFixed
 import java.lang.RuntimeException
 
 @TeleOp(name = "SlamDriveTest")
@@ -20,20 +24,22 @@ class SlamDriveTest : MOETeleOp(useSlam = true) {
         ref.delete()
         telemetry.addData("testagain")
         robot.odometry.servos.initServosUp()
-        robot.slam
+        robot.slam.options = MOESlamOptions(0.0, 0.0, 0.0)
+        SlamHandler.t265Handler.restart();
     }
 
     override fun loopStuff() {
         if (laped.milliseconds().toInt() > diff) {
             val robotPose = robot.slam.getRawPose()
             moeWebServer.broadcast("data/slam/${robotPose[0]},${robotPose[1]},${robot.gyro.getRawAngle()}")
-
-            laped.reset();
+            laped.reset()
         }
-        telemetry.addData("slam", robot.gyro.getRawAngle())
-        telemetry.addData("rawPose", robot.slam.getRawPose().toString())
-        telemetry.addData("cameraPosition", robot.slam.getCameraPose())
-        telemetry.addData("position", robot.slam.getRobotPose())
+        telemetry.addData("theta", robot.slam.getTheta().toFixed(3))
+        telemetry.addData("rawPose", robot.slam.getRawPose().contentToString())
+        telemetry.addData("cameraPosition", robot.slam.getCameraPose() * MOEConstants.Units.ASTARS_PER_METER)
+        telemetry.addData("robotaxis", robot.slam.getRobotPoseInCameraAxis() * MOEConstants.Units.ASTARS_PER_METER)
+        telemetry.addData("scaledPosition", robot.slam.getScaledRobotPose())
+        //        telemetry.addData("position", robot.slam.getRobotPose())
         telemetry.update()
 
         val maxPower = 1.0

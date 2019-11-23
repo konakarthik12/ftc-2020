@@ -2,15 +2,29 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam
 
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamT265Handler
+import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Localization
 import org.firstinspires.ftc.teamcode.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.external.AdvancedMath.toRadians
 import org.firstinspires.ftc.teamcode.utilities.quaternionToHeading
+import toNormalAngle
 
-class MOESlam {
+data class MOESlamOptions(val robotToFieldTheta: Double, val xOffset: Double, val yOffset: Double)
+
+class MOESlam() {
+    lateinit var options: MOESlamOptions
+
+    constructor(options: MOESlamOptions) : this() {
+        this.options = options;
+    }
+    //
+    //    private fun setOptions(options: MOESlamOptions) {
+    //        this.options = options;
+    //    }
+
     lateinit var handler: SlamT265Handler
     var slamOffset: FloatArray = floatArrayOf(0.0F, 0.0F, 0.0F)
-    var thetaOffset: Double = 0.0;
+    var thetaOffset: Double = 0.0
 
     init {
         checkConnection()
@@ -23,28 +37,39 @@ class MOESlam {
         handler.startStream()
     }
 
-    fun getRawOffsetPose(): Point = getRawPose().let {raw->
-        return Point(raw[0] - slamOffset[0].toDouble(), raw[1] - slamOffset[1].toDouble())
+    fun getRawOffsetPose(): Point = getRawPose().let {
+        return Point(it[0] - slamOffset[0].toDouble(), it[1] - slamOffset[1].toDouble())
     }
 
     fun getCameraPose(): Point {
-        val angle = toRadians(getTheta())
-        val rawPose = getRawOffsetPose()
-        return rawPose.rotateAroundOrigin(angle)
-        //        with(rawPose) {
-        //
+        val rawPose = getRawPose()
+        return Point(rawPose[0].toDouble(), -rawPose[2].toDouble())
+    }
 
-        //            // flipped on purpose
-        //            return Point(y, x)
-        //        }
+    fun getRobotPoseInCameraAxis(): Point {
+        return getCameraPose().getRelativePoint(
+                distanceFromThis = Localization.CAMERA_DISTANCE,
+                theta = toRadians(getTheta() + Localization.INITIAL_CAMERA_THETA)
+        )
+        //        rawPose.getRelativePoint(Localization.CAMERA_DISTANCE, Localization.)
+        //        return rawPose.rotateAroundOrigin(angle)
+
+        //        val theta = toRadians(getTheta() + Localization.CAMERA_THETA)
+        //        return getCameraPose().getRelativePointLocalization.CAMERA_DISTANCE, theta)
     }
 
     fun getRobotPose(): Point {
-        val theta = toRadians(getTheta() + Localization.CAMERA_THETA)
-        return getCameraPose().getRelativePoint(Localization.CAMERA_DISTANCE, theta)
+        val untranslatedPose = getRobotPoseInCameraAxis().rotateAroundOrigin(options.robotToFieldTheta)
+        return Point(untranslatedPose.x + options.xOffset, untranslatedPose.y + options.yOffset)
     }
 
-    fun getTheta(): Double = (getRawTheta() - thetaOffset)
+    fun getScaledRobotPose(): Point = getRobotPose() * MOEConstants.Units.ASTARS_PER_METER
+    //
+    //    fun getRawEulerTheta(): Double {
+    //
+    //    }
+
+    fun getTheta(): Double = (getRawTheta().toNormalAngle() - thetaOffset)
 
     fun getRawTheta(): Double = quaternionToHeading(getQuadTheta())
 

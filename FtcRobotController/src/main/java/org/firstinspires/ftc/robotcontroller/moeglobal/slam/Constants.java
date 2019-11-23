@@ -12,4 +12,7 @@ public class Constants {
     static int OUTPUT_Y_OFFSET = 12;
     static int OUTPUT_Z_OFFSET = 16;
 
+    //I'm guessing
+    static byte[] DEV_STOP = new byte[]{0x08, 0x00, 0x00, 0x00, 0x13, 0x00, 0x00, 0x00, 0};
+
 }

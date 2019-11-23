@@ -44,7 +44,7 @@ fun Bitmap.saveTo(file: File) {
 
 }
 
-fun Double.roundToString(digits: Int): String = "%.${digits}f".format(this)
+fun Double.toFixed(digits: Int): String = "%.${digits}f".format(this)
 
 fun Bitmap.scale(width: Int, height: Int): Bitmap? =
         Bitmap.createScaledBitmap(this, width, height, false)

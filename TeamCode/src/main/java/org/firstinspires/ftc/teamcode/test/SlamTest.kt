@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.test
 
+import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOEServer
-import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler
+import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler
+import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamT265Handler
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 import org.firstinspires.ftc.teamcode.utilities.addData
 import org.firstinspires.ftc.teamcode.utilities.get
@@ -16,13 +16,16 @@ class SlamTest : MOETeleOp(useSlam = true) {
     var speed: Int = 1000;
 
     override fun loopStuff() {
+        SlamHandler.t265Handler.restart()
         //        count++
         //        telemetry.addData("loop", count++)
-        val quadTheta = robot.slam.getRawTheta()
-        MOESocketHandler.moeWebServer.broadcast("data/slam/0,0,0,$quadTheta")
-        Thread.sleep(speed.toLong())
-//        telemetry.addData("", robot.slam.getRawTheta())
-        telemetry.addData("slam", robot.slam.getRawTheta())
+        val pose = robot.slam.getRawPose()
+        //        MOESocketHandler.moeWebServer.broadcast("data/slam/0,0,0,$quadTheta")
+        //        Thread.sleep(speed.toLong())
+        //        telemetry.addData("", robot.slam.getRawTheta())
+
+        telemetry.addData("slam", pose)
+        telemetry.addData("slam", robot.slam.getRobotPose())
         telemetry.update()
     }
 
@@ -31,7 +34,8 @@ class SlamTest : MOETeleOp(useSlam = true) {
     }
 
     override fun onConfigChanged(dataSnapshot: DataSnapshot) {
-        speed = dataSnapshot.getValue(Int::class.java) ?: return
+        //        speed = dataSnapshot.getValue(Int::class.java) ?: return
+        Log.e("changed", "changed")
     }
 
     override fun initOpMode() {

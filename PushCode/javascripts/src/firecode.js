@@ -54,6 +54,7 @@ async function getIp() {
             console.log(address);
             socketHandler.createServer(address.ip, address.port, sendOpModes).then((it) => {
                 client = it;
+
                 watchFiles();
 
             });
@@ -86,21 +87,21 @@ function watchFiles() {
 
 
 async function pushCode(path) {
-    // console.log(path);
-
     if (!path.endsWith('classes.txt')) {
         return;
     }
+    // console.log("Pushing...");
     console.log(`Sending ${path}`);
     client.send(fs.readFileSync(resolve(__dirname, constants.dexFile)), (err) => {
         if (err) throw err;
         console.log("Sent Dex")
         // client.send()
     });
-    // console.log(client.bufferedAmount)
+    console.log(client.bufferedAmount)
 }
 
 function sendOpModes() {
+    console.log("sending op modes");
     let s = fs.readFileSync(resolve(__dirname, constants.listFile), 'utf8');
     console.log(s);
     return s;
