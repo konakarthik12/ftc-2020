@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.utilities
 import android.graphics.Bitmap
 import com.google.firebase.database.DatabaseReference
 import org.firstinspires.ftc.robotcore.external.Telemetry
-import org.firstinspires.ftc.teamcode.external.AdvancedMath.Point3
 import org.firstinspires.ftc.teamcode.misc.Rectangle
 import java.io.File
 import java.io.FileOutputStream
@@ -38,7 +37,6 @@ fun Bitmap.saveTo(file: File) {
     try {
         FileOutputStream(file).use { out ->
             this.compress(Bitmap.CompressFormat.PNG, 100, out) // bmp is your Bitmap instance
-            // PNG is a lossless format, the compression factor (100) is ignored
         }
     } catch (e: IOException) {
         e.printStackTrace()

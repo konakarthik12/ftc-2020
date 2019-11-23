@@ -74,9 +74,9 @@ tasks.register("copyClasses", Copy::class) {
     dependsOn("clearClassesCache")
     includeEmptyDirs = false
     val mainPath = "${project(":TeamCode").buildDir}/tmp/kotlin-classes/debug"
-    val libPath = "${project(":MOELibraries").buildDir}/classes/kotlin/jvm/main"
+//    val libPath = "${project(":MOELibraries").buildDir}/classes/kotlin/jvm/main"
     from(mainPath)
-    from(libPath)
+//    from(libPath)
     include("**/*.class")
     into("$buildDir/classes")
     //    doFirst {

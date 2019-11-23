@@ -30,6 +30,7 @@ import java.nio.channels.FileChannel;
 import java.util.Map;
 
 import static org.firstinspires.ftc.robotcontroller.moeglobal.ActivityReferenceHolder.activityRef;
+import static org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEDatabase.dataRef;
 
 public class MOEServer extends WebSocketServer {
 
@@ -40,7 +41,7 @@ public class MOEServer extends WebSocketServer {
     private TeamLessClassLoader parent;
 
     MOEServer(Context context) {
-        super(new InetSocketAddress(53717));
+        super(new InetSocketAddress(0));
         sharedPref = context.getSharedPreferences(
                 context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         editor = sharedPref.edit();
@@ -152,9 +153,8 @@ public class MOEServer extends WebSocketServer {
 
     @Override
     public void onStart() {
-//        Log.e("address", get);
-        Log.e("addresse", String.valueOf(getPort()));
-//        activityRef.get().set
+        Log.e("websockets", String.valueOf(getPort()));
+        dataRef.child("ws").child("port").setValue(getPort());
     }
 
     @SuppressWarnings("ConstantConditions")

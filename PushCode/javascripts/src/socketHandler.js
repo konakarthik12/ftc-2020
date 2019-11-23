@@ -1,9 +1,15 @@
+const ReconnectingWebSocket =require('reconnecting-websocket');
+
 const WS = require("ws");
+const options = {
+    WebSocket: WS, // custom WebSocket constructor
+    connectionTimeout: 1000,
+    // maxRetries: 10,
+};
 
-
-async function createServer(address , port, getOpModes) {
+async function createServer(address, port, getOpModes) {
     return new Promise((resolve, reject) => {
-        const client = new WS(`ws://${address}:${port}`, null, null);
+        const client = new ReconnectingWebSocket(`ws://${address}:${port}`, null, options);
         client.on('open', () => {
             // console.log("yes");
             resolve(client);

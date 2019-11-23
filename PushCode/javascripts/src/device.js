@@ -1,14 +1,14 @@
 module.exports = function (client, internal) {
-    function tcpip() {
-        // console.log(adb);
-
-    }
+    // function tcpip() {
+    //     // console.log(adb);
+    //
+    // }
 
     async function getIp() {
         return await client.getDHCPIpAddress(internal.id)
     }
 
-    internal.tcpip = tcpip;
+    // internal.tcpip = tcpip;
     internal.getIp = getIp;
     internal.connectTcpip = async function () {
         const port = await client.tcpip(internal.id);
