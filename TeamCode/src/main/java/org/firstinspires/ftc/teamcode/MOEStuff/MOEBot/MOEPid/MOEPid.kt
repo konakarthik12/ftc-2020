@@ -10,15 +10,26 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
  *
  * @see http://brettbeauregard.com/blog/2011/04/improving-the-beginners-pid-direction/improving-the-beginners-pid-introduction
  */
-class MOEPid {
+open class MOEPid(private var P: Double = 0.0,
+                  I: Double = 0.0,
+                  private var D: Double = 0.0,
+                  private var F: Double = 0.0) {
     //**********************************
     // Class private variables
     //**********************************
 
-    private var P = 0.0
-    private var I = 0.0
-    private var D = 0.0
-    private var F = 0.0
+    private var lastTime: Long = 0;
+    private var I = I
+        set(value) {
+            if (field != 0.0) {
+                errorSum = errorSum * field / value
+            }
+            if (maxIOutput != 0.0) {
+                maxError = maxIOutput / value
+            }
+            field = value
+        }
+
 
     private var maxIOutput = 0.0
     private var maxError = 0.0
@@ -42,125 +53,6 @@ class MOEPid {
     private var setpointRange = 0.0
 
     /**
-     * Calculate the output value for the current PID cycle.<br></br>
-     * In no-parameter mode, this uses the last sensor value,
-     * and last setpoint value. <br></br>
-     * Not typically useful, and use of parameter modes is suggested. <br></br>
-     * @return calculated output value for driving the system
-     */
-
-
-    //**********************************
-    // Constructor functions
-    //**********************************
-
-    /**
-     * Create a MiniPID class object.
-     * See setP, setI, setD methods for more detailed parameters.
-     * @param p Proportional gain. Large if large difference between setpoint and target.
-     * @param i Integral gain.  Becomes large if setpoint cannot reach target quickly.
-     * @param d Derivative gain. Responds quickly to large changes in error. Small values prevents P and I terms from causing overshoot.
-     */
-    constructor(p: Double, i: Double, d: Double) {
-        P = p
-        I = i
-        D = d
-        checkSigns()
-    }
-
-    /**
-     * Create a MiniPID class object.
-     * See setP, setI, setD, setF methods for more detailed parameters.
-     * @param p Proportional gain. Large if large difference between setpoint and target.
-     * @param i Integral gain.  Becomes large if setpoint cannot reach target quickly.
-     * @param d Derivative gain. Responds quickly to large changes in error. Small values prevents P and I terms from causing overshoot.
-     * @param f Feed-forward gain. Open loop "best guess" for the output should be. Only useful if setpoint represents a rate.
-     */
-    constructor(p: Double, i: Double, d: Double, f: Double) {
-        P = p
-        I = i
-        D = d
-        F = f
-        checkSigns()
-    }
-
-    //**********************************
-    // Configuration functions
-    //**********************************
-    /**
-     * Configure the Proportional gain parameter. <br></br>
-     * This responds quickly to changes in setpoint, and provides most of the initial driving force
-     * to make corrections. <br></br>
-     * Some systems can be used with only a P gain, and many can be operated with only PI.<br></br>
-     * For position based controllers, this is the first parameter to tune, with I second. <br></br>
-     * For rate controlled systems, this is often the second after F.
-     *
-     * @param p Proportional gain. Affects output according to **output+=P*(setpoint-current_value)**
-     */
-    fun setP(p: Double) {
-        P = p
-        checkSigns()
-    }
-
-    /**
-     * Changes the I parameter <br></br>
-     * This is used for overcoming disturbances, and ensuring that the controller always gets to the control mode.
-     * Typically tuned second for "Position" based modes, and third for "Rate" or continuous based modes. <br></br>
-     * Affects output through **output+=previous_errors*Igain ;previous_errors+=current_error**
-     *
-     * @see {@link .setMaxIOutput
-     * @param i New gain value for the Integral term
-     */
-    fun setI(i: Double) {
-        if (I != 0.0) {
-            errorSum = errorSum * I / i
-        }
-        if (maxIOutput != 0.0) {
-            maxError = maxIOutput / i
-        }
-        I = i
-        checkSigns()
-        // Implementation note:
-        // This Scales the accumulated error to avoid output errors.
-        // As an example doubling the I term cuts the accumulated error in half, which results in the
-        // output change due to the I term constant during the transition.
-    }
-
-    /**
-     * Changes the D parameter <br></br>
-     * This has two primary effects:
-     * <list>
-     *  *  Adds a "startup kick" and speeds up system response during setpoint changes
-     *  *  Adds "drag" and slows the system when moving toward the target
-    </list> *
-     * A small D value can be useful for both improving response times, and preventing overshoot.
-     * However, in many systems a large D value will cause significant instability, particularly
-     * for large setpoint changes.
-     * <br></br>
-     * Affects output through **output += -D*(current_input_value - last_input_value)**
-     *
-     * @param d New gain value for the Derivative term
-     */
-    fun setD(d: Double) {
-        D = d
-        checkSigns()
-    }
-
-    /**
-     * Configure the FeedForward parameter. <br></br>
-     * This is excellent for velocity, rate, and other  continuous control modes where you can
-     * expect a rough output value based solely on the setpoint.<br></br>
-     * Should not be used in "position" based control modes.<br></br>
-     * Affects output according to **output+=F*Setpoint**. Note, that a F-only system is actually open loop.
-     *
-     * @param f Feed forward gain.
-     */
-    fun setF(f: Double) {
-        F = f
-        checkSigns()
-    }
-
-    /**
      * Configure the PID object.
      * See setP, setI, setD methods for more detailed parameters.
      * @param p Proportional gain. Large if large difference between setpoint and target.
@@ -169,11 +61,10 @@ class MOEPid {
      */
     fun setPID(p: Double, i: Double, d: Double) {
         P = p
+        I = i
         D = d
-        //Note: the I term has additional calculations, so we need to use it's
-        //specific method for setting it.
-        setI(i)
-        checkSigns()
+
+
     }
 
     /**
@@ -186,12 +77,9 @@ class MOEPid {
      */
     fun setPID(p: Double, i: Double, d: Double, f: Double) {
         P = p
+        I = i
         D = d
         F = f
-        //Note: the I term has additional calculations, so we need to use it's
-        //specific method for setting it.
-        setI(i)
-        checkSigns()
     }
 
     /**
@@ -215,9 +103,7 @@ class MOEPid {
      * **[-output, output]**
      * @param output
      */
-    fun setOutputLimits(output: Double) {
-        setOutputLimits(-output, output)
-    }
+    fun setOutputLimits(output: Double) = setOutputLimits(-output, output)
 
     /**
      * Specify a  maximum output.
@@ -249,16 +135,6 @@ class MOEPid {
     // Primary operating functions
     //**********************************
 
-    /**
-     * Configure setpoint for the PID calculations<br></br>
-     * This represents the target for the PID system's, such as a
-     * position, velocity, or angle. <br></br>
-     * @see MiniPID.getOutput
-     * @param setpoint
-     */
-//    fun setSetpoint(setpoint: Double) {
-//        this.setpoint = setpoint
-//    }
 
     /**
      * Calculate the output value for the current PID cycle.<br></br>
@@ -268,85 +144,63 @@ class MOEPid {
      * @param setpoint The target value for the system
      * @return calculated output value for driving the system
      */
-    //    fun getOutput() = getOutput(lastActual, setpoint)
-
-    /**
-     * Calculate the output value for the current PID cycle.<br>
-     * In one parameter mode, the last configured setpoint will be used.<br>
-     * @see MiniPID#setSetpoint()
-     * @param actual The monitored value, typically as a sensor input.
-     * @param setpoint The target value for the system
-     * @return calculated output value for driving the system
-     */
-
-
-    /**
-     * Calculate the output value for the current PID cycle.<br></br>
-     * @param actual The monitored value, typically as a sensor input.
-     * @param setpoint The target value for the system
-     * @return calculated output value for driving the system
-     */
     fun getOutput(actual: Double = lastActual, newSetPoint: Double = setpoint): Double {
         var tempSetPoint = newSetPoint
-        var output: Double
-        val Poutput: Double
-        var Ioutput: Double
-        val Doutput: Double = -D * (actual - lastActual)
-        val Foutput: Double
 
         this.setpoint = tempSetPoint
 
         // Ramp the setpoint used for calculations if user has opted to do so
         if (setpointRange != 0.0) {
-            tempSetPoint = constrain(tempSetPoint, actual - setpointRange, actual + setpointRange)
+            tempSetPoint = tempSetPoint.coerceIn(actual - setpointRange..actual + setpointRange)
         }
 
         // Do the simple parts of the calculations
         val error = tempSetPoint - actual
 
         // Calculate F output. Notice, this depends only on the setpoint, and not the error.
-        Foutput = F * tempSetPoint
+        val FOutput = F * tempSetPoint
 
         // Calculate P term
-        Poutput = P * error
+        var Poutput = P * error
 
         // If this is our first time running this, we don't actually _have_ a previous input or output.
         // For sensor, sanely assume it was exactly where it is now.
         // For last output, we can assume it's the current time-independent outputs.
         if (firstRun) {
             lastActual = actual
-            lastOutput = Poutput + Foutput
+            lastOutput = Poutput + FOutput
             firstRun = false
         }
 
         // Calculate D Term
         // Note, this is negative. This actually "slows" the system if it's doing
         // the correct thing, and small values helps prevent output spikes and overshoot
+        val Doutput: Double = -D * (actual - lastActual)
         lastActual = actual
 
         // The Iterm is more complex. There's several things to factor in to make it easier to deal with.
         // 1. maxIoutput restricts the amount of output contributed by the Iterm.
         // 2. prevent windup by not increasing errorSum if we're already running against our max Ioutput
         // 3. prevent windup by not increasing errorSum if output is output=maxOutput
-        Ioutput = I * errorSum
+        var Ioutput = I * errorSum
         if (maxIOutput != 0.0) {
-            Ioutput = constrain(Ioutput, -maxIOutput, maxIOutput)
+            Ioutput = Ioutput.coerceIn(-maxIOutput..maxIOutput)
         }
 
         // And, finally, we can just add the terms up
-        output = Foutput + Poutput + Ioutput + Doutput
+        var output = FOutput + Poutput + Ioutput + Doutput
 
         // Figure out what we're doing with the error.
-        if (minOutput != maxOutput && !bounded(output, minOutput, maxOutput)) {
+        if (minOutput != maxOutput && !(output in minOutput..maxOutput)) {
             errorSum = error
             // reset the error sum to a sane level
             // Setting to current error ensures a smooth transition when the P term
             // decreases enough for the I term to start acting upon the controller
             // From that point the I term will build up as would be expected
-        } else if (outputRampRate != 0.0 && !bounded(output, lastOutput - outputRampRate, lastOutput + outputRampRate)) {
+        } else if (outputRampRate != 0.0 && !(output in lastOutput - outputRampRate..lastOutput + outputRampRate)) {
             errorSum = error
         } else if (maxIOutput != 0.0) {
-            errorSum = constrain(errorSum + error, -maxError, maxError)
+            errorSum = (errorSum + error).coerceIn(-maxError..maxError)
             // In addition to output limiting directly, we also want to prevent I term
             // buildup, so restrict the error directly
         } else {
@@ -355,10 +209,10 @@ class MOEPid {
 
         // Restrict output to our specified output and ramp limits
         if (outputRampRate != 0.0) {
-            output = constrain(output, lastOutput - outputRampRate, lastOutput + outputRampRate)
+            output = output.coerceIn(lastOutput - outputRampRate..lastOutput + outputRampRate)
         }
         if (minOutput != maxOutput) {
-            output = constrain(output, minOutput, maxOutput)
+            output = output.coerceIn(minOutput..maxOutput)
         }
         if (outputFilter != 0.0) {
             output = lastOutput * outputFilter + output * (1 - outputFilter)
@@ -366,8 +220,8 @@ class MOEPid {
 
         // Get a test printline with lots of details about the internal
         // calculations. This can be useful for debugging.
-//         System.out.printf("Final output %5.2f [ %5.2f, %5.2f , %5.2f  ], eSum %.2f\n",output,Poutput, Ioutput, Doutput,errorSum );
-//         System.out.printf("%5.2f\t%5.2f\t%5.2f\t%5.2f\n",output,Poutput, Ioutput, Doutput );
+        //         System.out.printf("Final output %5.2f [ %5.2f, %5.2f , %5.2f  ], eSum %.2f\n",output,Poutput, Ioutput, Doutput,errorSum );
+        //         System.out.printf("%5.2f\t%5.2f\t%5.2f\t%5.2f\n",output,Poutput, Ioutput, Doutput );
 
         lastOutput = output
         return output
@@ -422,7 +276,7 @@ class MOEPid {
      * @param output valid between [0..1), meaning [current output only.. historical output only)
      */
     fun setOutputFilter(strength: Double) {
-        if (strength == 0.0 || bounded(strength, 0.0, 1.0)) {
+        if (strength in 0.0..1.0) {
             outputFilter = strength
         }
     }
@@ -431,52 +285,5 @@ class MOEPid {
     // Helper functions
     //**************************************
 
-    /**
-     * Forces a value into a specific range
-     * @param value input value
-     * @param min maximum returned value
-     * @param max minimum value in range
-     * @return Value if it's within provided range, min or max otherwise
-     */
-    private fun constrain(value: Double, min: Double, max: Double): Double {
-        if (value > max) {
-            return max
-        }
-        return if (value < min) {
-            min
-        } else value
-    }
 
-    /**
-     * Test if the value is within the min and max, inclusive
-     * @param value to test
-     * @param min Minimum value of range
-     * @param max Maximum value of range
-     * @return true if value is within range, false otherwise
-     */
-    private fun bounded(value: Double, min: Double, max: Double): Boolean {
-        // Note, this is an inclusive range. This is so tests like
-        // `bounded(constrain(0,0,1),0,1)` will return false.
-        // This is more helpful for determining edge-case behaviour
-        // than <= is.
-        return min < value && value < max
-    }
-
-    /**
-     * To operate correctly, all PID parameters require the same sign
-     * This should align with the reversed value
-     */
-    private fun checkSigns() {
-        if (reversed) {  // all values should be below zero
-            if (P > 0) P *= -1.0
-            if (I > 0) I *= -1.0
-            if (D > 0) D *= -1.0
-            if (F > 0) F *= -1.0
-        } else {  // all values should be above zero
-            if (P < 0) P *= -1.0
-            if (I < 0) I *= -1.0
-            if (D < 0) D *= -1.0
-            if (F < 0) F *= -1.0
-        }
-    }
 }

@@ -1,6 +1,4 @@
-import kotlin.math.PI
-import kotlin.math.atan2
-
+package org.firstinspires.ftc.teamcode.external.AdvancedMath
 
 
 fun Double.toEulerAngle(): Double {

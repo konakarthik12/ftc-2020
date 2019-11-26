@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.utilities
 
 import android.graphics.Bitmap
+import android.util.Range
 import com.google.firebase.database.DatabaseReference
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.misc.Rectangle

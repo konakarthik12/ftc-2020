@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.constants.MOEConstants.Localization
 import org.firstinspires.ftc.teamcode.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.external.AdvancedMath.toRadians
 import org.firstinspires.ftc.teamcode.utilities.quaternionToHeading
-import toNormalAngle
+import org.firstinspires.ftc.teamcode.external.AdvancedMath.toNormalAngle
 
 data class MOESlamOptions(val robotToFieldTheta: Double, val xOffset: Double, val yOffset: Double)
 
