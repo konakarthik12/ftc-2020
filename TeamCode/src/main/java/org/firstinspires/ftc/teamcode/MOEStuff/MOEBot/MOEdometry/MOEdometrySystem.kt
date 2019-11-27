@@ -4,7 +4,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
-import org.firstinspires.ftc.teamcode.external.AdvancedMath.Point
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Point
 
 class MOEdometrySystem {
     val servos = ServosHolder()

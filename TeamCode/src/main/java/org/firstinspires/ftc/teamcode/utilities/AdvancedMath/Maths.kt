@@ -1,23 +1,12 @@
-package org.firstinspires.ftc.teamcode.external.AdvancedMath
+package org.firstinspires.ftc.teamcode.utilities.AdvancedMath
 
-import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 
-fun closestAngleDifference(ang1: Double, ang2: Double): Double {
-    val difference = abs(ang2 - ang1)
-    val secondDifference = 360 - difference
-    val returnVal = if (difference < secondDifference) difference else secondDifference
+//fun closestAngleDifference(source: Double, target: Double): Double = ((target - source) + 180) % 360 - 180
+infix fun Double.closestAngleDifference(other: Double): Double = ((other - this) + 180) % 360 - 180
 
-    val actualDiff = ang2 - ang1
-    return when {
-        actualDiff in -180.0..0.0 -> -returnVal
-        actualDiff > 180 -> -returnVal
-        else -> returnVal
-    }
-
-}
 
 fun getCircleLineIntersection(pointA: Point, pointB: Point, circleCenter: Point, radius: Double): Double {
     val d = pointB - pointA

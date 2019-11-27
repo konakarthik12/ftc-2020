@@ -1,10 +1,8 @@
-package org.firstinspires.ftc.teamcode.external.PurePursuit
+package org.firstinspires.ftc.teamcode.utilities.PurePursuit
 
 
-import org.firstinspires.ftc.teamcode.external.AdvancedMath.getCircleLineIntersection
-import org.firstinspires.ftc.teamcode.external.AdvancedMath.Point
-import org.firstinspires.ftc.teamcode.utilities.PurePursuit.MOEPurePursuitOptions
-import org.firstinspires.ftc.teamcode.utilities.PurePursuit.PurePursuitPoint
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.getCircleLineIntersection
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Point
 import kotlin.math.*
 
 
@@ -108,6 +106,7 @@ class MOEPurePursuitPath(var points: List<PurePursuitPoint>, private val options
                 }
             }
         }
+
         return closestPointIndex
     }
 

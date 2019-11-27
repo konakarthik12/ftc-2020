@@ -3,11 +3,11 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamT265Handler
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
-import org.firstinspires.ftc.teamcode.constants.MOEConstants.Localization
-import org.firstinspires.ftc.teamcode.external.AdvancedMath.Point
-import org.firstinspires.ftc.teamcode.external.AdvancedMath.toRadians
+import org.firstinspires.ftc.teamcode.constants.MOEConstants.SLAM
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Point
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.toRadians
 import org.firstinspires.ftc.teamcode.utilities.quaternionToHeading
-import org.firstinspires.ftc.teamcode.external.AdvancedMath.toNormalAngle
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.toNormalAngle
 
 data class MOESlamOptions(val robotToFieldTheta: Double, val xOffset: Double, val yOffset: Double)
 
@@ -15,7 +15,7 @@ class MOESlam() {
     lateinit var options: MOESlamOptions
 
     constructor(options: MOESlamOptions) : this() {
-        this.options = options;
+        this.options = options
     }
     //
     //    private fun setOptions(options: MOESlamOptions) {
@@ -38,18 +38,18 @@ class MOESlam() {
     }
 
     fun getRawOffsetPose(): Point = getRawPose().let {
-        return Point(it[0] - slamOffset[0].toDouble(), it[1] - slamOffset[1].toDouble())
+        return Point(it[0] - slamOffset[0].toDouble(), it[2] - slamOffset[2].toDouble())
     }
 
     fun getCameraPose(): Point {
-        val rawPose = getRawPose()
-        return Point(rawPose[0].toDouble(), -rawPose[2].toDouble())
+        val rawPose = getRawOffsetPose()
+        return Point(rawPose.x, -rawPose.y)
     }
 
     fun getRobotPoseInCameraAxis(): Point {
         return getCameraPose().getRelativePoint(
-                distanceFromThis = Localization.CAMERA_DISTANCE,
-                theta = toRadians(getTheta() + Localization.INITIAL_CAMERA_THETA)
+                distanceFromThis = SLAM.CAMERA_DISTANCE,
+                theta = toRadians(getTheta() + SLAM.INITIAL_CAMERA_THETA)
         )
         //        rawPose.getRelativePoint(Localization.CAMERA_DISTANCE, Localization.)
         //        return rawPose.rotateAroundOrigin(angle)

@@ -6,7 +6,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
-import org.firstinspires.ftc.teamcode.external.AdvancedMath.lerp
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.lerp
 
 data class ServoConfig(val name: String, val min: Double = 0.0, val max: Double = 1.0, val direction: Servo.Direction = Servo.Direction.FORWARD)
 

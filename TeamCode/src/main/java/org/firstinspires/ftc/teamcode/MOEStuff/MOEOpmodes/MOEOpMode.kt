@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEFirebase
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOETelemetry
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRobotRef
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import org.firstinspires.ftc.teamcode.utilities.addData
 
 abstract class MOEOpMode : LinearOpMode(), MOEFirebase {
@@ -64,7 +65,6 @@ abstract class MOEOpMode : LinearOpMode(), MOEFirebase {
             }
         })
         ref = customRef
-
     }
 
     private fun notifyTelemetry() {

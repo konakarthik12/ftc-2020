@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.PurePursuit
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
-import org.firstinspires.ftc.teamcode.external.AdvancedMath.Point
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.PurePursuit.MOEPurePursuitSystem
 import org.firstinspires.ftc.teamcode.utilities.PurePursuit.PurePursuitPoint
 import kotlin.math.abs

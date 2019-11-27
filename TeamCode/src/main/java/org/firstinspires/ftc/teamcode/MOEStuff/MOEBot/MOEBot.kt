@@ -6,10 +6,9 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOESlamGyro
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySystem
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEOpMode
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlam
-import org.firstinspires.ftc.teamcode.utilities.PurePursuit.MOEPurePursuitSystem
 
-class MOEBot(opMode: MOEOpMode, useSlamForGyro: Boolean = false, useCamera: Boolean = false,
-             val useSlam: Boolean = false, val thetaOffset: Double = 0.0) {
+class MOEBot(opMode: MOEOpMode, useCamera: Boolean = false, val useSlam: Boolean = false,
+             val thetaOffset: Double = 0.0) {
     val foundation = MOEFoundation()
     val outTake = MOEOutTake()
     var chassis: MOEChassis = MOEChassis()

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
 import org.firstinspires.ftc.robotcontroller.moeglobal.ActivityReferenceHolder.activityRef
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEFancyPid
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEPid
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.DriveTrain.Motors.Configs
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
@@ -47,15 +48,27 @@ class MOEChassis {
         setPower(0.0)
     }
 
-    fun turn(degrees: Double) {
-        val pid = MOEPid(1.0, 0.0, 0.0)
-        pid.setOutputLimits(0.0, 1.0)
+    fun turnTo(degrees: Double) {
+        val pid = MOEFancyPid(1.0, 0.0, 0.0)
+        pid.setOutputLimits(1.0)
         pid.setpoint = degrees
-        while (moeOpMode.opModeIsActive()) {
-            val output = pid.getOutput(robot.gyro.getRawAngle())
-            robot.chassis.turnPower(output)
-            telemetry.addData(output)
-            telemetry.update();
-        }
+        pid.input = { robot.gyro.getRawAngle() }
+        pid.output = { robot.chassis.turnPower(it) }
+        pid.run()
+        //        while (moeOpMode.opModeIsActive()) {
+        //            val output = pid.getOutput(robot.gyro.getRawAngle())
+        //            robot.chassis.turnPower(output)
+        //            telemetry.addData(output)
+        //            telemetry.update();
+        //        }
+    }
+
+    fun moveTo(x: Double, y: Double) {
+        val xPID = MOEFancyPid(1.0, 0.0, 0.0)
+        xPID.setOutputLimits(1.0)
+        xPID.setpoint = x
+        xPID.input = { robot.slam.getRobotPose().x }
+        xPID.output = { robot.chassis.turnPower(it) }
+        xPID.run()
     }
 }

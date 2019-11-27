@@ -147,19 +147,14 @@ public class SlamT265Handler {
         if (needsRestart) {
             Log.e("restarting", "restart");
             sendCode(DEV_STOP);
-//            try {
-//                //TODO: Maybe remove
-////                Thread.sleep();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+
             sendInitCode();
         }
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         needsRestart = false;
     }

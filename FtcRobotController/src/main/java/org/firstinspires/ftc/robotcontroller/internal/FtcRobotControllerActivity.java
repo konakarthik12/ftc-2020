@@ -314,7 +314,6 @@ public class FtcRobotControllerActivity extends Activity {
             try {
                 ClassManagerFactory.processAllClasses();
             } catch (NoClassDefFoundError e) {
-
             }
         }
         cfgFileMgr = new RobotConfigFileManager(this);

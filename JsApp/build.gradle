@@ -1,97 +1,35 @@
+/**
+ * Top-level build file for ftc_app project.
+ *
+ * It is extraordinarily rare that you will ever need to edit this file.
+ */
+
 buildscript {
-    ext {
-        kotlinx_html_version = '0.6.12'
-
-        react_version = '16.9.0'
-        kotlin_react_version = "$react_version-pre.87-kotlin-$kotlin_version"
-        kotlin_react_dom_version = "$react_version-pre.87-kotlin-$kotlin_version"
+    allprojects {
+        ext {
+            set("kotlin_version", "1.3.50")
+        }
     }
+//    ext.kotlin_version = '1.3.50'
     repositories {
-        mavenCentral()
-        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-        maven { url 'https://dl.bintray.com/kotlinx/kotlinx' }
-        maven { url 'https://dl.bintray.com/kotlin/kotlin-js-wrappers' }
-        maven { url 'https://plugins.gradle.org/m2/' }
-        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-
+        google()
+        jcenter()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.45"
-    }
-}
-plugins {
-    id 'kotlin2js'
-}
-apply plugin: 'org.jetbrains.kotlin.frontend'
-repositories {
-    mavenCentral()
-    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-    maven { url 'https://dl.bintray.com/kotlinx/kotlinx' }
-    maven { url 'https://dl.bintray.com/kotlin/kotlin-js-wrappers' }
-    maven { url 'https://plugins.gradle.org/m2/' }
-    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-//    maven {
-//        url "https://dl.bintray.com/[YOUR_USERNAME]/<REPOSITORY_NAME>"
-//    }
-}
-
-dependencies {
-    implementation(project(":MOELibraries"))
-    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
-    compile "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
-    compile "org.jetbrains:kotlin-react:$kotlin_react_version"
-    compile "org.jetbrains:kotlin-react-dom:$kotlin_react_dom_version"
-
-    testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
-}
-task linkify(type: Exec) {
-    workingDir = buildDir
-//    println rootProject.buildDir.toString()+file('js/packages')
-    commandLine 'npm', 'link', 'MOETime-MOELibraries'
-}
-//tasks.findByName("npm-deps") {
-//    dependsOn linkify
-//}
-kotlinFrontend {
-    npm {
-        dependency('webpack-cli', 'v2.0.12')
-        dependency('core-js', 'v3.4.0')
-        dependency('react', react_version)
-        dependency('react-dom', react_version)
-    }
-
-    sourceMaps = true
-
-    webpackBundle {
-        bundleName = 'main'
-        contentPath = file("$projectDir/static")
-        proxyUrl = 'http://localhost:8080'
+        classpath ("com.android.tools:r8:1.5.68")
+        classpath 'com.android.tools.build:gradle:3.5.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${project.property("kotlin_version")}"
+        classpath 'com.google.gms:google-services:4.3.2'
     }
 }
 
-compileKotlin2Js {
-//    kotlinOptions.metaInfo = true
-    kotlinOptions.outputFile = "${project.buildDir.path}/js/${project.name}.js"
-    kotlinOptions.sourceMap = true
-    kotlinOptions.moduleKind = 'commonjs'
-    kotlinOptions.main = 'call'
+// This is now required because aapt2 has to be downloaded from the
+// google() repository beginning with version 3.2 of the Android Gradle Plugin
+allprojects {
+    repositories {
+        google()
+        jcenter()
+
+    }
+
 }
-compileTestKotlin2Js {
-    kotlinOptions.sourceMap = true
-//    kotlinOptions.metaInfo = true
-//    kotlinOptions.outputDir = "${project.buildDir.path}/js/${project.name}.js"
-//    kotlinOptions.sourceMap = true
-//    kotlinOptions.moduleKind = 'commonjs'
-//    kotlinOptions.main = 'call'
-}
-task serverPrepare(type: Copy, dependsOn: ['bundle']) {
-    doFirst { delete "$projectDir/static" }
-    from "$projectDir/build/bundle", "$projectDir/src/main/web"
-    into "$projectDir/static"
-}
-//task libsPull(type: Copy) {
-//
-//}
-//build.dependsOn libsPull
-build.dependsOn serverPrepare
-run.dependsOn build

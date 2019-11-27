@@ -7,13 +7,9 @@ import kotlin.math.roundToInt
 
 const val NUM_BLOCKS: Int = 2
 
-enum class SkyStoneLocation {
-    LEFT,
-    MIDDLE,
-    RIGHT
-}
+enum class SkyStoneLocation { LEFT, MIDDLE, RIGHT }
 
-fun getSkyStoneLocationsFromBitmap(bm: Bitmap): SkyStoneLocation {
+fun getSkyStoneLocationFromBitmap(bm: Bitmap): SkyStoneLocation {
     val image = bm.scale(2, 1)
     image!!.saveTo(Environment.getExternalStorageDirectory().absolutePath + "/FirstTest/1_crop_crop.jpg")
     val leftBound = 0

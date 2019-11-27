@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.external.AdvancedMath
+package org.firstinspires.ftc.teamcode.utilities.AdvancedMath
 
 import kotlin.math.PI
 

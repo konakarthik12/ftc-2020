@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.constants
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MotorConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.ServoConfig
+import org.firstinspires.ftc.teamcode.misc.Rectangle
 import org.firstinspires.ftc.teamcode.utilities.PurePursuit.MOEPurePursuitOptions
 import kotlin.math.PI
 import com.qualcomm.robotcore.hardware.DcMotorSimple as Motor
@@ -77,30 +78,36 @@ MOEConstants {
         }
     }
 
-    object Localization {
-        const val CAMERA_DISTANCE = 15.0 * Units.METERS_PER_ASTAR
-        const val CAMERA_THETA = -10.0  // Angle relative to robot from camera
-        const val INITIAL_CAMERA_THETA = -100.0
+    object SLAM {
+        const val CAMERA_DISTANCE = 11.0 * Units.METERS_PER_ASTAR
+//        const val CAMERA_THETA = -10.0  // Angle relative to robot from camera
+        const val INITIAL_CAMERA_THETA = -82.0
     }
 
     object PurePursuit {
         val DefaultOptions = MOEPurePursuitOptions(
-                overallMaxVelocity = -1.0,
-                spacing = -1.0,
-                tolerance = -1.0,
-                smoothingA = -1.0,
-                smoothingB = -1.0,
-                turningConstant = 0.0,
-                lookBack = 0,
-                lookForward = 0,
-                lookAheadDistance = 0.0,
-                track_width = 0.0,
+                overallMaxVelocity = 1.0,
+                spacing = 3.0,
+                tolerance = 0.0005,
+                smoothingA = 1 - 0.7,
+                smoothingB = 0.7,
+                turningConstant = 0.1,
+                lookBack = 4,
+                lookForward = 4,
+                lookAheadDistance = 20.0,
+                track_width = 28.0,
                 K_V = 0.0,
                 K_A = 0.0,
                 K_P = 0.0
         )
 
-        val FINISHED_TOLERANCE: Double = 0.5
+        const val FINISHED_TOLERANCE: Double = 0.5
+    }
+
+    object Autonomous {
+        object Template {
+            val SKYSTONE_CROP = Rectangle(0, 0, 0, 0)
+        }
     }
 
     object Units {
@@ -113,6 +120,5 @@ MOEConstants {
         const val ASTARS_PER_METER = ASTARS_PER_TILE / METERS_PER_TILE
     }
 
-    object Slam {
-    }
+
 }

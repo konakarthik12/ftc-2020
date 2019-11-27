@@ -39,8 +39,8 @@ class DuoDrive : MOETeleOp() {
         val maxPower = 1.0
         val minPower = 0.6
         val scaleX = 1
-        val scaleY = 0.8
-        val scaleRot = 0.6
+        val scaleY = 0.85
+        val scaleRot = 0.75
         var angle = robot.gyro.eulerAngle
         var rawX = -gamepad1.left_stick_x.toDouble()
         var rawY = (gamepad1.left_stick_y).toDouble()

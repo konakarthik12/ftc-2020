@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.utilities.PurePursuit
 
-import org.firstinspires.ftc.teamcode.external.AdvancedMath.toRadians
-import org.firstinspires.ftc.teamcode.external.AdvancedMath.Point
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.toRadians
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Point
 import kotlin.math.*
 
 fun getSignedCurvatureFromLookaheadPoint(lookahead: Point, currPos: Point,

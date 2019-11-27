@@ -4,7 +4,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Environment
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEOpMode
+import org.firstinspires.ftc.teamcode.misc.Rectangle
 import org.firstinspires.ftc.teamcode.utilities.addData
+import org.firstinspires.ftc.teamcode.utilities.crop
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
@@ -30,5 +32,9 @@ class MOECamera(private val opMode: MOEOpMode) {
             e.printStackTrace()
         }
         return bitmap
+    }
+
+    fun getCroppedBitmap(cropRect: Rectangle): Bitmap? {
+        return getBitmap()?.crop(cropRect)
     }
 }

@@ -10,10 +10,19 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
  *
  * @see http://brettbeauregard.com/blog/2011/04/improving-the-beginners-pid-direction/improving-the-beginners-pid-introduction
  */
+data class MOEPidValues(val P: Double = 0.0,
+                        val I: Double = 0.0,
+                        val D: Double = 0.0,
+                        val F: Double = 0.0
+) {
+}
+
 open class MOEPid(private var P: Double = 0.0,
                   I: Double = 0.0,
                   private var D: Double = 0.0,
                   private var F: Double = 0.0) {
+    constructor(options: MOEPidValues) : this(options.P, options.I, options.D, options.F)
+
     //**********************************
     // Class private variables
     //**********************************
@@ -63,8 +72,6 @@ open class MOEPid(private var P: Double = 0.0,
         P = p
         I = i
         D = d
-
-
     }
 
     /**
@@ -155,7 +162,7 @@ open class MOEPid(private var P: Double = 0.0,
         }
 
         // Do the simple parts of the calculations
-        val error = tempSetPoint - actual
+        val error = getError(tempSetPoint, actual)
 
         // Calculate F output. Notice, this depends only on the setpoint, and not the error.
         val FOutput = F * tempSetPoint
@@ -227,6 +234,8 @@ open class MOEPid(private var P: Double = 0.0,
         return output
     }
 
+    open fun getError(setPoint: Double, actual: Double) = setPoint - actual
+
     /**
      * Resets the controller. This erases the I term buildup, and removes
      * D gain on the next loop.<br></br>
@@ -281,9 +290,8 @@ open class MOEPid(private var P: Double = 0.0,
         }
     }
 
-    //**************************************
-    // Helper functions
-    //**************************************
-
+    override fun toString(): String {
+        return "P=$P,I=$I,D=$D"
+    }
 
 }
