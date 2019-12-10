@@ -14,33 +14,16 @@ import org.firstinspires.ftc.teamcode.utilities.addData
 import org.firstinspires.ftc.teamcode.utilities.get
 import org.firstinspires.ftc.teamcode.utilities.toFixed
 
-@TeleOp(name = "PidTest")
-class PidTest : MOETeleOp() {
-    override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
-        return ref["chicken"]
-    }
-
+@TeleOp(name = "DiagonalStrafeTest")
+class DiagonalStrafeTest : MOETeleOp() {
     override fun initOpMode() {
-//        ref.setValue(MOEPidValues(0.01, 0.0, 0.0))
-        //        telemetry.addData("testagain")
-        //        robot.odometry.servos.initServosUp()
+
     }
 
-    lateinit var pid:MOETurnPid
+    lateinit var pid: MOETurnPid
 
     override fun mainLoop() {
-            pid.setpoint = 180.0
-        //        pid.setOutputLimits(0.25)
-        while (moeOpMode.iOpModeIsActive()) {
 
-            val output = pid.getOutput(robot.gyro.getRawAngle())
-            telemetry.addData(robot.gyro.getRawAngle().toFixed(4))
-            telemetry.addData(output.toFixed(4))
-            telemetry.addData(pid)
-            telemetry.update()
-            robot.chassis.turnPower(output)
-            //            waitForGamepad()
-        }
     }
 
     override fun onConfigChanged(dataSnapshot: DataSnapshot) {
@@ -48,7 +31,4 @@ class PidTest : MOETeleOp() {
         Log.e("stuff",options.toString())
         pid = MOETurnPid(options)
     }
-    //    private fun waitForGamepad() {
-    //        while (g)
-    //    }
 }

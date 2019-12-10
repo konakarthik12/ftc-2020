@@ -22,7 +22,7 @@ class MOEFancyPid(private var P: Double = 0.0,
 
     fun run(sync: Boolean = true): Job {
         return GlobalScope.launch {
-            while (moeOpMode.opModeIsActive()) {
+            while (moeOpMode.iOpModeIsActive()) {
                 val output1 = getOutput(input())
                 output(output1)
                 if (endCondition(output1)) {

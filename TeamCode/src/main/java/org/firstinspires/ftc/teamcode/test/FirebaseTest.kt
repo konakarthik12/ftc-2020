@@ -20,7 +20,7 @@ class FirebaseTest : MOETeleOp() {
         telemetry.addData("testagain")
     }
 
-    override fun loopStuff() {
+    override fun mainLoop() {
     }
 
     override fun onConfigChanged(dataSnapshot: DataSnapshot) {

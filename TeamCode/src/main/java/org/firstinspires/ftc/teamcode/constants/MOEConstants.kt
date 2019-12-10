@@ -3,7 +3,10 @@ package org.firstinspires.ftc.teamcode.constants
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MotorConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.ServoConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.AutonConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.reflectAutonConfig
 import org.firstinspires.ftc.teamcode.misc.Rectangle
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.PurePursuit.MOEPurePursuitOptions
 import kotlin.math.PI
 import com.qualcomm.robotcore.hardware.DcMotorSimple as Motor
@@ -31,8 +34,6 @@ MOEConstants {
 
             const val MaxPower = 0.9
         }
-
-
     }
 
     object OutTakeSystem {
@@ -46,7 +47,8 @@ MOEConstants {
     object FoundationSystem {
         object Servos {
             object Configs {
-                val FoundationServo = ServoConfig("FNDS23")
+                val FoundationServo1 = ServoConfig("FDRS23", 0.0, 1.0, Servo.Direction.FORWARD)
+                val FoundationServo2 = ServoConfig("FDLS20", 0.0, 1.0, Servo.Direction.REVERSE)
             }
         }
     }
@@ -105,9 +107,16 @@ MOEConstants {
     }
 
     object Autonomous {
-        object Template {
-            val SKYSTONE_CROP = Rectangle(0, 0, 0, 0)
-        }
+        val Left = AutonConfig(
+                skystoneCropRect = Rectangle(0, 0, 0, 0),
+                robotToFieldOffset = 0.0,
+                positionOffsets = Point(0.0, 0.0),// Point(15.0, 96.0),
+                topSkystonePosition = Point(96.0 + 4.0, 96.0 - 8.0),
+                afterSkystonePosition = Point(48.0, 96.0),
+                dumpSkystonePosition = Point(48.0, 192.0),
+                parkPosition = Point(63.0, 144.0)
+        )
+        val Right = reflectAutonConfig(Left)
     }
 
     object Units {
@@ -118,7 +127,20 @@ MOEConstants {
 //        const val METERS_PER_ASTAR = 0.0127
         const val METERS_PER_ASTAR = METERS_PER_TILE / ASTARS_PER_TILE
         const val ASTARS_PER_METER = ASTARS_PER_TILE / METERS_PER_TILE
+
+        const val SKYSTONE_WIDTH = 4.0 * 2.0
+        const val SKYSTONE_LENGTH = 8.0 * 2.0
+        const val NUM_QUARRY_STONES = 6
+        const val FIELD_SIZE = 288.0
+
+        const val TICKS_PER_ASTAR = 19.8333333
+        const val ASTARS_PER_TICK = 1 / TICKS_PER_ASTAR
     }
 
-
+    object Vuforia {
+        const val LICENSE_KEY = "AVmJqSr/////AAABmeGcV96ftk3KgMDBC6fRLL4Qn/iAktqBNx29ewqo4NPP1TWeg6cpqfRV3dQ3vtDc4LxnL" +
+                "DckSBYdv9v3b1pe2Rq1v+stEVsKhckekqcdpbffWqz+QAyFJF7Mg9q/vOVBXIjvH7CPFVVKiM/M+J3vFw87SFxJKQlZuOM0WGi0hM" +
+                "Jf8CE21ZJKh3h9tCg+/dqEux2FmB7XpezHFFeIqE8EK/3skt8Gjui+ywRSmgyzr+C3GswiIWsUn3YYCS6udgB8O6ntF5RZyrq4dQJ" +
+                "xrdV1Mh1P7dlpGgyml+yiBAKDgoHZPiHKBx1TIY0Gg9QBebnuHdMvEOhK9oOJqtlR7XBO+fRJrXSCBY+9zBHRpZ6zSE0P"
+    }
 }

@@ -15,7 +15,7 @@ class SlamTest : MOETeleOp(useSlam = true) {
     //    val laped = ElapsedTime()
     var speed: Int = 1000;
 
-    override fun loopStuff() {
+    override fun mainLoop() {
         SlamHandler.t265Handler.restart()
         //        count++
         //        telemetry.addData("loop", count++)

@@ -21,7 +21,7 @@ class TurnTest : MOETeleOp() {
         //        robot.odometry.servos.initServosUp()
     }
 
-    override fun loopStuff() {
+    override fun mainLoop() {
 
         robot.chassis.turnPower(gamepad1.left_stick_x.toDouble())
     }

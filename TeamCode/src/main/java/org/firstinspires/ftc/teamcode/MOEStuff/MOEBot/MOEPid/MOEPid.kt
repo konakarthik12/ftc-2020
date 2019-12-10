@@ -13,9 +13,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 data class MOEPidValues(val P: Double = 0.0,
                         val I: Double = 0.0,
                         val D: Double = 0.0,
-                        val F: Double = 0.0
-) {
-}
+                        val F: Double = 0.0)
 
 open class MOEPid(private var P: Double = 0.0,
                   I: Double = 0.0,

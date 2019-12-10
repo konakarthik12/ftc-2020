@@ -26,10 +26,10 @@ class SlamDriveTest : MOETeleOp(useSlam = true) {
         telemetry.addData("testagain")
         robot.odometry.servos.initServosUp()
         robot.slam.options = MOESlamOptions(0.0, 0.0, 0.0)
-        SlamHandler.t265Handler.restart();
+        SlamHandler.t265Handler.restart()
     }
 
-    override fun loopStuff() {
+    override fun mainLoop() {
         if (laped.milliseconds().toInt() > diff) {
             val robotPose = robot.slam.getRawPose()
             moeWebServer.broadcast("data/slam/${robotPose[0]},${robotPose[1]},${robot.gyro.getRawAngle()}")

@@ -12,7 +12,7 @@ class IntakeTest : MOETeleOp() {
         telemetry.addData("testagain")
     }
 
-    override fun loopStuff() {
+    override fun mainLoop() {
         val P = (gamepad1.left_trigger - gamepad1.right_trigger).toDouble() * 0.4
         telemetry.addData("Power: ", P)
         telemetry.update()

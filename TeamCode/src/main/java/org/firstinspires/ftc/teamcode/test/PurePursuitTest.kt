@@ -14,7 +14,7 @@ class PurePursuitTest : MOETeleOp() {
         telemetry.addData("testagain$string")
     }
 
-    override fun loopStuff() {
+    override fun mainLoop() {
         robot.purePursuit.move(0.0, 50.0, 0.0)
     }
 }

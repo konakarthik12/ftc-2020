@@ -8,12 +8,11 @@ import org.firstinspires.ftc.teamcode.utilities.addData
 
 @TeleOp(name = "KotlinTest")
 class KotlinTest : MOETeleOp() {
-
     override fun initOpMode() {
         telemetry.addData("testagain")
     }
 
-    override fun loopStuff() {
+    override fun mainLoop() {
 //        mainGamepad.onButton(Button.A) {
 //            Log.e("stuff", "A is $it")
 //        }

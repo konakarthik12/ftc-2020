@@ -7,6 +7,8 @@ open class Point(var x: Double, var y: Double) {
     operator fun plus(other: Point): Point = Point(this.x + other.x, this.y + other.y)
     operator fun minus(other: Point): Point = Point(this.x - other.x, this.y - other.y)
     open operator fun times(value: Double): Point = Point(this.x * value, this.y * value)
+    operator fun component1(): Double = x
+    operator fun component2(): Double = y
     operator fun times(value: Point): Double = dot(value)
     open operator fun div(value: Double): Point = Point(this.x / value, this.y / value)
 

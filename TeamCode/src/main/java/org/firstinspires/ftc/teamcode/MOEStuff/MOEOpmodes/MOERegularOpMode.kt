@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEConfig
 import org.firstinspires.ftc.robotcore.external.Telemetry
@@ -16,42 +17,44 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRobotRef
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import org.firstinspires.ftc.teamcode.utilities.addData
-import org.firstinspires.ftc.teamcode.utilities.wait
 
-abstract class MOEOpMode : LinearOpMode(), MOEFirebase, OpModeInterface {
+abstract class MOERegularOpMode : OpMode(), MOEFirebase, OpModeInterface {
     val firelog = MOETelemetry(telemetry)
     lateinit var ref: DatabaseReference
     lateinit var robot: MOEBot
+    var opModeIsActive: Boolean = false
 
-    override fun iOpModeIsActive(): Boolean = opModeIsActive()
+    override fun iOpModeIsActive(): Boolean = opModeIsActive
 
     override val iTelemetry: Telemetry
-        get() = this.telemetry
+        get() = telemetry
 
     override val iHardwareMap: HardwareMap
         get() = this.hardwareMap
 
     override val iIsStopRequested: Boolean
-        get() = this.isStopRequested
+        get() = !this.opModeIsActive
 
-    final override fun runOpMode() {
+//    override fun iOpModeIsActive(): Boolean =
+
+    override fun init() {
+        opModeIsActive = false
         moeDoubleInternalInit()
         moeInternalInit()
         setRobotRef(robot)
         initOpMode()
         moeInternalPostInit()
-        waitForStart()
         resetRobotValues()
-        run()
     }
+
+    override fun loop() {
+        opModeIsActive = true
+        mainLoop()
+    }
+
+    abstract fun mainLoop()
 
     abstract fun moeInternalPostInit()
-
-    override fun waitForStart() {
-        while (!isStarted) {
-            notifyTelemetry()
-        }
-    }
 
     private fun resetRobotValues() {
         robot.resetValues()
@@ -89,6 +92,4 @@ abstract class MOEOpMode : LinearOpMode(), MOEFirebase, OpModeInterface {
     abstract fun moeInternalInit()
 
     abstract fun initOpMode()
-
-    abstract fun run()
 }

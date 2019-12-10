@@ -7,8 +7,6 @@ import org.firstinspires.ftc.teamcode.utilities.addData
 
 @TeleOp(name = "MotorTest")
 class MotorTest : MOETeleOp() {
-
-
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return ref
     }
@@ -18,7 +16,7 @@ class MotorTest : MOETeleOp() {
         robot.odometry.servos.initServosUp()
     }
 
-    override fun loopStuff() {
+    override fun mainLoop() {
         robot.chassis.setPower(FLP = 1.0, FRP = 0.0, BLP = 0.0, BRP = 0.0)
     }
 }

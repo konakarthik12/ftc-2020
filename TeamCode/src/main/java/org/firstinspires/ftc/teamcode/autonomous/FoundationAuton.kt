@@ -8,30 +8,27 @@ import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.utilities.SkyStoneLocation
 import org.firstinspires.ftc.teamcode.utilities.addData
 import org.firstinspires.ftc.teamcode.utilities.getSkyStoneLocationFromBitmap
+import org.firstinspires.ftc.teamcode.utilities.wait
 
-@Autonomous(name = "AutonTemplete")
-class AutonTemplate : MOEAuton(isLeft = true) {
+@Autonomous(name = "FoundationAuton")
+class FoundationAuton : MOEAuton(isLeft = true) {
     override fun initOpMode() {
         Log.e("stuffe", "stuffe")
         telemetry.addData("testagain")
     }
 
     override fun run() {
-        val bm = robot.camera.getCroppedBitmap(config.skystoneCropRect)!!
-        val location = getSkyStoneLocationFromBitmap(bm)
+        robot.chassis.moveForwardAStars(72.0, 0.3)
 
-        when (location) {
-            SkyStoneLocation.LEFT -> {
+        robot.foundation.closeServo()
+        wait(3000)
 
-            }
-            SkyStoneLocation.MIDDLE -> {
+        robot.chassis.moveBackwardSlamAStars(69.0, 0.3)
+        wait(3000)
 
-            }
-            SkyStoneLocation.RIGHT -> {
+        robot.foundation.openServo()
+        wait(3000)
 
-            }
-        }
-
-        robot.chassis.moveTo(-1.0 /* foundation */, -1.0)
+        robot.chassis.jitter(4.0, 0.4)
     }
 }

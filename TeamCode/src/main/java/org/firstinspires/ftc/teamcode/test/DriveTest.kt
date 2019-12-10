@@ -18,7 +18,7 @@ class DriveTest : MOETeleOp(useSlam = false) {
         robot.odometry.servos.initServosUp()
     }
 
-    override fun loopStuff() {
+    override fun mainLoop() {
 
 //        telemetry.addData("slam", robot.slam.getTheta())
         telemetry.update()

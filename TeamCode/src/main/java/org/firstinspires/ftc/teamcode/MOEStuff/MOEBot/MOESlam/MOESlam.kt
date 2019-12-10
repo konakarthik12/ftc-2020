@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.toRadians
 import org.firstinspires.ftc.teamcode.utilities.quaternionToHeading
 import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.toNormalAngle
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
 
 data class MOESlamOptions(val robotToFieldTheta: Double, val xOffset: Double, val yOffset: Double)
 
@@ -28,6 +29,10 @@ class MOESlam() {
 
     init {
         checkConnection()
+    }
+
+    fun setOptions(thetaInDegrees: Double, xOffset: Double, yOffset: Double) {
+        options = MOESlamOptions(toRadians(thetaInDegrees), xOffset, yOffset)
     }
 
     private fun checkConnection() {

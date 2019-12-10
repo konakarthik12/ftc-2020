@@ -10,13 +10,16 @@ import kotlin.math.sin
 
 @TeleOp(name = "DuoDrive")
 class DuoDrive : MOETeleOp() {
+//    var outtakeOpen = true
+//    var rightBumperPressed = false
+
     override fun initOpMode() {
         Log.e("stuffe", "stuffe")
         telemetry.addData("testagain")
+
     }
 
-    override fun loopStuff() {
-
+    override fun controllerLoop() {
         harvester()
         foundation()
         chassis()
@@ -31,8 +34,9 @@ class DuoDrive : MOETeleOp() {
 
     private fun foundation() {
         robot.foundation.foundationServo.setPosition(if (gamepad1.left_bumper) 1.0 else 0.0)
+//        robot.foundation.foundationServo.servo1.setPosition(if (gamepad1.left_bumper) 1.0 else 0.0)
+//        robot.foundation.foundationServo.servo.setPosition(if (gamepad1.left_bumper) 1.0 else 0.0)
     }
-
 
     private fun chassis() {
         val bumperThrottle = 0.5
@@ -46,20 +50,20 @@ class DuoDrive : MOETeleOp() {
         var rawY = (gamepad1.left_stick_y).toDouble()
         var rot = gamepad1.right_stick_x.toDouble()
 
-        var throttle = (maxPower - minPower) * gamepad1.right_trigger + minPower;
-        if (gamepad1.right_bumper) {
-            throttle *= bumperThrottle
-            if (angle > 0) angle = -90.0
-            if (angle > 0) angle = 90.0
+        var throttle = (maxPower - minPower) * gamepad1.left_trigger + minPower
+//        if (gamepad1.right_bumper) {
+//            throttle *= bumperThrottle
+//            if (angle > 0) angle = -90.0
+//            if (angle > 0) angle = 90.0
+//        }
 
-        }
         rawX *= scaleX * throttle
         rawY *= scaleY * throttle
         rot *= scaleRot * throttle
 
-        val fwd = -rawX * sin(Math.toRadians(angle)) + rawY * cos(Math.toRadians(angle))
-        val str = rawX * cos(Math.toRadians(angle)) + rawY * sin(Math.toRadians(angle))
-        //        var fwd = rawY
+        val fwd = rawX * sin(Math.toRadians(angle)) + rawY * cos(Math.toRadians(angle))
+        val str = rawX * cos(Math.toRadians(angle)) - rawY * sin(Math.toRadians(angle))
+
         var FRP = fwd - str - rot
         var FLP = fwd + str + rot
         var BRP = fwd + str - rot
@@ -81,11 +85,28 @@ class DuoDrive : MOETeleOp() {
 
     private fun harvester() {
         val outPower = if (gamepad1.b) 0.5 else 0.0
-        val P = (outPower - gamepad1.left_trigger) * MOEConstants.IntakeSystem.Motors.MaxPower
+        val P = (outPower - gamepad1.right_trigger) * MOEConstants.IntakeSystem.Motors.MaxPower
         //        telemetry.addData("Power: ", P)
         //        telemetry.update()
         robot.harvester.setPower(P)
-        val outtake = if (gamepad1.x || gamepad2.x) 0.0 else 1.0
+        var outtake: Double = 0.0
+//
+//        if (gamepad1.right_bumper && !rightBumperPressed){
+//            rightBumperPressed = true
+//            outtakeOpen = !outtakeOpen
+//        }
+//        if (rightBumperPressed && !gamepad1.right_bumper){
+//            rightBumperPressed = false
+//        }
+
+        if (gamepad1.x) {
+            outtake = 0.0
+        } else if (gpad1.right_bumper.isToggled) {
+            outtake = 1.0
+        } else {
+            outtake = 0.6
+        }
+
         robot.outTake.outTakeServo.setPosition(outtake)
     }
 }

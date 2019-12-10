@@ -6,6 +6,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
 import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.lerp
 
 data class ServoConfig(val name: String, val min: Double = 0.0, val max: Double = 1.0, val direction: Servo.Direction = Servo.Direction.FORWARD)
@@ -29,7 +30,7 @@ class MOEServo(config: ServoConfig) {
         val launch = GlobalScope.launch {
             val time = ElapsedTime()
             val range = initialPosition..destPosition
-            while (time.seconds() < duration) {
+            while (time.seconds() < duration && moeOpMode.iOpModeIsActive()) {
                 setPosition(range.lerp(time.seconds() / duration))
             }
         }

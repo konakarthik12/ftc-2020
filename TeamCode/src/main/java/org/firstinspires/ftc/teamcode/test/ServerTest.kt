@@ -17,7 +17,7 @@ class ServerTest : MOETeleOp() {
         telemetry.addData(moeWebServer.address)
     }
 
-    override fun loopStuff() {
+    override fun mainLoop() {
         val randomValues = List(2) { Random.nextInt(-50, 50) }
 
         moeWebServer.broadcast("data/slam/${randomValues.joinToString(separator = ",")}")

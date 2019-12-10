@@ -15,14 +15,17 @@ class DriveGamepad1 : MOETeleOp() {
         telemetry.addData("testagain")
     }
 
-    override fun loopStuff() {
-        telemetry.addData(robot.gyro.eulerAngle)
+    override fun mainLoop() {
+        telemetry.addData(gamepad1.left_trigger.toDouble())
         telemetry.update()
 
-        harvester()
-        foundation()
-        chassis()
-        other()
+        robot.outTake.outTakeServo.setPosition(gamepad1.left_trigger.toDouble())
+
+//        harvester()
+//        foundation()
+
+//        chassis()
+//        other()
     }
 
     private fun other() {

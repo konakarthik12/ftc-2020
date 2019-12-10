@@ -39,7 +39,7 @@ class MOEdometrySystem {
         val opMode = ReferenceHolder.moeOpMode
 
         GlobalScope.launch {
-            while (opMode.opModeIsActive()) {
+            while (opMode.iOpModeIsActive()) {
                 wheels.update()
                 updatePosition()
             }

@@ -10,8 +10,6 @@ import org.firstinspires.ftc.teamcode.utilities.addData
 
 @Autonomous(name = "TurnLeft")
 class TurnLeftTest : MOEAuton() {
-
-
     override fun initOpMode() {
         Log.e("stuffe", "stuffe")
         telemetry.addData("testagain")
@@ -23,5 +21,4 @@ class TurnLeftTest : MOEAuton() {
         Thread.sleep(2000)
         robot.chassis.stop();
     }
-
 }
