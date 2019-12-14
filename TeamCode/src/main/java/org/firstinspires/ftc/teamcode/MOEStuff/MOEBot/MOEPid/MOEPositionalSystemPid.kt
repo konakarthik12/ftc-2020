@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.Powers
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
 
 class MOEPositionalSystemPid(Px: Double = 0.0, Ix: Double = 0.0, Dx: Double = 0.0, Fx: Double = 0.0,
                              Py: Double = 0.0, Iy: Double = 0.0, Dy: Double = 0.0, Fy: Double = 0.0,

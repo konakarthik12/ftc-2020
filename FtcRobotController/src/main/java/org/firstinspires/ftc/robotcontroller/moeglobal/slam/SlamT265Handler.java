@@ -10,6 +10,7 @@ import java.nio.BufferOverflowException;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 
 import static android.hardware.usb.UsbConstants.USB_DIR_OUT;
 import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
@@ -145,10 +146,13 @@ public class SlamT265Handler {
 
     private void checkRestart() {
         if (needsRestart) {
-            Log.e("restarting", "restart");
-            sendCode(DEV_STOP);
 
-            sendInitCode();
+            double[] doubles = Arrays.copyOf(quatAngle, quatAngle.length);
+            while (Arrays.equals(quatAngle, doubles)) {
+                sendCode(DEV_STOP);
+                sendInitCode();
+            }
+            Log.e("restarting", "restart");
         }
 //        try {
 //            Thread.sleep(5000);

@@ -35,7 +35,7 @@ abstract class MOERegularOpMode : OpMode(), MOEFirebase, OpModeInterface {
     override val iIsStopRequested: Boolean
         get() = !this.opModeIsActive
 
-//    override fun iOpModeIsActive(): Boolean =
+    //    override fun iOpModeIsActive(): Boolean =
 
     override fun init() {
         opModeIsActive = false
@@ -49,10 +49,10 @@ abstract class MOERegularOpMode : OpMode(), MOEFirebase, OpModeInterface {
 
     override fun loop() {
         opModeIsActive = true
-        mainLoop()
+        internalLoop()
     }
 
-    abstract fun mainLoop()
+    abstract fun internalLoop()
 
     abstract fun moeInternalPostInit()
 

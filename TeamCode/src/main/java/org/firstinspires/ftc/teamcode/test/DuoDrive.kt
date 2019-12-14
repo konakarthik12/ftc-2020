@@ -9,21 +9,30 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @TeleOp(name = "DuoDrive")
-class DuoDrive : MOETeleOp() {
-//    var outtakeOpen = true
-//    var rightBumperPressed = false
+open class DuoDrive : MOETeleOp() {
+    //    var outtakeOpen = true
+    //    var rightBumperPressed = false
 
     override fun initOpMode() {
+        addListeners()
         Log.e("stuffe", "stuffe")
         telemetry.addData("testagain")
 
     }
 
-    override fun controllerLoop() {
+    private fun addListeners() {
+        gpad1.y.onKeyDown {
+            //            ayyy, it works
+            robot.gyro.resetEulerAngle()
+        }
+    }
+
+    override fun mainLoop() {
         harvester()
         foundation()
         chassis()
         other()
+
     }
 
     private fun other() {
@@ -34,8 +43,8 @@ class DuoDrive : MOETeleOp() {
 
     private fun foundation() {
         robot.foundation.foundationServo.setPosition(if (gamepad1.left_bumper) 1.0 else 0.0)
-//        robot.foundation.foundationServo.servo1.setPosition(if (gamepad1.left_bumper) 1.0 else 0.0)
-//        robot.foundation.foundationServo.servo.setPosition(if (gamepad1.left_bumper) 1.0 else 0.0)
+        //        robot.foundation.foundationServo.servo1.setPosition(if (gamepad1.left_bumper) 1.0 else 0.0)
+        //        robot.foundation.foundationServo.servo.setPosition(if (gamepad1.left_bumper) 1.0 else 0.0)
     }
 
     private fun chassis() {
@@ -45,17 +54,17 @@ class DuoDrive : MOETeleOp() {
         val scaleX = 1
         val scaleY = 0.85
         val scaleRot = 0.75
-        var angle = robot.gyro.eulerAngle
+        val angle = robot.gyro.eulerAngle
         var rawX = -gamepad1.left_stick_x.toDouble()
         var rawY = (gamepad1.left_stick_y).toDouble()
         var rot = gamepad1.right_stick_x.toDouble()
 
-        var throttle = (maxPower - minPower) * gamepad1.left_trigger + minPower
-//        if (gamepad1.right_bumper) {
-//            throttle *= bumperThrottle
-//            if (angle > 0) angle = -90.0
-//            if (angle > 0) angle = 90.0
-//        }
+        val throttle = (maxPower - minPower) * gamepad1.left_trigger + minPower
+        //        if (gamepad1.right_bumper) {
+        //            throttle *= bumperThrottle
+        //            if (angle > 0) angle = -90.0
+        //            if (angle > 0) angle = 90.0
+        //        }
 
         rawX *= scaleX * throttle
         rawY *= scaleY * throttle
@@ -80,7 +89,8 @@ class DuoDrive : MOETeleOp() {
         BLP /= max
         BRP /= max
 
-        robot.chassis.setPower(FLP, FRP, BLP, BRP)
+        val i = 20
+        robot.chassis.setVelocity(FLP * i, FRP * i, BLP * i, BRP * i)
     }
 
     private fun harvester() {
@@ -90,14 +100,14 @@ class DuoDrive : MOETeleOp() {
         //        telemetry.update()
         robot.harvester.setPower(P)
         var outtake: Double = 0.0
-//
-//        if (gamepad1.right_bumper && !rightBumperPressed){
-//            rightBumperPressed = true
-//            outtakeOpen = !outtakeOpen
-//        }
-//        if (rightBumperPressed && !gamepad1.right_bumper){
-//            rightBumperPressed = false
-//        }
+        //
+        //        if (gamepad1.right_bumper && !rightBumperPressed){
+        //            rightBumperPressed = true
+        //            outtakeOpen = !outtakeOpen
+        //        }
+        //        if (rightBumperPressed && !gamepad1.right_bumper){
+        //            rightBumperPressed = false
+        //        }
 
         if (gamepad1.x) {
             outtake = 0.0

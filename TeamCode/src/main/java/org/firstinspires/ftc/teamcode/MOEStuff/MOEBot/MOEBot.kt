@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEChassis
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOEGyro
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOEIMUGyro
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOESlamGyro
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySystem
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEOpMode
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlam
 import org.firstinspires.ftc.teamcode.constants.OpModeInterface
 

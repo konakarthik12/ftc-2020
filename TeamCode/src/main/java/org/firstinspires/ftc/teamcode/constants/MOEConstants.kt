@@ -82,7 +82,7 @@ MOEConstants {
 
     object SLAM {
         const val CAMERA_DISTANCE = 11.0 * Units.METERS_PER_ASTAR
-//        const val CAMERA_THETA = -10.0  // Angle relative to robot from camera
+        //        const val CAMERA_THETA = -10.0  // Angle relative to robot from camera
         const val INITIAL_CAMERA_THETA = -82.0
     }
 
@@ -110,7 +110,7 @@ MOEConstants {
         val Left = AutonConfig(
                 skystoneCropRect = Rectangle(0, 0, 0, 0),
                 robotToFieldOffset = 0.0,
-                positionOffsets = Point(0.0, 0.0),// Point(15.0, 96.0),
+                positionOffsets = Point(0.0, 0.0), // Point(15.0, 96.0),
                 topSkystonePosition = Point(96.0 + 4.0, 96.0 - 8.0),
                 afterSkystonePosition = Point(48.0, 96.0),
                 dumpSkystonePosition = Point(48.0, 192.0),
@@ -124,7 +124,7 @@ MOEConstants {
         const val FEET_PER_TILE = 2
         const val METERS_PER_TILE = FEET_PER_TILE * METER_PER_FEET
         const val ASTARS_PER_TILE = 48
-//        const val METERS_PER_ASTAR = 0.0127
+        //        const val METERS_PER_ASTAR = 0.0127
         const val METERS_PER_ASTAR = METERS_PER_TILE / ASTARS_PER_TILE
         const val ASTARS_PER_METER = ASTARS_PER_TILE / METERS_PER_TILE
 
@@ -142,5 +142,9 @@ MOEConstants {
                 "DckSBYdv9v3b1pe2Rq1v+stEVsKhckekqcdpbffWqz+QAyFJF7Mg9q/vOVBXIjvH7CPFVVKiM/M+J3vFw87SFxJKQlZuOM0WGi0hM" +
                 "Jf8CE21ZJKh3h9tCg+/dqEux2FmB7XpezHFFeIqE8EK/3skt8Gjui+ywRSmgyzr+C3GswiIWsUn3YYCS6udgB8O6ntF5RZyrq4dQJ" +
                 "xrdV1Mh1P7dlpGgyml+yiBAKDgoHZPiHKBx1TIY0Gg9QBebnuHdMvEOhK9oOJqtlR7XBO+fRJrXSCBY+9zBHRpZ6zSE0P"
+    }
+
+    object Gamepad {
+        const val ON_THRESHOLD = 0.95
     }
 }

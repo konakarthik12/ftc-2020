@@ -31,7 +31,7 @@ class MOEVuforia() {
         setVuforiaSettings()
         vuforia = ClassFactory.getInstance().createVuforia(parameters)
         vuforia.enableConvertFrameToBitmap()
-        vuforia.setFrameQueueCapacity(1)
+        vuforia.frameQueueCapacity = 1
     }
 
     private fun setVuforiaSettings() {
@@ -42,7 +42,7 @@ class MOEVuforia() {
         val frame: VuforiaLocalizer.CloseableFrame
 
         try {
-            frame = vuforia.getFrameQueue().take()
+            frame = vuforia.frameQueue.take()
         } catch (e: InterruptedException) {
             return null
         }

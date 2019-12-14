@@ -14,8 +14,5 @@ class ControllerTest : MOETeleOp() {
     }
 
     override fun mainLoop() {
-//        mainGamepad.onButton(Button.A) {
-//            Log.e("stuff", "A is $it")
-//        }
     }
 }
