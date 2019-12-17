@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.constants
 
+import com.qualcomm.hardware.bosch.BNO055IMU
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MotorConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.ServoConfig
@@ -146,5 +147,14 @@ MOEConstants {
 
     object Gamepad {
         const val ON_THRESHOLD = 0.95
+    }
+
+    object GyroConfig {
+        val parameters = BNO055IMU.Parameters().apply {
+            angleUnit = BNO055IMU.AngleUnit.DEGREES
+            mode = BNO055IMU.SensorMode.GYRONLY
+            accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC
+            loggingEnabled = false
+        }
     }
 }

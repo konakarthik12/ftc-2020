@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.utilities.SkyStoneLocation
 import org.firstinspires.ftc.teamcode.utilities.addData
 import org.firstinspires.ftc.teamcode.utilities.getSkyStoneLocationFromBitmap
 
-@Autonomous(name = "AutonTemplete")
+@Autonomous(name = "AutonTemplate")
 class AutonTemplate : MOEAuton(isLeft = true) {
     override fun initOpMode() {
         Log.e("stuffe", "stuffe")

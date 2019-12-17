@@ -1,7 +1,8 @@
-package org.firstinspires.ftc.teamcode.test
+package org.firstinspires.ftc.teamcode.teleop
 
 import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.utilities.addData
@@ -9,7 +10,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @TeleOp(name = "DuoDrive")
-open class DuoDrive : MOETeleOp() {
+open class DuoDrive(usingSlam: Boolean = false) : MOETeleOp(useSlam = usingSlam) {
     //    var outtakeOpen = true
     //    var rightBumperPressed = false
 
@@ -73,24 +74,7 @@ open class DuoDrive : MOETeleOp() {
         val fwd = rawX * sin(Math.toRadians(angle)) + rawY * cos(Math.toRadians(angle))
         val str = rawX * cos(Math.toRadians(angle)) - rawY * sin(Math.toRadians(angle))
 
-        var FRP = fwd - str - rot
-        var FLP = fwd + str + rot
-        var BRP = fwd + str - rot
-        var BLP = fwd - str + rot
-
-        var max = if (FRP > maxPower) FRP else 1.0
-        if (max < FRP) max = FRP
-        if (max < BLP) max = BLP
-        if (max < BRP) max = BRP
-        if (max < FLP) max = FLP
-
-        FLP /= max
-        FRP /= max
-        BLP /= max
-        BRP /= max
-
-        val i = 20
-        robot.chassis.setVelocity(FLP * i, FRP * i, BLP * i, BRP * i)
+        robot.chassis.setPower(Powers.mechanumToPowers(fwd, str, rot, maxPower))
     }
 
     private fun harvester() {

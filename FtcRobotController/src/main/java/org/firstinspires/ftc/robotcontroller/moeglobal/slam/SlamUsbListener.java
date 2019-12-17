@@ -40,6 +40,9 @@ public class SlamUsbListener {
     }
 
     public static synchronized void handleT265DeviceAdded(UsbDevice device) {
+        SlamT265Handler t265Handler = SlamHandler.t265Handler;
+        if (t265Handler != null)
+            t265Handler.killStream();
         SlamHandler.t265Handler = new SlamT265Handler(device);
     }
 }

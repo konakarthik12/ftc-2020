@@ -11,7 +11,7 @@ import static android.hardware.usb.UsbManager.ACTION_USB_DEVICE_DETACHED;
 import static org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamUsbListener.handleLizardDeviceAdded;
 
 public class SlamHandler {
-    public static SlamT265Handler t265Handler;
+    public static volatile SlamT265Handler t265Handler;
     public static IntentFilter USBAddOrRemove = new IntentFilter();
 //    private static SlamUsbListener usbReceiver = new SlamUsbListener();
 
@@ -34,12 +34,14 @@ public class SlamHandler {
         UsbDevice device = SlamLizardHandler.getDevice();
         if (device != null) {
             SlamUsbListener.handleLizardDeviceAdded(device);
-            Log.e("found Lizard", "foundy");
+            Log.e("slam", "lizard");
         } else {
             Log.e("no lizard", "np");
 
-            device = SlamT265Handler.getDevice();
+            device = SlamT265Handler.Companion.getDevice();
             if (device != null) {
+                Log.e("slam", "legit");
+
                 SlamUsbListener.handleT265DeviceAdded(device);
             }
         }

@@ -36,3 +36,4 @@ infix fun <A, B> A.and(second: B): Pair<A, B> {
 fun ClosedFloatingPointRange<Double>.lerp(t: Double): Double {
     return this.start + t * (this.endInclusive - this.start)
 }
+

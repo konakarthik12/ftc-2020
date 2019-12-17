@@ -2,17 +2,19 @@ package org.firstinspires.ftc.teamcode.utilities
 
 import android.graphics.Bitmap
 import android.util.Range
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.misc.Rectangle
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.nio.file.Path
 
 
 fun Telemetry.addData(data: Any) {
     this.addData(data.toString(), "")
-//    this.update()
+    //    this.update()
 }
 
 operator fun DatabaseReference.get(child: String): DatabaseReference {
@@ -26,6 +28,7 @@ fun Bitmap.crop(frame: Rectangle): Bitmap {
 fun Bitmap.saveTo(file: String) {
     saveTo(File(file))
 }
+
 fun DatabaseReference.delete() {
     this.setValue(null)
 }
@@ -50,6 +53,11 @@ fun Double.toFixed(digits: Int): String = "%.${digits}f".format(this)
 fun Bitmap.scale(width: Int, height: Int): Bitmap? =
         Bitmap.createScaledBitmap(this, width, height, false)
 
+operator fun DataSnapshot.get(child: String): DataSnapshot {
+    return child(child)
+}
+
 //operator fun DataSnapshot.get(s: String): Rectangle {
 //
 //}
+

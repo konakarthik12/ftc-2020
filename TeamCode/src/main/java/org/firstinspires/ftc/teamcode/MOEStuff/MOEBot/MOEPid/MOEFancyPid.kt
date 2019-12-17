@@ -7,10 +7,10 @@ import kotlinx.coroutines.runBlocking
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
 import kotlin.math.abs
 
-class MOEFancyPid(private var P: Double = 0.0,
-                  I: Double = 0.0,
-                  private var D: Double = 0.0,
-                  private var F: Double = 0.0) : MOEPid(P, I, D) {
+open class MOEFancyPid(private var P: Double = 0.0,
+                       I: Double = 0.0,
+                       private var D: Double = 0.0,
+                       private var F: Double = 0.0) : MOEPid(P, I, D) {
 
     var input: () -> Double = { 0.0 }
 

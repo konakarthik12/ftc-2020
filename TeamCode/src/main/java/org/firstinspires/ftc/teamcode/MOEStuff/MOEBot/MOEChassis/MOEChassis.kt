@@ -5,7 +5,6 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEtor
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.DriveTrain.Motors.Configs
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 
-data class Powers(val FLP: Double, val FRP: Double, val BLP: Double, val BRP: Double)
 
 class MOEChassis {
     val astar = MOEAstarSystem(this)
@@ -26,6 +25,7 @@ class MOEChassis {
     fun setVelocity(LV: Double, RV: Double) = setVelocity(LV, RV, LV, RV)
 
     fun setPower(powers: Powers) = setPower(powers.FLP, powers.FRP, powers.BLP, powers.BRP)
+    fun setVelocity(powers: Powers) = setVelocity(powers.FLP, powers.FRP, powers.BLP, powers.BRP)
 
     fun setPower(FLP: Double, FRP: Double, BLP: Double, BRP: Double) {
         frontLeftMotor.setPower(FLP)
@@ -74,5 +74,9 @@ class MOEChassis {
         xPID.input = { robot.slam.getRobotPose().x }
         xPID.output = { robot.chassis.turnPower(it) }
         xPID.run()
+    }
+
+    fun getVelocities(): List<Double> {
+        return motors.map { it.getVelocity() }
     }
 }

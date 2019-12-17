@@ -16,7 +16,7 @@ class MOEButton(private val get: () -> Boolean) {
         set(value) {
             if (field == value) return
             field = value
-            isToggled = !isToggled
+            if (value) isToggled = !isToggled
             listeners.forEach { it(value) }
         }
     private var listeners = ArrayList<(Boolean) -> Unit>()
@@ -32,7 +32,7 @@ class MOEButton(private val get: () -> Boolean) {
 
     }
 
-    private fun onKey(function: (currentState: Boolean) -> Unit) {
+    fun onKey(function: (currentState: Boolean) -> Unit) {
         listeners.add(function)
     }
 

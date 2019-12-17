@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpM
 
 data class MOESlamOptions(val robotToFieldTheta: Double, val xOffset: Double, val yOffset: Double)
 
-class MOESlam() {
+class MOESlam(val setInitialOffsets: Boolean = false) {
     lateinit var options: MOESlamOptions
 
     constructor(options: MOESlamOptions) : this() {
@@ -29,6 +29,10 @@ class MOESlam() {
 
     init {
         checkConnection()
+
+        if (setInitialOffsets) {
+            setInitialOffsets()
+        }
     }
 
     fun setOptions(thetaInDegrees: Double, xOffset: Double, yOffset: Double) {
@@ -92,6 +96,15 @@ class MOESlam() {
     private fun setOffset(curPose: FloatArray) {
         this.slamOffset = curPose.copyOf()
     }
+
+    private fun setInitialOffsets() {
+        val point = Point(0.0, 0.0).getRelativePoint(
+                distanceFromThis = SLAM.CAMERA_DISTANCE,
+                theta = toRadians(getTheta() + SLAM.INITIAL_CAMERA_THETA)
+        );
+        setOffset(floatArrayOf(point.x.toFloat(), point.y.toFloat()))
+    };
+    fun restart() = handler.restart()
 
     fun getQuadTheta(): DoubleArray = handler.quatAngle
 }

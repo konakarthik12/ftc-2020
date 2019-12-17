@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEConfig
@@ -15,10 +14,9 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOETelemet
 import org.firstinspires.ftc.teamcode.constants.OpModeInterface
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRobotRef
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import org.firstinspires.ftc.teamcode.utilities.addData
 
-abstract class MOERegularOpMode : OpMode(), MOEFirebase, OpModeInterface {
+abstract class MOERegularOpMode() : OpMode(), MOEFirebase, OpModeInterface {
     val firelog = MOETelemetry(telemetry)
     lateinit var ref: DatabaseReference
     lateinit var robot: MOEBot
@@ -45,6 +43,7 @@ abstract class MOERegularOpMode : OpMode(), MOEFirebase, OpModeInterface {
         initOpMode()
         moeInternalPostInit()
         resetRobotValues()
+        notifyInitFinished()
     }
 
     override fun loop() {
@@ -84,7 +83,7 @@ abstract class MOERegularOpMode : OpMode(), MOEFirebase, OpModeInterface {
         ref = customRef
     }
 
-    private fun notifyTelemetry() {
+    private fun notifyInitFinished() {
         telemetry.addData("waiting for start")
         telemetry.update()
     }

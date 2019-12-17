@@ -46,6 +46,8 @@ public class MOEServer extends WebSocketServer {
     private final ClassLoader contextClassLoader;
     private TeamLessClassLoader parent;
 
+    File dexFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/firecode/classes.dex");
+
     MOEServer(Context context) {
         super(new InetSocketAddress(0));
         sharedPref = context.getSharedPreferences(
@@ -53,10 +55,9 @@ public class MOEServer extends WebSocketServer {
         editor = sharedPref.edit();
         absolutePath = ContextCompat.getCodeCacheDir(context).getAbsolutePath();
         contextClassLoader = context.getClassLoader();
-
+        dexFile.mkdirs();
     }
 
-    File dexFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/firecode/classes.dex");
 
     @Override
     public void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
@@ -77,6 +78,7 @@ public class MOEServer extends WebSocketServer {
 
     private void writeDex(ByteBuffer message) {
         try {
+//            Log.e("happening", dexFile.getAbsolutePath());
             FileChannel fc = new FileOutputStream(dexFile).getChannel();
             fc.write(message);
             fc.close();
@@ -117,6 +119,11 @@ public class MOEServer extends WebSocketServer {
         String[] teleDetails = tele.split("/");
         for (int i = 0; i < teleDetails.length; i += 2) {
             opModeMetaAndClassMap.put(teleDetails[i], getOpModeMetaAndClass(classLoader, teleDetails[i], teleDetails[i + 1], false));
+        }
+        for (Map.Entry<String, OpModeMetaAndClass> stringOpModeMetaAndClassEntry : opModeMetaAndClassMap.entrySet()) {
+            if (stringOpModeMetaAndClassEntry.getValue().clazz == null) {
+                Log.e("we" + stringOpModeMetaAndClassEntry.getKey(), "failed");
+            }
         }
         ReflectionHolder.replaceOpModes(opModeMetaAndClassMap);
         refreshUI();

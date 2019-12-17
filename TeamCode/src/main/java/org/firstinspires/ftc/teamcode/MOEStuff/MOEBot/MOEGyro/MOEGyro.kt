@@ -27,9 +27,7 @@ abstract class MOEGyro {
     abstract fun getRawEulerAngle(): Double
 
 
-    open fun init(sync: Boolean = false) {
-
-    }
+    open fun init(sync: Boolean = false) {}
 
 
     var eulerAngle: Double

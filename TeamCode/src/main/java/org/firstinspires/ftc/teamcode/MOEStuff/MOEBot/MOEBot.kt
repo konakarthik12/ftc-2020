@@ -8,7 +8,8 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySyste
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlam
 import org.firstinspires.ftc.teamcode.constants.OpModeInterface
 
-class MOEBot(opMode: OpModeInterface, useCamera: Boolean = false, val useSlam: Boolean = false,
+class MOEBot(opMode: OpModeInterface, useGyro: Boolean = true,
+             useCamera: Boolean = false, val useSlam: Boolean = false,
              val thetaOffset: Double = 0.0) {
     val foundation = MOEFoundation()
     val outTake = MOEOutTake()
@@ -16,14 +17,24 @@ class MOEBot(opMode: OpModeInterface, useCamera: Boolean = false, val useSlam: B
     var harvester: MOEHarvester = MOEHarvester()
     var odometry: MOEdometrySystem = MOEdometrySystem()
     var purePursuit: MOEPurePursuitHandler = MOEPurePursuitHandler()
-    var vuforia: MOEVuforia = MOEVuforia()
-    var gyro: MOEGyro = if (useSlam) MOESlamGyro() else MOEIMUGyro()
+    lateinit var gyro: MOEGyro
+
+    init {
+        if (useGyro) {
+            gyro = (if (useSlam) MOESlamGyro() else MOEIMUGyro())
+        }
+    }
+
+    lateinit var vuforia: MOEVuforia
     lateinit var camera: MOECamera
     lateinit var slam: MOESlam
 
     init {
-        if (useCamera) camera = MOECamera(opMode)
-        if (useSlam) slam = MOESlam()
+        if (useCamera) {
+            camera = MOECamera(opMode)
+            vuforia = MOEVuforia()
+        }
+        if (useSlam) slam = MOESlam(setInitialOffsets = false)
     }
 
     fun resetValues() {
