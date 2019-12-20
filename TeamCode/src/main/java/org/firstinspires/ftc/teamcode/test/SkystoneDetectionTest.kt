@@ -3,10 +3,9 @@ package org.firstinspires.ftc.teamcode.test
 
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
-import org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
 import org.firstinspires.ftc.teamcode.utilities.addData
-import org.firstinspires.ftc.teamcode.misc.Rectangle
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Rectangle
 
 @Autonomous(name = "SkystoneDetection", group = "test")
 class SkystoneDetectionTest : MOEAuton() {

@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.closestAngleDiffere
 class MOETurnPid(P: Double = 0.0,
                  I: Double = 0.0,
                  D: Double = 0.0,
-                 F: Double = 0.0) : MOEPid(P, I, D, F) {
+                 F: Double = 0.0) : MOEFancyPid(P, I, D, F) {
 
     constructor(options: MOEPidValues) : this(options.P, options.I, options.D, options.F)
 

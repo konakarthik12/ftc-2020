@@ -1,15 +1,13 @@
 package org.firstinspires.ftc.teamcode.utilities
 
 import android.graphics.Bitmap
-import android.util.Range
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import org.firstinspires.ftc.robotcore.external.Telemetry
-import org.firstinspires.ftc.teamcode.misc.Rectangle
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Rectangle
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.nio.file.Path
 
 
 fun Telemetry.addData(data: Any) {

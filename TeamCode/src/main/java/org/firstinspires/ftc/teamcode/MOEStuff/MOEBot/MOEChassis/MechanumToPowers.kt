@@ -1,26 +1,36 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis
 
-data class Powers(val FLP: Double, val FRP: Double, val BLP: Double, val BRP: Double) {
+import kotlin.math.abs
+
+
+data class Powers(var FLP: Double, var FRP: Double, var BLP: Double, var BRP: Double) {
+
+    constructor(powers: List<Double>) : this(powers[0], powers[1], powers[2], powers[3])
+    constructor(powers: Array<Double>) : this(powers[0], powers[1], powers[2], powers[3])
+
     companion object {
+
         fun mechanumToPowers(fwd: Double, str: Double, rot: Double, maxPower: Double = 1.0): Powers {
-            var FRP = fwd - str - rot
             var FLP = fwd + str + rot
-            var BRP = fwd + str - rot
+            var FRP = fwd - str - rot
             var BLP = fwd - str + rot
+            var BRP = fwd + str - rot
+            val powers = arrayOf(FLP, FRP, BLP, BRP)
+            var highestPower = abs(powers.maxBy { abs(it) }!!)
 
-            var max = if (FRP > maxPower) FRP else maxPower
-            if (max < FRP) max = FRP
-            if (max < BLP) max = BLP
-            if (max < BRP) max = BRP
-            if (max < FLP) max = FLP
-
-            FLP /= max
-            FRP /= max
-            BLP /= max
-            BRP /= max
-
-            return Powers(FLP, FRP, BLP, BRP)
+            if (highestPower > maxPower) {
+                return Powers(powers.map { it * (maxPower / highestPower) })
+            }
+            return Powers(powers)
         }
+
+    }
+
+    operator fun timesAssign(num: Double) {
+        FLP *= num
+        FRP *= num
+        BLP *= num
+        BRP *= num
     }
 }
 

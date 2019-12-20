@@ -8,8 +8,10 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySyste
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlam
 import org.firstinspires.ftc.teamcode.constants.OpModeInterface
 
-class MOEBot(opMode: OpModeInterface, useGyro: Boolean = true,
-             useCamera: Boolean = false, val useSlam: Boolean = false,
+class MOEBot(opMode: OpModeInterface,
+             useGyro: Boolean = true,
+             useCamera: Boolean = false,
+             val useSlam: Boolean = false,
              val thetaOffset: Double = 0.0) {
     val foundation = MOEFoundation()
     val outTake = MOEOutTake()

@@ -17,12 +17,7 @@ class SlamTest : MOETeleOp(useSlam = true) {
 
     override fun mainLoop() {
         SlamHandler.t265Handler.restart()
-        //        count++
-        //        telemetry.addData("loop", count++)
         val pose = robot.slam.getRawPose()
-        //        MOESocketHandler.moeWebServer.broadcast("data/slam/0,0,0,$quadTheta")
-        //        Thread.sleep(speed.toLong())
-        //        telemetry.addData("", robot.slam.getRawTheta())
 
         telemetry.addData("slam", pose)
         telemetry.addData("slam", robot.slam.getRobotPose())
@@ -39,6 +34,9 @@ class SlamTest : MOETeleOp(useSlam = true) {
     }
 
     override fun initOpMode() {
+        gpad1.a.onKeyDown {
+            robot.slam.restart()
+        }
         telemetry.addData("testagain")
     }
 }

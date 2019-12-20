@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MotorConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.ServoConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.AutonConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.reflectAutonConfig
-import org.firstinspires.ftc.teamcode.misc.Rectangle
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Rectangle
 import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.PurePursuit.MOEPurePursuitOptions
 import kotlin.math.PI
@@ -110,7 +110,7 @@ MOEConstants {
     object Autonomous {
         val Left = AutonConfig(
                 skystoneCropRect = Rectangle(0, 0, 0, 0),
-                robotToFieldOffset = 0.0,
+                robotToFieldOffset = 90.0,
                 positionOffsets = Point(0.0, 0.0), // Point(15.0, 96.0),
                 topSkystonePosition = Point(96.0 + 4.0, 96.0 - 8.0),
                 afterSkystonePosition = Point(48.0, 96.0),

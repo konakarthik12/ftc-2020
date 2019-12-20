@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlamOptions
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Units
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Autonomous
-import org.firstinspires.ftc.teamcode.misc.Rectangle
+import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Rectangle
 import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Point
 
 data class AutonConfig(val skystoneCropRect: Rectangle,

@@ -23,7 +23,8 @@ class MOESlam(val setInitialOffsets: Boolean = false) {
     //        this.options = options;
     //    }
 
-    lateinit var handler: SlamT265Handler
+    val handler: SlamT265Handler?
+        get() = SlamHandler.t265Handler
     var slamOffset: FloatArray = floatArrayOf(0.0F, 0.0F, 0.0F)
     var thetaOffset: Double = 0.0
 
@@ -40,10 +41,8 @@ class MOESlam(val setInitialOffsets: Boolean = false) {
     }
 
     private fun checkConnection() {
-        val t265Handler = SlamHandler.t265Handler
-        handler = t265Handler
-        handler.killStream()
-        handler.startStream()
+        handler?.killStream()
+        handler?.startStream()
     }
 
     fun getRawOffsetPose(): Point = getRawPose().let {
@@ -82,14 +81,14 @@ class MOESlam(val setInitialOffsets: Boolean = false) {
 
     fun getRawTheta(): Double = quaternionToHeading(getQuadTheta())
 
-    fun getRawPose() = handler.curPose!!
+    fun getRawPose() = handler!!.curPose
 
     override fun toString(): String {
         return getCameraPose().toString()
     }
 
     fun resetValues(thetaOffset: Double) {
-        setOffset(handler.curPose)
+        setOffset(handler?.curPose!!)
         this.thetaOffset = thetaOffset
     }
 
@@ -104,7 +103,7 @@ class MOESlam(val setInitialOffsets: Boolean = false) {
         );
         setOffset(floatArrayOf(point.x.toFloat(), point.y.toFloat()))
     };
-    fun restart() = handler.restart()
+    fun restart() = handler?.restart()
 
-    fun getQuadTheta(): DoubleArray = handler.quatAngle
+    fun getQuadTheta(): DoubleArray = handler!!.quatAngle
 }

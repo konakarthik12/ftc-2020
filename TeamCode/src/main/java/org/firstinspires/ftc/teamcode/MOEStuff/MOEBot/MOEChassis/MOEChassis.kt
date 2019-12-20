@@ -15,6 +15,7 @@ class MOEChassis {
     var backRightMotor = MOEtor(Configs.BackRight)
     val motors = listOf(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor)
 
+
     fun getFrontVelocities() = Pair(frontLeftMotor.getVelocity(), frontRightMotor.getVelocity())
     fun getBackVelocities() = Pair(backLeftMotor.getVelocity(), backRightMotor.getVelocity())
 
@@ -35,11 +36,10 @@ class MOEChassis {
     }
 
     fun setVelocity(FLV: Double, FRV: Double, BLV: Double, BRV: Double) {
-        frontLeftMotor.setPower(FLV)
-        frontRightMotor.setPower(FRV)
-        backLeftMotor.setPower(BLV)
-        backRightMotor.setPower(BRV)
-
+        frontLeftMotor.setVelocity(FLV)
+        frontRightMotor.setVelocity(FRV)
+        backLeftMotor.setVelocity(BLV)
+        backRightMotor.setVelocity(BRV)
     }
 
     fun turnPower(power: Double) = setPower(power, -power)

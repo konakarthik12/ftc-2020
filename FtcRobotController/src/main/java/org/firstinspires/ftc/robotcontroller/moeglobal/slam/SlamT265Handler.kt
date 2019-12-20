@@ -138,9 +138,9 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
     }
 
     private fun actualRestart() {
-        val doubles = Arrays.copyOf(quatAngle, quatAngle.size)
+        val doubles = quatAngle.copyOf()
         var sleep = 100
-        while (isRunning && Arrays.equals(quatAngle, doubles)) {
+        while (isRunning && quatAngle.contentEquals(doubles)) {
             Log.e("restarting", sleep.toString())
             sendCode(Constants.DEV_STOP)
             try {

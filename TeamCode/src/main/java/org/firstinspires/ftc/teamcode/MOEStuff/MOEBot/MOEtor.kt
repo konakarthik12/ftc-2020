@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
 
@@ -45,5 +46,6 @@ class MOEtor(config: MotorConfig) {
         mMotor.zeroPowerBehavior = zeroPowerBehavior;
     }
 
-    fun getVelocity() = mMotor.getVelocity()  // TODO: Check if this is in ticks or angles.
+    fun setVelocity(velocity: Double) = mMotor.setVelocity(velocity, AngleUnit.RADIANS)
+    fun getVelocity() = mMotor.getVelocity(AngleUnit.RADIANS)  // TODO: Check if this is in ticks or angles.
 }

@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRobotRef
 import org.firstinspires.ftc.teamcode.utilities.addData
 
-abstract class MOERegularOpMode() : OpMode(), MOEFirebase, OpModeInterface {
+abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface {
     val firelog = MOETelemetry(telemetry)
     lateinit var ref: DatabaseReference
     lateinit var robot: MOEBot
@@ -51,9 +51,13 @@ abstract class MOERegularOpMode() : OpMode(), MOEFirebase, OpModeInterface {
         internalLoop()
     }
 
-    abstract fun internalLoop()
+    open fun internalLoop() {
 
-    abstract fun moeInternalPostInit()
+    }
+
+    open fun moeInternalPostInit() {
+
+    }
 
     private fun resetRobotValues() {
         robot.resetValues()
@@ -88,7 +92,11 @@ abstract class MOERegularOpMode() : OpMode(), MOEFirebase, OpModeInterface {
         telemetry.update()
     }
 
-    abstract fun moeInternalInit()
+    open fun moeInternalInit() {
 
-    abstract fun initOpMode()
+    }
+
+    open fun initOpMode() {
+
+    }
 }

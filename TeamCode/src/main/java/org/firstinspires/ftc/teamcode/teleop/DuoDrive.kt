@@ -49,7 +49,7 @@ open class DuoDrive(usingSlam: Boolean = false) : MOETeleOp(useSlam = usingSlam)
     }
 
     private fun chassis() {
-        val bumperThrottle = 0.5
+//        val bumperThrottle = 0.5
         val maxPower = 1.0
         val minPower = 0.6
         val scaleX = 1

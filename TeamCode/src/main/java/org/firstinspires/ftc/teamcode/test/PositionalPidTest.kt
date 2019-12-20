@@ -13,9 +13,10 @@ import org.firstinspires.ftc.teamcode.utilities.get
 
 @TeleOp(name = "PositionalPidTest")
 class PositionalPidTest : MOETeleOp(useSlam = true) {
-    lateinit var xPid: MOEPositionalPid
-    lateinit var yPid: MOEPositionalPid
-    lateinit var tPid: MOETurnPid
+    //    lateinit var xPid: MOEPositionalPid
+    //    lateinit var yPid: MOEPositionalPid
+    //    lateinit var tPid: MOETurnPid
+    lateinit var systemPidOld: MOEPositionalSystemPid
 
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return ref["positionalPID"]
@@ -23,39 +24,51 @@ class PositionalPidTest : MOETeleOp(useSlam = true) {
 
     override fun initOpMode() {
         telemetry.addData("testagain")
+
         robot.slam.options = MOESlamOptions(0.0, 0.0, 0.0)
         SlamHandler.t265Handler.restart()
-
-        xPid.setpoint = 192.0
-        yPid.setpoint = 192.0
-        tPid.setpoint = 0.0
-        xPid.setOutputLimits(0.5)
-        yPid.setOutputLimits(0.5)
-        tPid.setOutputLimits(0.5)
+        systemPidOld = MOEPositionalSystemPid(
+                1.0, 0.0, 0.0, 0.0,
+                1.0, 0.0, 0.0, 0.0,
+                1.0, 0.0, 0.0, 0.0)
+        systemPidOld.setSetpoints(0.0)
+        //        xPid.setpoint = 192.0
+        //        yPid.setpoint = 192.0
+        //        tPid.setpoint = 0.0
+        val limit = 0.5
+        systemPidOld.setOutputLimits(limit);
+        //        xPid.setOutputLimits(limit)
+        //        yPid.setOutputLimits(limit)
+        //        tPid.setOutputLimits(limit)
     }
 
     override fun mainLoop() {
         val pose = robot.slam.getScaledRobotPose()
-        val str = xPid.getOutput(pose.x)
-        val fwd = yPid.getOutput(pose.y)
-        val rot = tPid.getOutput(robot.gyro.angle)
+
+        val str = systemPidOld.xPid.getOutput(pose.x)
+        val fwd = systemPidOld.yPid.getOutput(pose.y)
+        val rot = systemPidOld.tPid.getOutput(robot.gyro.angle)
         telemetry.addData("STR", str)
         telemetry.addData("FWD", fwd)
         telemetry.addData("ROT", rot)
+        telemetry.addData("curAngle", robot.gyro.angle)
+        //        telemetry.addData("curAngle", robot.gyro.angle)
 
-        robot.chassis.setPower(mechanumToPowers(fwd = yPid.getOutput(pose.y),
-                                                str = xPid.getOutput(pose.x),
-                                                rot = tPid.getOutput(robot.gyro.angle)))
+        val powers = mechanumToPowers(0.0,0.0,
+//                systemPid.yPid.getOutput(pose.y),
+//                systemPid.xPid.getOutput(pose.x),
+                systemPidOld.tPid.getOutput(robot.gyro.angle)
+        )
+        powers *= 50.0;
+        robot.chassis.setVelocity(powers)
     }
 
     override fun onConfigChanged(dataSnapshot: DataSnapshot) {
         val xOptions = dataSnapshot["x"].getValue(MOEPidValues::class.java)!!
-        xPid = MOEPositionalPid(xOptions)
 
         val yOptions = dataSnapshot["y"].getValue(MOEPidValues::class.java)!!
-        yPid = MOEPositionalPid(yOptions)
 
         val tOptions = dataSnapshot["t"].getValue(MOEPidValues::class.java)!!
-        tPid = MOETurnPid(tOptions)
+        systemPidOld = MOEPositionalSystemPid(xOptions, yOptions, tOptions)
     }
 }
