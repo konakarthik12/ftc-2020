@@ -7,6 +7,6 @@ class MOERawPid(P: Double = 0.0,
     constructor(options: MOEPidValues) : this(options.P, options.I, options.D, options.F)
 
     override fun getError(setPoint: Double, actual: Double): Double {
-        return actual - setPoint
+        return setPoint - actual
     }
 }

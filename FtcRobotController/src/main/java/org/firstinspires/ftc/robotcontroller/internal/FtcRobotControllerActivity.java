@@ -178,10 +178,11 @@ public class FtcRobotControllerActivity extends Activity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.e("usb connect", intent.toString());
+//        Log.e("usb connect", intent.toString());
         if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(intent.getAction())) {
             UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
             RobotLog.vv(TAG, "ACTION_USB_DEVICE_ATTACHED: %s", usbDevice.getDeviceName());
+            Log.e("Device added", String.valueOf(usbDevice.getVendorId()));
 
             SlamHandler.handleDeviceAdded(usbDevice);
             // We might get attachment notifications before the event loop is set up, so
@@ -313,7 +314,7 @@ public class FtcRobotControllerActivity extends Activity {
             ClassManagerFactory.registerFilters();
             try {
                 ClassManagerFactory.processAllClasses();
-            } catch (NoClassDefFoundError e) {
+            } catch (Exception ignored) {
             }
         }
         cfgFileMgr = new RobotConfigFileManager(this);

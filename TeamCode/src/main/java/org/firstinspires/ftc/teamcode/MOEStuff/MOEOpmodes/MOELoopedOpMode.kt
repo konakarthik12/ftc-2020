@@ -17,10 +17,12 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRob
 import org.firstinspires.ftc.teamcode.utilities.addData
 
 abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface {
-    val firelog = MOETelemetry(telemetry)
     lateinit var ref: DatabaseReference
+    val firelog = MOETelemetry(telemetry)
     lateinit var robot: MOEBot
     var opModeIsActive: Boolean = false
+
+
 
     override fun iOpModeIsActive(): Boolean = opModeIsActive
 
@@ -65,27 +67,16 @@ abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface {
 
     private fun moeDoubleInternalInit() {
         setRefs()
-        createGamePads()
-        addListener()
+        addListener()?.let {
+            ref = it
+        }
     }
 
-    private fun createGamePads() {
-        //        mainGamepad = MOEGamePad(gamepad1)
-    }
 
     private fun setRefs() {
         ReferenceHolder.setRefs(this)
     }
 
-    private fun addListener() {
-        val customRef = getCustomRef(MOEConfig.config) ?: return
-        customRef.addValueEventListener(object : MOEEventListener() {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                onConfigChanged(snapshot)
-            }
-        })
-        ref = customRef
-    }
 
     private fun notifyInitFinished() {
         telemetry.addData("waiting for start")

@@ -33,7 +33,7 @@ fun reflectAutonConfig(config: AutonConfig): AutonConfig {
 
 abstract class MOEAuton(val isLeft: Boolean = true,
                         val useCamera: Boolean = true,
-                        val useSlam: Boolean = true) : MOEOpMode() {
+                        val useSlam: Boolean = true) : MOERegularOpMode() {
     protected val config: AutonConfig = if (isLeft) Autonomous.Left else Autonomous.Right
     // The values are ordered from top to bottom.
     private val skystonePositions: ArrayList<Point> = config.topSkystonePosition.let { (x, y) ->

@@ -18,10 +18,10 @@ MOEConstants {
     object DriveTrain {
         object Motors {
             object Configs {
-                val FrontLeft = MotorConfig("FLDM11", Motor.Direction.FORWARD)
-                val FrontRight = MotorConfig("FRDM13", Motor.Direction.REVERSE)
-                val BackLeft = MotorConfig("BLDM10", Motor.Direction.FORWARD)
-                val BackRight = MotorConfig("BRDM12", Motor.Direction.REVERSE)
+                val FrontLeft = MotorConfig("FLDM12", Motor.Direction.FORWARD)
+                val FrontRight = MotorConfig("FRDM10", Motor.Direction.REVERSE)
+                val BackLeft = MotorConfig("BLDM13", Motor.Direction.FORWARD)
+                val BackRight = MotorConfig("BRDM11", Motor.Direction.REVERSE)
             }
         }
     }
@@ -152,7 +152,7 @@ MOEConstants {
     object GyroConfig {
         val parameters = BNO055IMU.Parameters().apply {
             angleUnit = BNO055IMU.AngleUnit.DEGREES
-            mode = BNO055IMU.SensorMode.GYRONLY
+            mode = BNO055IMU.SensorMode.IMU
             accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC
             loggingEnabled = false
         }

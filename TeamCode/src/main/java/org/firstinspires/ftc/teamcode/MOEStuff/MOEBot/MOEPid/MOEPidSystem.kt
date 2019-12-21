@@ -5,6 +5,10 @@ open class MOEPidSystem(vararg val pids: MOEFancyPid) {
         pids.forEach { it.setpoint = goal }
     }
 
+    fun setSetpoints(vararg goals: Double) {
+        pids.forEachIndexed { index: Int, it: MOEFancyPid -> it.setpoint = goals[index] }
+    }
+
     fun setOutputLimits(limit: Double) {
         pids.forEach { it.setOutputLimits(limit) }
     }

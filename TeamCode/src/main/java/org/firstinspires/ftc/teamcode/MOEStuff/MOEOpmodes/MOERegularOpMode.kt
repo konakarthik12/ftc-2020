@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.teleme
 import org.firstinspires.ftc.teamcode.utilities.addData
 import org.firstinspires.ftc.teamcode.utilities.wait
 
-abstract class MOEOpMode : LinearOpMode(), MOEFirebase, OpModeInterface {
+abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface {
     val firelog = MOETelemetry(telemetry)
     lateinit var ref: DatabaseReference
     lateinit var robot: MOEBot
@@ -45,7 +45,6 @@ abstract class MOEOpMode : LinearOpMode(), MOEFirebase, OpModeInterface {
         run()
     }
 
-    abstract fun moeInternalPostInit()
 
     override fun waitForStart() {
         while (!isStarted) {
@@ -60,7 +59,10 @@ abstract class MOEOpMode : LinearOpMode(), MOEFirebase, OpModeInterface {
     private fun moeDoubleInternalInit() {
         setRefs()
         createGamePads()
-        addListener()
+        addListener()?.let {
+            ref = it
+        }
+        //        ref = addListener()
     }
 
     private fun createGamePads() {
@@ -71,24 +73,33 @@ abstract class MOEOpMode : LinearOpMode(), MOEFirebase, OpModeInterface {
         ReferenceHolder.setRefs(this)
     }
 
-    private fun addListener() {
-        val customRef = getCustomRef(MOEConfig.config) ?: return
-        customRef.addValueEventListener(object : MOEEventListener() {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                onConfigChanged(snapshot)
-            }
-        })
-        ref = customRef
-    }
+    //    private fun addListener() {
+    //        val customRef = getCustomRef(MOEConfig.config) ?: return
+    //        customRef.addValueEventListener(object : MOEEventListener() {
+    //            override fun onDataChange(snapshot: DataSnapshot) {
+    //                onConfigChanged(snapshot)
+    //            }
+    //        })
+    //        customRef.addChildEventListener(this)
+    //        ref = customRef
+    //    }
 
     private fun notifyTelemetry() {
         telemetry.addData("waiting for start")
         telemetry.update()
     }
 
-    abstract fun moeInternalInit()
+    open fun moeInternalInit() {
 
-    abstract fun initOpMode()
+    }
+
+    open fun initOpMode() {
+
+    }
+
+    open fun moeInternalPostInit() {
+
+    }
 
     abstract fun run()
 }

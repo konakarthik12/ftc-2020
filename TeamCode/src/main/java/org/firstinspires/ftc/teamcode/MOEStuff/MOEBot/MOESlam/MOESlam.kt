@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam
 
+import android.util.Log
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamT265Handler
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
@@ -9,11 +10,14 @@ import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.toRadians
 import org.firstinspires.ftc.teamcode.utilities.quaternionToHeading
 import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.toNormalAngle
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
+import org.firstinspires.ftc.teamcode.utilities.addData
 
 data class MOESlamOptions(val robotToFieldTheta: Double, val xOffset: Double, val yOffset: Double)
 
 class MOESlam(val setInitialOffsets: Boolean = false) {
     lateinit var options: MOESlamOptions
+
 
     constructor(options: MOESlamOptions) : this() {
         this.options = options
@@ -29,11 +33,12 @@ class MOESlam(val setInitialOffsets: Boolean = false) {
     var thetaOffset: Double = 0.0
 
     init {
-        checkConnection()
-
+        //        checkConnection()
+        restart()
         if (setInitialOffsets) {
             setInitialOffsets()
         }
+        Log.e("init", "done")
     }
 
     fun setOptions(thetaInDegrees: Double, xOffset: Double, yOffset: Double) {
@@ -41,7 +46,7 @@ class MOESlam(val setInitialOffsets: Boolean = false) {
     }
 
     private fun checkConnection() {
-        handler?.killStream()
+        //        handler?.killStream()
         handler?.startStream()
     }
 
@@ -51,7 +56,7 @@ class MOESlam(val setInitialOffsets: Boolean = false) {
 
     fun getCameraPose(): Point {
         val rawPose = getRawOffsetPose()
-        return Point(rawPose.x, -rawPose.y)
+        return Point(-rawPose.x, rawPose.y)
     }
 
     fun getRobotPoseInCameraAxis(): Point {
@@ -103,7 +108,25 @@ class MOESlam(val setInitialOffsets: Boolean = false) {
         );
         setOffset(floatArrayOf(point.x.toFloat(), point.y.toFloat()))
     };
-    fun restart() = handler?.restart()
+    fun restart() {
+        handler?.restart()
+        val zeros = doubleArrayOf(0.0, 0.0, 0.0, 0.0)
+        while (!moeOpMode.iIsStopRequested && !handler!!.quatAngle.contentEquals(zeros)) {
+            Log.e("info", getQuadTheta().contentToString())
+        }
+        checkConnection()
+        while (!moeOpMode.iIsStopRequested && handler!!.quatAngle.contentEquals(zeros)) {
+            Log.e("info2", getQuadTheta().contentToString())
+        }
+        //        handler?.waitFor
+    }
 
     fun getQuadTheta(): DoubleArray = handler!!.quatAngle
+    fun waitForRestart() {
+        val copyOf = getQuadTheta().copyOf()
+        while (!moeOpMode.iIsStopRequested && copyOf.contentEquals(getQuadTheta())) {
+            telemetry.addData("waiting for slam")
+            telemetry.update()
+        }
+    }
 }

@@ -7,9 +7,11 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.util.*
 
+@Volatile
+private var isRunning = false
+
 class SlamT265Handler internal constructor(device: UsbDevice) {
-    @Volatile
-    private var initCodeSent = false
+
     private var connection: UsbDeviceConnection? = null
     private var usbInterface: UsbInterface? = null
     private var control: UsbEndpoint? = null
@@ -19,33 +21,44 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
     private var inEndpoint130: UsbEndpoint? = null
     private var inEndpoint131: UsbEndpoint? = null
     private val tempSlam = ByteArray(104)
+    val commands = LinkedList<ByteArray>()
+
     //    private void closeConnection() {
     //        connection.releaseInterface(usbInterface);
     //        connection.close();
     //    }
+    val data = SlamData()
+
     val curPose = FloatArray(3)
-    @Volatile
-    private var isRunning = false
+
+
+    val quatAngle = DoubleArray(4)
 
     companion object {
+
         val device: UsbDevice?
             get() = SlamUsbHandler.getDevice(Constants.T265_VID)
 
         init {
-            Log.e("multiple", "whyplz")
+            Log.e("slam", "starting slam thread")
             Thread(SlamRunnable()).start()
         }
+
     }
 
-    val quatAngle = DoubleArray(4)
     @Volatile
     private var needsRestart = false
 
+    //    init {
+    //    }
 
     private fun initVariables(device: UsbDevice) {
         connection = SlamUsbHandler.getDeviceConnection(device)
         usbInterface = device.getInterface(0)
         loadEndpoints()
+        connection!!.claimInterface(usbInterface, true)
+        sendInitCode()
+        isRunning = true
     }
 
     private fun loadEndpoints() {
@@ -69,23 +82,31 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
     }
 
     fun startStream() {
-        if (!initCodeSent) {
-            connection!!.claimInterface(usbInterface, true)
-            sendInitCode()
-            initCodeSent = true
-        }
+        //        if (!initCodeSent) {
+        //            connection!!.claimInterface(usbInterface, true)
+        sendInitCode()
+        //            initCodeSent = true
+        //        }
         isRunning = true
     }
 
     private fun updateSlam() {
         connection!!.bulkTransfer(inEndpoint131, tempSlam, 0, tempSlam.size, 100)
-        val order = ByteBuffer.wrap(tempSlam, 8, 7 * 4).order(ByteOrder.LITTLE_ENDIAN)
-        for (i in 0..2) {
-            curPose[i] = order.float
+        val order = ByteBuffer.wrap(tempSlam, 8, tempSlam.size - 8).order(ByteOrder.LITTLE_ENDIAN)
+        fillDataIn(order)
+
+    }
+
+    private fun fillDataIn(order: ByteBuffer) {
+        repeat(3) {
+            curPose[it] = order.float
         }
-        for (i in 0..3) {
-            quatAngle[i] = order.float.toDouble()
+        repeat(4) {
+            quatAngle[it] = order.float.toDouble()
         }
+        data.fillIn(order)
+
+//        Log.e("time", Data.lastTimestamp.toString())
     }
 
     private fun sendInitCode() {
@@ -112,50 +133,57 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
         override fun run() {
             Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND)
             while (true) {
-                if (SlamHandler.t265Handler?.isRunning == true) {
+                if (isRunning) {
                     SlamHandler.t265Handler?.updateSlam()
+                    SlamHandler.t265Handler?.checkCommands()
                     SlamHandler.t265Handler?.checkRestart()
-                } else{
+                } else {
                     Thread.sleep(500)
                 }
             }
-//            Log.e("done", "finished")
+            //            Log.e("done", "finished")
             //            closeConnection();
         }
     }
 
+    //
+    private fun checkCommands() {
+        commands.pollFirst()?.let { sendCode(it) }
+
+    }
+
     private fun checkRestart() {
-        if (needsRestart) { //            sendCode(DEV_STOP);
-            //            sendInitCode();
+        if (needsRestart) {
             actualRestart()
         }
-        //        try {
-        //            Thread.sleep(5000);
-        //        } catch (InterruptedException e) {
-        //            e.printStackTrace();
-        //        }
         needsRestart = false
     }
 
     private fun actualRestart() {
-        val doubles = quatAngle.copyOf()
-        var sleep = 100
-        while (isRunning && quatAngle.contentEquals(doubles)) {
-            Log.e("restarting", sleep.toString())
-            sendCode(Constants.DEV_STOP)
-            try {
-                Thread.sleep(sleep.toLong())
-                sendInitCode()
-                Thread.sleep(sleep.toLong())
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
+        sendCode(Constants.DEV_STOP)
+        while (isRunning) {
             updateSlam()
-            sleep += 50
+            //            Log.e("info", quatAngle.contentToString())
         }
+        //        val doubles = quatAngle.copyOf()
+        //        var sleep = 100
+        //        while (isRunning && quatAngle.contentEquals(doubles)) {
+        //            Log.e("restarting", sleep.toString())
+        //            //            sendCode(Constants.DEV_STOP)
+        //            try {
+        //                Thread.sleep(sleep.toLong())
+        //                sendInitCode()
+        //                Thread.sleep(sleep.toLong())
+        //            } catch (e: InterruptedException) {
+        //                e.printStackTrace()
+        //            }
+        //            updateSlam()
+        //            sleep += 50
+        //        }
     }
 
     init {
         initVariables(device)
+        //        startStream()
     }
 }

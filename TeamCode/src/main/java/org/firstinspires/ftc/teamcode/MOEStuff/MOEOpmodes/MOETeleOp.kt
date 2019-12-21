@@ -16,8 +16,9 @@ abstract class MOETeleOp(val thetaOffset: Double = 0.0,
                 thetaOffset = thetaOffset,
                 useGyro = useGyro)
         setUpJoysticks()
-        if (useGyro)
+        if (useGyro) {
             robot.gyro.init()
+        }
     }
 
     private fun setUpJoysticks() {
@@ -28,8 +29,9 @@ abstract class MOETeleOp(val thetaOffset: Double = 0.0,
     }
 
     final override fun moeInternalPostInit() {
-        if (useGyro)
+        if (useGyro) {
             robot.gyro.init(true)
+        }
     }
 
     override fun internalLoop() {

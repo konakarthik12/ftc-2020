@@ -5,6 +5,8 @@ import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler
+import org.firstinspires.ftc.robotcontroller.moeglobal.slam.Constants
+import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlamOptions
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.teleop.DuoDrive
@@ -15,14 +17,28 @@ import java.io.File
 class SlamDriveTest : DuoDrive(usingSlam = true) {
     val laped = ElapsedTime()
     var diff: Int = 1000
-    val printWriter = File(Environment.getExternalStorageDirectory().absolutePath+"/blank.txt").printWriter()
+    val printWriter = File(Environment.getExternalStorageDirectory().absolutePath + "/blank.txt").printWriter()
+
     override fun initOpMode() {
         super.initOpMode()
         robot.slam.options = MOESlamOptions(0.0, 0.0, 0.0)
         Log.e("why", "yes")
         gpad1.a.onKeyDown {
             Log.e("restarting", "yes")
-            robot.slam.restart()
+            SlamHandler.t265Handler?.commands?.addLast(Constants.DEV_STOP)
+        }
+        gpad1.b.onKeyDown {
+            Log.e("starting", "yes")
+
+            SlamHandler.t265Handler?.commands?.addLast(Constants.SLAM_CONTROL)
+            SlamHandler.t265Handler?.commands?.addLast(Constants.POSE_CONTROL)
+            SlamHandler.t265Handler?.commands?.addLast(Constants.DEV_START)
+        }
+        gpad1.x.onKeyDown {
+            Thread(Runnable {
+                robot.slam.restart()
+
+            }).start()
         }
     }
 
@@ -33,6 +49,7 @@ class SlamDriveTest : DuoDrive(usingSlam = true) {
         //            MOESocketHandler.moeWebServer.broadcast("data/slam/${robotPose[0]},${robotPose[1]},${robot.gyro.getRawAngle()}")
         //            laped.reset()
         //        }
+        telemetry.addData("timestamp", SlamHandler.t265Handler?.data?.confidence)
         telemetry.addData("theta", robot.slam.getTheta().toFixed(3))
         val raw = robot.slam.getRawPose().contentToString()
         telemetry.addData("rawPose", raw)
@@ -42,6 +59,7 @@ class SlamDriveTest : DuoDrive(usingSlam = true) {
         telemetry.addData("cameraPosition", robot.slam.getCameraPose() * MOEConstants.Units.ASTARS_PER_METER)
         telemetry.addData("robotaxis", robot.slam.getRobotPoseInCameraAxis() * MOEConstants.Units.ASTARS_PER_METER)
         telemetry.addData("scaledPosition", robot.slam.getScaledRobotPose())
+        telemetry.addData("gyroAngle", robot.gyro.angle)
         //        telemetry.addData("position", robot.slam.getRobotPose())
         telemetry.update()
     }

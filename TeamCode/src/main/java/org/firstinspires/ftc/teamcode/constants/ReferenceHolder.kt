@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.constants
 
+import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
@@ -8,7 +9,6 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
 // The 'i' prefix is used to avoid naming conflicts.
 interface OpModeInterface {
     fun iOpModeIsActive(): Boolean
-
     val iIsStopRequested: Boolean
     val iTelemetry: Telemetry
     val iHardwareMap: HardwareMap

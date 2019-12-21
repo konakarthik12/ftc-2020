@@ -16,7 +16,7 @@ class SlamTest : MOETeleOp(useSlam = true) {
     var speed: Int = 1000;
 
     override fun mainLoop() {
-        SlamHandler.t265Handler.restart()
+//        SlamHandler.t265Handler?.restart()
         val pose = robot.slam.getRawPose()
 
         telemetry.addData("slam", pose)
