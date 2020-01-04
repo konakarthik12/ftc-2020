@@ -53,7 +53,7 @@ object SlamUsbHandler {
         //        usbManager.openDevice()
         //        UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
         //        HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
-        val deviceIterator: Iterator<UsbDevice> = deviceList.values.iterator()
+//        val deviceIterator: Iterator<UsbDevice> = deviceList.values.iterator()
 //        while (deviceIterator.hasNext()) {
 //            val device = deviceIterator.next()
             //            manager.requestPermission(device, mPermissionIntent);

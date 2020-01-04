@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis
 
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAstarSystem
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEFancyPid
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEtor
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.DriveTrain.Motors.Configs
@@ -48,6 +49,8 @@ class MOEChassis {
     fun turnRightLeft(power: Double) = turnPower(-power)
 
 
+    fun turnVelocity(vel: Double) = setVelocity(vel,-vel)
+
     fun stop() {
         setPower(0.0)
     }
@@ -79,4 +82,6 @@ class MOEChassis {
     fun getVelocities(): List<Double> {
         return motors.map { it.getVelocity() }
     }
+
+
 }

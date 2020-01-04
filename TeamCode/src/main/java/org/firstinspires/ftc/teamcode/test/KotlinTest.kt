@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.test
 
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad.Button
-import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.utilities.addData
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
 @TeleOp(name = "KotlinTest")
 class KotlinTest : MOETeleOp() {

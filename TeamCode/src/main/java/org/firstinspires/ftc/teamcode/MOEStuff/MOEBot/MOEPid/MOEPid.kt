@@ -26,7 +26,7 @@ open class MOEPid(private var P: Double = 0.0,
     //**********************************
 
     private var lastTime: Long = 0;
-    private var I = I
+    var I = I
         set(value) {
             if (field != 0.0) {
                 errorSum = errorSum * field / value

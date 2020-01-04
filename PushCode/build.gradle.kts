@@ -31,6 +31,7 @@ tasks.register("writeOpModes") {
     val classPackageRoot = "$buildDir/classes"
     //    println(classPackageRoot)
     // compileTask.destinationDir
+    val outFile = File("$buildDir/dex/classes.txt")
     doLast {
         ClassGraph()
                 // [Configure your ClassGraph instance here]
@@ -39,14 +40,21 @@ tasks.register("writeOpModes") {
                 .enableAnnotationInfo()
                 .scan()
                 .use { scanResult ->
-                    File("$buildDir/dex/classes.txt").printWriter().use { out ->
+                    outFile.printWriter().use { out ->
                         for (annotation in annotations) {
                             val resultList = scanResult.getClassesWithAnnotation(prefix + annotation)
-                            resultList.forEach {
-                                val annotationInfo = it.getAnnotationInfo(prefix + annotation)
-                                out.write(annotationInfo.parameterValues.getValue("name").toString())
+                            resultList.forEach { clazz ->
+                                //                                if (clazz.isAbstract || clazz.isAnonymousInnerClass || !clazz.isPublic || clazz.declaredConstructorInfo.none { it.isPublic && it.parameterInfo.isEmpty() }) {
+                                //                                    throw kotlin.IllegalStateException(clazz + "seems suspisious")
+                                //                                }
+                                val annotationInfo = clazz.getAnnotationInfo(prefix + annotation)
+                                var toString = annotationInfo.parameterValues.getValue("name")?.toString()
+                                if (toString.isNullOrEmpty()) {
+                                    toString = clazz.simpleName
+                                }
+                                out.write(toString!!)
                                 out.write("/")
-                                out.write(it.name)
+                                out.write(clazz.name)
                                 out.write("/")
                             }
                             out.write("\n")
@@ -74,9 +82,9 @@ tasks.register("copyClasses", Copy::class) {
     dependsOn("clearClassesCache")
     includeEmptyDirs = false
     val mainPath = "${project(":TeamCode").buildDir}/tmp/kotlin-classes/debug"
-//    val libPath = "${project(":MOELibraries").buildDir}/classes/kotlin/jvm/main"
+    //    val libPath = "${project(":MOELibraries").buildDir}/classes/kotlin/jvm/main"
     from(mainPath)
-//    from(libPath)
+    //    from(libPath)
     include("**/*.class")
     into("$buildDir/classes")
     //    doFirst {
@@ -108,9 +116,9 @@ tasks.register("compileClasses") {
         //        println("done" + outputDir)
     }
 }
-tasks.register("temp") {
-    doFirst {
-        //                configurations.runtime.each { File f -> println f }
-
-    }
-}
+//tasks.register("temp") {
+//    doFirst {
+//        //                configurations.runtime.each { File f -> println f }
+//
+//    }
+//}

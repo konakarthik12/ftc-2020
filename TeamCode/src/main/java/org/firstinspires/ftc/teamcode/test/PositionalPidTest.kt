@@ -4,65 +4,92 @@ import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers.Companion.mechanumToPowers
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers.Companion.fromMecanum
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.*
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlamOptions
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.utilities.addData
-import org.firstinspires.ftc.teamcode.utilities.get
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
+import org.firstinspires.ftc.teamcode.constants.MOEConstants
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toDegrees
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
+import org.firstinspires.ftc.teamcode.utilities.internal.get
+import org.firstinspires.ftc.teamcode.utilities.external.toPrecision
+import kotlin.math.cos
+import kotlin.math.sin
 
-@TeleOp(name = "PositionalPidTest")
-class PositionalPidTest : MOETeleOp(useSlam = true) {
+@TeleOp(name = "APositionalPidTest")
+class PositionalPidTest : MOERegularTest() {
     //    lateinit var xPid: MOEPositionalPid
     //    lateinit var yPid: MOEPositionalPid
     //    lateinit var tPid: MOETurnPid
     lateinit var systemPid: MOEPositionalSystemPid
 
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
-        return ref["positionalPID"]
+        return ref["desmos"]
     }
 
     override fun initOpMode() {
-        telemetry.addData("testagain")
-
-        robot.slam.options = MOESlamOptions(0.0, 0.0, 0.0)
-        //        SlamHandler.t265Handler.restart()
-        //        robot.slam.waitForRestart()
-        //        systemPid = MOEPositionalSystemPid(
-        //                1.0, 0.0, 0.0, 0.0,
-        //                1.0, 0.0, 0.0, 0.0,
-        //                1.0, 0.0, 0.0, 0.0
-        ////        )
-        //        systemPid.setSetpoints(0.0)
-        //
-        //        val limit = 0.5
-        //        systemPid.setOutputLimits(limit);
+        telemetry.addData("waiting for slam")
+        telemetry.update()
+        robot.slam.restart()
+        //        telemetry.addData("slam", "yeah")
+        robot.slam.config = MOESlamConfig(0.0, 0.0, 0.0)
     }
 
-    override fun mainLoop() {
-        val pose = robot.slam.getScaledRobotPose()
+    override fun run() {
+        while (opModeIsActive()) {
+            mainLoop()
+        }
+    }
 
-        val str = systemPid.xPid.getOutput(pose.x)
-        val fwd = systemPid.yPid.getOutput(pose.y)
-        val rot = systemPid.tPid.getOutput(robot.gyro.angle)
+    var oldDown = false
+    private var oldUp = false
+    private var oldLeft = false
+    private var oldRight = false
+    fun mainLoop() {
+        val pose = robot.slam.getCameraPose()
+        pose *= MOEConstants.Units.ASTARS_PER_METER
+        //        while (gamepad1.a){
+        //        }
+        val setPointPoint = Point(systemPid.xPid.setpoint, systemPid.yPid.setpoint);
+        logData(pose, setPointPoint)
+        val rawX = systemPid.xPid.getOutput(pose.x)
+        val rawY = systemPid.yPid.getOutput(pose.y)
+        val angle = robot.gyro.angle
+        val rot = systemPid.tPid.getOutput(angle)
 
-        telemetry.addData("STR", str)
-        telemetry.addData("FWD", fwd)
+        val fwd = rawX * sin(Math.toRadians(angle)) + rawY * cos(Math.toRadians(angle))
+        val str = rawX * cos(Math.toRadians(angle)) - rawY * sin(Math.toRadians(angle))
+        telemetry.addData("FWD", fwd.toPrecision())
+        telemetry.addData("STR", str.toPrecision())
+        telemetry.addData("ROT", rot.toPrecision())
 
-        telemetry.addData("curPose", pose.x)
-        telemetry.addData("curAngle", robot.gyro.angle)
+        //        telemetry.addData("curPose", pose.x.toPrecision())
+        //        telemetry.addData("curAngle", robot.gyro.angle)
+        //        telemetry.addData("goal", systemPid.yPid.setpoint.toPrecision())
+        //        telemetry.addData("error", systemPid.yPid.getError(systemPid.yPid.setpoint, pose.y).toPrecision())
 
 
-        val powers = mechanumToPowers(0.0, str, gpad1.right_stick_x)
-        telemetry.addData("velocityad", powers.toString())
-        telemetry.update()
-        powers *= 15.0
-        if (gamepad1.a) {
-            robot.chassis.setVelocity(0.0)
+        val powers = fromMecanum(fwd, str, gamepad1.right_stick_x.toDouble())
+        //        telemetry.addData("powers", powers.toString())
+        //        telemetry.update()
+        val yPid = systemPid.yPid
+        val xPid = systemPid.xPid
+        val multi = 80.0
+        if (gamepad1.y && !oldUp) yPid.setpoint += multi
+        if (gamepad1.a && !oldDown) yPid.setpoint -= multi
+        if (gamepad1.b && !oldRight) xPid.setpoint += multi
+        if (gamepad1.x && !oldLeft) xPid.setpoint -= multi
+        oldUp = gamepad1.y
+        oldDown = gamepad1.a
+        oldLeft = gamepad1.x
+        oldRight = gamepad1.b
+        if (gamepad1.right_trigger > 0.5) {
+            robot.chassis.setPower(0.0)
             return
         }
-        robot.chassis.setVelocity(powers)
+
+        robot.chassis.setPower(powers)
         //        while (gamepad1.a) {
         //            robot.chassis.setVelocity(0.0)
         //            telemetry.addData("waiting for key")
@@ -70,14 +97,34 @@ class PositionalPidTest : MOETeleOp(useSlam = true) {
         //        }
     }
 
-    override fun onConfigChanged(dataSnapshot: DataSnapshot) {
-        val xOptions = dataSnapshot["x"].getValue(MOEPidValues::class.java)!!
-        val yOptions = dataSnapshot["y"].getValue(MOEPidValues::class.java)!!
-        val tOptions = dataSnapshot["t"].getValue(MOEPidValues::class.java)!!
+    private fun logData(pose: Point, pointPoint: Point) {
+        //        systemPid.yPid.setpoint += gamepad1.left_stick_y
+        //        systemPid.xPid.setpoint += gamepad1.left_stick_x
+        //        systemPid.tPid.setpoint += gamepad1.right_stick_x
+        telemetry.addData("goalY", systemPid.yPid.setpoint)
+        telemetry.addData("curY", pose.y)
+        telemetry.addData("goalX", systemPid.xPid.setpoint)
+        telemetry.addData("curX", pose.x)
+        telemetry.addData("goaT", 0.0)
+        telemetry.addData("curT", robot.gyro.angle)
+        telemetry.update()
 
+    }
+
+    override fun onConfigChanged(dataSnapshot: DataSnapshot) {
+        val xOptions = dataSnapshot["xPID"].getValue(MOEPidValues::class.java)!!
+        val yOptions = dataSnapshot["yPID"].getValue(MOEPidValues::class.java)!!
+        val tOptions = dataSnapshot["tPID"].getValue(MOEPidValues::class.java)!!
+        Log.e("focus", yOptions.toString())
         systemPid = MOEPositionalSystemPid(xOptions, yOptions, tOptions)
-        systemPid.setOutputLimits(0.5)
-        systemPid.setSetpoints(100.0, 0.0, 0.0)
-        Log.e("Positnal pid", xOptions.toString())
+        systemPid.xPid.setOutputLimits(1.0)
+        systemPid.yPid.setOutputLimits(1.0)
+        systemPid.tPid.setOutputLimits(1.0)
+        //(x,y,t)
+        systemPid.setSetpoints(0.0, 0.0, 0.0)
+    }
+
+    override fun getRobotConfig(): MOEBotConfig {
+        return super.getRobotConfig().apply { useSlam = true }
     }
 }

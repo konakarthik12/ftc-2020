@@ -6,14 +6,10 @@ import android.hardware.usb.UsbManager
 
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEFancyPid
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
-import org.firstinspires.ftc.teamcode.utilities.addData
-import org.firstinspires.ftc.teamcode.utilities.toFixed
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
 @TeleOp(name = "USBHostTest")
-class USBHostTest : MOETeleOp() {
+class USBHostTest : MOERegularTest() {
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return null
     }
@@ -25,7 +21,7 @@ class USBHostTest : MOETeleOp() {
         //        robot.odometry.servos.initServosUp()
     }
 
-    override fun mainLoop() {
+    override fun run() {
         //        robot.chassis.turnPower(gamepad1.left_stick_x.toDouble())
         val appContext = iHardwareMap.appContext
         val manager = appContext.getSystemService(Context.USB_SERVICE) as UsbManager

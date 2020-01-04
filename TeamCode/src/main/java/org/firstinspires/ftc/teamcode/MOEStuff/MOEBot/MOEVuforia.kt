@@ -7,22 +7,18 @@ import org.firstinspires.ftc.robotcore.external.ClassFactory
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
+import org.firstinspires.ftc.teamcode.constants.MOEVuforiaConstants
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
 
 
-fun getVuforiaParameters(): VuforiaLocalizer.Parameters {
-    val params = VuforiaLocalizer.Parameters()
-    params.vuforiaLicenseKey = MOEConstants.Vuforia.LICENSE_KEY
-    params.cameraName = hardwareMap.get(WebcamName::class.java, "Webcam 1")
-    return params
-}
+
 
 
 class MOEVuforia() {
     var vuforia: VuforiaLocalizer
-    val cameraMonitorViewId: Int = hardwareMap.appContext.resources
-            .getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.packageName)
-    private val parameters: VuforiaLocalizer.Parameters = getVuforiaParameters()
+//    val cameraMonitorViewId: Int = hardwareMap.appContext.resources
+//            .getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.packageName)
+    private val parameters: VuforiaLocalizer.Parameters = MOEVuforiaConstants.params
 
     init {
         setVuforiaSettings()

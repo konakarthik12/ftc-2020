@@ -2,26 +2,22 @@ package org.firstinspires.ftc.teamcode.constants
 
 import com.qualcomm.hardware.bosch.BNO055IMU
 import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MotorConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.ServoConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.AutonConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.reflectAutonConfig
-import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Rectangle
-import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Point
-import org.firstinspires.ftc.teamcode.utilities.PurePursuit.MOEPurePursuitOptions
-import kotlin.math.PI
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.MotorConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.ServoConfig
+import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.MOEPurePursuitOptions
 import com.qualcomm.robotcore.hardware.DcMotorSimple as Motor
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.OdometryWheelConfig as OWC
+
+//import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.OdometryWheelConfig as OWC
 
 object
 MOEConstants {
     object DriveTrain {
         object Motors {
             object Configs {
-                val FrontLeft = MotorConfig("FLDM12", Motor.Direction.FORWARD)
-                val FrontRight = MotorConfig("FRDM10", Motor.Direction.REVERSE)
-                val BackLeft = MotorConfig("BLDM13", Motor.Direction.FORWARD)
-                val BackRight = MotorConfig("BRDM11", Motor.Direction.REVERSE)
+                val FrontLeft = MotorConfig("FLD", 1, 2, Motor.Direction.FORWARD)
+                val FrontRight = MotorConfig("FRD", 2, 2, Motor.Direction.REVERSE)
+                val BackLeft = MotorConfig("BLD", 1, 3, Motor.Direction.FORWARD)
+                val BackRight = MotorConfig("BRD", 2, 3, Motor.Direction.REVERSE)
             }
         }
     }
@@ -29,8 +25,8 @@ MOEConstants {
     object IntakeSystem {
         object Motors {
             object Configs {
-                val LeftIntake = MotorConfig("LHVM20", Motor.Direction.REVERSE)
-                val RightIntake = MotorConfig("RHVM21", Motor.Direction.FORWARD)
+                val LeftIntake = MotorConfig("LIN", 1, 1)
+                val RightIntake = MotorConfig("RIN", 2, 1)
             }
 
             const val MaxPower = 0.9
@@ -40,7 +36,9 @@ MOEConstants {
     object OutTakeSystem {
         object Servos {
             object Configs {
-                val DispenserServo = ServoConfig("OUTS12")
+                val GrabberServo = ServoConfig("GRB", 1, 2)
+                val CapstoneServo = ServoConfig("CAP", 1, 3)
+                val HorizontalDispenser = ServoConfig("OUT", 1, 4)
             }
         }
     }
@@ -48,38 +46,46 @@ MOEConstants {
     object FoundationSystem {
         object Servos {
             object Configs {
-                val FoundationServo1 = ServoConfig("FDRS23", 0.0, 1.0, Servo.Direction.FORWARD)
-                val FoundationServo2 = ServoConfig("FDLS20", 0.0, 1.0, Servo.Direction.REVERSE)
+                val FoundationServo1 = ServoConfig("LFG", 1, 0, 0.0, 0.5, Servo.Direction.FORWARD)
+                val FoundationServo2 = ServoConfig("RFG", 2, 0, 0.5, 1.0, Servo.Direction.REVERSE)
             }
         }
     }
 
-    object Odometry {
-        object Servos {
-            object Configs {
-                val Left = ServoConfig("LODS10", 0.0, 0.45, Servo.Direction.REVERSE)
-                val Right = ServoConfig("RODS11", 0.55, 1.0, Servo.Direction.FORWARD)
-            }
+    object Lift {
+        object Motors {
+            val LeftLiftMotor = MotorConfig("LLF", 1, 0, maxPow = 0.4)
+            val RightLiftMotor = MotorConfig("RLF", 2, 0, maxPow = 0.4)
         }
 
-        object Wheels {
-            object Configs {
-                val axialLeft = OWC("LOAA12", OWC.Direction.FORWARD, OWC.Orientation.AXIAL)
-                val axialRight = OWC("ROAA10", OWC.Direction.FORWARD, OWC.Orientation.AXIAL)
-                val strafeRight = OWC("ROSA11", OWC.Direction.FORWARD, OWC.Orientation.STRAFE)
-            }
-
-            object Circumference {
-                const val AXIAL = 0.0 //TODO: Calculate.
-                const val STRAFE = 0.0  //TODO: Calculate.
-            }
-
-            const val MIN_VOLTAGE = 0.0
-            const val MAX_VOLTAGE = 5.0
-            const val WHEEL_CIRCUMFERENCE = 2 * PI * 2  // 2PI * (half inch conversion factor)
-            const val VOLTS_TO_HALF_INCH: Double = WHEEL_CIRCUMFERENCE / 5
-        }
     }
+
+    //    object Odometry {
+    //        object Servos {
+    //            object Configs {
+    ////                val Left = ServoConfig("LODS10", 0.0, 0.45, Servo.Direction.REVERSE)
+    ////                val Right = ServoConfig("RODS11", 0.55, 1.0, Servo.Direction.FORWARD)
+    //            }
+    //        }
+    //
+    //        object Wheels {
+    //            object Configs {
+    //                val axialLeft = OWC("LOAA12", OWC.Direction.FORWARD, OWC.Orientation.AXIAL)
+    //                val axialRight = OWC("ROAA10", OWC.Direction.FORWARD, OWC.Orientation.AXIAL)
+    //                val strafeRight = OWC("ROSA11", OWC.Direction.FORWARD, OWC.Orientation.STRAFE)
+    //            }
+    //
+    //            object Circumference {
+    //                const val AXIAL = 0.0
+    //                const val STRAFE = 0.0
+    //            }
+    //
+    //            const val MIN_VOLTAGE = 0.0
+    //            const val MAX_VOLTAGE = 5.0
+    //            val WHEEL_CIRCUMFERENCE = 2 * PI * 2  // 2PI * (half inch conversion factor)
+    //            val VOLTS_TO_HALF_INCH: Double = WHEEL_CIRCUMFERENCE / 5
+    //        }
+    //    }
 
     object SLAM {
         const val CAMERA_DISTANCE = 11.0 * Units.METERS_PER_ASTAR
@@ -107,18 +113,6 @@ MOEConstants {
         const val FINISHED_TOLERANCE: Double = 0.5
     }
 
-    object Autonomous {
-        val Left = AutonConfig(
-                skystoneCropRect = Rectangle(0, 0, 0, 0),
-                robotToFieldOffset = 90.0,
-                positionOffsets = Point(0.0, 0.0), // Point(15.0, 96.0),
-                topSkystonePosition = Point(96.0 + 4.0, 96.0 - 8.0),
-                afterSkystonePosition = Point(48.0, 96.0),
-                dumpSkystonePosition = Point(48.0, 192.0),
-                parkPosition = Point(63.0, 144.0)
-        )
-        val Right = reflectAutonConfig(Left)
-    }
 
     object Units {
         const val METER_PER_FEET = 0.3048
@@ -138,12 +132,7 @@ MOEConstants {
         const val ASTARS_PER_TICK = 1 / TICKS_PER_ASTAR
     }
 
-    object Vuforia {
-        const val LICENSE_KEY = "AVmJqSr/////AAABmeGcV96ftk3KgMDBC6fRLL4Qn/iAktqBNx29ewqo4NPP1TWeg6cpqfRV3dQ3vtDc4LxnL" +
-                "DckSBYdv9v3b1pe2Rq1v+stEVsKhckekqcdpbffWqz+QAyFJF7Mg9q/vOVBXIjvH7CPFVVKiM/M+J3vFw87SFxJKQlZuOM0WGi0hM" +
-                "Jf8CE21ZJKh3h9tCg+/dqEux2FmB7XpezHFFeIqE8EK/3skt8Gjui+ywRSmgyzr+C3GswiIWsUn3YYCS6udgB8O6ntF5RZyrq4dQJ" +
-                "xrdV1Mh1P7dlpGgyml+yiBAKDgoHZPiHKBx1TIY0Gg9QBebnuHdMvEOhK9oOJqtlR7XBO+fRJrXSCBY+9zBHRpZ6zSE0P"
-    }
+
 
     object Gamepad {
         const val ON_THRESHOLD = 0.95

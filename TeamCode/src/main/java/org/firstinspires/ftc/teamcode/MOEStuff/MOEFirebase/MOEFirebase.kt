@@ -9,6 +9,8 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 
 interface MOEFirebase : ChildEventListener {
 
+
+
     //    var localConfigSnapshot: DataSnapshot
     fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return null
@@ -37,13 +39,13 @@ interface MOEFirebase : ChildEventListener {
     }
 
     fun addListener(): DatabaseReference? {
-        val customRef = getCustomRef(MOEConfig.config)?:return null
+        val customRef = getCustomRef(MOEConfig.config) ?: return null
         customRef.addValueEventListener(object : MOEEventListener() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 onConfigChanged(snapshot)
             }
         })
-     return customRef
+        return customRef
         //        customRef.addChildEventListener(this)
 
     }

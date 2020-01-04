@@ -19,36 +19,10 @@ public class OpModesFrame {
     public static OpModeReadiedData instance;
 //    public static OpModeClassedData classedInstance;
 
-    private static void enableCodeDownloader() {
-        MOEStorage.clearFiles();
-        MOEDatabase.details.addValueEventListener(new MOEValueListener() {
-
-            @Override
-            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-//                Log.e("data", "changed");
-                final OpModeFrameData frameData = dataSnapshot.getValue(OpModeFrameData.class);
-                MOEStorage.downloadDexFromUUID(frameData.uuid).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        instance = new OpModeReadiedData(frameData);
-                        OpModeLoading.loadOpModes();
-                    }
-                }).addOnFailureListener(ActivityReferenceHolder.activityRef.get(), new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        e.printStackTrace();
-                        Log.e("OpModeFrame", e.toString());
-                    }
-                });
-            }
-        });
-    }
 
 
-    public static void init() {
-        enableCodeDownloader();
 
-    }
+
 
     public static class OpModeFrameData {
         public String uuid;

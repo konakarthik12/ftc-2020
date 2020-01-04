@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
-import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.closestAngleDifference
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.closestAngleDifference
 
 class MOETurnPid(P: Double = 0.0,
                  I: Double = 0.0,

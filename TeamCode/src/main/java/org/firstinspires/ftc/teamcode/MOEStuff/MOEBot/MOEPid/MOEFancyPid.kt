@@ -10,7 +10,7 @@ import kotlin.math.abs
 open class MOEFancyPid(private var P: Double = 0.0,
                        I: Double = 0.0,
                        private var D: Double = 0.0,
-                       private var F: Double = 0.0) : MOEPid(P, I, D) {
+                       private var F: Double = 0.0) : MOEPid(P, I, D, F) {
 
     var input: () -> Double = { 0.0 }
 
@@ -35,11 +35,13 @@ open class MOEFancyPid(private var P: Double = 0.0,
             }
         }
     }
+
+
+    fun setOptions(options: MOEPidValues) {
+        this.P = options.P
+        this.I = options.I
+        this.D = options.D
+        this.F = options.F
+
+    }
 }
-//    fun setInput(value: (Double) -> Double) {
-//
-//    }
-//
-//    fun setSetpoint(value: (Double) -> Double) {
-//
-//    }

@@ -71,7 +71,6 @@ public class MOEServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, ByteBuffer message) {
-        Log.e("plz", "why");
         writeDex(message);
         conn.send("ops");
     }
@@ -120,15 +119,15 @@ public class MOEServer extends WebSocketServer {
         for (int i = 0; i < teleDetails.length; i += 2) {
             opModeMetaAndClassMap.put(teleDetails[i], getOpModeMetaAndClass(classLoader, teleDetails[i], teleDetails[i + 1], false));
         }
-        for (Map.Entry<String, OpModeMetaAndClass> stringOpModeMetaAndClassEntry : opModeMetaAndClassMap.entrySet()) {
-            if (stringOpModeMetaAndClassEntry.getValue().clazz == null) {
-                Log.e("we" + stringOpModeMetaAndClassEntry.getKey(), "failed");
-            }
-        }
+//        for (Map.Entry<String, OpModeMetaAndClass> stringOpModeMetaAndClassEntry : opModeMetaAndClassMap.entrySet()) {
+//            if (stringOpModeMetaAndClassEntry.getValue().clazz == null) {
+//                Log.e("we" + stringOpModeMetaAndClassEntry.getKey(), "failed");
+//            }
+//        }
         ReflectionHolder.replaceOpModes(opModeMetaAndClassMap);
         refreshUI();
         OpModeLoading.playInstalledSound();
-        Log.e("done", "done");
+//        Log.e("done", "done");
     }
 
     private void refreshUI() {
@@ -184,7 +183,6 @@ public class MOEServer extends WebSocketServer {
         WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(WIFI_SERVICE);
         int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
 
-        // Convert little-endian to big-endianif needed
         if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
             ipAddress = Integer.reverseBytes(ipAddress);
         }

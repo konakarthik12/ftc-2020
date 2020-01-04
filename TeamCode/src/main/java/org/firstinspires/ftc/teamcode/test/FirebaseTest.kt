@@ -4,8 +4,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.utilities.addData
-import org.firstinspires.ftc.teamcode.utilities.get
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
+import org.firstinspires.ftc.teamcode.utilities.internal.get
 
 @TeleOp(name = "FirebaseTest")
 class FirebaseTest : MOETeleOp() {

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.constants
 
+import android.content.Context
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
@@ -20,12 +21,14 @@ class ReferenceHolder {
         lateinit var moeOpMode: OpModeInterface
         lateinit var telemetry: Telemetry
         lateinit var hardwareMap: HardwareMap
+        lateinit var appContext: Context
         lateinit var robot: MOEBot
 
         fun setRefs(opMode: OpModeInterface) {
             moeOpMode = opMode
             telemetry = opMode.iTelemetry
             hardwareMap = opMode.iHardwareMap
+            appContext = hardwareMap.appContext
         }
 
         fun setRobotRef(robot: MOEBot) {

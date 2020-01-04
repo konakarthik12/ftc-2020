@@ -1,11 +1,19 @@
 package org.firstinspires.ftc.robotcontroller.moeglobal.slam
 
+import android.graphics.Color
 import android.hardware.usb.*
 import android.os.Process
 import android.util.Log
+import android.widget.TextView
+import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.util.*
+
+private var accuracyText = arrayOf("Failed", "Low", "Medium", "High")
+private var warningColors = arrayOf(
+        Color.RED, Color.rgb(255, 127, 127),
+        Color.rgb(153, 153, 0), Color.GREEN)
+
 
 @Volatile
 private var isRunning = false
@@ -21,20 +29,26 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
     private var inEndpoint130: UsbEndpoint? = null
     private var inEndpoint131: UsbEndpoint? = null
     private val tempSlam = ByteArray(104)
-    val commands = LinkedList<ByteArray>()
+
+    //    val commands = LinkedList<ByteArray>()
 
     //    private void closeConnection() {
     //        connection.releaseInterface(usbInterface);
     //        connection.close();
     //    }
-    val data = SlamData()
+//    val data = SlamData()
 
-    val curPose = FloatArray(3)
-
-
-    val quatAngle = DoubleArray(4)
 
     companion object {
+        lateinit var myContext: FtcRobotControllerActivity
+        val textView: TextView?
+            get() = myContext.textStreamingStatus
+        @JvmStatic
+        fun init(context: FtcRobotControllerActivity) {
+            myContext = context
+//            textView = context.textStreamingStatus
+            //        context.setStreamingText()
+        }
 
         val device: UsbDevice?
             get() = SlamUsbHandler.getDevice(Constants.T265_VID)
@@ -91,22 +105,20 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
     }
 
     private fun updateSlam() {
-        connection!!.bulkTransfer(inEndpoint131, tempSlam, 0, tempSlam.size, 100)
-        val order = ByteBuffer.wrap(tempSlam, 8, tempSlam.size - 8).order(ByteOrder.LITTLE_ENDIAN)
+        val order = getBufferFromUSB()
         fillDataIn(order)
+    }
 
+    private fun getBufferFromUSB(): ByteBuffer {
+        connection!!.bulkTransfer(inEndpoint131, tempSlam, 0, tempSlam.size, 100)
+        return ByteBuffer.wrap(tempSlam, 8, tempSlam.size - 8).order(ByteOrder.LITTLE_ENDIAN)
     }
 
     private fun fillDataIn(order: ByteBuffer) {
-        repeat(3) {
-            curPose[it] = order.float
-        }
-        repeat(4) {
-            quatAngle[it] = order.float.toDouble()
-        }
-        data.fillIn(order)
 
-//        Log.e("time", Data.lastTimestamp.toString())
+        SlamData.fillIn(order)
+
+        //        Log.e("time", Data.lastTimestamp.toString())
     }
 
     private fun sendInitCode() {
@@ -122,7 +134,10 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
     }
 
     fun killStream() {
+        Log.e("killing","dead")
         isRunning = false
+        SlamData.confidence=0
+        updateConfidence()
     }
 
     fun restart() {
@@ -134,10 +149,14 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
             Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND)
             while (true) {
                 if (isRunning) {
-                    SlamHandler.t265Handler?.updateSlam()
-                    SlamHandler.t265Handler?.checkCommands()
-                    SlamHandler.t265Handler?.checkRestart()
+                    SlamHandler.t265Handler?.let {
+                        it.checkRestart()
+                        it.updateSlam()
+                        it.updateUI()
+                    }
+
                 } else {
+                    Log.e("sleeping","sleep")
                     Thread.sleep(500)
                 }
             }
@@ -146,9 +165,23 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
         }
     }
 
+    private fun updateUI() {
+        updateConfidence()
+    }
+
+    private fun updateConfidence() {
+//        val textView: TextView? = myContext.textStreamingStatus
+        myContext.runOnUiThread {
+
+            textView?.setTextColor(warningColors[SlamData.confidence])
+            textView?.text = accuracyText[SlamData.confidence]
+        }
+    }
+
+
     //
     private fun checkCommands() {
-        commands.pollFirst()?.let { sendCode(it) }
+        //        commands.pollFirst()?.let { sendCode(it) }
 
     }
 
@@ -160,11 +193,12 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
     }
 
     private fun actualRestart() {
+        Log.e("Restart","sent")
         sendCode(Constants.DEV_STOP)
-        while (isRunning) {
-            updateSlam()
-            //            Log.e("info", quatAngle.contentToString())
-        }
+        //        while (isRunning) {
+        //            updateSlam()
+        //            Log.e("info", quatAngle.contentToString())
+        //        }
         //        val doubles = quatAngle.copyOf()
         //        var sleep = 100
         //        while (isRunning && quatAngle.contentEquals(doubles)) {

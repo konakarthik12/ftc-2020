@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
+import org.firstinspires.ftc.teamcode.constants.MOEAutonConstants
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Units
-import org.firstinspires.ftc.teamcode.constants.MOEConstants.Autonomous
-import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Rectangle
-import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Point
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Rectangle
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 
 data class AutonConfig(val skystoneCropRect: Rectangle,
                        val robotToFieldOffset: Double,
@@ -34,7 +33,7 @@ fun reflectAutonConfig(config: AutonConfig): AutonConfig {
 abstract class MOEAuton(val isLeft: Boolean = true,
                         val useCamera: Boolean = true,
                         val useSlam: Boolean = true) : MOERegularOpMode() {
-    protected val config: AutonConfig = if (isLeft) Autonomous.Left else Autonomous.Right
+    protected val config: AutonConfig = if (isLeft) MOEAutonConstants.Left else MOEAutonConstants.Right
     // The values are ordered from top to bottom.
     private val skystonePositions: ArrayList<Point> = config.topSkystonePosition.let { (x, y) ->
         arrayListOf(
@@ -50,10 +49,6 @@ abstract class MOEAuton(val isLeft: Boolean = true,
     protected val skystonePairs: ArrayList<Pair<Point, Point>>
         get() = skystonePositions.let { arrayListOf(Pair(it[0], it[3]), Pair(it[1], it[4]), Pair(it[2], it[5])) }
 
-    final override fun moeInternalInit() {
-        robot = MOEBot(this, useCamera = useCamera, useSlam = useSlam)
-        robot.slam.setOptions(config.robotToFieldOffset, config.positionOffsets.x, config.positionOffsets.y)
-    }
 
     final override fun moeInternalPostInit() {
         robot.gyro.init(true)

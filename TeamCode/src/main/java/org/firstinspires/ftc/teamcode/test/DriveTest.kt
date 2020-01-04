@@ -6,10 +6,10 @@ package org.firstinspires.ftc.teamcode.test
 //import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 //import com.qualcomm.robotcore.util.ElapsedTime
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-//import org.firstinspires.ftc.teamcode.utilities.addData
-//import org.firstinspires.ftc.teamcode.utilities.delete
-//import org.firstinspires.ftc.teamcode.utilities.get
-//import org.firstinspires.ftc.teamcode.utilities.pushData
+//import org.firstinspires.ftc.teamcode.utilities.utilities.addData
+//import org.firstinspires.ftc.teamcode.utilities.utilities.delete
+//import org.firstinspires.ftc.teamcode.utilities.utilities.get
+//import org.firstinspires.ftc.teamcode.utilities.utilities.pushData
 //
 //@TeleOp(name = "DriveTest")
 //class DriveTest : MOETeleOp(useSlam = false) {

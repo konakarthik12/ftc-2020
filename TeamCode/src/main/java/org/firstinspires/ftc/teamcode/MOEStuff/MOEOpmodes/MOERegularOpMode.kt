@@ -1,28 +1,21 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
-import com.google.firebase.database.DataSnapshot
+//import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEConfig
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEEventListener
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstants
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEFirebase
-//import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOETelemetry
 import org.firstinspires.ftc.teamcode.constants.OpModeInterface
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRobotRef
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
-import org.firstinspires.ftc.teamcode.utilities.addData
-import org.firstinspires.ftc.teamcode.utilities.wait
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
-abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface {
-    val firelog = MOETelemetry(telemetry)
-    lateinit var ref: DatabaseReference
+abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, MOEBotConstants {
+    lateinit var dataRef: DatabaseReference
     lateinit var robot: MOEBot
-
     override fun iOpModeIsActive(): Boolean = opModeIsActive()
 
     override val iTelemetry: Telemetry
@@ -36,13 +29,28 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface {
 
     final override fun runOpMode() {
         moeDoubleInternalInit()
+//        Log.e("wait", "wait")
+        initRobot()
+//        Log.e("wait2", "wait")
+
         moeInternalInit()
+//        Log.e("wait3", "wait")
         setRobotRef(robot)
+//        Log.e("wait4", "wait")
+
         initOpMode()
+//        Log.e("wait5", "wait")
+
         moeInternalPostInit()
+//        Log.e("start wait", "wait")
         waitForStart()
-        resetRobotValues()
+//        Log.e("end wait", "end")
+        offsetRobotValues()
         run()
+    }
+
+    private fun initRobot() {
+        robot = createRobot()
     }
 
 
@@ -52,26 +60,15 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface {
         }
     }
 
-    private fun resetRobotValues() {
-        robot.resetValues()
-    }
 
     private fun moeDoubleInternalInit() {
-        setRefs()
-        createGamePads()
+        ReferenceHolder.setRefs(this)
         addListener()?.let {
-            ref = it
+            dataRef = it
         }
         //        ref = addListener()
     }
 
-    private fun createGamePads() {
-        //        mainGamepad = MOEGamePad(gamepad1)
-    }
-
-    private fun setRefs() {
-        ReferenceHolder.setRefs(this)
-    }
 
     //    private fun addListener() {
     //        val customRef = getCustomRef(MOEConfig.config) ?: return
@@ -99,6 +96,10 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface {
 
     open fun moeInternalPostInit() {
 
+    }
+
+    fun offsetRobotValues() {
+        robot.offsetValues(this)
     }
 
     abstract fun run()

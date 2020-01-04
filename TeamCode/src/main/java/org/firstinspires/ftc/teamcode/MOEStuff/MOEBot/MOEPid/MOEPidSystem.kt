@@ -16,6 +16,7 @@ open class MOEPidSystem(vararg val pids: MOEFancyPid) {
     fun setOutputLimits(min: Double, max: Double) {
         pids.forEach { it.setOutputLimits(min, max) }
     }
+//    fun setOuputLimits()
 
     fun getOutputs(): List<Double> {
         return pids.map { it.getOutput(it.input()) }

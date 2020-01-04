@@ -4,11 +4,8 @@ package org.firstinspires.ftc.teamcode.autonomous
 import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
-import org.firstinspires.ftc.teamcode.constants.MOEConstants
-import org.firstinspires.ftc.teamcode.utilities.SkyStoneLocation
-import org.firstinspires.ftc.teamcode.utilities.addData
-import org.firstinspires.ftc.teamcode.utilities.getSkyStoneLocationFromBitmap
-import org.firstinspires.ftc.teamcode.utilities.wait
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
+import org.firstinspires.ftc.teamcode.utilities.internal.wait
 
 @Autonomous(name = "FoundationAuton")
 class FoundationAuton : MOEAuton(isLeft = true) {

@@ -52,7 +52,7 @@ async function getIp() {
             let address = data.val();
             console.info("Initialing Websocket Server...");
             console.log(address);
-            socketHandler.createServer(address.ip, address.port, sendOpModes).then((it) => {
+            socketHandler.createServer(address.ip, address.port, sendOpModes, pushCode).then((it) => {
                 client = it;
 
                 watchFiles();
@@ -81,12 +81,15 @@ function watchFiles() {
     let paths = resolve(__dirname, constants.dexFolder);
     console.log(paths);
     chokidar.watch(paths)
-        .on('add', pushCode)
-        .on('change', pushCode);
+        .on('add', fileChange)
+    // .on('change', pushCode);
 }
 
+function fileChange(path) {
+    return pushCode(path, client)
+}
 
-async function pushCode(path) {
+async function pushCode(path, client) {
     if (!path.endsWith('classes.txt')) {
         return;
     }
@@ -102,8 +105,7 @@ async function pushCode(path) {
 
 function sendOpModes() {
     console.log("sending op modes");
-    let s = fs.readFileSync(resolve(__dirname, constants.listFile), 'utf8');
-    console.log(s);
-    return s;
+    // console.log(s);
+    return fs.readFileSync(resolve(__dirname, constants.listFile), 'utf8');
     // console.log("asked");
 }

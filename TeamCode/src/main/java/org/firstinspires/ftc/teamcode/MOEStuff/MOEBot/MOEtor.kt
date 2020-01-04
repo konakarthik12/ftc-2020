@@ -2,26 +2,23 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
-import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE
-import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.MotorConfig
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
-
-data class MotorConfig(val name: String, val direction: Direction = Direction.FORWARD,
-                       val zeroPowerBehavior: ZeroPowerBehavior = BRAKE)
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
 
 
 class MOEtor(config: MotorConfig) {
-    private var mMotor: DcMotorEx = moeOpMode.iHardwareMap.get(
-            DcMotorEx::class.java, config.name)
+    var mMotor = config.getDevice()
+    private var powerScale = config.minPow..config.maxPow
 
     init {
         mMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         mMotor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         setDirection(config.direction)
         setZeroPowerBehavior(config.zeroPowerBehavior)
+
     }
 
     val position: Int
@@ -30,12 +27,12 @@ class MOEtor(config: MotorConfig) {
     val distanceTraveled: Double
         get() = position * MOEConstants.Units.ASTARS_PER_TICK
 
-//    fun setPosition() {
-//        mMotor.setPos
-//    }
+    //    fun setPosition() {
+    //        mMotor.setPos
+    //    }
 
     fun setPower(power: Double) {
-        mMotor.power = power;
+        mMotor.power = powerScale.lerp(power)
     }
 
     fun setDirection(direction: Direction) {
@@ -47,5 +44,12 @@ class MOEtor(config: MotorConfig) {
     }
 
     fun setVelocity(velocity: Double) = mMotor.setVelocity(velocity, AngleUnit.RADIANS)
-    fun getVelocity() = mMotor.getVelocity(AngleUnit.RADIANS)  // TODO: Check if this is in ticks or angles.
+    fun getVelocity() = mMotor.velocity
+    fun resetEncoder() {
+        mMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+    }
+
+    fun setTargetPosition(position: Int) {
+        mMotor.targetPosition = position
+    }
 }

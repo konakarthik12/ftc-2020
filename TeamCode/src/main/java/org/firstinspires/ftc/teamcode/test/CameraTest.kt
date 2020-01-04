@@ -5,7 +5,7 @@ import android.hardware.camera2.CameraManager
 import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
-import org.firstinspires.ftc.teamcode.utilities.addData
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
 @TeleOp(name = "CameraTest")
 class CameraTest : MOEAuton() {

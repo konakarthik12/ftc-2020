@@ -1,26 +1,27 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam
 
 import android.util.Log
+import com.qualcomm.robotcore.util.ElapsedTime
+import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamData
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamT265Handler
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.SLAM
-import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Point
-import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.toRadians
-import org.firstinspires.ftc.teamcode.utilities.quaternionToHeading
-import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.toNormalAngle
+import org.firstinspires.ftc.teamcode.utilities.external.quaternionToHeading
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
-import org.firstinspires.ftc.teamcode.utilities.addData
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.*
 
-data class MOESlamOptions(val robotToFieldTheta: Double, val xOffset: Double, val yOffset: Double)
+class MOESlam(setInitialOffsets: Boolean = false) {
+    lateinit var config: MOESlamConfig
+    //TODO: change this once the rest of the stuff works
+    val pose: Point
+        get() = getCameraPose() * MOEConstants.Units.ASTARS_PER_METER
 
-class MOESlam(val setInitialOffsets: Boolean = false) {
-    lateinit var options: MOESlamOptions
 
-
-    constructor(options: MOESlamOptions) : this() {
-        this.options = options
+    constructor(config: MOESlamConfig) : this() {
+        this.config = config
     }
     //
     //    private fun setOptions(options: MOESlamOptions) {
@@ -34,18 +35,15 @@ class MOESlam(val setInitialOffsets: Boolean = false) {
 
     init {
         //        checkConnection()
-        restart()
+        //        restart()
         if (setInitialOffsets) {
             setInitialOffsets()
         }
-        Log.e("init", "done")
+        //        Log.e("init", "done")
     }
 
-    fun setOptions(thetaInDegrees: Double, xOffset: Double, yOffset: Double) {
-        options = MOESlamOptions(toRadians(thetaInDegrees), xOffset, yOffset)
-    }
 
-    private fun checkConnection() {
+    fun checkConnection() {
         //        handler?.killStream()
         handler?.startStream()
     }
@@ -62,7 +60,7 @@ class MOESlam(val setInitialOffsets: Boolean = false) {
     fun getRobotPoseInCameraAxis(): Point {
         return getCameraPose().getRelativePoint(
                 distanceFromThis = SLAM.CAMERA_DISTANCE,
-                theta = toRadians(getTheta() + SLAM.INITIAL_CAMERA_THETA)
+                theta = (getTheta() + SLAM.INITIAL_CAMERA_THETA).toRadians()
         )
         //        rawPose.getRelativePoint(Localization.CAMERA_DISTANCE, Localization.)
         //        return rawPose.rotateAroundOrigin(angle)
@@ -72,8 +70,8 @@ class MOESlam(val setInitialOffsets: Boolean = false) {
     }
 
     fun getRobotPose(): Point {
-        val untranslatedPose = getRobotPoseInCameraAxis().rotateAroundOrigin(options.robotToFieldTheta)
-        return Point(untranslatedPose.x + options.xOffset, untranslatedPose.y + options.yOffset)
+        val untranslatedPose = getRobotPoseInCameraAxis().rotateAroundOrigin(config.robotToFieldTheta)
+        return Point(untranslatedPose.x + config.xOffset, untranslatedPose.y + config.yOffset)
     }
 
     fun getScaledRobotPose(): Point = getRobotPose() * MOEConstants.Units.ASTARS_PER_METER
@@ -86,14 +84,14 @@ class MOESlam(val setInitialOffsets: Boolean = false) {
 
     fun getRawTheta(): Double = quaternionToHeading(getQuadTheta())
 
-    fun getRawPose() = handler!!.curPose
+    fun getRawPose() = SlamData.curPose
 
     override fun toString(): String {
         return getCameraPose().toString()
     }
 
     fun resetValues(thetaOffset: Double) {
-        setOffset(handler?.curPose!!)
+        setOffset(SlamData?.curPose!!)
         this.thetaOffset = thetaOffset
     }
 
@@ -104,28 +102,44 @@ class MOESlam(val setInitialOffsets: Boolean = false) {
     private fun setInitialOffsets() {
         val point = Point(0.0, 0.0).getRelativePoint(
                 distanceFromThis = SLAM.CAMERA_DISTANCE,
-                theta = toRadians(getTheta() + SLAM.INITIAL_CAMERA_THETA)
+                theta = (getTheta() + SLAM.INITIAL_CAMERA_THETA).toRadians()
         );
         setOffset(floatArrayOf(point.x.toFloat(), point.y.toFloat()))
     };
+    val zeros = doubleArrayOf(0.0, 0.0, 0.0, 0.0)
+
     fun restart() {
+        Log.e("restart", "started")
+        Log.e("datas", SlamData.quatAngle.contentToString())
         handler?.restart()
-        val zeros = doubleArrayOf(0.0, 0.0, 0.0, 0.0)
-        while (!moeOpMode.iIsStopRequested && !handler!!.quatAngle.contentEquals(zeros)) {
-            Log.e("info", getQuadTheta().contentToString())
+        var last = SlamData.lastTimestamp
+        val timer = ElapsedTime().apply { seconds() }
+        while (!moeOpMode.iIsStopRequested && SlamData.lastTimestamp != 0L) {
+            if (last != SlamData.lastTimestamp) {
+                last = SlamData.lastTimestamp
+                timer.reset()
+            }
+            if (timer.seconds() > 2.5) {
+                break
+            }
+
+            //            telemetry.addData("datas", SlamData.lastTimestamp.toString())
+            //            telemetry.update()
+
         }
         checkConnection()
-        while (!moeOpMode.iIsStopRequested && handler!!.quatAngle.contentEquals(zeros)) {
-            Log.e("info2", getQuadTheta().contentToString())
-        }
+        waitForData()
+        Log.e("restart", "done")
+        Log.e("datae", SlamData.quatAngle.contentToString())
+
         //        handler?.waitFor
     }
 
-    fun getQuadTheta(): DoubleArray = handler!!.quatAngle
-    fun waitForRestart() {
-        val copyOf = getQuadTheta().copyOf()
-        while (!moeOpMode.iIsStopRequested && copyOf.contentEquals(getQuadTheta())) {
-            telemetry.addData("waiting for slam")
+    fun getQuadTheta(): DoubleArray = SlamData.quatAngle
+    fun waitForData() {
+        while (!moeOpMode.iIsStopRequested && SlamData.lastTimestamp == 0L) {
+            //            Log.e("info2", SlamData?.lastTimestamp.toString())
+            //            telemetry.addData("datar", SlamData.lastTimestamp.toString())
             telemetry.update()
         }
     }

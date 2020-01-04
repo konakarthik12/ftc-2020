@@ -5,14 +5,12 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.ServoConfig
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
-import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.lerp
-
-data class ServoConfig(val name: String, val min: Double = 0.0, val max: Double = 1.0, val direction: Servo.Direction = Servo.Direction.FORWARD)
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
 
 class MOEServo(config: ServoConfig) {
-    private var mServo: Servo = hardwareMap.get(Servo::class.java, config.name)
+    private var mServo = config.getDevice()
 
     init {
         setRange(config.min, config.max)

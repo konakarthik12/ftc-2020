@@ -1,27 +1,25 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEConfig
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEEventListener
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstants
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEFirebase
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOETelemetry
 import org.firstinspires.ftc.teamcode.constants.OpModeInterface
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRobotRef
-import org.firstinspires.ftc.teamcode.utilities.addData
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
-abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface {
+abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface, MOEBotConstants {
     lateinit var ref: DatabaseReference
-    val firelog = MOETelemetry(telemetry)
     lateinit var robot: MOEBot
     var opModeIsActive: Boolean = false
 
+    @Volatile
+    var isStopRequested = false
 
 
     override fun iOpModeIsActive(): Boolean = opModeIsActive
@@ -33,20 +31,26 @@ abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface {
         get() = this.hardwareMap
 
     override val iIsStopRequested: Boolean
-        get() = !this.opModeIsActive
+        get() = isStopRequested
 
     //    override fun iOpModeIsActive(): Boolean =
 
-    override fun init() {
+    final override fun init() {
         opModeIsActive = false
         moeDoubleInternalInit()
+        initRobot()
         moeInternalInit()
         setRobotRef(robot)
         initOpMode()
         moeInternalPostInit()
-        resetRobotValues()
+        offsetRobotValues()
         notifyInitFinished()
     }
+
+    private fun initRobot() {
+        robot = createRobot()
+    }
+
 
     override fun loop() {
         opModeIsActive = true
@@ -61,9 +65,6 @@ abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface {
 
     }
 
-    private fun resetRobotValues() {
-        robot.resetValues()
-    }
 
     private fun moeDoubleInternalInit() {
         setRefs()
@@ -83,11 +84,15 @@ abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface {
         telemetry.update()
     }
 
-    open fun moeInternalInit() {
-
+    private fun offsetRobotValues() {
+        robot.offsetValues(this)
     }
 
-    open fun initOpMode() {
+    open fun moeInternalInit() {}
 
+    open fun initOpMode() {}
+
+    override fun stop() {
+        isStopRequested = true
     }
 }

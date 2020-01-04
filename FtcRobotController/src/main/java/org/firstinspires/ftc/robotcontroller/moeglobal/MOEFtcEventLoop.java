@@ -33,9 +33,11 @@ public class MOEFtcEventLoop extends FtcEventLoop {
     @Override
     public CallbackResult processCommand(Command command) throws InterruptedException, RobotCoreException {
         String name = command.getName();
-        if (name.equals(CommandList.CMD_INIT_OP_MODE) || name.equals(CommandList.CMD_RUN_OP_MODE)) {
-            Log.e("command", command.toString());
-        }
+        Log.e("command", command.toString());
+
+//        if (name.equals(CommandList.CMD_INIT_OP_MODE) || name.equals(CommandList.CMD_RUN_OP_MODE)) {
+//            Log.e("command", command.toString());
+//        }
         return super.processCommand(command);
     }
 

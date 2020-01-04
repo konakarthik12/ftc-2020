@@ -1,22 +1,28 @@
 package org.firstinspires.ftc.teamcode.test
 
-import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.utilities.addData
+import com.qualcomm.robotcore.hardware.DcMotor
+import org.firstinspires.ftc.teamcode.teleop.CompTeleOp
 
-@TeleOp(name = "IntakeTest")
-class IntakeTest : MOETeleOp() {
+@TeleOp(name = "LiftTest")
+class LiftTest : CompTeleOp() {
     override fun initOpMode() {
-        Log.e("stuffe", "stuffe")
-        telemetry.addData("testagain")
+        super.initOpMode()
+        gpad2.y.onKeyDown {
+            robot.lift.resetEncoders()
+        }
+        robot.lift.motors.forEach { it.mMotor.mode = DcMotor.RunMode.RUN_TO_POSITION }
     }
 
-    override fun mainLoop() {
-        val P = (gamepad1.left_trigger - gamepad1.right_trigger).toDouble() * 0.4
-        telemetry.addData("Power: ", P)
-        telemetry.update()
-        robot.harvester.setPower(P)
-
+    var target = 0.0
+    override fun lift() {
+        target += (gpad2.trigger_diff)
+        robot.lift.setPosition(target.toInt())
     }
+
+    override fun log() {
+        telemetry.addData("lift", robot.lift.getPositions())
+        //        super.log()
+    }
+
 }

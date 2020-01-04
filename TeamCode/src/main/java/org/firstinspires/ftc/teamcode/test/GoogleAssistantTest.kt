@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode.test
 
-import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOELoopedOpMode
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 
 @TeleOp(name = "Google Assistant Test")
-class GoogleAssistantTest : MOETeleOp(useSlam = false, useGyro = false) {
+class GoogleAssistantTest : MOETeleOp() {
     var goal = 0
     override fun initOpMode() {
         ref.setValue(null)

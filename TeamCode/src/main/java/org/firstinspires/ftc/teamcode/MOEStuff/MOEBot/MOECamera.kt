@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
 import android.graphics.Bitmap
-import org.firstinspires.ftc.teamcode.constants.OpModeInterface
-import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.Rectangle
-import org.firstinspires.ftc.teamcode.utilities.crop
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Rectangle
+import org.firstinspires.ftc.teamcode.utilities.internal.crop
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 
 
-class MOECamera(private val opMode: OpModeInterface) {
-    //TODO: Change to camera
+class MOECamera {
     fun getBitmap(): Bitmap? {
 
         return robot.vuforia.getBitmap()

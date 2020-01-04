@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
-import com.qualcomm.robotcore.hardware.Servo
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.ServoConfig
 
 class MOEJointServo(config1: ServoConfig, config2: ServoConfig) {
     var servo1: MOEServo = MOEServo(config1)

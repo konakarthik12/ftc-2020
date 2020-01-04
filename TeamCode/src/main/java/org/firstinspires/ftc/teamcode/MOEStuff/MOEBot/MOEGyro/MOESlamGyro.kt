@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro
 
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
-import org.firstinspires.ftc.teamcode.utilities.AdvancedMath.toNormalAngle
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 
 
 class MOESlamGyro : MOEGyro() {

@@ -5,7 +5,7 @@ import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler.moeWebServer
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.utilities.addData
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import kotlin.random.Random
 
 @TeleOp(name = "ServerTest")

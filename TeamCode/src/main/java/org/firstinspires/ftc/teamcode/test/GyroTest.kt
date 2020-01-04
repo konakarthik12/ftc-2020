@@ -1,15 +1,11 @@
 package org.firstinspires.ftc.teamcode.test
 
-import android.content.Context
-import android.hardware.camera2.CameraManager
-import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.utilities.addData
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
 @TeleOp(name = "GyroTest")
-class GyroTest : MOETeleOp(useSlam = true) {
+class GyroTest : MOETeleOp() {
     override fun mainLoop() {
         telemetry.addData(robot.gyro.angle)
         telemetry.addData(robot.slam.getRawTheta())

@@ -2,19 +2,27 @@ package org.firstinspires.ftc.robotcontroller.moeglobal.slam
 
 import android.content.Context
 import android.content.IntentFilter
-import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbManager
 import android.util.Log
+import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity
 
 object SlamHandler {
     @Volatile
     var t265Handler: SlamT265Handler? = null
-    var USBAddOrRemove = IntentFilter()
+    private val USBListener = SlamUSBListener()
+    var USBAddOrRemove = IntentFilter().apply {
+        addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
+        addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
+    }
+
+
     @JvmStatic
-    fun init(context: Context) {
+    fun init(context: FtcRobotControllerActivity) {
         SlamUsbHandler.init(context)
         SlamLizardHandler.init(context)
+        SlamT265Handler.init(context)
         checkPreConnection()
+        initUsbListener(context)
     }
 
     /**
@@ -24,37 +32,34 @@ object SlamHandler {
         Log.e("checking", "connection")
         var device = SlamLizardHandler.getDevice()
         if (device != null) {
-            SlamUsbListener.handleLizardDeviceAdded(device)
+            SlamUsbReciever.handleLizardDeviceAdded(device)
             Log.e("slam", "lizard")
         } else {
             Log.e("no lizard", "np")
             device = SlamT265Handler.device
             if (device != null) {
                 Log.e("slam", "legit")
-                SlamUsbListener.handleT265DeviceAdded(device)
+                SlamUsbReciever.handleT265DeviceAdded(device)
             }
         }
     }
 
-    //    public static void initUsbListener(Context context) {
-    //        context.registerReceiver(usbReceiver, USBAddOrRemove);
-    //    }
+    private fun initUsbListener(context: Context) {
+        context.registerReceiver(USBListener, USBAddOrRemove)
+    }
+
     //    public static void unRegisterListener(Context context) {
     //        context.unregisterReceiver(usbReceiver);
     //    }
-    @JvmStatic
-    fun handleDeviceAdded(usbDevice: UsbDevice) {
-        SlamUsbListener.handleDeviceAdded(usbDevice)
-    }
+    //    @JvmStatic
+    //    fun handleDeviceAdded(usbDevice: UsbDevice) {
+    //        SlamUsbReciever.handleDeviceAdded(usbDevice)
+    //    }
+    //
+    //    @JvmStatic
+    //    fun handleDeviceRemoved(usbDevice: UsbDevice) {
+    //        SlamUsbReciever.handleDeviceRemoved(usbDevice)
+    //    }
 
-    @JvmStatic
-    fun handleDeviceRemoved(usbDevice: UsbDevice) {
-        SlamUsbListener.handleDeviceRemoved(usbDevice)
-    }
 
-    //    private static SlamUsbListener usbReceiver = new SlamUsbListener();
-    init {
-        USBAddOrRemove.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
-        USBAddOrRemove.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
-    }
 }

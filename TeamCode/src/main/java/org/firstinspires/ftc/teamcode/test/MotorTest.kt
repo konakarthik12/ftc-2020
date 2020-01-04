@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.test
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.utilities.addData
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
 @TeleOp(name = "MotorTest")
 class MotorTest : MOETeleOp() {
@@ -13,7 +13,6 @@ class MotorTest : MOETeleOp() {
 
     override fun initOpMode() {
         telemetry.addData("testagain")
-        robot.odometry.servos.initServosUp()
     }
 
     override fun mainLoop() {

@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis
 
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toRadians
 import kotlin.math.abs
+import kotlin.math.cos
+import kotlin.math.sin
 
 
 data class Powers(var FLP: Double, var FRP: Double, var BLP: Double, var BRP: Double) {
@@ -10,18 +13,24 @@ data class Powers(var FLP: Double, var FRP: Double, var BLP: Double, var BRP: Do
 
     companion object {
 
-        fun mechanumToPowers(fwd: Double, str: Double, rot: Double, maxPower: Double = 1.0): Powers {
-            var FLP = fwd + str + rot
-            var FRP = fwd - str - rot
-            var BLP = fwd - str + rot
-            var BRP = fwd + str - rot
-            val powers = arrayOf(FLP, FRP, BLP, BRP)
-            var highestPower = abs(powers.maxBy { abs(it) }!!)
-
+        fun fromMecanum(fwd: Double, str: Double, rot: Double, maxPower: Double = 1.0): Powers {
+            val flp = fwd + str + rot
+            val frp = fwd - str - rot
+            val blp = fwd - str + rot
+            val brp = fwd + str - rot
+            var powers = listOf(flp, frp, blp, brp)
+            val highestPower = abs(powers.maxBy { abs(it) }!!)
             if (highestPower > maxPower) {
-                return Powers(powers.map { it * (maxPower / highestPower) })
+                powers = powers.map { it * (maxPower / highestPower) }
             }
             return Powers(powers)
+        }
+
+        fun fromAng(degAng: Double, magnitude: Double, rot: Double, maxPower: Double = 1.0) = fromRadAngle(degAng.toRadians(), magnitude, rot, maxPower)
+        fun fromRadAngle(radAng: Double, magnitude: Double, rot: Double, maxPower: Double = 1.0): Powers {
+            //            val radAng = degAng.toRadians()
+            //            telemetry.addData("magsin", magnitude* sin(radAng))
+            return fromMecanum(magnitude * sin(radAng), magnitude * cos(radAng), rot, maxPower)
         }
 
     }
@@ -32,5 +41,6 @@ data class Powers(var FLP: Double, var FRP: Double, var BLP: Double, var BRP: Do
         BLP *= num
         BRP *= num
     }
+
 }
 

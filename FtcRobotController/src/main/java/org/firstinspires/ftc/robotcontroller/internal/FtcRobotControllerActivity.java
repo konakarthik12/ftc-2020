@@ -87,8 +87,6 @@ import org.firstinspires.ftc.onbotjava.OnBotJavaHelperImpl;
 import org.firstinspires.ftc.onbotjava.OnBotJavaProgrammingMode;
 import org.firstinspires.ftc.robotcontroller.moeglobal.MOEFtcEventLoop;
 import org.firstinspires.ftc.robotcontroller.moeglobal.MOEGlobalProcesses;
-import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler;
-import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamUsbListener;
 import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
 import org.firstinspires.ftc.robotcore.internal.hardware.android.AndroidBoard;
 import org.firstinspires.ftc.robotcore.internal.network.*;
@@ -125,7 +123,8 @@ public class FtcRobotControllerActivity extends Activity {
     protected StartResult deviceNameStartResult = new StartResult();
     protected PreferencesHelper preferencesHelper;
     protected ImageButton buttonMenu;
-    protected TextView textStreamingStatus;
+    //    public static FtcRobotControllerActivity deleteThis;
+    public TextView textStreamingStatus;
     protected TextView textDeviceName;
     protected TextView textNetworkConnectionStatus;
     protected TextView textRobotStatus;
@@ -166,25 +165,25 @@ public class FtcRobotControllerActivity extends Activity {
         return TAG;
     }
 
-    public void setStreamingText(final boolean dataStreaming) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                textStreamingStatus.setText("Streaming: " + dataStreaming);
-            }
-        });
-    }
+//    public  void setStreamingText(final String dataStreaming) {
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                textStreamingStatus.setText("Streaming: " + dataStreaming);
+//            }
+//        });
+//    }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-//        Log.e("usb connect", intent.toString());
         if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(intent.getAction())) {
+            Log.e("usb connect", intent.getAction());
             UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
             RobotLog.vv(TAG, "ACTION_USB_DEVICE_ATTACHED: %s", usbDevice.getDeviceName());
             Log.e("Device added", String.valueOf(usbDevice.getVendorId()));
 
-            SlamHandler.handleDeviceAdded(usbDevice);
+//            SlamHandler.handleDeviceAdded(usbDevice);
             // We might get attachment notifications before the event loop is set up, so
             // we hold on to them and pass them along only when we're good and ready.
             if (receivedUsbAttachmentNotifications != null) { // *total* paranoia
@@ -194,7 +193,7 @@ public class FtcRobotControllerActivity extends Activity {
         } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(intent.getAction())) {
             UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
             Log.e("Device disconnected", String.valueOf(usbDevice.getVendorId()));
-            SlamHandler.handleDeviceRemoved(usbDevice);
+//            SlamHandler.handleDeviceRemoved(usbDevice);
         }
     }
 
