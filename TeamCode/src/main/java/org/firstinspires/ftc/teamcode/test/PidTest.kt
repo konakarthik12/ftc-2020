@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEPidValues
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEPidOptions
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOETurnPid
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
@@ -57,7 +57,7 @@ class PidTest : MOETeleOp() {
     }
 
     override fun onConfigChanged(dataSnapshot: DataSnapshot) {
-        val options = dataSnapshot.getValue(MOEPidValues::class.java)!!
+        val options = dataSnapshot.getValue(MOEPidOptions::class.java)!!
         Log.e("stuff", options.toString())
         pid.setOptions(options)
         pid.reset()

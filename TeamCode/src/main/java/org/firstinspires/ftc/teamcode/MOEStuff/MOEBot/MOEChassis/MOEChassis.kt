@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis
 
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAstarSystem
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEFancyPid
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEtor
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.DriveTrain.Motors.Configs
@@ -8,7 +7,8 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 
 
 class MOEChassis {
-    val astar = MOEAstarSystem(this)
+    val pidChassisHandler = ChassisPidHandler()
+//    val astar = MOEAstarSystem()
 
     var frontLeftMotor = MOEtor(Configs.FrontLeft)
     var frontRightMotor = MOEtor(Configs.FrontRight)
@@ -49,7 +49,7 @@ class MOEChassis {
     fun turnRightLeft(power: Double) = turnPower(-power)
 
 
-    fun turnVelocity(vel: Double) = setVelocity(vel,-vel)
+    fun turnVelocity(vel: Double) = setVelocity(vel, -vel)
 
     fun stop() {
         setPower(0.0)
@@ -71,12 +71,8 @@ class MOEChassis {
     }
 
     fun moveTo(x: Double, y: Double) {
-        val xPID = MOEFancyPid(1.0, 0.0, 0.0)
-        xPID.setOutputLimits(1.0)
-        xPID.setpoint = x
-        xPID.input = { robot.slam.getRobotPose().x }
-        xPID.output = { robot.chassis.turnPower(it) }
-        xPID.run()
+        pidChassisHandler.moveTo(x,y)
+//        val pid = MOEPositionalSystemPid(MOE/Constants.PositionalPid.DefaultOptions)
     }
 
     fun getVelocities(): List<Double> {

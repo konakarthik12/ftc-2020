@@ -11,11 +11,12 @@ class LiftTest : CompTeleOp() {
         gpad2.y.onKeyDown {
             robot.lift.resetEncoders()
         }
-        robot.lift.motors.forEach { it.mMotor.mode = DcMotor.RunMode.RUN_TO_POSITION }
+//        robot.lift.motors.forEach { it.mMotor.mode = DcMotor.RunMode.RUN_TO_POSITION }
     }
 
     var target = 0.0
     override fun lift() {
+//        robot.lift.leftMotor.setPower(gpad1.left.)
         target += (gpad2.trigger_diff)
         robot.lift.setPosition(target.toInt())
     }

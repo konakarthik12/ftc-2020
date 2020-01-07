@@ -5,11 +5,16 @@ import kotlin.math.*
 
 
 /**
- * creates another point relative to this one given distance and angle (Polar style)
+ * creates another point relative to this one given distance and angle
+ *
+ * 0 is straight up
+ * 90 is to the right
+ * 180 is down
+ * 270 is lef
  */
-fun <T : PointImpl<T>> T.getRelativePoint(distanceFromThis: Double, theta: Double): T {
-    val cameraX = cos(theta) * distanceFromThis
-    val cameraY = sin(theta) * distanceFromThis
+fun <T : PointImpl<T>> T.getRelativePoint(distanceFromThis: Double, degTheta: Double): T {
+    val cameraX = sin(degTheta) * distanceFromThis
+    val cameraY = cos(degTheta) * distanceFromThis
 
     return create(this.x + cameraX, this.y + cameraY)
 }

@@ -19,7 +19,7 @@ class AngleTest : MOERegularTest() {
         while (opModeIsActive()) {
             robot.chassis.stop()
             telemetry.addData("slam2", robot.slam.pose)
-            telemetry.addData("atan2", robot.slam.pose.atan2().toDegrees())
+//            telemetry.addData("atan2", robot.slam.pose.atan2().toDegrees())
             telemetry.update()
         }
 

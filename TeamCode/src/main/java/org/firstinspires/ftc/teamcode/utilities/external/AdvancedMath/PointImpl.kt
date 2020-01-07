@@ -14,7 +14,12 @@ interface PointImpl<T> : Cloneable<T> {
         this.x *= value; this.y *= value
     }
 
-    fun atan2() = kotlin.math.atan2(y, x)
+    /**
+     * 0 up
+     * 90 right
+     */
+    fun atan2() = kotlin.math.atan2(x, y)
+    fun hypot(): Double = kotlin.math.hypot(x,y)
 
     fun dot(p: PointImpl<T>): Double {
         return x * p.x + y * p.y
@@ -32,14 +37,15 @@ interface PointImpl<T> : Cloneable<T> {
     }
 
     fun create(x: Double, y: Double): T
-    override fun clone(): T = create(x, y)
+//    abstract override clone(): T
     operator fun set(index: Int, value: Double) {
         when (index) {
-            0 -> x=value
-            1 -> y=value
+            0 -> x = value
+            1 -> y = value
             else -> throw IllegalStateException("Point only has two components (x and y)")
         }
     }
+
 
 
 }

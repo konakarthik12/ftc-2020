@@ -5,11 +5,11 @@ import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.PointImpl
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class PurePursuitPoint(override var x: Double, override var y: Double) : PointImpl<PurePursuitPoint>  {
+class PurePursuitPoint(override var x: Double, override var y: Double, var isCriticalPoint: Boolean = false) : PointImpl<PurePursuitPoint> {
     var prefixDistance: Double = 0.0
     var velocity: Double = 0.0
-    var isCriticalPoint: Boolean = false
-    var magnitude: Double = 0.0
+    //    var isCriticalPoint: Boolean = false
+    //    var magnitude: Double = 0.0
 
     constructor(point: Point) : this(point.x, point.y)
 
@@ -33,5 +33,11 @@ class PurePursuitPoint(override var x: Double, override var y: Double) : PointIm
         }
     }
 
-    override fun create(x: Double, y: Double): PurePursuitPoint  = PurePursuitPoint(x,y)
+    override fun create(x: Double, y: Double): PurePursuitPoint = PurePursuitPoint(x,y,isCriticalPoint)
+//    fun create(x: Double, y: Double): PurePursuitPoint {
+//        return PurePursuitPoint(x, y, isCriticalPoint)
+//    }
+
+    override fun clone(): PurePursuitPoint = create(x, y)
+
 }

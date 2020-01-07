@@ -10,16 +10,16 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
  *
  * @see http://brettbeauregard.com/blog/2011/04/improving-the-beginners-pid-direction/improving-the-beginners-pid-introduction
  */
-data class MOEPidValues(val P: Double = 0.0,
-                        val I: Double = 0.0,
-                        val D: Double = 0.0,
-                        val F: Double = 0.0)
+data class MOEPidOptions(val P: Double = 0.0,
+                         val I: Double = 0.0,
+                         val D: Double = 0.0,
+                         val F: Double = 0.0)
 
 open class MOEPid(private var P: Double = 0.0,
                   I: Double = 0.0,
                   private var D: Double = 0.0,
                   private var F: Double = 0.0) {
-    constructor(options: MOEPidValues) : this(options.P, options.I, options.D, options.F)
+    constructor(options: MOEPidOptions) : this(options.P, options.I, options.D, options.F)
 
     //**********************************
     // Class private variables
@@ -149,7 +149,7 @@ open class MOEPid(private var P: Double = 0.0,
      * @param setpoint The target value for the system
      * @return calculated output value for driving the system
      */
-    fun getOutput(actual: Double = lastActual, newSetPoint: Double = setpoint): Double {
+    fun getOutput(actual: Double, newSetPoint: Double = setpoint): Double {
         var tempSetPoint = newSetPoint
 
         this.setpoint = tempSetPoint

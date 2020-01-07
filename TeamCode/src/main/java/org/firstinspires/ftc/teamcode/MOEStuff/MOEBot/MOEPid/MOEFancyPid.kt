@@ -37,11 +37,20 @@ open class MOEFancyPid(private var P: Double = 0.0,
     }
 
 
-    fun setOptions(options: MOEPidValues) {
+    fun setOptions(options: MOEPidOptions) {
         this.P = options.P
         this.I = options.I
         this.D = options.D
         this.F = options.F
 
     }
+
+    fun getOutput(): Double {
+        return getOutput(input())
+    }
+
+    fun isFinished(): Boolean {
+        return endCondition(input())
+    }
+
 }

@@ -1,3 +1,3 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
-class MOEPidGridValues(options:MOEPidValues)
+class MOEPidGridValues(options:MOEPidOptions)

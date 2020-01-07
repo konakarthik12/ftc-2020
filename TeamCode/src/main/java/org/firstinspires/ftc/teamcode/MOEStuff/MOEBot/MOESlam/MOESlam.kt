@@ -5,15 +5,17 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamData
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamT265Handler
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.SLAM
 import org.firstinspires.ftc.teamcode.utilities.external.quaternionToHeading
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.*
 
-class MOESlam(setInitialOffsets: Boolean = false) {
+class MOESlam() {
     lateinit var config: MOESlamConfig
     //TODO: change this once the rest of the stuff works
     val pose: Point
@@ -36,9 +38,7 @@ class MOESlam(setInitialOffsets: Boolean = false) {
     init {
         //        checkConnection()
         //        restart()
-        if (setInitialOffsets) {
-            setInitialOffsets()
-        }
+
         //        Log.e("init", "done")
     }
 
@@ -54,13 +54,13 @@ class MOESlam(setInitialOffsets: Boolean = false) {
 
     fun getCameraPose(): Point {
         val rawPose = getRawOffsetPose()
-        return Point(-rawPose.x, rawPose.y)
+        return Point(rawPose.x, rawPose.y)
     }
 
     fun getRobotPoseInCameraAxis(): Point {
         return getCameraPose().getRelativePoint(
-                distanceFromThis = SLAM.CAMERA_DISTANCE,
-                theta = (getTheta() + SLAM.INITIAL_CAMERA_THETA).toRadians()
+                distanceFromThis = -SLAM.CAMERA_DISTANCE,
+                degTheta = (getTheta() + SLAM.INITIAL_CAMERA_THETA)
         )
         //        rawPose.getRelativePoint(Localization.CAMERA_DISTANCE, Localization.)
         //        return rawPose.rotateAroundOrigin(angle)
@@ -98,14 +98,14 @@ class MOESlam(setInitialOffsets: Boolean = false) {
     private fun setOffset(curPose: FloatArray) {
         this.slamOffset = curPose.copyOf()
     }
-
-    private fun setInitialOffsets() {
-        val point = Point(0.0, 0.0).getRelativePoint(
-                distanceFromThis = SLAM.CAMERA_DISTANCE,
-                theta = (getTheta() + SLAM.INITIAL_CAMERA_THETA).toRadians()
-        );
-        setOffset(floatArrayOf(point.x.toFloat(), point.y.toFloat()))
-    };
+//
+//    private fun setInitialOffsets() {
+//        val point = Point(0.0, 0.0).getRelativePoint(
+//                distanceFromThis = SLAM.CAMERA_DISTANCE,
+//                degTheta = (getTheta() + SLAM.INITIAL_CAMERA_THETA)
+//        );
+//        setOffset(floatArrayOf(point.x.toFloat(), point.y.toFloat()))
+//    };
     val zeros = doubleArrayOf(0.0, 0.0, 0.0, 0.0)
 
     fun restart() {
@@ -143,4 +143,17 @@ class MOESlam(setInitialOffsets: Boolean = false) {
             telemetry.update()
         }
     }
+
+    //TODO: temporary
+    fun getScaledCameraPose(): Point {
+        val cameraPose = getCameraPose()
+        cameraPose *= MOEConstants.Units.ASTARS_PER_METER
+        return cameraPose
+    }
+
+    fun getTrans(): Transformation {
+        return Transformation(getScaledCameraPose(), robot.gyro.angle)
+    }
+
+
 }

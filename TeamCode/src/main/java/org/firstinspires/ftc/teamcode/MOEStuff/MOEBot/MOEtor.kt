@@ -9,9 +9,9 @@ import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
 
 
-class MOEtor(config: MotorConfig) {
+class MOEtor(val config: MotorConfig) {
     var mMotor = config.getDevice()
-    private var powerScale = config.minPow..config.maxPow
+    //    private var powerScale = config.minPow..config.maxPow
 
     init {
         mMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
@@ -32,7 +32,13 @@ class MOEtor(config: MotorConfig) {
     //    }
 
     fun setPower(power: Double) {
-        mMotor.power = powerScale.lerp(power)
+        val lerp = if (power > 0.0) {
+            (0.0..config.maxPow).lerp(power)
+        } else
+            -(0.0..config.minPow).lerp(power)
+
+        //var prog = (power + 1)/2
+        mMotor.power = lerp
     }
 
     fun setDirection(direction: Direction) {

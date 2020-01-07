@@ -1,49 +1,29 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
-import org.firstinspires.ftc.teamcode.constants.MOEAutonConstants
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEAutonConfigImpl
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Units
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Rectangle
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 
-data class AutonConfig(val skystoneCropRect: Rectangle,
-                       val robotToFieldOffset: Double,
-                       val positionOffsets: Point,
-                       val topSkystonePosition: Point,
-                       val afterSkystonePosition: Point,
-                       val dumpSkystonePosition: Point,
-                       val parkPosition: Point)
 
-fun flipAboutFieldYAxis(p: Point): Point = Point(Units.FIELD_SIZE - p.x, p.y)
-
-fun reflectAutonConfig(config: AutonConfig): AutonConfig {
-    val (skystoneCropRect, robotToFieldOffset, positionOffsets, topSkystonePosition,
-            afterSkystonePosition, dumpSkystonePosition, parkPosition) = config
-
-    return AutonConfig(
-            skystoneCropRect = skystoneCropRect,
-            robotToFieldOffset = -robotToFieldOffset,
-            positionOffsets = flipAboutFieldYAxis(positionOffsets),
-            topSkystonePosition = flipAboutFieldYAxis(topSkystonePosition),
-            afterSkystonePosition = flipAboutFieldYAxis(afterSkystonePosition),
-            dumpSkystonePosition = flipAboutFieldYAxis(dumpSkystonePosition),
-            parkPosition = flipAboutFieldYAxis(parkPosition)
-    )
-}
-
-abstract class MOEAuton(val isLeft: Boolean = true,
-                        val useCamera: Boolean = true,
-                        val useSlam: Boolean = true) : MOERegularOpMode() {
-    protected val config: AutonConfig = if (isLeft) MOEAutonConstants.Left else MOEAutonConstants.Right
+abstract class MOEAuton : MOERegularOpMode(), MOEAutonConfigImpl {
+    //    protected val config: AutonConfig = if (isLeft) MOEAutonConstants.Left else MOEAutonConstants.Right
     // The values are ordered from top to bottom.
-    private val skystonePositions: ArrayList<Point> = config.topSkystonePosition.let { (x, y) ->
-        arrayListOf(
-                Point(x, y),
-                Point(x, y - (1 * Units.SKYSTONE_LENGTH)),
-                Point(x, y - (2 * Units.SKYSTONE_LENGTH)),
-                Point(x, y - (3 * Units.SKYSTONE_LENGTH)),
-                Point(x, y - (4 * Units.SKYSTONE_LENGTH)),
-                Point(x, y - (5 * Units.SKYSTONE_LENGTH))
-        )
+//   protected var
+    private lateinit var skystonePositions: ArrayList<Point>
+
+    override fun moeInternalInit() {
+
+        skystonePositions = getAutonConfig().positionConfig.topSkystonePosition.let { (x, y) ->
+            arrayListOf(
+                    Point(x, y),
+                    Point(x, y - (1 * Units.SKYSTONE_LENGTH)),
+                    Point(x, y - (2 * Units.SKYSTONE_LENGTH)),
+                    Point(x, y - (3 * Units.SKYSTONE_LENGTH)),
+                    Point(x, y - (4 * Units.SKYSTONE_LENGTH)),
+                    Point(x, y - (5 * Units.SKYSTONE_LENGTH))
+            )
+        }
     }
 
     protected val skystonePairs: ArrayList<Pair<Point, Point>>
@@ -53,4 +33,5 @@ abstract class MOEAuton(val isLeft: Boolean = true,
     final override fun moeInternalPostInit() {
         robot.gyro.init(true)
     }
+
 }

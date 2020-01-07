@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.constants
 
 import com.qualcomm.hardware.bosch.BNO055IMU
+import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.MotorConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.ServoConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEPositionalPidOptions
 import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.MOEPurePursuitOptions
 import com.qualcomm.robotcore.hardware.DcMotorSimple as Motor
 
@@ -14,10 +16,10 @@ MOEConstants {
     object DriveTrain {
         object Motors {
             object Configs {
-                val FrontLeft = MotorConfig("FLD", 1, 2, Motor.Direction.FORWARD)
-                val FrontRight = MotorConfig("FRD", 2, 2, Motor.Direction.REVERSE)
-                val BackLeft = MotorConfig("BLD", 1, 3, Motor.Direction.FORWARD)
-                val BackRight = MotorConfig("BRD", 2, 3, Motor.Direction.REVERSE)
+                val FrontLeft = MotorConfig("FLD", 1, 2, Direction.FORWARD)
+                val FrontRight = MotorConfig("FRD", 2, 2, Direction.REVERSE)
+                val BackLeft = MotorConfig("BLD", 1, 3, Direction.FORWARD)
+                val BackRight = MotorConfig("BRD", 2, 3, Direction.REVERSE)
             }
         }
     }
@@ -54,8 +56,8 @@ MOEConstants {
 
     object Lift {
         object Motors {
-            val LeftLiftMotor = MotorConfig("LLF", 1, 0, maxPow = 0.4)
-            val RightLiftMotor = MotorConfig("RLF", 2, 0, maxPow = 0.4)
+            val LeftLiftMotor = MotorConfig("LLF", 1, 0, direction = Direction.REVERSE, minPow = -0.4, maxPow = 0.6)
+            val RightLiftMotor = MotorConfig("RLF", 2, 0, direction = Direction.REVERSE, minPow = -0.4, maxPow = 0.6)
         }
 
     }
@@ -88,9 +90,9 @@ MOEConstants {
     //    }
 
     object SLAM {
-        const val CAMERA_DISTANCE = 11.0 * Units.METERS_PER_ASTAR
+        const val CAMERA_DISTANCE = 18.02775637732// astars
         //        const val CAMERA_THETA = -10.0  // Angle relative to robot from camera
-        const val INITIAL_CAMERA_THETA = -82.0
+        const val INITIAL_CAMERA_THETA = -86.820169880136
     }
 
     object PurePursuit {
@@ -133,7 +135,6 @@ MOEConstants {
     }
 
 
-
     object Gamepad {
         const val ON_THRESHOLD = 0.95
     }
@@ -146,4 +147,6 @@ MOEConstants {
             loggingEnabled = false
         }
     }
+
+
 }

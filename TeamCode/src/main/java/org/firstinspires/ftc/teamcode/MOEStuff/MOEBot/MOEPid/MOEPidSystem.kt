@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
 open class MOEPidSystem(vararg val pids: MOEFancyPid) {
+//    val setInputs: Unit
+//fun setInputs
     fun setSetpoints(goal: Double) {
         pids.forEach { it.setpoint = goal }
     }
@@ -15,6 +17,9 @@ open class MOEPidSystem(vararg val pids: MOEFancyPid) {
 
     fun setOutputLimits(min: Double, max: Double) {
         pids.forEach { it.setOutputLimits(min, max) }
+    }
+    fun reset(){
+        pids.forEach { it.reset() }
     }
 //    fun setOuputLimits()
 

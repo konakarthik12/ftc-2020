@@ -4,6 +4,8 @@ import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import com.qualcomm.robotcore.util.ElapsedTime
+import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler.moeWebServer
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOELoopedOpMode
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
@@ -44,7 +46,7 @@ class PurePursuitTest : MOELoopedTest() {
                            rightActualVelocity: Double): Pair<Double, Double> {
 
         lastKnownPointIndex = path.getClosestPointIndex(lastKnownPointIndex, currentPosition)
-//        telemetry.addData("lastKnownPointIndex", lastKnownPointIndex)
+        //        telemetry.addData("lastKnownPointIndex", lastKnownPointIndex)
         val closestPoint: PurePursuitPoint = path[lastKnownPointIndex]
         telemetry.addData("closestPoint", closestPoint)
 
@@ -87,7 +89,7 @@ class PurePursuitTest : MOELoopedTest() {
 
 
     override fun mainLoop() {
-
+        pushSockets()
         val pose = robot.slam.getCameraPose()
         pose *= MOEConstants.Units.ASTARS_PER_METER
         telemetry.addData("pose", pose.toString())
@@ -109,7 +111,16 @@ class PurePursuitTest : MOELoopedTest() {
             return
         }
 
-        robot.chassis.setVelocity(leftTargetVelocity, rightTargetVelocity)
+//        robot.chassis.setVelocity(leftTargetVelocity, rightTargetVelocity)
+    }
+
+    val timer = ElapsedTime()
+    private fun pushSockets() {
+        if (timer.milliseconds() < 5000) return
+        timer.reset()
+        val pose = robot.slam.getCameraPose()
+        pose *= MOEConstants.Units.ASTARS_PER_METER
+        moeWebServer.broadcast("slam/pose/${pose.x+48}/${pose.y+48}")
     }
 
     override fun getRobotConfig(): MOEBotConfig {

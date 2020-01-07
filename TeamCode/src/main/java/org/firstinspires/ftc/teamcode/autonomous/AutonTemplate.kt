@@ -9,14 +9,14 @@ import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.firstinspires.ftc.teamcode.utilities.internal.getSkyStoneLocationFromBitmap
 
 @Autonomous(name = "AutonTemplate")
-class AutonTemplate : MOEAuton(isLeft = true) {
+class AutonTemplate : MOEAuton() {
     override fun initOpMode() {
         Log.e("stuffe", "stuffe")
         telemetry.addData("testagain")
     }
 
     override fun run() {
-        val bm = robot.camera.getCroppedBitmap(config.skystoneCropRect)!!
+        val bm = robot.camera.getCroppedBitmap(getAutonConfig().positionConfig.skystoneCropRect)!!
         val location = getSkyStoneLocationFromBitmap(bm)
 
         when (location) {
