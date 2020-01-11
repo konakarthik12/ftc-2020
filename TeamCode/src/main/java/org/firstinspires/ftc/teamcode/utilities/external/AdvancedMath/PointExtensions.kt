@@ -12,18 +12,18 @@ import kotlin.math.*
  * 180 is down
  * 270 is lef
  */
-fun <T : PointImpl<T>> T.getRelativePoint(distanceFromThis: Double, degTheta: Double): T {
-    val cameraX = sin(degTheta) * distanceFromThis
-    val cameraY = cos(degTheta) * distanceFromThis
+fun <T : PointImpl<T>> T.getRelativePoint(distanceFromThis: Double, radTheta: Double): T {
+    val cameraX = sin(radTheta) * distanceFromThis
+    val cameraY = cos(radTheta) * distanceFromThis
 
     return create(this.x + cameraX, this.y + cameraY)
 }
 
 /** clockwise rotation */
-fun <T : PointImpl<T>> T.rotateAroundOrigin(angle: Double): T {
-    val x = x * cos(angle) - y * sin(angle)
-    val y = x * sin(angle) + y * cos(angle)
-    return create(x, y)
+fun <T : PointImpl<T>> T.rotateAroundOrigin(radAng: Double): T {
+    val newX = x * cos(radAng) - y * sin(radAng)
+    val newY = x * sin(radAng) + y * cos(radAng)
+    return create(newX, newY)
 }
 
 fun <T : PointImpl<T>> T.distanceFrom(point: T) = hypot(this.x - point.x, this.y - point.y)

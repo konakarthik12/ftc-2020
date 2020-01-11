@@ -7,24 +7,25 @@ import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamT265Handler
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
-import org.firstinspires.ftc.teamcode.constants.MOEConstants
-import org.firstinspires.ftc.teamcode.constants.MOEConstants.SLAM
+import org.firstinspires.ftc.teamcode.constants.MOEConstants.Units.ASTARS_PER_METER
 import org.firstinspires.ftc.teamcode.utilities.external.quaternionToHeading
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.*
 
-class MOESlam() {
-    lateinit var config: MOESlamConfig
+class MOESlam(val config: MOESlamConfig) {
+    val transformation: Transformation
+        get() = getTrans()
+    //    val pose
+//        get() = getTrans().pose
+    val transHandler = MOERohanTrans(config)
+//    lateinit var config: MOESlamConfig
+
     //TODO: change this once the rest of the stuff works
-    val pose: Point
-        get() = getCameraPose() * MOEConstants.Units.ASTARS_PER_METER
+//    val pose: Point
+//        get() = getCameraPose() * MOEConstants.Units.ASTARS_PER_METER
 
 
-    constructor(config: MOESlamConfig) : this() {
-        this.config = config
-    }
     //
     //    private fun setOptions(options: MOESlamOptions) {
     //        this.options = options;
@@ -36,10 +37,7 @@ class MOESlam() {
     var thetaOffset: Double = 0.0
 
     init {
-        //        checkConnection()
-        //        restart()
-
-        //        Log.e("init", "done")
+        resetValues()
     }
 
 
@@ -52,53 +50,59 @@ class MOESlam() {
         return Point(it[0] - slamOffset[0].toDouble(), it[2] - slamOffset[2].toDouble())
     }
 
-    fun getCameraPose(): Point {
-        val rawPose = getRawOffsetPose()
-        return Point(rawPose.x, rawPose.y)
-    }
+    fun getAstarPose() = getRawOffsetPose() * ASTARS_PER_METER
+//    @Deprecated("")
+//    fun getCameraPose(): Point {
+//        val rawPose = getRawOffsetPose()
+//        return Point(rawPose.x, rawPose.y)
+//    }
 
-    fun getRobotPoseInCameraAxis(): Point {
-        return getCameraPose().getRelativePoint(
-                distanceFromThis = -SLAM.CAMERA_DISTANCE,
-                degTheta = (getTheta() + SLAM.INITIAL_CAMERA_THETA)
-        )
-        //        rawPose.getRelativePoint(Localization.CAMERA_DISTANCE, Localization.)
-        //        return rawPose.rotateAroundOrigin(angle)
+//    @Deprecated("")
+//    fun getRobotPoseInCameraAxis(): Point {
+//        return getCameraPose().getRelativePoint(
+//                distanceFromThis = -SLAM.CAMERA_DISTANCE,
+//                degTheta = (getTheta() + SLAM.INITIAL_CAMERA_THETA)
+//        )
+//                rawPose.getRelativePoint(Localization.CAMERA_DISTANCE, Localization.)
+//                return rawPose.rotateAroundOrigin(angle)
+//
+//                val theta = toRadians(getTheta() + Localization.CAMERA_THETA)
+//                return getCameraPose().getRelativePointLocalization.CAMERA_DISTANCE, theta)
+//    }
 
-        //        val theta = toRadians(getTheta() + Localization.CAMERA_THETA)
-        //        return getCameraPose().getRelativePointLocalization.CAMERA_DISTANCE, theta)
-    }
+//    @Deprecated("")
+//    fun getRobotPose(): Point {
+//        val untranslatedPose = getRobotPoseInCameraAxis().rotateAroundOrigin(config.robotToFieldTheta)
+//        return Point(untranslatedPose.x + config.xOffset, untranslatedPose.y + config.yOffset)
+//    }
 
-    fun getRobotPose(): Point {
-        val untranslatedPose = getRobotPoseInCameraAxis().rotateAroundOrigin(config.robotToFieldTheta)
-        return Point(untranslatedPose.x + config.xOffset, untranslatedPose.y + config.yOffset)
-    }
-
-    fun getScaledRobotPose(): Point = getRobotPose() * MOEConstants.Units.ASTARS_PER_METER
+//    @Deprecated("")
+//    fun getScaledRobotPose(): Point = getRobotPose() * MOEConstants.Units.ASTARS_PER_METER
     //
     //    fun getRawEulerTheta(): Double {
     //
     //    }
 
-    fun getTheta(): Double = (getRawTheta().toNormalAngle() - thetaOffset)
+    fun getTheta(): Double = -(getRawTheta().toEulerAngle() - thetaOffset)
 
     fun getRawTheta(): Double = quaternionToHeading(getQuadTheta())
 
     fun getRawPose() = SlamData.curPose
 
-    override fun toString(): String {
-        return getCameraPose().toString()
-    }
+//    override fun toString(): String {
+//        return getCameraPose().toString()
+//    }
 
-    fun resetValues(thetaOffset: Double) {
+    fun resetValues() {
         setOffset(SlamData?.curPose!!)
-        this.thetaOffset = thetaOffset
+        this.thetaOffset = -getRawTheta()
     }
 
     private fun setOffset(curPose: FloatArray) {
         this.slamOffset = curPose.copyOf()
     }
-//
+
+    //
 //    private fun setInitialOffsets() {
 //        val point = Point(0.0, 0.0).getRelativePoint(
 //                distanceFromThis = SLAM.CAMERA_DISTANCE,
@@ -144,16 +148,11 @@ class MOESlam() {
         }
     }
 
-    //TODO: temporary
-    fun getScaledCameraPose(): Point {
-        val cameraPose = getCameraPose()
-        cameraPose *= MOEConstants.Units.ASTARS_PER_METER
-        return cameraPose
+    private fun getTrans(): Transformation {
+        return transHandler.getTrans(getRawTrans())
     }
 
-    fun getTrans(): Transformation {
-        return Transformation(getScaledCameraPose(), robot.gyro.angle)
+    fun getRawTrans(): Transformation {
+        return Transformation(getAstarPose(), getTheta())
     }
-
-
 }

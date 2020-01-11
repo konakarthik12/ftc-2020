@@ -10,19 +10,24 @@ import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
 
 
 class MOEtor(val config: MotorConfig) {
+    val error
+        get() = mMotor.targetPosition - mMotor.currentPosition
     var mMotor = config.getDevice()
     //    private var powerScale = config.minPow..config.maxPow
+    val powRange = 0.0..config.maxPow
 
     init {
         mMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         mMotor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         setDirection(config.direction)
         setZeroPowerBehavior(config.zeroPowerBehavior)
-
     }
 
     val position: Int
         get() = mMotor.currentPosition
+
+    val isBusy: Boolean
+        get() = mMotor.isBusy
 
     val distanceTraveled: Double
         get() = position * MOEConstants.Units.ASTARS_PER_TICK
@@ -32,13 +37,11 @@ class MOEtor(val config: MotorConfig) {
     //    }
 
     fun setPower(power: Double) {
-        val lerp = if (power > 0.0) {
-            (0.0..config.maxPow).lerp(power)
-        } else
-            -(0.0..config.minPow).lerp(power)
+        mMotor.power = (powRange).lerp(power)
+    }
 
-        //var prog = (power + 1)/2
-        mMotor.power = lerp
+    fun setMode(mode: DcMotor.RunMode) {
+        mMotor.mode = mode
     }
 
     fun setDirection(direction: Direction) {
@@ -52,7 +55,9 @@ class MOEtor(val config: MotorConfig) {
     fun setVelocity(velocity: Double) = mMotor.setVelocity(velocity, AngleUnit.RADIANS)
     fun getVelocity() = mMotor.velocity
     fun resetEncoder() {
+        val oldMOde = mMotor.mode
         mMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        mMotor.mode = oldMOde
     }
 
     fun setTargetPosition(position: Int) {

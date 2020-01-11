@@ -90,7 +90,7 @@ class PurePursuitTest : MOELoopedTest() {
 
     override fun mainLoop() {
         pushSockets()
-        val pose = robot.slam.getCameraPose()
+        val pose = robot.slam.transformation.pose
         pose *= MOEConstants.Units.ASTARS_PER_METER
         telemetry.addData("pose", pose.toString())
         val (leftActualVelocity, rightActualVelocity) = robot.chassis.getFrontVelocities()
@@ -118,7 +118,7 @@ class PurePursuitTest : MOELoopedTest() {
     private fun pushSockets() {
         if (timer.milliseconds() < 5000) return
         timer.reset()
-        val pose = robot.slam.getCameraPose()
+        val pose = robot.slam.transformation.pose
         pose *= MOEConstants.Units.ASTARS_PER_METER
         moeWebServer.broadcast("slam/pose/${pose.x+48}/${pose.y+48}")
     }

@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEChassis
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOEGyro
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOEIMUGyro
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOESlamGyro
@@ -9,16 +8,14 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlam
 
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySystem
 
-class MOEBot(useGyro: Boolean = true,
-             useCamera: Boolean = false,
-             val useSlam: Boolean = false) {
+class MOEBot(config: MOEBotConstants) {
+    val robotConfig = config.getRobotConfig()
 
-
-    constructor(config: MOEBotConfig) : this(config.useGyro, config.useCamera, config.useSlam)
+//    constructor(config: MOEBotConstants) : this(config.getRobotConfig().useGyro, config.getRobotConfig().useCamera, config.useSlam)
 
     val lift = MOELift()
     val foundation = MOEFoundation()
-    val outTake = MOEOutTake()
+    val outtake = MOEOuttake()
     var chassis: MOEChassis = MOEChassis()
     var harvester: MOEHarvester = MOEHarvester()
     var purePursuit: MOEPurePursuitHandler = MOEPurePursuitHandler()
@@ -28,18 +25,18 @@ class MOEBot(useGyro: Boolean = true,
     lateinit var slam: MOESlam
 
     init {
-        if (useGyro) {
-            gyro = (if (useSlam) MOESlamGyro() else MOEIMUGyro())
+        if (robotConfig.useGyro) {
+            gyro = (if (robotConfig.useSlam) MOESlamGyro() else MOEIMUGyro())
         }
-        if (useCamera) {
+        if (robotConfig.useCamera) {
             camera = MOECamera()
             vuforia = MOEVuforia()
         }
-        if (useSlam) slam = MOESlam()
+        if (robotConfig.useSlam) slam = MOESlam(config.getSlamConfig())
     }
 
     fun offsetValues(constants: MOEBotConstants) {
-        if (useSlam) slam.config = constants.getSlamConfig()
+//        if (robotConfig.useSlam) slam.config = constants.getSlamConfig()
         gyro.config = constants.getGyroConfig()
 
     }

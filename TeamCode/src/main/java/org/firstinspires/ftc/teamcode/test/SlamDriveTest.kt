@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamData
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
-import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.teleop.CompTeleOp
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.PolarPoint
 import org.firstinspires.ftc.teamcode.utilities.external.toPrecision
 
 @TeleOp(name = "BSlamDriveTest")
@@ -18,7 +18,7 @@ class SlamDriveTest : CompTeleOp() {
 
     override fun initOpMode() {
         super.initOpMode()
-        robot.slam.config = MOESlamConfig(0.0, 0.0, 0.0)
+//        robot.slam.config = MOESlamConfig(0.0, 0.0, 0.0)
         Log.e("why", "yessir")
         //        gpad1.a.onKeyDown {
         //            Log.e("restarting", "yes")
@@ -52,22 +52,36 @@ class SlamDriveTest : CompTeleOp() {
         //            MOESocketHandler.moeWebServer.broadcast("data/slam/${robotPose[0]},${robotPose[1]},${robot.gyro.getRawAngle()}")
         //            laped.reset()
         //        }
+        telemetry.addData("rawTrans", robot.slam.getRawTrans())
+
+        telemetry.addData("rohanTriesTrans", robot.slam.transformation)
+
         telemetry.addData("timestamp", SlamData.lastTimestamp)
-        telemetry.addData("cameraPositionAstars", robot.slam.getCameraPose() )
-        telemetry.addData("robotaxis", robot.slam.getRobotPoseInCameraAxis())
+//        telemetry.addData("patrickPosition", robot.slam.transformation)
         telemetry.addData("theta", robot.slam.getTheta().toPrecision(3))
+//        val cameraPose = findCameraTrans(robot.slam.transHandler.cameraInitialTrans, robot.slam.getRawTrans()) //takes in 3 calculated constants, and 3 values (camera init pose and values from SLAM cam)
+//        return findRobotTrans(cameraPose, config.cameraRelative)
+//        telemetry.addData("patrickCameraPose", cameraPose)
+//        telemetry.addData("robotaxis", robot.slam.getRobotPoseInCameraAxis())
         val raw = robot.slam.getRawPose().contentToString()
-        telemetry.addData("rawPose", raw)
         //        printWriter.write(raw)
-        telemetry.addData("rawPoseInCM", robot.slam.getRawPose().map { it * 100 })
-        telemetry.addData("rawPoseOffset", robot.slam.getRawOffsetPose())
-        telemetry.addData("scaledPosition", robot.slam.getScaledRobotPose())
+//        telemetry.addData("rawTrans", robot.slam.getRawTrans())
+        telemetry.addData("rawPoseInAstarts", robot.slam.getAstarPose())
+        telemetry.addData("rawPose", raw)
+//        telemetry.addData("scaledPosition", robot.slam.getScaledRobotPose())
         telemetry.addData("gyroAngle", robot.gyro.angle)
         telemetry.update()
         //        telemetry.addData("position", robot.slam.getRobotPose())
     }
 
     override fun getRobotConfig(): MOEBotConfig {
-        return super.getRobotConfig().also { it.useSlam = true }
+        return super.getRobotConfig().apply { useSlam = true }
+    }
+
+    override fun getSlamConfig(): MOESlamConfig {
+        return super.getSlamConfig().apply {
+            CAMERA_TO_ROBOT_DIST = PolarPoint(18.027, 176.82)
+            ROBOT_TO_CAMERA_THETA = 180.0
+        }
     }
 }

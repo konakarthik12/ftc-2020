@@ -15,13 +15,13 @@ class MOEPurePursuitHandler {
     }
 
     fun move(x: Double, y: Double, t: Double) {
-        var pose = robot.slam.getRobotPose()
+        var pose = robot.slam.transformation.pose
 
         // TODO: Add Pathfinding algorithm.
         val purePursuit = MOEPurePursuitSystem(pose.x, pose.y, x, y, PurePursuit.DefaultOptions)
 
         while (!isFinished(pose, x, y)) {
-            pose = robot.slam.getRobotPose()
+            pose = robot.slam.transformation.pose
 
             val (leftActualVelocity, rightActualVelocity) = robot.chassis.getFrontVelocities()
 

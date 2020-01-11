@@ -1,3 +1,10 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig
 
-data class MOESlamConfig(val robotToFieldTheta: Double, val xOffset: Double, val yOffset: Double)
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.PolarPoint
+
+data class MOESlamConfig(
+        val robotInitial: Transformation = Transformation(),
+        var CAMERA_TO_ROBOT_DIST: PolarPoint = PolarPoint(0.0, 0.0),
+        var ROBOT_TO_CAMERA_THETA: Double = 180.0
+)

@@ -15,10 +15,10 @@ data class MOEPidOptions(val P: Double = 0.0,
                          val D: Double = 0.0,
                          val F: Double = 0.0)
 
-open class MOEPid(private var P: Double = 0.0,
+open class MOEPid(var P: Double = 0.0,
                   I: Double = 0.0,
-                  private var D: Double = 0.0,
-                  private var F: Double = 0.0) {
+                  var D: Double = 0.0,
+                  var F: Double = 0.0) {
     constructor(options: MOEPidOptions) : this(options.P, options.I, options.D, options.F)
 
     //**********************************
@@ -232,7 +232,8 @@ open class MOEPid(private var P: Double = 0.0,
         return output
     }
 
-    open fun getError(setPoint: Double, actual: Double) = setPoint - actual
+    var getError = { setpoint: Double, actual: Double -> setpoint - actual }
+//    open fun getError(setPoint: Double, actual: Double) = setPoint - actual
 
     /**
      * Resets the controller. This erases the I term buildup, and removes
@@ -241,6 +242,7 @@ open class MOEPid(private var P: Double = 0.0,
      * duration, and the controlled portion of the system may have changed due to
      * external forces.
      */
+
     fun reset() {
         firstRun = true
         errorSum = 0.0

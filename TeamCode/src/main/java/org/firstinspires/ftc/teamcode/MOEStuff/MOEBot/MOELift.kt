@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
-import org.firstinspires.ftc.teamcode.constants.MOEConstants.Lift.Motors
+import com.qualcomm.robotcore.hardware.DcMotor
+import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Lift.Motors
 
 class MOELift {
     val leftMotor = MOEtor(Motors.LeftLiftMotor)
@@ -28,6 +29,18 @@ class MOELift {
 
     fun setPosition(target: Int) {
         motors.forEach { it.setTargetPosition(target) }
+    }
+
+    fun setRunToPosition() {
+
+        motors.forEach { it.setTargetPosition(10) }
+        motors.forEach { it.mMotor.mode = DcMotor.RunMode.RUN_TO_POSITION }
+
+
+    }
+
+    fun getPowers(): String? {
+        return motors.joinToString { it.mMotor.power.toString() }
     }
 
 }

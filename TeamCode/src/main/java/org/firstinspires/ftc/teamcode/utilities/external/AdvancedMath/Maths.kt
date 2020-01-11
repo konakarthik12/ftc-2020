@@ -46,5 +46,5 @@ fun ClosedFloatingPointRange<Double>.lerp(t: Double): Double {
 }
 
 
-fun Double.toDegrees() = this * 180.0 / PI
-fun Double.toRadians() = this / 180.0 * PI
+fun Double.toDegrees() = Math.toDegrees(this)
+fun Double.toRadians() = Math.toRadians(this)

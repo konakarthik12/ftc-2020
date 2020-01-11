@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis
 
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEFancyPid
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEtor
-import org.firstinspires.ftc.teamcode.constants.MOEConstants.DriveTrain.Motors.Configs
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
+import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.DriveTrain.Motors.Configs
 
 
 class MOEChassis {
@@ -15,7 +13,7 @@ class MOEChassis {
     var backLeftMotor = MOEtor(Configs.BackLeft)
     var backRightMotor = MOEtor(Configs.BackRight)
     val motors = listOf(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor)
-
+    val encoders = MOEChassisEncoder(this)
 
     fun getFrontVelocities() = Pair(frontLeftMotor.getVelocity(), frontRightMotor.getVelocity())
     fun getBackVelocities() = Pair(backLeftMotor.getVelocity(), backRightMotor.getVelocity())
@@ -55,23 +53,23 @@ class MOEChassis {
         setPower(0.0)
     }
 
-    fun turnTo(degrees: Double) {
-        val pid = MOEFancyPid(1.0, 0.0, 0.0)
-        pid.setOutputLimits(1.0)
-        pid.setpoint = degrees
-        pid.input = { robot.gyro.getRawAngle() }
-        pid.output = { robot.chassis.turnPower(it) }
-        pid.run()
-        //        while (moeOpMode.opModeIsActive()) {
-        //            val output = pid.getOutput(robot.gyro.getRawAngle())
-        //            robot.chassis.turnPower(output)
-        //            telemetry.addData(output)
-        //            telemetry.update();
-        //        }
-    }
+//    fun turnTo(degrees: Double) {
+//        val pid = MOETurnPid(1.0, 0.0, 0.0)
+//        pid.setOutputLimits(1.0)
+//        pid.setpoint = degrees
+//        pid.input = { robot.gyro.getRawAngle() }
+//        pid.output = { robot.chassis.turnPower(it) }
+//        pid.run()
+//        //        while (moeOpMode.opModeIsActive()) {
+//        //            val output = pid.getOutput(robot.gyro.getRawAngle())
+//        //            robot.chassis.turnPower(output)
+//        //            telemetry.addData(output)
+//        //            telemetry.update();
+//        //        }
+//    }
 
     fun moveTo(x: Double, y: Double) {
-        pidChassisHandler.moveTo(x,y)
+        pidChassisHandler.moveTo(x, y)
 //        val pid = MOEPositionalSystemPid(MOE/Constants.PositionalPid.DefaultOptions)
     }
 

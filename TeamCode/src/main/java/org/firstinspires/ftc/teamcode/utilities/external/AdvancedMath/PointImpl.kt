@@ -7,8 +7,9 @@ interface PointImpl<T> : Cloneable<T> {
     var y: Double
     operator fun plus(other: PointImpl<T>): T = create(this.x + other.x, this.y + other.y)
     operator fun minus(other: PointImpl<T>): T = create(this.x - other.x, this.y - other.y)
-    operator fun times(value: Double): T = create(this.x * value, this.y * value)
-    operator fun div(value: Double): Point = Point(this.x / value, this.y / value)
+    operator fun times(value: Double) = create(this.x * value, this.y * value)
+    operator fun div(value: Double) = create(this.x / value, this.y / value)
+    operator fun unaryMinus() = create(-this.x, -this.y)
 
     operator fun timesAssign(value: Double) {
         this.x *= value; this.y *= value
@@ -19,7 +20,8 @@ interface PointImpl<T> : Cloneable<T> {
      * 90 right
      */
     fun atan2() = kotlin.math.atan2(x, y)
-    fun hypot(): Double = kotlin.math.hypot(x,y)
+
+    fun hypot(): Double = kotlin.math.hypot(x, y)
 
     fun dot(p: PointImpl<T>): Double {
         return x * p.x + y * p.y
@@ -37,7 +39,7 @@ interface PointImpl<T> : Cloneable<T> {
     }
 
     fun create(x: Double, y: Double): T
-//    abstract override clone(): T
+    //    abstract override clone(): T
     operator fun set(index: Int, value: Double) {
         when (index) {
             0 -> x = value
@@ -45,7 +47,4 @@ interface PointImpl<T> : Cloneable<T> {
             else -> throw IllegalStateException("Point only has two components (x and y)")
         }
     }
-
-
-
 }

@@ -1,22 +1,33 @@
 package org.firstinspires.ftc.teamcode.teleop
 
+import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.constants.MOEConstants
+import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
-import org.firstinspires.ftc.teamcode.utilities.internal.addData
-import java.time.Clock
 import kotlin.math.cos
 import kotlin.math.sin
 
 @TeleOp
 open class CompTeleOp() : MOETeleOp() {
+    //    val state: TeleOpState()
     override fun initOpMode() {
-
         addListeners()
-        //        Log.e("stuffe", "stuffe")
+        initLift()
+        initOuttake()
+    }
 
+    private fun initLift() {
+        robot.lift.resetEncoders()
+        gpad2.dpad.down.onKeyDown {
+            robot.lift.resetEncoders()
+
+        }
+        robot.lift.setRunToPosition()
+        robot.lift.motors.forEach {
+            it.mMotor.targetPositionTolerance = 25
+        }
     }
 
     private fun addListeners() {
@@ -25,7 +36,18 @@ open class CompTeleOp() : MOETeleOp() {
         }
     }
 
-//    var oldTime = 0L
+    private fun initOuttake() {
+        robot.outtake.grabServo.setPosition(0.6)
+        gpad2.left.bumper.onKeyDown {
+            robot.outtake.outtakeServo.setPosition(0.0)
+        }
+        gpad2.right.bumper.onKeyDown {
+            //            Log.e("why","what")
+            robot.outtake.outtakeServo.setPosition(1.0)
+        }
+    }
+
+    //    var oldTime = 0L
     override fun mainLoop() {
 //        telemetry.addData(System.currentTimeMillis() - oldTime)
 //        telemetry.update()
@@ -33,6 +55,7 @@ open class CompTeleOp() : MOETeleOp() {
         harvester()
         foundation()
         lift()
+        outtake()
         log()
 //        oldTime = System.currentTimeMillis()
 
@@ -78,34 +101,48 @@ open class CompTeleOp() : MOETeleOp() {
 
     private fun harvester() {
         val outPower = if (gamepad1.b) 0.5 else 0.0
-        val P = (outPower - gamepad1.right_trigger) * MOEConstants.IntakeSystem.Motors.MaxPower
-        //        telemetry.addData("Power: ", P)
-        //        telemetry.update()
-        robot.harvester.setPower(P)
-        //
-        //        if (gamepad1.right_bumper && !rightBumperPressed){
-        //            rightBumperPressed = true
-        //            outtakeOpen = !outtakeOpen
-        //        }
-        //        if (rightBumperPressed && !gamepad1.right_bumper){
-        //            rightBumperPressed = false
-        //        }
+        val harvesterPow = (outPower - gamepad1.right_trigger)
+        robot.harvester.setPower(harvesterPow)
 
-        val outtake = when {
-            gpad1.x() -> 0.0
-            gpad1.right.bumper.isToggled -> 1.0
-            else -> 0.6
-        }
 
-        robot.outTake.grabServo.setPosition(outtake)
     }
 
     private fun foundation() {
         robot.foundation.foundationServo.setPosition(if (gamepad1.left_bumper) 1.0 else 0.0)
     }
 
+    var target = 0.0
     open fun lift() {
-        robot.lift.setPower(gpad2.trigger_diff)
+        if (gpad1.dpad.down()) {
+            robot.lift.setPower(-1.0)
+        }
+        val right = gamepad2.right_trigger.toDouble()
+//        val multi = if (target > 0) 3.0 else 0.0
+        val left = gamepad2.left_trigger.toDouble() * 3.0
+        robot.lift.motors.forEach {
+            val error = it.error
+            if (error > 0) {
+                robot.lift.setPower(1.0)
+            } else {
+                robot.lift.setPower(-0.4)
+
+            }
+        }
+        target += ((right - left) * 25)
+        target = target.coerceAtLeast(0.0)
+//        telemetry.addData("delta", 25)
+        robot.lift.setPosition(target.toInt())
+    }
+
+    fun outtake() {
+        val outtake = when {
+//            gpad2.x() -> 0.0
+            gpad2.a.isToggled -> 1.0
+            else -> 0.54
+        }
+
+        robot.outtake.grabServo.setPosition(outtake)
+//        robot.outtake.outtakeServo.se
     }
 
 }

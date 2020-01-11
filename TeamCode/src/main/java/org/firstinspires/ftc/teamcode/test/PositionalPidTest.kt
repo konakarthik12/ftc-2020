@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers.Companion.fromMecanum
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.*
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
@@ -32,7 +31,7 @@ class PositionalPidTest : MOERegularTest() {
         telemetry.update()
         robot.slam.restart()
         //        telemetry.addData("slam", "yeah")
-        robot.slam.config = MOESlamConfig(0.0, 0.0, 0.0)
+//        robot.slam.config = MOESlamConfig(0.0, 0.0, 0.0)
     }
 
     override fun run() {
@@ -48,11 +47,12 @@ class PositionalPidTest : MOERegularTest() {
     private var oldDpadLeft = false
     private var oldDpadRight = false
     fun mainLoop() {
-        val pose = robot.slam.getCameraPose()
+        val pose = robot.slam.transformation.pose
         pose *= MOEConstants.Units.ASTARS_PER_METER
+        pose *= -1.0
         //        while (gamepad1.a){
         //        }
-        val setPointPoint = Point(systemPid.xPid.setpoint, systemPid.yPid.setpoint);
+        val setPointPoint = Point(systemPid.xPid.setpoint(), systemPid.yPid.setpoint());
         logData(pose, setPointPoint)
         val rawX = systemPid.xPid.getOutput(pose.x)
         val rawY = systemPid.yPid.getOutput(pose.y)
@@ -78,13 +78,13 @@ class PositionalPidTest : MOERegularTest() {
         val xPid = systemPid.xPid
         val tPid = systemPid.tPid
         val multi = 48.0
-        if (gamepad1.y && !oldUp) yPid.setpoint += multi
-        if (gamepad1.a && !oldDown) yPid.setpoint -= multi
-        if (gamepad1.b && !oldRight) xPid.setpoint += multi
-        if (gamepad1.x && !oldLeft) xPid.setpoint -= multi
-        if (gamepad1.dpad_left && !oldDpadLeft) tPid.setpoint -= 90
-        if (gamepad1.dpad_right && !oldDpadRight) tPid.setpoint += 90
-        tPid.setpoint = tPid.setpoint.coerceIn(0.0..359.0)
+        if (gamepad1.y && !oldUp) yPid.setpoint = { yPid.setpoint() + multi }
+        if (gamepad1.a && !oldDown) yPid.setpoint = { yPid.setpoint() - multi }
+        if (gamepad1.b && !oldRight) xPid.setpoint = { xPid.setpoint() + multi }
+        if (gamepad1.x && !oldLeft) xPid.setpoint = { xPid.setpoint() - multi }
+        if (gamepad1.dpad_left && !oldDpadLeft) tPid.setpoint = { tPid.setpoint() - 90 }
+        if (gamepad1.dpad_right && !oldDpadRight) tPid.setpoint = { tPid.setpoint() + 90 }
+        tPid.setpoint = { tPid.setpoint().coerceIn(0.0..359.0) }
 
         oldUp = gamepad1.y
         oldDown = gamepad1.a
@@ -130,7 +130,7 @@ class PositionalPidTest : MOERegularTest() {
         systemPid.yPid.setOutputLimits(1.0)
         systemPid.tPid.setOutputLimits(1.0)
         //(x,y,t)
-        systemPid.setSetpoints(0.0, 0.0, 0.0)
+//        systemPid.setSetpoints(0.0, 0.0, 0.0)
     }
 
     override fun getRobotConfig(): MOEBotConfig {

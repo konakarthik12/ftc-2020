@@ -5,21 +5,23 @@ import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 
 class ChassisPidHandler {
-    val pid = MOEPositionalSystemPid(MOEPidConstants.PositionalPid.DefaultOptions)
+    private val pid = MOEPositionalSystemPid(MOEPidConstants.PositionalPid.DefaultOptions)
 
     init {
-        pid.input= {
-            robot.slam.getTrans()
+        pid.input = {
+            robot.slam.transformation
         }
         pid.output = { powers ->
             robot.chassis.setPower(powers)
         }
     }
 
-    fun moveTo(x: Double, y: Double) {
+    fun moveTo(goal: Transformation) {
         pid.reset()
-        pid.setSetpoints(x, y, robot.gyro.angle)
+        pid.setpoint = { goal }
         pid.run()
     }
+
+    fun moveTo(x: Double, y: Double, angle: Double = robot.gyro.angle) = moveTo(Transformation(x, y, angle))
 
 }

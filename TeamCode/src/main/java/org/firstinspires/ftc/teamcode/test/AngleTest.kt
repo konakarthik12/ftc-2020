@@ -13,12 +13,13 @@ class AngleTest : MOERegularTest() {
 
     override fun run() {
 
-        while (opModeIsActive() && (robot.slam.pose.x < 160 && robot.slam.pose.y < 160)) {
+        val transformation = robot.slam.transformation
+        while (opModeIsActive() && (transformation.pose.x < 160 && transformation.pose.y < 160)) {
             robot.chassis.setPower(Powers.fromAng(45.0, sqrt(2.0), 0.0))
         }
         while (opModeIsActive()) {
             robot.chassis.stop()
-            telemetry.addData("slam2", robot.slam.pose)
+            telemetry.addData("slam2", transformation.pose)
 //            telemetry.addData("atan2", robot.slam.pose.atan2().toDegrees())
             telemetry.update()
         }
