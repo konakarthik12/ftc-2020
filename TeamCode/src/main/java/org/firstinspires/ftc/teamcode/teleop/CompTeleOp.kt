@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode.teleop
 
-import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
 import kotlin.math.cos
 import kotlin.math.sin
@@ -24,6 +22,7 @@ open class CompTeleOp() : MOETeleOp() {
             robot.lift.resetEncoders()
 
         }
+        robot.lift.setTargetPosition(10)
         robot.lift.setRunToPosition()
         robot.lift.motors.forEach {
             it.mMotor.targetPositionTolerance = 25
@@ -42,7 +41,6 @@ open class CompTeleOp() : MOETeleOp() {
             robot.outtake.outtakeServo.setPosition(0.0)
         }
         gpad2.right.bumper.onKeyDown {
-            //            Log.e("why","what")
             robot.outtake.outtakeServo.setPosition(1.0)
         }
     }
@@ -113,8 +111,11 @@ open class CompTeleOp() : MOETeleOp() {
 
     var target = 0.0
     open fun lift() {
-        if (gpad1.dpad.down()) {
-            robot.lift.setPower(-1.0)
+        if (gpad2.dpad.down()) {
+            robot.lift.setRunWithoutEncoder()
+            robot.lift.setPower(1.0)
+        } else {
+            robot.lift.setRunToPosition()
         }
         val right = gamepad2.right_trigger.toDouble()
 //        val multi = if (target > 0) 3.0 else 0.0
@@ -130,13 +131,11 @@ open class CompTeleOp() : MOETeleOp() {
         }
         target += ((right - left) * 25)
         target = target.coerceAtLeast(0.0)
-//        telemetry.addData("delta", 25)
-        robot.lift.setPosition(target.toInt())
+        robot.lift.setTargetPosition(target.toInt())
     }
 
-    fun outtake() {
+    private fun outtake() {
         val outtake = when {
-//            gpad2.x() -> 0.0
             gpad2.a.isToggled -> 1.0
             else -> 0.54
         }

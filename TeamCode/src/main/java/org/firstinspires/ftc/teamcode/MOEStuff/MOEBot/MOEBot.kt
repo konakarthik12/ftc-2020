@@ -18,7 +18,7 @@ class MOEBot(config: MOEBotConstants) {
     val outtake = MOEOuttake()
     var chassis: MOEChassis = MOEChassis()
     var harvester: MOEHarvester = MOEHarvester()
-    var purePursuit: MOEPurePursuitHandler = MOEPurePursuitHandler()
+
     lateinit var gyro: MOEGyro
     lateinit var vuforia: MOEVuforia
     lateinit var camera: MOECamera

@@ -139,7 +139,7 @@ class MOESlam(val config: MOESlamConfig) {
         //        handler?.waitFor
     }
 
-    fun getQuadTheta(): DoubleArray = SlamData.quatAngle
+    private fun getQuadTheta(): DoubleArray = SlamData.quatAngle
     fun waitForData() {
         while (!moeOpMode.iIsStopRequested && SlamData.lastTimestamp == 0L) {
             //            Log.e("info2", SlamData?.lastTimestamp.toString())

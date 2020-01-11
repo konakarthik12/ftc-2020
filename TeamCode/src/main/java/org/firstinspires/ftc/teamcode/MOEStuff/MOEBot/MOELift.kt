@@ -27,13 +27,16 @@ class MOELift {
         return motors.joinToString { it.position.toString() }
     }
 
-    fun setPosition(target: Int) {
+    fun setTargetPosition(target: Int) {
         motors.forEach { it.setTargetPosition(target) }
+    }
+
+    fun setRunWithoutEncoder() {
+        motors.forEach { it.mMotor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER }
     }
 
     fun setRunToPosition() {
 
-        motors.forEach { it.setTargetPosition(10) }
         motors.forEach { it.mMotor.mode = DcMotor.RunMode.RUN_TO_POSITION }
 
 

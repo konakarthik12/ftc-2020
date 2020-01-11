@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis
 
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPurePursuitHandler
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEtor
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.DriveTrain.Motors.Configs
 
 
 class MOEChassis {
     val pidChassisHandler = ChassisPidHandler()
-//    val astar = MOEAstarSystem()
+    var purePursuit: MOEPurePursuitHandler = MOEPurePursuitHandler()
+
 
     var frontLeftMotor = MOEtor(Configs.FrontLeft)
     var frontRightMotor = MOEtor(Configs.FrontRight)
