@@ -53,23 +53,23 @@ class SlamDriveTest : CompTeleOp() {
         //            laped.reset()
         //        }
         telemetry.addData("rawTrans", robot.slam.getRawTrans())
-
-        telemetry.addData("rohanTriesTrans", robot.slam.transformation)
-
-        telemetry.addData("timestamp", SlamData.lastTimestamp)
-//        telemetry.addData("patrickPosition", robot.slam.transformation)
-        telemetry.addData("theta", robot.slam.getTheta().toPrecision(3))
+        val ij = robot.slam.transformation
+//        telemetry.addData("rohanTriesTrans", )
+//
+//        telemetry.addData("timestamp", SlamData.lastTimestamp)
+////        telemetry.addData("patrickPosition", robot.slam.transformation)
+//        telemetry.addData("theta", robot.slam.getTheta().toPrecision(3))
 //        val cameraPose = findCameraTrans(robot.slam.transHandler.cameraInitialTrans, robot.slam.getRawTrans()) //takes in 3 calculated constants, and 3 values (camera init pose and values from SLAM cam)
 //        return findRobotTrans(cameraPose, config.cameraRelative)
 //        telemetry.addData("patrickCameraPose", cameraPose)
 //        telemetry.addData("robotaxis", robot.slam.getRobotPoseInCameraAxis())
-        val raw = robot.slam.getRawPose().contentToString()
+        val raw = robot.slam.getRawPose().toString()
         //        printWriter.write(raw)
 //        telemetry.addData("rawTrans", robot.slam.getRawTrans())
-        telemetry.addData("rawPoseInAstarts", robot.slam.getAstarPose())
-        telemetry.addData("rawPose", raw)
-//        telemetry.addData("scaledPosition", robot.slam.getScaledRobotPose())
-        telemetry.addData("gyroAngle", robot.gyro.angle)
+//        telemetry.addData("rawPoseInAstarts", robot.slam.getAstarPose())
+//        telemetry.addData("rawPose", raw)
+////        telemetry.addData("scaledPosition", robot.slam.getScaledRobotPose())
+//        telemetry.addData("gyroAngle", robot.gyro.angle)
         telemetry.update()
         //        telemetry.addData("position", robot.slam.getRobotPose())
     }
@@ -80,7 +80,7 @@ class SlamDriveTest : CompTeleOp() {
 
     override fun getSlamConfig(): MOESlamConfig {
         return super.getSlamConfig().apply {
-            CAMERA_TO_ROBOT_DIST = PolarPoint(18.027, 176.82)
+            CAMERA_TO_ROBOT_DIST = PolarPoint(18.027, 183.18)
             ROBOT_TO_CAMERA_THETA = 180.0
         }
     }
