@@ -77,7 +77,7 @@ class MOESlam(val config: MOESlamConfig) {
         Log.e("datae", SlamData.quatAngle.contentToString())
     }
 
-    fun getQuadTheta(): DoubleArray = SlamData.quatAngle
+    private fun getQuadTheta(): DoubleArray = SlamData.quatAngle
     fun waitForData() {
         while (!moeOpMode.iIsStopRequested && SlamData.lastTimestamp == 0L) {
             telemetry.update()

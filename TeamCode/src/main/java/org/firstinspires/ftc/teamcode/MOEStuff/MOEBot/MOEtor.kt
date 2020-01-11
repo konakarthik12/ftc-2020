@@ -14,7 +14,7 @@ class MOEtor(val config: MotorConfig) {
         get() = mMotor.targetPosition - mMotor.currentPosition
     var mMotor = config.getDevice()
     //    private var powerScale = config.minPow..config.maxPow
-    val powRange = 0.0..config.maxPow
+    private val powRange = 0.0..config.maxPow
 
     init {
         mMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
