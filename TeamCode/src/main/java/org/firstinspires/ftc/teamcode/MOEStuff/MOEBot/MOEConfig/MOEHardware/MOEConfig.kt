@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware
 import com.qualcomm.robotcore.hardware.HardwareDevice
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
 
-open class MOEConfig<Type : HardwareDevice>(val name: String, val hub: Int, val port: Int, val java: Class<Type>) {
+open class MOEConfig<Type : HardwareDevice>(val name: String, val hub: Int, val port: Int) {
 
     fun getDevice(): Type {
 //        hardwareMap.ge

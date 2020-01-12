@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
+import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -15,9 +16,14 @@ interface MOEPidStructure<I, O> {
     var endCondition: (I) -> Boolean
     fun run(sync: Boolean = true): Job {
         return GlobalScope.launch {
+            Log.e("isittho", ReferenceHolder.moeOpMode.iOpModeIsActive().toString())
+
             while (ReferenceHolder.moeOpMode.iOpModeIsActive()) {
+                Log.e("working", "work")
+//                Log.e("xPid", "work")
                 val curInput = input()
                 if (endCondition(curInput)) {
+                    Log.e("job", "done")
                     break
                 }
                 output(getOutput(curInput, setpoint()))
@@ -29,7 +35,7 @@ interface MOEPidStructure<I, O> {
         }
     }
 
-//    fun getOutput(input: I): O
+    //    fun getOutput(input: I): O
     fun getOutput(input: I, setpoint: I): O
 
 }

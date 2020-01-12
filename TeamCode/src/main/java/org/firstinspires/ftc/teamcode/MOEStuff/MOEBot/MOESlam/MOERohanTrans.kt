@@ -18,19 +18,19 @@ class MOERohanTrans(val config: MOESlamConfig) {
         val theta = config.CAMERA_TO_ROBOT_DIST.radAng + cameraRawTrans.radAng
         val robotInCameraAxis = cameraRawTrans.pose.getRelativePoint(config.CAMERA_TO_ROBOT_DIST.r, theta)
 
-        ReferenceHolder.telemetry.addData("theta", theta.toDegrees())
-        ReferenceHolder.telemetry.addData("robCamAxis", robotInCameraAxis)
+//        ReferenceHolder.telemetry.addData("theta", theta.toDegrees())
+//        ReferenceHolder.telemetry.addData("robCamAxis", robotInCameraAxis)
 
         val centeredPoint = robotInCameraAxis + centerOffset
 
-        ReferenceHolder.telemetry.addData("centerPoint", centeredPoint)
-        ReferenceHolder.telemetry.addData("robToCamtheta", config.ROBOT_TO_CAMERA_THETA)
+//        ReferenceHolder.telemetry.addData("centerPoint", centeredPoint)
+//        ReferenceHolder.telemetry.addData("robToCamtheta", config.ROBOT_TO_CAMERA_THETA)
 
         val cameraInRobotPoint = centeredPoint.rotateAroundOrigin(config.ROBOT_TO_CAMERA_THETA.toRadians())
-        ReferenceHolder.telemetry.addData("camRobot", cameraInRobotPoint)
-
+//        ReferenceHolder.telemetry.addData("camRobot", cameraInRobotPoint)
+        val offsetPoint = cameraInRobotPoint + config.robotInitial.pose
         val fieldDegrees = (config.robotInitial.radAng + cameraRawTrans.radAng).toDegrees()
-        return Transformation(cameraInRobotPoint, fieldDegrees)
+        return Transformation(offsetPoint, fieldDegrees)
     }
 
     fun getTrans(slamRawPose: Transformation): Transformation {

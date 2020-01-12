@@ -2,9 +2,13 @@ package org.firstinspires.ftc.teamcode.test
 
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEAutonConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.firstinspires.ftc.teamcode.utilities.internal.get
 
 @Autonomous
@@ -16,20 +20,36 @@ class PidTest : MOEAuton() {
 
     override fun initOpMode() {
         robot.slam.restart()
-
     }
 
 
     override fun run() {
-        robot.chassis.moveTo(0.0, 100.0)
+        while (opModeIsActive() && !gamepad1.a) {
+            telemetry.addData("slamActualRaw", robot.slam.getRawPose())
+            telemetry.addData("slamOffset", robot.slam.slamOffset)
+            telemetry.addData("slamRaw", robot.slam.getRawTrans())
+            telemetry.addData("pose", robot.slam.transformation)
+            telemetry.update()
+        }
+        val turn = robot.chassis.moveTo(0.0, 50.0)
+
+        while (opModeIsActive() && turn.isActive) {
+            telemetry.addData("pose", robot.slam.transformation)
+            telemetry.update()
+        }
+        robot.chassis.stop()
     }
 
     override fun getRobotConfig(): MOEBotConfig {
-        return super.getRobotConfig().also { it.useSlam = true }
+        return super.getRobotConfig().apply { useSlam = true }
     }
 
     override fun getAutonConfig(): MOEAutonConfig {
         return super.getAutonConfig()
+    }
+
+    override fun getSlamConfig(): MOESlamConfig {
+        return super.getSlamConfig().apply { robotInitial = Transformation(0.0, 0.0, 0.0) }
     }
 
 }

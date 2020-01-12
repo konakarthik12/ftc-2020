@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.utilities.external.toPrecision
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.firstinspires.ftc.teamcode.utilities.internal.get
 
-@TeleOp(name = "AAPurePursuitTest")
+@TeleOp()
 class PurePursuitTest : MOELoopedTest() {
     val points = listOf(
             PurePursuitPoint(0.0, 0.0),

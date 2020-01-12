@@ -46,10 +46,13 @@ class PositionalPidTest : MOERegularTest() {
     private var oldRight = false
     private var oldDpadLeft = false
     private var oldDpadRight = false
+    var ySet = 0.0
+    var xSet = 0.0
+    var tSet = 0.0
     fun mainLoop() {
         val pose = robot.slam.transformation.pose
-        pose *= MOEConstants.Units.ASTARS_PER_METER
-        pose *= -1.0
+//        pose *= MOEConstants.Units.ASTARS_PER_METER
+//        pose *= -1.0
         //        while (gamepad1.a){
         //        }
         val setPointPoint = Point(systemPid.xPid.setpoint(), systemPid.yPid.setpoint());
@@ -73,18 +76,29 @@ class PositionalPidTest : MOERegularTest() {
 
         val powers = fromMecanum(fwd, str, rot)
         //        telemetry.addData("powers", powers.toString())
-        //        telemetry.update()
         val yPid = systemPid.yPid
         val xPid = systemPid.xPid
         val tPid = systemPid.tPid
         val multi = 48.0
-        if (gamepad1.y && !oldUp) yPid.setpoint = { yPid.setpoint() + multi }
-        if (gamepad1.a && !oldDown) yPid.setpoint = { yPid.setpoint() - multi }
-        if (gamepad1.b && !oldRight) xPid.setpoint = { xPid.setpoint() + multi }
-        if (gamepad1.x && !oldLeft) xPid.setpoint = { xPid.setpoint() - multi }
-        if (gamepad1.dpad_left && !oldDpadLeft) tPid.setpoint = { tPid.setpoint() - 90 }
-        if (gamepad1.dpad_right && !oldDpadRight) tPid.setpoint = { tPid.setpoint() + 90 }
-        tPid.setpoint = { tPid.setpoint().coerceIn(0.0..359.0) }
+//        val yPid =
+        if (gamepad1.y && !oldUp) ySet += multi
+        if (gamepad1.a && !oldDown) ySet -= multi
+        if (gamepad1.b && !oldRight) xSet += multi
+        if (gamepad1.x && !oldLeft) xSet -= multi
+        if (gamepad1.dpad_left && !oldDpadLeft) tSet -= 90
+        if (gamepad1.dpad_right && !oldDpadRight) tSet += 90
+        tSet = tSet.coerceIn(0.0..359.9)
+
+        if (gamepad1.right_bumper) {
+            xSet = 0.0
+            ySet = 0.0
+            tSet = 0.0
+        }
+
+        yPid.setpoint = { ySet }
+        xPid.setpoint = { xSet }
+        tPid.setpoint = { tSet }
+//        tPid.setpoint = { tPid.setpoint().coerceIn(0.0..359.0) }
 
         oldUp = gamepad1.y
         oldDown = gamepad1.a
@@ -92,6 +106,7 @@ class PositionalPidTest : MOERegularTest() {
         oldRight = gamepad1.b
         oldDpadLeft = gamepad1.dpad_left
         oldDpadRight = gamepad1.dpad_right
+        telemetry.update()
 
         if (gamepad1.right_trigger > 0.5) {
             robot.chassis.setPower(0.0)
@@ -110,14 +125,12 @@ class PositionalPidTest : MOERegularTest() {
         //        systemPid.yPid.setpoint += gamepad1.left_stick_y
         //        systemPid.xPid.setpoint += gamepad1.left_stick_x
         //        systemPid.tPid.setpoint += gamepad1.right_stick_x
-        telemetry.addData("goalY", systemPid.yPid.setpoint)
+        telemetry.addData("egoalY", systemPid.yPid.setpoint())
         telemetry.addData("curY", pose.y)
-        telemetry.addData("goalX", systemPid.xPid.setpoint)
+        telemetry.addData("egoalX", systemPid.xPid.setpoint())
         telemetry.addData("curX", pose.x)
-        telemetry.addData("goaT", 0.0)
+        telemetry.addData("goaT", systemPid.tPid.setpoint())
         telemetry.addData("curT", robot.gyro.angle)
-        telemetry.update()
-
     }
 
     override fun onConfigChanged(dataSnapshot: DataSnapshot) {

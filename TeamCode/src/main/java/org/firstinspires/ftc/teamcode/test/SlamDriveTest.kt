@@ -54,7 +54,7 @@ class SlamDriveTest : CompTeleOp() {
         //        }
         telemetry.addData("rawTrans", robot.slam.getRawTrans())
         val ij = robot.slam.transformation
-//        telemetry.addData("rohanTriesTrans", )
+        telemetry.addData("robottrans", ij)
 //
 //        telemetry.addData("timestamp", SlamData.lastTimestamp)
 ////        telemetry.addData("patrickPosition", robot.slam.transformation)

@@ -3,12 +3,13 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPurePursuitHandler
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEtor
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.DriveTrain.Motors.Configs
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 
 
 class MOEChassis {
     val pidChassisHandler = ChassisPidHandler()
     var purePursuit: MOEPurePursuitHandler = MOEPurePursuitHandler()
-
 
     var frontLeftMotor = MOEtor(Configs.FrontLeft)
     var frontRightMotor = MOEtor(Configs.FrontRight)
@@ -55,7 +56,7 @@ class MOEChassis {
         setPower(0.0)
     }
 
-//    fun turnTo(degrees: Double) {
+    //    fun turnTo(degrees: Double) {
 //        val pid = MOETurnPid(1.0, 0.0, 0.0)
 //        pid.setOutputLimits(1.0)
 //        pid.setpoint = degrees
@@ -69,15 +70,15 @@ class MOEChassis {
 //        //            telemetry.update();
 //        //        }
 //    }
+    fun moveTo(trans: Transformation) = pidChassisHandler.moveTo(trans)
 
-    fun moveTo(x: Double, y: Double) {
-        pidChassisHandler.moveTo(x, y)
+    fun moveTo(x: Double, y: Double) = moveTo(Transformation(Point(x, y), robot.gyro.angle))
 //        val pid = MOEPositionalSystemPid(MOE/Constants.PositionalPid.DefaultOptions)
-    }
 
     fun getVelocities(): List<Double> {
         return motors.map { it.getVelocity() }
     }
 
+    fun turn(deg: Double) = pidChassisHandler.turn(deg)
 
 }

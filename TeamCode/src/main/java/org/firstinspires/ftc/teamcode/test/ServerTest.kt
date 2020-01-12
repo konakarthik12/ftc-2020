@@ -9,12 +9,12 @@ import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import kotlin.random.Random
 
 @TeleOp(name = "ServerTest")
-class ServerTest : MOETeleOp() {
+class ServerTest : MOELoopedTest() {
 
 
     override fun initOpMode() {
         Log.e("stuffe", moeWebServer.address.toString())
-        telemetry.addData(moeWebServer.address)
+        telemetry.addData("trying", moeWebServer.address)
     }
 
     override fun mainLoop() {

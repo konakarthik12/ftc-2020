@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
+import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -32,13 +33,26 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
             this.input().degAng
         }
 
-        xPid.setpoint
+        xPid.setpoint = {
+            this.setpoint().pose.x
+        }
+
+        yPid.setpoint = {
+            this.setpoint().pose.y
+        }
+
+        tPid.setpoint = {
+            this.setpoint().degAng
+        }
     }
 
     override var endCondition: (Transformation) -> Boolean = {
-        xPid.endCondition(it.pose.x) &&
+        val b = (xPid.endCondition(it.pose.x) &&
                 yPid.endCondition(it.pose.y)
-                && tPid.endCondition(it.degAng)
+                && tPid.endCondition(it.degAng))
+//        Log.e("wholeEnd", b.toString())
+        b
+
     }
 
 
@@ -46,6 +60,9 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
         val x = xPid.getOutput(input.pose.x, setpoint.pose.x)
         val y = yPid.getOutput(input.pose.y, setpoint.pose.y)
         val t = tPid.getOutput(input.degAng, setpoint.degAng)
+        Log.e("x", x.toString())
+        Log.e("y", y.toString())
+        Log.e("t", t.toString())
         return Powers.fromMecanum(y, x, t)
     }
 

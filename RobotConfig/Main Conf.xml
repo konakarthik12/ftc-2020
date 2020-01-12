@@ -11,9 +11,10 @@
             <Servo name="GRBS12" port="2" />
             <Servo name="CAPS13" port="3" />
             <Servo name="OUTS14" port="4" />
-            <!--            <AnalogInput name="ROAA10" port="0" />-->
-            <!--            <AnalogInput name="ROSA11" port="1" />-->
-            <!--            <AnalogInput name="LOAA12" port="2" />-->
+            <AnalogInput name="ROAA10" port="0" />
+            <AnalogInput name="ROSA11" port="1" />
+            <AnalogInput name="LOAA12" port="2" />
+            <DigitalDevice name="LIMD10" port="0" />
             <LynxEmbeddedIMU name="imu" port="0" bus="0" />
         </LynxModule>
         <LynxModule name="Expansion Hub 2" port="2">

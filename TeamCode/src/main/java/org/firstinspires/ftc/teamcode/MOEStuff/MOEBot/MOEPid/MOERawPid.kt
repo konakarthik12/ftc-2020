@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
+import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -14,9 +15,11 @@ open class MOERawPid(options: MOEPidOptions) : MOEPidStructure<Double, Double> {
 
     override var input = { 0.0 }
     override var output: (Double) -> Unit = { }
-    private var threshold = 0.1
+    private var threshold = 2
     override var setpoint: () -> Double = { 0.0 }
     override var endCondition: (Double) -> Boolean = {
+        //        Log.e("curValue", it.toString())
+//        Log.e("setpoint", setpoint().toString())
         abs(it - setpoint()) < threshold
     }
 
@@ -29,7 +32,7 @@ open class MOERawPid(options: MOEPidOptions) : MOEPidStructure<Double, Double> {
 
     }
 
-    fun getOutput(input: Double) = getOutput(input, internalPid.setpoint)
+    fun getOutput(input: Double) = getOutput(input, setpoint())
     override fun getOutput(input: Double, setpoint: Double): Double = internalPid.getOutput(input, setpoint)
 
     fun reset() = internalPid.reset()

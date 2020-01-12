@@ -1,12 +1,16 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
 import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DigitalChannel
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Lift.Motors
+import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Lift.Switches
 
 class MOELift {
     val leftMotor = MOEtor(Motors.LeftLiftMotor)
     val rightMotor = MOEtor(Motors.RightLiftMotor)
     val motors = arrayOf(leftMotor, rightMotor)
+    val limitSwitch = MOESwitch(Switches.BottomLimit)
+
     fun setPower(power: Double) {
         motors.forEach { it.setPower(power) }
     }
@@ -17,6 +21,12 @@ class MOELift {
 
     fun getVelocities(): String {
         return motors.joinToString { it.getVelocity().toString() }
+    }
+
+    fun bottomOutIfNeeded() {
+        if (limitSwitch.isPressed) {
+            resetEncoders()
+        }
     }
 
     fun resetEncoders() {
@@ -36,14 +46,10 @@ class MOELift {
     }
 
     fun setRunToPosition() {
-
         motors.forEach { it.mMotor.mode = DcMotor.RunMode.RUN_TO_POSITION }
-
-
     }
 
     fun getPowers(): String? {
         return motors.joinToString { it.mMotor.power.toString() }
     }
-
 }

@@ -18,10 +18,6 @@ open class CompTeleOp() : MOETeleOp() {
 
     private fun initLift() {
         robot.lift.resetEncoders()
-        gpad2.dpad.down.onKeyDown {
-            robot.lift.resetEncoders()
-
-        }
         robot.lift.setTargetPosition(10)
         robot.lift.setRunToPosition()
         robot.lift.motors.forEach {
@@ -61,8 +57,9 @@ open class CompTeleOp() : MOETeleOp() {
     }
 
     open fun log() {
-        telemetry.addData("Running", this::class.simpleName)
-
+        telemetry.addData("Runninge", this::class.simpleName)
+        telemetry.addData("limswitch", robot.lift.limitSwitch.isPressed)
+        telemetry.addData("testing", "testing")
     }
 
     val minPower = 0.6
@@ -73,7 +70,10 @@ open class CompTeleOp() : MOETeleOp() {
         val scaleX = 1
         val scaleY = 0.85
         val scaleRot = 0.75
-        val angle = robot.gyro.eulerAngle
+        val angle = robot.gyro.angle
+
+        telemetry.addData("gyro", angle)
+
         var rawY = gpad1.left.stick.y()
         var rawX = gpad1.left.stick.x()
         var rot = gpad1.right.stick.x()
@@ -85,24 +85,23 @@ open class CompTeleOp() : MOETeleOp() {
         rot *= scaleRot * throttle
 
         val angRad = Math.toRadians(angle)
+//        telemetry.addData()
         val fwd = rawX * sin(angRad) + rawY * cos(angRad)
         val str = rawX * cos(angRad) - rawY * sin(angRad)
         //        telemetry.addData("angle", gpad1.left_stick_angle)
         //        telemetry.addData("magnitute", gpad1.left_stick_mag)
 
-        val powers = Powers.fromRadAngle(gpad1.left.stick.angle
-                + Math.toRadians(robot.gyro.angle), gpad1.left.stick.mag, rot)
+        robot.chassis.setPower(Powers.fromMecanum(fwd, str, rot, maxPower))
+//        val powers = Powers.fromRadAngle(gpad1.left.stick.angle
+//                + Math.toRadians(robot.gyro.angle), gpad1.left.stick.mag, rot)
 //        telemetry.addData("powers", powers)
-        robot.chassis.setPower(powers)
-        //        robot.chassis.setPower(Powers.fromMecanum(fwd, str, rot, maxPower))
+//        robot.chassis.setPower(powers)
     }
 
     private fun harvester() {
         val outPower = if (gamepad1.b) 0.5 else 0.0
         val harvesterPow = (outPower - gamepad1.right_trigger)
         robot.harvester.setPower(harvesterPow)
-
-
     }
 
     private fun foundation() {
@@ -111,12 +110,14 @@ open class CompTeleOp() : MOETeleOp() {
 
     var target = 0.0
     open fun lift() {
+//        robot.lift.bottomOutIfNeeded()
         if (gpad2.dpad.down()) {
             robot.lift.setRunWithoutEncoder()
             robot.lift.setPower(1.0)
         } else {
             robot.lift.setRunToPosition()
         }
+
         val right = gamepad2.right_trigger.toDouble()
 //        val multi = if (target > 0) 3.0 else 0.0
         val left = gamepad2.left_trigger.toDouble() * 3.0
@@ -126,7 +127,6 @@ open class CompTeleOp() : MOETeleOp() {
                 robot.lift.setPower(1.0)
             } else {
                 robot.lift.setPower(-0.4)
-
             }
         }
         target += ((right - left) * 25)
@@ -143,5 +143,4 @@ open class CompTeleOp() : MOETeleOp() {
         robot.outtake.grabServo.setPosition(outtake)
 //        robot.outtake.outtakeServo.se
     }
-
 }

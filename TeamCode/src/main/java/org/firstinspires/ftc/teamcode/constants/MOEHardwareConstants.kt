@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.constants
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.MotorConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.OdometryConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.ServoConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.SwitchConfig
+import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Lift.Motors.RightLiftMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction as MotorDirection
 import com.qualcomm.robotcore.hardware.Servo.Direction as ServoDirection
 
@@ -52,6 +55,14 @@ object MOEHardwareConstants {
             val LeftLiftMotor = MotorConfig("LLF", 1, 0, direction = MotorDirection.REVERSE, maxPow = 0.7)
             val RightLiftMotor = MotorConfig("RLF", 2, 0, direction = MotorDirection.REVERSE, maxPow = 0.7)
         }
+
+        object Switches {
+            val BottomLimit = SwitchConfig("LIMD", 1, 0)
+        }
+    }
+
+    object Odometry {
+        val RightForward = OdometryConfig(RightLiftMotor)
 
     }
 }

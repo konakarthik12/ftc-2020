@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpM
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.*
 
-class MOESlam(val config: MOESlamConfig) {
+class MOESlam(var config: MOESlamConfig) {
     val transformation: Transformation
         get() = getTrans()
 
@@ -27,7 +27,6 @@ class MOESlam(val config: MOESlamConfig) {
     init {
         resetValues()
     }
-
 
     fun checkConnection() {
         //        handler?.killStream()

@@ -156,7 +156,7 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
                     }
 
                 } else {
-                    Log.e("sleeping","sleep")
+//                    Log.e("sleeping","sleep")
                     Thread.sleep(500)
                 }
             }

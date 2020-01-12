@@ -20,6 +20,10 @@ fun toPrecision(n: Double, p: Double): Double {
     } else round(n / f) * f
 }
 
+fun Double.toFixed(digits: Int = 3): String {
+    return "%.${digits}f".format(this)
+}
+
  fun IntRange.coerceIn(indices: IntRange): IntRange {
     return IntRange(start.coerceAtLeast(indices.first), last.coerceAtMost(indices.last))
 }

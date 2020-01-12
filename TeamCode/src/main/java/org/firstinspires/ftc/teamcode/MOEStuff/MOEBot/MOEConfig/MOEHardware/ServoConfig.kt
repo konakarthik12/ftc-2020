@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware
 
-import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.Servo
 
 class ServoConfig(
@@ -10,4 +9,4 @@ class ServoConfig(
         val min: Double = 0.0,
         val max: Double = 1.0,
         val direction: Servo.Direction = Servo.Direction.FORWARD
-) : MOEConfig<Servo>(name + "S", hub, port, Servo::class.java)
+) : MOEConfig<Servo>(name + "S", hub, port)
