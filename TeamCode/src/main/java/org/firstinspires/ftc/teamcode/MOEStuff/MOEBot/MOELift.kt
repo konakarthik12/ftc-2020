@@ -33,8 +33,8 @@ class MOELift {
         motors.forEach { it.resetEncoder() }
     }
 
-    fun getPositions(): String? {
-        return motors.joinToString { it.position.toString() }
+    fun getPositions(): List<Int> {
+        return motors.map { it.position }
     }
 
     fun setTargetPosition(target: Int) {
@@ -51,5 +51,9 @@ class MOELift {
 
     fun getPowers(): String? {
         return motors.joinToString { it.mMotor.power.toString() }
+    }
+
+    fun setTargetTolorence(i: Int) {
+        motors.forEach { it.mMotor.targetPositionTolerance - i }
     }
 }

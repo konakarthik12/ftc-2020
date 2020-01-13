@@ -33,8 +33,9 @@ class SlamDriveTest : CompTeleOp() {
         //        }
         gpad1.y.onKeyDown {
             Thread(Runnable {
+                robot.slam.resetValues()
                 //                robot.slam.handler.re
-                robot.slam.checkConnection()
+//                robot.slam.checkConnection()
             }).start()
         }
         gpad1.x.onKeyDown {

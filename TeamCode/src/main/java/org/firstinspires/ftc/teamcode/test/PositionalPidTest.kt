@@ -8,7 +8,9 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers.Companio
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.*
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
+import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.firstinspires.ftc.teamcode.utilities.internal.get
 import org.firstinspires.ftc.teamcode.utilities.external.toPrecision
@@ -20,7 +22,7 @@ class PositionalPidTest : MOERegularTest() {
     //    lateinit var xPid: MOEPositionalPid
     //    lateinit var yPid: MOEPositionalPid
     //    lateinit var tPid: MOETurnPid
-    lateinit var systemPid: MOEPositionalSystemPid
+    var systemPid = MOEPositionalSystemPid(MOEPidConstants.PositionalPid.DefaultOptions)
 
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return ref["desmos"]
@@ -87,7 +89,7 @@ class PositionalPidTest : MOERegularTest() {
         if (gamepad1.x && !oldLeft) xSet -= multi
         if (gamepad1.dpad_left && !oldDpadLeft) tSet -= 90
         if (gamepad1.dpad_right && !oldDpadRight) tSet += 90
-        tSet = tSet.coerceIn(0.0..359.9)
+        tSet = tSet.toNormalAngle()
 
         if (gamepad1.right_bumper) {
             xSet = 0.0

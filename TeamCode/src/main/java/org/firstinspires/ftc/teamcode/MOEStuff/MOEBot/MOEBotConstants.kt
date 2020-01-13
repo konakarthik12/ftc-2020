@@ -4,7 +4,7 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEGyroConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
 
-interface MOEBotConstants {
+interface                                                                                                                                                       MOEBotConstants {
     fun getRobotConfig(): MOEBotConfig {
         return MOEBotConfig()
     }

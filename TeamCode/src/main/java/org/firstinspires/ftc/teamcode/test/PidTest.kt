@@ -27,11 +27,12 @@ class PidTest : MOEAuton() {
         while (opModeIsActive() && !gamepad1.a) {
             telemetry.addData("slamActualRaw", robot.slam.getRawPose())
             telemetry.addData("slamOffset", robot.slam.slamOffset)
+            telemetry.addData("slamRaw", robot.slam.getRawOffsetPose())
             telemetry.addData("slamRaw", robot.slam.getRawTrans())
             telemetry.addData("pose", robot.slam.transformation)
             telemetry.update()
         }
-        val turn = robot.chassis.moveTo(0.0, 50.0)
+        val turn = robot.chassis.moveTo(Transformation(0.0, 10.0, 0.0))
 
         while (opModeIsActive() && turn.isActive) {
             telemetry.addData("pose", robot.slam.transformation)

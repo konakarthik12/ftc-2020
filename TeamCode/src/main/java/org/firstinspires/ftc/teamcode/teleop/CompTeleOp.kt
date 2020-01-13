@@ -20,9 +20,7 @@ open class CompTeleOp() : MOETeleOp() {
         robot.lift.resetEncoders()
         robot.lift.setTargetPosition(10)
         robot.lift.setRunToPosition()
-        robot.lift.motors.forEach {
-            it.mMotor.targetPositionTolerance = 25
-        }
+        robot.lift.setTargetTolorence(25)
     }
 
     private fun addListeners() {
@@ -46,7 +44,7 @@ open class CompTeleOp() : MOETeleOp() {
 //        telemetry.addData(System.currentTimeMillis() - oldTime)
 //        telemetry.update()
         chassis()
-        harvester()
+        intake()
         foundation()
         lift()
         outtake()
@@ -58,8 +56,10 @@ open class CompTeleOp() : MOETeleOp() {
 
     open fun log() {
         telemetry.addData("Runninge", this::class.simpleName)
-        telemetry.addData("limswitch", robot.lift.limitSwitch.isPressed)
-        telemetry.addData("testing", "testing")
+//        telemetry.addData("limswitch", robot.lift.limitSwitch.isPressed)
+        telemetry.addData("lift", target)
+        telemetry.addData("acutal", robot.lift.getPositions().average())
+        telemetry.addData("switch", robot.lift.limitSwitch.isPressed)
     }
 
     val minPower = 0.6
@@ -78,7 +78,7 @@ open class CompTeleOp() : MOETeleOp() {
         var rawX = gpad1.left.stick.x()
         var rot = gpad1.right.stick.x()
 
-        val throttle = powerRange.lerp(gamepad1.left_trigger.toDouble())
+        val throttle = powerRange.lerp(gpad1.left.trigger())
 
         rawX *= scaleX * throttle
         rawY *= scaleY * throttle
@@ -98,29 +98,34 @@ open class CompTeleOp() : MOETeleOp() {
 //        robot.chassis.setPower(powers)
     }
 
-    private fun harvester() {
-        val outPower = if (gamepad1.b) 0.5 else 0.0
-        val harvesterPow = (outPower - gamepad1.right_trigger)
+    private fun intake() {
+        val outPower = if (gpad1.b()) 0.25 else 0.0
+        val harvesterPow = (outPower - gpad1.right.trigger())
         robot.harvester.setPower(harvesterPow)
     }
 
     private fun foundation() {
-        robot.foundation.foundationServo.setPosition(if (gamepad1.left_bumper) 1.0 else 0.0)
+        robot.foundation.foundationServo.setPosition(if (gpad1.left.bumper()) 1.0 else 0.0)
     }
-
+he
     var target = 0.0
     open fun lift() {
 //        robot.lift.bottomOutIfNeeded()
-        if (gpad2.dpad.down()) {
-            robot.lift.setRunWithoutEncoder()
-            robot.lift.setPower(1.0)
-        } else {
-            robot.lift.setRunToPosition()
-        }
+//        if (gpad2.dpad.down()) {
+//            robot.lift.setRunWithoutEncoder()
+//            robot.lift.setPower(1.0)
+//            return
+//        } else {
+//            robot.lift.setRunToPosition()
+//        }
 
-        val right = gamepad2.right_trigger.toDouble()
+        //val right = gamepad2.right_trigger.toDouble()
+        val up = gpad2.left.stick.y()
 //        val multi = if (target > 0) 3.0 else 0.0
-        val left = gamepad2.left_trigger.toDouble() * 3.0
+        //val left = gamepad2.left_trigger.toDouble() * 3.0
+//        val down = gpad2.left.stick.y() * -1
+        val upSlow = gpad2.right.stick.y() * 0.5
+//        val downSlow = gpad2.right.stick.y() * -0.25
         robot.lift.motors.forEach {
             val error = it.error
             if (error > 0) {
@@ -129,18 +134,21 @@ open class CompTeleOp() : MOETeleOp() {
                 robot.lift.setPower(-0.4)
             }
         }
-        target += ((right - left) * 25)
-        target = target.coerceAtLeast(0.0)
+        target += ((up + upSlow) * 35)
+        if (gpad2.left.stick.y() > -0.1) {
+            target = target.coerceAtLeast(0.0)
+        }
+//        target = target.coerceAtLeast(0.0)
         robot.lift.setTargetPosition(target.toInt())
     }
 
     private fun outtake() {
-        val outtake = when {
-            gpad2.a.isToggled -> 1.0
+        val grabServo = when {
+            gpad2.b.isToggled -> 1.0
             else -> 0.54
         }
 
-        robot.outtake.grabServo.setPosition(outtake)
+        robot.outtake.grabServo.setPosition(grabServo)
 //        robot.outtake.outtakeServo.se
     }
 }

@@ -9,6 +9,8 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
+import kotlin.math.cos
+import kotlin.math.sin
 
 data class MOEPositionalPidOptions(val xOptions: MOEPidOptions, val yOptions: MOEPidOptions, val turnOptions: MOEPidOptions)
 
@@ -57,13 +59,16 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
 
 
     override fun getOutput(input: Transformation, setpoint: Transformation): Powers {
-        val x = xPid.getOutput(input.pose.x, setpoint.pose.x)
-        val y = yPid.getOutput(input.pose.y, setpoint.pose.y)
-        val t = tPid.getOutput(input.degAng, setpoint.degAng)
-        Log.e("x", x.toString())
-        Log.e("y", y.toString())
-        Log.e("t", t.toString())
-        return Powers.fromMecanum(y, x, t)
+        val rawX = xPid.getOutput(input.pose.x, setpoint.pose.x)
+        val rawY = yPid.getOutput(input.pose.y, setpoint.pose.y)
+        val rawT = tPid.getOutput(input.degAng, setpoint.degAng)
+        val angle = input.radAng
+        val x = rawX * sin(angle) + rawY * cos(angle)
+        val y = rawX * cos(angle) - rawY * sin(angle)
+//        Log.e("x", x.toString())
+//        Log.e("y", y.toString())
+//        Log.e("t", rawT.toString())
+        return Powers.fromMecanum(y, x, rawT)
     }
 
     fun reset() {

@@ -24,9 +24,9 @@ class MOESlam(var config: MOESlamConfig) {
     var slamOffset: Point = Point(0.0, 0.0)
     var thetaOffset: Double = 0.0
 
-    init {
-        resetValues()
-    }
+//    init {
+//        resetValues()
+//    }
 
     fun checkConnection() {
         //        handler?.killStream()

@@ -98,7 +98,7 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, 
 
     }
 
-    fun offsetRobotValues() {
+    private fun offsetRobotValues() {
         robot.offsetValues(this)
     }
 

@@ -36,7 +36,10 @@ class MOEBot(config: MOEBotConstants) {
     }
 
     fun offsetValues(constants: MOEBotConstants) {
-        if (robotConfig.useSlam) slam.config = constants.getSlamConfig()
+        if (robotConfig.useSlam) {
+//            slam.config = constants.getSlamConfig()
+            slam.resetValues()
+        }
         gyro.config = constants.getGyroConfig()
 
     }

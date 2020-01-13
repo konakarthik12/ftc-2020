@@ -8,8 +8,15 @@ class MOESwitch(val config: SwitchConfig) {
 
     init {
         channel.mode = INPUT
+
     }
 
+    /**
+    0 0 0
+    1 0 1
+    0 1 1
+    1 1 0
+     */
     val isPressed: Boolean
-        get() = channel.state
+        get() = channel.state xor config.flipped
 }

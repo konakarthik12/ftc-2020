@@ -57,7 +57,7 @@ object MOEHardwareConstants {
         }
 
         object Switches {
-            val BottomLimit = SwitchConfig("LIMD", 1, 0)
+            val BottomLimit = SwitchConfig("LIMD", 1, 0, true)
         }
     }
 
