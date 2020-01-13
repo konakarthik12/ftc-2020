@@ -107,7 +107,7 @@ open class CompTeleOp() : MOETeleOp() {
     private fun foundation() {
         robot.foundation.foundationServo.setPosition(if (gpad1.left.bumper()) 1.0 else 0.0)
     }
-he
+
     var target = 0.0
     open fun lift() {
 //        robot.lift.bottomOutIfNeeded()
