@@ -4,6 +4,8 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEPatrickSlamConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.*
+import kotlin.math.cos
+import kotlin.math.sin
 
 class MOEPatrickTrans(val config: MOEPatrickSlamConfig) {
     val initialCameraTrans = findInitialCameraTrans()
@@ -18,7 +20,7 @@ class MOEPatrickTrans(val config: MOEPatrickSlamConfig) {
         //its kinda jank that i use findInitialCameraTrans().pose and then one of the inputs is findInitialCameraTrans().radAng
        // it would be better if getPatrickAxesRotationOffset just inputted slamRawPose.pose and it was a function for a Transformation
        //instead of a function for pose. That was initialCameraTrans.radAngle wouldnt have to be an input.
-        val pose = findInitialCameraTrans().pose.getPatrickAxesRotationOffset(slamRawPose.pose,findInitialCameraTrans().radAng)
+        val pose = findInitialCameraTrans().getPatrickAxesRotationOffset(slamRawPose.pose)
         val angle = (findInitialCameraTrans().degAng + slamRawPose.degAng).toNormalAngle()
         return Transformation(pose,angle)
     }
@@ -29,6 +31,12 @@ class MOEPatrickTrans(val config: MOEPatrickSlamConfig) {
         return Transformation(pose,angle)
     }
 
+}
+fun Transformation.getPatrickAxesRotationOffset(pointFromThis: Point): Point {
+
+    val xOffset = pointFromThis.y * sin(this.radAng) + pointFromThis.x * cos(this.radAng)
+    val yOffset = pointFromThis.y * cos(this.radAng) - pointFromThis.x * sin(this.radAng)
+    return pointFromThis.create(this.pose.x + xOffset, this.pose.y + yOffset)
 }
 
 /*fun main() {

@@ -26,14 +26,6 @@ fun <T : PointImpl<T>> T.rotateAroundOrigin(radAng: Double): T {
     return create(newX, newY)
 }
 
-/** clockwise rotation */
-fun <T : PointImpl<T>> T.getPatrickAxesRotationOffset(pointFromThis: Point, radAngleOfThis: Double): T {
-
-    val xOffset = pointFromThis.y * sin(radAngleOfThis) + pointFromThis.x * cos(radAngleOfThis)
-    val yOffset = pointFromThis.y * cos(radAngleOfThis) - pointFromThis.x * sin(radAngleOfThis)
-    return create(this.x + xOffset, this.y + yOffset)
-}
-
 fun <T : PointImpl<T>> T.distanceFrom(point: T) = hypot(this.x - point.x, this.y - point.y)
 //    return sqrt((this.x - point.x).pow(2.0) + (this.y - point.y).pow(2.0))
 
