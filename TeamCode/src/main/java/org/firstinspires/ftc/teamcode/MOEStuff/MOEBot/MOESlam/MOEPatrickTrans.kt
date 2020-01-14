@@ -17,9 +17,6 @@ class MOEPatrickTrans(val config: MOEPatrickSlamConfig) {
     }
 
    fun getCameraTrans(slamRawPose: Transformation): Transformation{
-        //its kinda jank that i use findInitialCameraTrans().pose and then one of the inputs is findInitialCameraTrans().radAng
-       // it would be better if getPatrickAxesRotationOffset just inputted slamRawPose.pose and it was a function for a Transformation
-       //instead of a function for pose. That was initialCameraTrans.radAngle wouldnt have to be an input.
         val pose = findInitialCameraTrans().getPatrickAxesRotationOffset(slamRawPose.pose)
         val angle = (findInitialCameraTrans().degAng + slamRawPose.degAng).toNormalAngle()
         return Transformation(pose,angle)
