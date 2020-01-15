@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.*
-import org.firstinspires.ftc.teamcode.utilities.external.toPrecision
+import org.firstinspires.ftc.teamcode.utilities.external.toFixed
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.firstinspires.ftc.teamcode.utilities.internal.get
 
@@ -62,7 +62,7 @@ class PurePursuitTest : MOELoopedTest() {
                 lookaheadDistance = options.lookAheadDistance
         )
 
-        telemetry.addData("gyro", robot.gyro.angle.toPrecision())
+        telemetry.addData("gyro", robot.gyro.angle.toFixed())
         telemetry.addData("curvature", curvature)
         if (gpad1.left.trigger.button.isPressed) {
             Log.e("hold", "up")

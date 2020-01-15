@@ -19,12 +19,12 @@ fun <T : PointImpl<T>> T.getRelativePoint(distanceFromThis: Double, radTheta: Do
     return create(this.x + cameraX, this.y + cameraY)
 }
 
-/** clockwise rotation */
-fun <T : PointImpl<T>> T.rotateAroundOrigin(radAng: Double): T {
-    val newX = x * cos(radAng) - y * sin(radAng)
-    val newY = x * sin(radAng) + y * cos(radAng)
-    return create(newX, newY)
-}
+///** clockwise rotation */
+//fun <T : PointImpl<T>> T.rotateAroundOrigin(radAng: Double): T {
+//    val newX = x * cos(radAng) - y * sin(radAng)
+//    val newY = x * sin(radAng) + y * cos(radAng)
+//    return create(newX, newY)
+//}
 
 fun <T : PointImpl<T>> T.distanceFrom(point: T) = hypot(this.x - point.x, this.y - point.y)
 //    return sqrt((this.x - point.x).pow(2.0) + (this.y - point.y).pow(2.0))

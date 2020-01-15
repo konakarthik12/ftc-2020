@@ -7,16 +7,16 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers.Companion.fromMecanum
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEPatrickSlamConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.*
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOEPatrickTrans
-import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
+import org.firstinspires.ftc.teamcode.constants.MOESlamConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.firstinspires.ftc.teamcode.utilities.internal.get
-import org.firstinspires.ftc.teamcode.utilities.external.toPrecision
+import org.firstinspires.ftc.teamcode.utilities.external.toFixed
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -54,11 +54,12 @@ class PatrickPositionalPIDTest : MOERegularTest() {
     var ySet = 0.0
     var xSet = 0.0
     var tSet = 0.0
-    val moePatrickTrans = MOEPatrickTrans(MOEPatrickSlamConfig(robotInitial = Transformation(24.0, 24.0,180.0)))
+    private val moePatrickTrans = MOEPatrickTrans(MOESlamConstants.DefaultValues)
 
     fun mainLoop() {
         val cameraTrans = moePatrickTrans.getCameraTrans(Transformation(robot.slam.getRawTrans().pose, robot.gyro.angle))
-        val pose = moePatrickTrans.getTrans(cameraTrans).pose
+        val pose1 = moePatrickTrans.getRobotTrans(cameraTrans)
+        val pose = pose1.pose
         val angle = robot.gyro.angle + moePatrickTrans.config.robotInitial.degAng
 //        pose *= MOEConstants.Units.ASTARS_PER_METER
 //        pose *= -1.0
@@ -73,13 +74,13 @@ class PatrickPositionalPIDTest : MOERegularTest() {
 
         val fwd = rawX * sin(Math.toRadians(angle)) + rawY * cos(Math.toRadians(angle))
         val str = rawX * cos(Math.toRadians(angle)) - rawY * sin(Math.toRadians(angle))
-        telemetry.addData("FWD", fwd.toPrecision())
-        telemetry.addData("STR", str.toPrecision())
-        telemetry.addData("ROT", rot.toPrecision())
+        telemetry.addData("FWD", fwd.toFixed())
+        telemetry.addData("STR", str.toFixed())
+        telemetry.addData("ROT", rot.toFixed())
 
-        //        telemetry.addData("curPose", pose.x.toPrecision())
+        //        telemetry.addData("curPose", pose.x.toFixed())
         //        telemetry.addData("curAngle", robot.gyro.angle)
-        //        telemetry.addData("goal", systemPid.yPid.setpoint.toPrecision())
+        //        telemetry.addData("goal", systemPid.yPid.setpoint.toFixed())
         //        telemetry.addData("error", systemPid.yPid.getError(systemPid.yPid.setpoint, pose.y).toPrecision())
 
 

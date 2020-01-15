@@ -63,8 +63,8 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
         val rawY = yPid.getOutput(input.pose.y, setpoint.pose.y)
         val rawT = tPid.getOutput(input.degAng, setpoint.degAng)
         val angle = input.radAng
-        val x = rawX * sin(angle) + rawY * cos(angle)
-        val y = rawX * cos(angle) - rawY * sin(angle)
+        val x = rawX * cos(angle) + rawY * sin(angle)
+        val y = -rawX * sin(angle) + rawY * cos(angle)
 //        Log.e("x", x.toString())
 //        Log.e("y", y.toString())
 //        Log.e("t", rawT.toString())

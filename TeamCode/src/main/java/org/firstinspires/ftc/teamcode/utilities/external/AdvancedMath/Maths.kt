@@ -1,17 +1,12 @@
 package org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath
 
-import kotlin.math.PI
-import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 
 //fun closestAngleDifference(source: Double, target: Double): Double = ((target - source) + 180) % 360 - 180
-infix fun Double.closestAngleDifference(other: Double): Double {
-    val c = this
-    val t = other
-    val something = (t - c + 540) % 360 - 180;
-    return something
+fun Double.closestAngleDifference(other: Double): Double {
+    return (other - this + 540) % 360 - 180
     //    return 180 - kotlin.math.abs(kotlin.math.abs(a1 - a2) - 180);
 }
 

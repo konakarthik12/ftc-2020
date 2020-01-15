@@ -16,6 +16,5 @@ class SlamUSBListener : BroadcastReceiver() {
         } else if (UsbManager.ACTION_USB_DEVICE_DETACHED == intent.action) {
             SlamUsbReciever.handleDeviceRemoved(usbDevice);
         }
-        Log.e("why", intent.action)
     }
 }

@@ -6,10 +6,12 @@ import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamData
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamT265Handler
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERohanSlamConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Units.ASTARS_PER_METER
 import org.firstinspires.ftc.teamcode.utilities.external.quaternionToHeading
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.*
 
@@ -17,12 +19,11 @@ class MOESlam(var config: MOESlamConfig) {
     val transformation: Transformation
         get() = getTrans()
 
-    val transHandler = MOERohanTrans(config)
+    private val transHandler = MOEPatrickTrans(config)
 
     val handler: SlamT265Handler?
         get() = SlamHandler.t265Handler
     var slamOffset: Point = Point(0.0, 0.0)
-    var thetaOffset: Double = 0.0
 
 //    init {
 //        resetValues()
@@ -37,7 +38,6 @@ class MOESlam(var config: MOESlamConfig) {
 
     fun getAstarPose() = getRawOffsetPose() * ASTARS_PER_METER
 
-    fun getTheta(): Double = -(getRawTheta().toEulerAngle() - thetaOffset)
 
     fun getRawTheta(): Double = quaternionToHeading(getQuadTheta())
 
@@ -48,7 +48,6 @@ class MOESlam(var config: MOESlamConfig) {
 
     fun resetValues() {
         setOffset(getRawPose())
-        this.thetaOffset = -getRawTheta()
     }
 
     private fun setOffset(curPose: Point) {
@@ -88,6 +87,6 @@ class MOESlam(var config: MOESlamConfig) {
     }
 
     fun getRawTrans(): Transformation {
-        return Transformation(getAstarPose(), getTheta())
+        return Transformation(getAstarPose(), robot.gyro.angle)
     }
 }

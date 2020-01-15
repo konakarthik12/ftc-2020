@@ -43,6 +43,7 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
         lateinit var myContext: FtcRobotControllerActivity
         val textView: TextView?
             get() = myContext.textStreamingStatus
+
         @JvmStatic
         fun init(context: FtcRobotControllerActivity) {
             myContext = context
@@ -134,9 +135,9 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
     }
 
     fun killStream() {
-        Log.e("killing","dead")
+        Log.e("killing", "dead")
         isRunning = false
-        SlamData.confidence=0
+        SlamData.confidence = 0
         updateConfidence()
     }
 
@@ -193,7 +194,7 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
     }
 
     private fun actualRestart() {
-        Log.e("Restart","sent")
+        Log.e("Restart", "sent")
         sendCode(Constants.DEV_STOP)
         //        while (isRunning) {
         //            updateSlam()

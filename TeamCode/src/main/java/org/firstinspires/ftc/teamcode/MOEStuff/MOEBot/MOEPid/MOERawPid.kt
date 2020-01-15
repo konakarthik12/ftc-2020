@@ -15,7 +15,7 @@ open class MOERawPid(options: MOEPidOptions) : MOEPidStructure<Double, Double> {
 
     override var input = { 0.0 }
     override var output: (Double) -> Unit = { }
-    private var threshold = 2
+    private var threshold = 0.5
     override var setpoint: () -> Double = { 0.0 }
     override var endCondition: (Double) -> Boolean = {
         //        Log.e("curValue", it.toString())

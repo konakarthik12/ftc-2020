@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.firstinspires.ftc.teamcode.utilities.internal.get
-import org.firstinspires.ftc.teamcode.utilities.external.toPrecision
+import org.firstinspires.ftc.teamcode.utilities.external.toFixed
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -66,13 +66,13 @@ class PositionalPidTest : MOERegularTest() {
 
         val fwd = rawX * sin(Math.toRadians(angle)) + rawY * cos(Math.toRadians(angle))
         val str = rawX * cos(Math.toRadians(angle)) - rawY * sin(Math.toRadians(angle))
-        telemetry.addData("FWD", fwd.toPrecision())
-        telemetry.addData("STR", str.toPrecision())
-        telemetry.addData("ROT", rot.toPrecision())
+        telemetry.addData("FWD", fwd.toFixed())
+        telemetry.addData("STR", str.toFixed())
+        telemetry.addData("ROT", rot.toFixed())
 
-        //        telemetry.addData("curPose", pose.x.toPrecision())
+        //        telemetry.addData("curPose", pose.x.toFixed())
         //        telemetry.addData("curAngle", robot.gyro.angle)
-        //        telemetry.addData("goal", systemPid.yPid.setpoint.toPrecision())
+        //        telemetry.addData("goal", systemPid.yPid.setpoint.toFixed())
         //        telemetry.addData("error", systemPid.yPid.getError(systemPid.yPid.setpoint, pose.y).toPrecision())
 
 

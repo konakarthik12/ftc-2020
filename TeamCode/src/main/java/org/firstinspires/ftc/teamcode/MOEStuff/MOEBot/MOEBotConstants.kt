@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEGyroConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERohanSlamConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
+import org.firstinspires.ftc.teamcode.constants.MOESlamConstants
 
-interface                                                                                                                                                       MOEBotConstants {
+interface MOEBotConstants {
     fun getRobotConfig(): MOEBotConfig {
         return MOEBotConfig()
     }
@@ -15,7 +17,7 @@ interface                                                                       
     }
 
     fun getSlamConfig(): MOESlamConfig {
-        return MOESlamConfig()
+        return MOESlamConstants.DefaultValues
     }
 
     fun getGyroConfig(): MOEGyroConfig {

@@ -14,7 +14,7 @@ interface MOEPidStructure<I, O> {
     var output: ((O) -> Unit)
     var setpoint: () -> I
     var endCondition: (I) -> Boolean
-    fun run(sync: Boolean = true): Job {
+    fun run(sync: Boolean = false): Job {
         return GlobalScope.launch {
             Log.e("isittho", ReferenceHolder.moeOpMode.iOpModeIsActive().toString())
 

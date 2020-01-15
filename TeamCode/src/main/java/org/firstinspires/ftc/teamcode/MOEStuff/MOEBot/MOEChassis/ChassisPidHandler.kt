@@ -4,6 +4,7 @@ import android.util.Log
 import kotlinx.coroutines.Job
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEPositionalSystemPid
 import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 
 class ChassisPidHandler {
@@ -14,9 +15,12 @@ class ChassisPidHandler {
             robot.slam.transformation
         }
         pid.output = { powers ->
-            Log.e("pow", powers.toString())
+            //            if(!moeOpMode)
+//            Log.e("pow", powers.toString())
             robot.chassis.setPower(powers)
         }
+        //TODO: weak rn
+        pid.pids.forEach { it.setOutputLimits(0.5) }
     }
 
     fun moveTo(goal: Transformation): Job {

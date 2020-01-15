@@ -3,12 +3,11 @@ package org.firstinspires.ftc.teamcode.test
 import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamData
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERohanSlamConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
 import org.firstinspires.ftc.teamcode.teleop.CompTeleOp
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.PolarPoint
-import org.firstinspires.ftc.teamcode.utilities.external.toPrecision
 
 @TeleOp(name = "BSlamDriveTest")
 class SlamDriveTest : CompTeleOp() {
@@ -81,8 +80,8 @@ class SlamDriveTest : CompTeleOp() {
 
     override fun getSlamConfig(): MOESlamConfig {
         return super.getSlamConfig().apply {
-            CAMERA_TO_ROBOT_DIST = PolarPoint(18.027, 183.18)
-            ROBOT_TO_CAMERA_THETA = 180.0
+//            ROBOT = PolarPoint(18.027, 183.18)
+//            ROBOT_TO_CAMERA_THETA = 180.0
         }
     }
 }
