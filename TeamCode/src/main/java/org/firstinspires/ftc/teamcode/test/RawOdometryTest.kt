@@ -24,12 +24,14 @@ class RawOdometryTest : CompTeleOp() {
     }
 
     override fun log() {
-        val rightForwardValue = robot.odometry.rightFoward.getRawValue()
+        val rightForwardValue = robot.odometry.rightFoward.getScaledValue()
+        val angle = robot.gyro.angle
         telemetry.addData("forward", rightForwardValue)
-        telemetry.addData("strafe", robot.odometry.strafe.getRawValue())
+        val strafe = robot.odometry.strafe.getScaledValue()
+        telemetry.addData("strafe", strafe)
 //              sd_main.  .use { out -> out.println(fileContent) }
 //        telemetry.update()
-        writer.println("forward\t$rightForwardValue")
+        writer.println("$angle\t$rightForwardValue")
     }
 
     override fun stop() {
