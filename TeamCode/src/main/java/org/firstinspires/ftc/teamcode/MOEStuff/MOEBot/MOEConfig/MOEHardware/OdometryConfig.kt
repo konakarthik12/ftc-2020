@@ -7,7 +7,8 @@ import java.lang.Math.PI
 class OdometryConfig(config: MotorConfig,
                      val turnCorrection: Double,
                      val ticsPerRevolution: Double,
-                     val odometryDiameter: Double
-) : MotorConfig(config.name, config.hub, config.port) {
-    var scalar = odometryDiameter * 2 * PI / ticsPerRevolution
+                     val odometryDiameter: Double, val negate: Boolean
+) {
+    var scalar = odometryDiameter * PI / ticsPerRevolution * if(negate) -1 else 1
+    var motorConfig = config
 }

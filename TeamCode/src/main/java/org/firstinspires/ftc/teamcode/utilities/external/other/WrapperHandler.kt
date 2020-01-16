@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.utilities.external.other
 
 class WrapperHandler(private val max: Int, val function: () -> Double) {
-    var finalValue: Double = function()
+    var finalValue:Double = 0.0
     private var prev = finalValue
     private fun getDelta(curr: Double): Double {
 

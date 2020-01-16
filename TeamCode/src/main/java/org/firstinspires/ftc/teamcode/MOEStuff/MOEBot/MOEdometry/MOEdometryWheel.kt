@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.utilities.external.other.WrapperHandler
 import kotlin.contracts.contract
 
 class MOEDometryWheel(val config: OdometryConfig) {
-    private val mMotor = config.getDevice()
+    private val mMotor = config.motorConfig.getDevice()
 
     init {
         reset()
@@ -19,7 +19,6 @@ class MOEDometryWheel(val config: OdometryConfig) {
     fun updateValue(angleWrapped: WrapperHandler): Double {
         return getScaledValue() - (angleWrapped.getValue() * config.turnCorrection)
     }
-
     fun getRawValue() = mMotor.currentPosition
     fun getScaledValue() = getRawValue() * config.scalar
 }

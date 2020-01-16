@@ -11,4 +11,4 @@ open class MotorConfig(
         val direction: DcMotorSimple.Direction = DcMotorSimple.Direction.FORWARD,
         val zeroPowerBehavior: DcMotor.ZeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE,
         val maxPow: Double = 1.0
-) : MOEConfig<DcMotorEx>(name + "M", hub, port)
+) : MOEConfig<DcMotorEx>((name + "M"), hub, port)
