@@ -12,7 +12,7 @@ abstract class MOEGyro {
         }
     var offset = 0.0
     private var eulerOffset = 0.0
-
+    var userSetOffset = 0.0
     val angle: Double
         get() = (getRawAngle() + offset).toNormalAngle()
     /**

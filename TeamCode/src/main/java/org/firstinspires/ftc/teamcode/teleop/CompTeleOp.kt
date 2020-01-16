@@ -72,7 +72,7 @@ open class CompTeleOp() : MOETeleOp() {
         val scaleRot = 0.75
         val angle = robot.gyro.angle
 
-        telemetry.addData("gyro", angle)
+//        telemetry.addData("gyro", angle)
 
         var rawY = gpad1.left.stick.y()
         var rawX = gpad1.left.stick.x()

@@ -8,6 +8,7 @@ import kotlinx.coroutines.runBlocking
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import kotlin.math.cos
 import kotlin.math.sin
@@ -46,6 +47,9 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
         tPid.setpoint = {
             this.setpoint().degAng
         }
+        xPid.threshold = 2.0
+        yPid.threshold = 2.0
+        tPid.threshold = 4.0
     }
 
     override var endCondition: (Transformation) -> Boolean = {
@@ -63,8 +67,15 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
         val rawY = yPid.getOutput(input.pose.y, setpoint.pose.y)
         val rawT = tPid.getOutput(input.degAng, setpoint.degAng)
         val angle = input.radAng
-        val x = rawX * cos(angle) + rawY * sin(angle)
-        val y = -rawX * sin(angle) + rawY * cos(angle)
+        val x = rawX * cos(angle) - rawY * sin(angle)
+        val y = rawX * sin(angle) + rawY * cos(angle)
+        telemetry.addData("pose", input)
+        telemetry.addData("setpoint", setpoint)
+        telemetry.addData("x", x)
+        telemetry.addData("y", y)
+        telemetry.addData("t", rawT)
+        telemetry.update()
+
 //        Log.e("x", x.toString())
 //        Log.e("y", y.toString())
 //        Log.e("t", rawT.toString())

@@ -5,10 +5,11 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEtor
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.DriveTrain.Motors.Configs
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 
 
 class MOEChassis {
-    val pidChassisHandler = ChassisPidHandler()
+    val pidChassisHandler = PidChassisHandler()
     var purePursuit: MOEPurePursuitHandler = MOEPurePursuitHandler()
 
     var frontLeftMotor = MOEtor(Configs.FrontLeft)
@@ -79,6 +80,14 @@ class MOEChassis {
         return motors.map { it.getVelocity() }
     }
 
-    fun turn(deg: Double) = pidChassisHandler.turn(deg)
+    //    fun turn(deg: Double) = pidChassisHandler.turn(deg)
+    fun turnTo(d: Double) {
+        pidChassisHandler.moveTo(robot.slam.transformation.apply { degAng = d.toNormalAngle() })
+    }
+
+    fun turn(deg: Double) = pidChassisHandler.moveTo(robot.slam.transformation.apply {
+        degAng += deg
+        degAng.toNormalAngle()
+    })
 
 }

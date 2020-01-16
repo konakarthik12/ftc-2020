@@ -4,6 +4,8 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.Moto
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.OdometryConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.ServoConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.SwitchConfig
+import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs.LeftIntake
+import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs.RightIntake
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Lift.Motors.RightLiftMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction as MotorDirection
 import com.qualcomm.robotcore.hardware.Servo.Direction as ServoDirection
@@ -62,7 +64,7 @@ object MOEHardwareConstants {
     }
 
     object Odometry {
-        val RightForward = OdometryConfig(RightLiftMotor)
-
+        val RightForward = OdometryConfig(RightIntake, 0.0, 8192.0, 2.0)
+        val Strafe = OdometryConfig(LeftIntake, 0.0, 8192.0, 2.0)
     }
 }

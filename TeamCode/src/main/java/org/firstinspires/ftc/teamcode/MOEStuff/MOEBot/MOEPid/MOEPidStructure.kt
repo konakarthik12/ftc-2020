@@ -6,6 +6,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
 
 interface MOEPidStructure<I, O> {
 //    var lastValue: T
@@ -14,7 +15,7 @@ interface MOEPidStructure<I, O> {
     var output: ((O) -> Unit)
     var setpoint: () -> I
     var endCondition: (I) -> Boolean
-    fun run(sync: Boolean = false): Job {
+    fun run(sync: Boolean = true): Job {
         return GlobalScope.launch {
             Log.e("isittho", ReferenceHolder.moeOpMode.iOpModeIsActive().toString())
 
@@ -26,6 +27,7 @@ interface MOEPidStructure<I, O> {
                     Log.e("job", "done")
                     break
                 }
+                if (moeOpMode.iIsStopRequested) break
                 output(getOutput(curInput, setpoint()))
             }
         }.also {

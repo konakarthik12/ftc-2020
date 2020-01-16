@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.test
 import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERohanSlamConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
@@ -52,9 +53,11 @@ class SlamDriveTest : CompTeleOp() {
         //            MOESocketHandler.moeWebServer.broadcast("data/slam/${robotPose[0]},${robotPose[1]},${robot.gyro.getRawAngle()}")
         //            laped.reset()
         //        }
+        telemetry.addData("ang", robot.gyro.angle)
         telemetry.addData("rawTrans", robot.slam.getRawTrans())
         val ij = robot.slam.transformation
         telemetry.addData("robottrans", ij)
+//        telemetry.addData("")
 //
 //        telemetry.addData("timestamp", SlamData.lastTimestamp)
 ////        telemetry.addData("patrickPosition", robot.slam.transformation)
@@ -80,8 +83,8 @@ class SlamDriveTest : CompTeleOp() {
 
     override fun getSlamConfig(): MOESlamConfig {
         return super.getSlamConfig().apply {
-//            ROBOT = PolarPoint(18.027, 183.18)
-//            ROBOT_TO_CAMERA_THETA = 180.0
+            robotInitial = Transformation(14.0, 48.0, 270.0)
+            ROBOT_TO_CAMERA_THETA = 180.0
         }
     }
 }

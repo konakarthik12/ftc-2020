@@ -1,13 +1,19 @@
 package org.firstinspires.ftc.teamcode.test
 
+import android.os.Environment
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.AnalogInput
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
+import org.firstinspires.ftc.teamcode.teleop.CompTeleOp
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
+import java.io.File
+import java.io.PrintWriter
 
-@TeleOp(name = "RawOdometryTest")
-class RawOdometryTest : MOETeleOp() {
+@TeleOp
+class RawOdometryTest : CompTeleOp() {
+    val sd_main = File(Environment.getExternalStorageDirectory().absolutePath + "/forward.txt")
+    val writer = sd_main.printWriter()
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return null
     }
@@ -17,13 +23,16 @@ class RawOdometryTest : MOETeleOp() {
 //        robot.odometry.servos.initServosDown()
     }
 
-    override fun mainLoop() {
-        val arrayOf = arrayOf("LOAA12", "ROAA10", "ROSA11")
-        arrayOf.forEach {
-            val servo = hardwareMap.get(AnalogInput::class.java, it)
-            telemetry.addData(servo.voltage.toString())
-        }
-//        telemetry.addData(robot.odometry.position)
-        telemetry.update()
+    override fun log() {
+        val rightForwardValue = robot.odometry.rightFoward.getRawValue()
+        telemetry.addData("forward", rightForwardValue)
+        telemetry.addData("strafe", robot.odometry.strafe.getRawValue())
+//              sd_main.  .use { out -> out.println(fileContent) }
+//        telemetry.update()
+        writer.println("forward\t$rightForwardValue")
+    }
+
+    override fun stop() {
+        writer.close()
     }
 }
