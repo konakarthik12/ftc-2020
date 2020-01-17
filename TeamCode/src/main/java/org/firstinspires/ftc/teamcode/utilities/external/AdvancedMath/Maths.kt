@@ -4,11 +4,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 
-//fun closestAngleDifference(source: Double, target: Double): Double = ((target - source) + 180) % 360 - 180
-fun Double.closestAngleDifference(other: Double): Double {
-    return (other - this + 540) % 360 - 180
-    //    return 180 - kotlin.math.abs(kotlin.math.abs(a1 - a2) - 180);
-}
+fun Double.closestAngleDifference(other: Double) = (other - this + 540) % 360 - 180
 
 
 fun <T : PointImpl<T>> getCircleLineIntersection(pointA: PointImpl<T>, pointB: PointImpl<T>, circleCenter: PointImpl<T>, radius: Double): Double {
@@ -32,9 +28,6 @@ fun <T : PointImpl<T>> getCircleLineIntersection(pointA: PointImpl<T>, pointB: P
     return Double.NaN
 }
 
-infix fun <A, B> A.and(second: B): Pair<A, B> {
-    return Pair(this, second)
-}
 
 fun ClosedFloatingPointRange<Double>.lerp(t: Double): Double {
     return this.start + t * (this.endInclusive - this.start)
