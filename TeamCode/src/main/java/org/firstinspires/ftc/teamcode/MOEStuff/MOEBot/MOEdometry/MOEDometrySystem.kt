@@ -25,8 +25,8 @@ class MOEDometrySystem {
     fun runLoop() {
 
         angleWrappedValue = angleWrapped.getValue()
-        val forward = rightForwardWheel.updateValue(angleWrapped)
-        val strafe = strafeWheel.updateValue(angleWrapped)
+        val forward = rightForwardWheel.updateValue(angleWrappedValue)
+        val strafe = strafeWheel.updateValue(angleWrappedValue)
 
         pose = Point(forward, strafe)
         fieldCentricPoseValue = fieldCentricPose.getValue()

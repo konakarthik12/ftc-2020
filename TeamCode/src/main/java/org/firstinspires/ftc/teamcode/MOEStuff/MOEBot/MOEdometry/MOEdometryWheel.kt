@@ -15,8 +15,8 @@ class MOEDometryWheel(val config: OdometryConfig) {
         mMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
     }
 
-    fun updateValue(angleWrapped: WrapperHandler): Double {
-        return getScaledValue() - (angleWrapped.getValue() * config.turnCorrection)
+    fun updateValue(angleWrapped: Double): Double {
+        return getScaledValue() - (angleWrapped * config.turnCorrection)
     }
     fun getRawValue() = mMotor.currentPosition
     fun getScaledValue() = getRawValue() * config.scalar
