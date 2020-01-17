@@ -1,32 +1,46 @@
 package org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath
 
-class WrapperHandler(private val max: Double, val function: () -> Double) {
-    var finalValue: Double = 0.0
-    private var prev = finalValue
-    private fun getDelta(curr: Double): Double {
-        return prev.closestAngleDifference(curr)
-    }
+import kotlin.math.cos
+import kotlin.math.sin
 
+class RotationsHandler(val Pose: () -> Point, val radAngle: () -> Double) {
+
+    var finalPose: Point = Point(0.0,0.0)
+
+    var angle: Double = 0.0
+
+    //var angle = radAngle()
+
+    private var prevPose = finalPose
+
+    private fun getDeltaPose(currPose: Point): Point {
+        angle = radAngle()
+        val deltaPose = currPose - prevPose
+        return Point((deltaPose.x) * cos(angle) + (deltaPose.y)* sin(angle),
+                -(deltaPose.x)*sin(angle) + (deltaPose.y)*cos(angle))
+    }
     var firstRun = true
-    fun getValue(): Double {
+    fun getValue(): Point {
         if(firstRun){
-            prev = function()
-            finalValue = prev
+            prevPose = Pose()
+            finalPose = prevPose
             firstRun=false
-            return prev
+            return prevPose
         }
-        val curr = function()
-        val delta = getDelta(curr)
-        finalValue += delta
-        prev = curr
-        return finalValue
+        val currPose = Pose()
+        val deltaPose = getDeltaPose(currPose)
+        finalPose += deltaPose
+        prevPose = currPose
+        return finalPose
     }
-
 }
 
 fun main() {
-    val wrapperHandler = WrapperHandler(360.0) { readLine()?.toDouble()!! }
+
+    val rotationsHandler = RotationsHandler( {Point(readLine()?.toDouble()!!, readLine()?.toDouble()!!)}, {readLine()?.toDouble()!!.toRadians()})
+
     while (true) {
-        println(wrapperHandler.getValue())
+        println(rotationsHandler.getValue())
+        println(rotationsHandler.angle.toString())
     }
 }

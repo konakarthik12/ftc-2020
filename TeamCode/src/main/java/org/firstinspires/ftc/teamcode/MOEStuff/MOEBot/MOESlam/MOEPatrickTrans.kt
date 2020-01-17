@@ -41,8 +41,8 @@ fun Transformation.getPatrickAxesRotationOffset(pointFromThis: Point): Point {
     val yOffset = pointFromThis.y * cos(this.radAng) - pointFromThis.x * sin(this.radAng)
     return pointFromThis.create(this.pose.x + xOffset, this.pose.y + yOffset)
 }
-
-/*fun main() {
+/*
+fun main() {
     val moePatrickTrans = MOEPatrickTrans(MOEPatrickSlamConfig(robotInitial = Transformation(10.0, 10.0,90.0)))
     val moePatrickRawCameraTrans = Transformation(20.0, -10.0, -90.0)
     val moePatrickCameraTrans = moePatrickTrans.getCameraTrans(moePatrickRawCameraTrans)
@@ -51,4 +51,5 @@ fun Transformation.getPatrickAxesRotationOffset(pointFromThis: Point): Point {
     println("Camera Pose: " + moePatrickCameraTrans)
     println("Robot Pose: " + moePatrickTrans.getTrans(moePatrickCameraTrans))
 
-}*/
+}
+*/

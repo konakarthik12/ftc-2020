@@ -24,17 +24,20 @@ class RawOdometryTest : CompTeleOp() {
 
     override fun log() {
         val rightForwardValue = robot.odometry.rightForwardWheel.getScaledValue()
-        val angle = robot.gyro.angle
-        robot.odometry.angleWrapped
-        val angleWrapped = robot.odometry.angleWrappedValue
-        val angleWrapped2 = WrapperHandler(360.0) { angle }.getValue()
-        telemetry.addData("forward", rightForwardValue)
-
         val strafe = robot.odometry.strafeWheel.getScaledValue()
+        val robotPose = robot.odometry.pose
+
+        val angle = robot.gyro.angle
+
+        val angleWrapped = robot.odometry.angleWrappedValue
+        val fieldCentricPose = robot.odometry.fieldCentricPoseValue
+
+        telemetry.addData("forward", rightForwardValue)
         telemetry.addData("strafe", strafe)
+        telemetry.addData("robot pose", robotPose)
         telemetry.addData("angle", angle)
         telemetry.addData("wrapped angle", angleWrapped)
-        telemetry.addData("wrapped angle", angleWrapped2)
+        telemetry.addData("fieldcentric pose", fieldCentricPose)
 //              sd_main.  .use { out -> out.println(fileContent) }
         telemetry.update()
         writer.println("$angle\t$rightForwardValue\t$strafe")
