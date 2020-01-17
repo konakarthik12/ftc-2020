@@ -18,19 +18,24 @@ class RawOdometryTest : CompTeleOp() {
 
     override fun initOpMode() {
         super.initOpMode()
+        robot.odometry.launchLoop()
         telemetry.addData("test")
 //        robot.odometry.servos.initServosDown()
     }
 
     override fun log() {
-        val rightForwardValue = robot.odometry.rightForwardWheel.getScaledValue()
-        val strafe = robot.odometry.strafeWheel.getScaledValue()
+
+
         val robotPose = robot.odometry.pose
 
+
         val angle = robot.gyro.angle
+        val rightForwardValue = robot.odometry.rightForwardWheel.updateValue(angle)
+        val strafe = robot.odometry.strafeWheel.updateValue(angle)
+
 
         val angleWrapped = robot.odometry.angleWrappedValue
-        val fieldCentricPose = robot.odometry.fieldCentricPoseValue
+        val fieldCentricPose = robot.odometry.fieldCentricPose
 
         telemetry.addData("forward", rightForwardValue)
         telemetry.addData("strafe", strafe)

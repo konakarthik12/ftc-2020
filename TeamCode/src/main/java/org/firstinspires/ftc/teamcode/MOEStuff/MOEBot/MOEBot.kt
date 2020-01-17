@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlam
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySystem
 
 class MOEBot(config: MOEBotConstants) {
-    val robotConfig = config.getRobotConfig()
+    val robotConfig = config.getRobotSubSystemConfig()
 
 //    constructor(config: MOEBotConstants) : this(config.getRobotConfig().useGyro, config.getRobotConfig().useCamera, config.useSlam)
 
@@ -19,7 +19,7 @@ class MOEBot(config: MOEBotConstants) {
     val outtake = MOEOuttake()
     var chassis: MOEChassis = MOEChassis()
     var harvester: MOEHarvester = MOEHarvester()
-    var odometry = MOEDometrySystem()
+    var odometry = MOEDometrySystem(config)
     lateinit var gyro: MOEGyro
     lateinit var vuforia: MOEVuforia
     lateinit var camera: MOECamera
@@ -33,7 +33,7 @@ class MOEBot(config: MOEBotConstants) {
             camera = MOECamera()
             vuforia = MOEVuforia()
         }
-        if (robotConfig.useSlam) slam = MOESlam(config.getSlamConfig())
+        if (robotConfig.useSlam) slam = MOESlam(config)
     }
 
     fun offsetValues(constants: MOEBotConstants) {

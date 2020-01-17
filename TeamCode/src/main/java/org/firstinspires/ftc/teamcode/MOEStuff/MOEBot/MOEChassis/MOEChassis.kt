@@ -71,9 +71,11 @@ class MOEChassis {
 //        //            telemetry.update();
 //        //        }
 //    }
-    fun moveTo(trans: Transformation) = pidChassisHandler.moveTo(trans)
+    fun moveTo(trans: MOEtion) = pidChassisHandler.moveTo(trans)
 
-    fun moveTo(x: Double, y: Double) = moveTo(Transformation(Point(x, y), robot.gyro.angle))
+    fun moveTo(x: Double, y: Double, angle: Double) = moveTo(MOEtion(x,y,angle))
+
+    fun moveTo(x: Double, y: Double) = moveTo(MOEtion(Point(x, y), robot.gyro.angle))
 //        val pid = MOEPositionalSystemPid(MOE/Constants.PositionalPid.DefaultOptions)
 
     fun getVelocities(): List<Double> {
@@ -81,13 +83,13 @@ class MOEChassis {
     }
 
     //    fun turn(deg: Double) = pidChassisHandler.turn(deg)
-    fun turnTo(d: Double) {
-        pidChassisHandler.moveTo(robot.slam.transformation.apply { degAng = d.toNormalAngle() })
+    fun turnTo(deg: Double) {
+        pidChassisHandler.moveTo(robot.odometry.astarMoetion().apply { degAng = deg.toNormalAngle() })
     }
 
-    fun turn(deg: Double) = pidChassisHandler.moveTo(robot.slam.transformation.apply {
+    fun turn(deg: Double) = pidChassisHandler.moveTo(robot.odometry.astarMoetion().apply {
         degAng += deg
-        degAng.toNormalAngle()
+        degAng = degAng.toNormalAngle()
     })
 
 }

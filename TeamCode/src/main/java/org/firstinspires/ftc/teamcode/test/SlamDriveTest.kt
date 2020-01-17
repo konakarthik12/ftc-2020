@@ -3,12 +3,11 @@ package org.firstinspires.ftc.teamcode.test
 import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERohanSlamConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEtion
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERobotInitialStateConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
 import org.firstinspires.ftc.teamcode.teleop.CompTeleOp
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.PolarPoint
 
 @TeleOp(name = "BSlamDriveTest")
 class SlamDriveTest : CompTeleOp() {
@@ -77,13 +76,19 @@ class SlamDriveTest : CompTeleOp() {
         //        telemetry.addData("position", robot.slam.getRobotPose())
     }
 
-    override fun getRobotConfig(): MOEBotConfig {
-        return super.getRobotConfig().apply { useSlam = true }
+    override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
+        return super.getRobotSubSystemConfig().apply { useSlam = true }
+    }
+
+    override fun getRobotInitialState(): MOERobotInitialStateConfig {
+        return super.getRobotInitialState().apply {
+            robotInitial = MOEtion(14.0, 48.0, 270.0)
+
+        }
     }
 
     override fun getSlamConfig(): MOESlamConfig {
         return super.getSlamConfig().apply {
-            robotInitial = Transformation(14.0, 48.0, 270.0)
             ROBOT_TO_CAMERA_THETA = 180.0
         }
     }

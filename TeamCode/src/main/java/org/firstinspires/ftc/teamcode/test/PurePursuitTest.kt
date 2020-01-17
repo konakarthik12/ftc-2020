@@ -6,15 +6,10 @@ import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler.moeWebServer
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOELoopedOpMode
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.*
 import org.firstinspires.ftc.teamcode.utilities.external.toFixed
-import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.firstinspires.ftc.teamcode.utilities.internal.get
 
 @TeleOp()
@@ -123,8 +118,8 @@ class PurePursuitTest : MOELoopedTest() {
         moeWebServer.broadcast("slam/pose/${pose.x+48}/${pose.y+48}")
     }
 
-    override fun getRobotConfig(): MOEBotConfig {
-        return super.getRobotConfig().apply { useSlam = true }
+    override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
+        return super.getRobotSubSystemConfig().apply { useSlam = true }
     }
 
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {

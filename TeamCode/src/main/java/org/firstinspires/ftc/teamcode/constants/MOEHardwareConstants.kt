@@ -1,13 +1,10 @@
 package org.firstinspires.ftc.teamcode.constants
 
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.MotorConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.OdometryConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.ServoConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.SwitchConfig
+import com.qualcomm.robotcore.hardware.Servo
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.*
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.DriveTrain.Motors.Configs.BackRight
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs.LeftIntake
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs.RightIntake
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Lift.Motors.RightLiftMotor
+import kotlin.math.min
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction as MotorDirection
 import com.qualcomm.robotcore.hardware.Servo.Direction as ServoDirection
 
@@ -66,18 +63,20 @@ object MOEHardwareConstants {
     }
 
     object Odometry {
-        val RightForward = OdometryConfig(RightIntake, 0.0, 8192.0, 2.0, true)
-        val Strafe = OdometryConfig(BackRight, 0.0, 8192.0, 2.0, true)
+        val RightForward = OdometryConfig(RightIntake, -0.103, 8192.0, 2.0, true)
+        val Strafe = OdometryConfig(BackRight, 0.0882, 8192.0, 2.0, true)
     }
-/*
-    object AutonArms{
-        object Servos{
-            object Configs{
-                val LeftArm = ServoConfig("LAA",1,1)
-                val LeftClaw = ServoConfig("LAC",1,5)
-                val RightArm = ServoConfig("RAA",2,1)
-                val RightClaw = ServoConfig("RAC",2,5)
+
+    object AutonArms {
+        object Servos {
+            object Configs {
+                val LeftArm = ServoConfig("LAA", 1, 1, max = 0.5, direction = Servo . Direction . REVERSE)
+                val LeftClaw = ServoConfig("LAC", 1, 5)
+                val LeftConfig = AutonArmConfig(LeftArm, LeftClaw)
+                val RightArm = ServoConfig("RAA", 2, 1, min = 0.5)
+                val RightClaw = ServoConfig("RAC", 2, 5, direction = Servo.Direction.REVERSE)
+                val RightConfig = AutonArmConfig(RightArm, RightClaw)
             }
         }
-    }*/
+    }
 }

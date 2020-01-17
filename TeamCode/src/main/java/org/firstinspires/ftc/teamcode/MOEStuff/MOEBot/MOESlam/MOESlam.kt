@@ -5,9 +5,8 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamData
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamHandler
 import org.firstinspires.ftc.robotcontroller.moeglobal.slam.SlamT265Handler
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERohanSlamConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstants
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEtion
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Units.ASTARS_PER_METER
 import org.firstinspires.ftc.teamcode.utilities.external.quaternionToHeading
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
@@ -15,8 +14,8 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.*
 
-class MOESlam(var config: MOESlamConfig) {
-    val transformation: Transformation
+class MOESlam(var config: MOEBotConstants) {
+    val transformation: MOEtion
         get() = getTrans()
 
     private val transHandler = MOEPatrickTrans(config)
@@ -82,11 +81,11 @@ class MOESlam(var config: MOESlamConfig) {
         }
     }
 
-    private fun getTrans(): Transformation {
+    private fun getTrans(): MOEtion {
         return transHandler.getTrans(getRawTrans())
     }
 
-    fun getRawTrans(): Transformation {
-        return Transformation(getAstarPose(), robot.gyro.angle)
+    fun getRawTrans(): MOEtion {
+        return MOEtion(getAstarPose(), robot.gyro.angle)
     }
 }

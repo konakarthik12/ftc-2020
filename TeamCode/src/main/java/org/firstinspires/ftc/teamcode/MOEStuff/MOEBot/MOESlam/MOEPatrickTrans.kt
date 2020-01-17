@@ -1,41 +1,43 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam
 
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstants
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEtion
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.*
 import kotlin.math.cos
 import kotlin.math.sin
 
-class MOEPatrickTrans(val config: MOESlamConfig) {
-    val initialCameraTrans = findInitialCameraTrans()
-    fun findInitialCameraTrans(): Transformation {
-        val radTheta = config.robotInitial.radAng + config.ROBOT_TO_CAMERA_DIST.radAng
-        val pose = config.robotInitial.pose.getRelativePoint(config.ROBOT_TO_CAMERA_DIST.r, radTheta)
-        val angle = (config.robotInitial.degAng + config.ROBOT_TO_CAMERA_THETA).toNormalAngle()
-        return Transformation(pose, angle)
+class MOEPatrickTrans(val config: MOEBotConstants) {
+    private val slamConfig = config.getSlamConfig()
+    private val initialCameraTrans = findInitialCameraTrans()
+    private val robotInitial = config.getRobotInitialState().robotInitial
+    private fun findInitialCameraTrans(): MOEtion {
+        val radTheta = robotInitial.radAng + slamConfig.ROBOT_TO_CAMERA_DIST.radAng
+        val pose = robotInitial.pose.getRelativePoint(slamConfig.ROBOT_TO_CAMERA_DIST.r, radTheta)
+        val angle = (robotInitial.degAng + slamConfig.ROBOT_TO_CAMERA_THETA).toNormalAngle()
+        return MOEtion(pose, angle)
     }
 
-    fun getCameraTrans(slamRawPose: Transformation): Transformation {
-        val pose = findInitialCameraTrans().getPatrickAxesRotationOffset(slamRawPose.pose)
-        val angle = (findInitialCameraTrans().degAng + slamRawPose.degAng).toNormalAngle()
-        return Transformation(pose, angle)
+    fun getCameraTrans(slamRawPose: MOEtion): MOEtion {
+        val pose = initialCameraTrans.getPatrickAxesRotationOffset(slamRawPose.pose)
+        val angle = (initialCameraTrans.degAng + slamRawPose.degAng).toNormalAngle()
+        return MOEtion(pose, angle)
     }
 
-    fun getRobotTrans(slamPose: Transformation): Transformation {
-        val radTheta = slamPose.radAng + config.ROBOT_TO_CAMERA_DIST.radAng
-        val pose = slamPose.pose.getRelativePoint(config.ROBOT_TO_CAMERA_DIST.r, radTheta)
-        val angle = (slamPose.degAng - config.ROBOT_TO_CAMERA_THETA).toNormalAngle()
-        return Transformation(pose, angle)
+    fun getRobotTrans(slamPose: MOEtion): MOEtion {
+        val radTheta = slamPose.radAng + slamConfig.ROBOT_TO_CAMERA_DIST.radAng
+        val pose = slamPose.pose.getRelativePoint(slamConfig.ROBOT_TO_CAMERA_DIST.r, radTheta)
+        val angle = (slamPose.degAng - slamConfig.ROBOT_TO_CAMERA_THETA).toNormalAngle()
+        return MOEtion(pose, angle)
     }
 
-    fun getTrans(rawSlamTrans: Transformation): Transformation {
+    fun getTrans(rawSlamTrans: MOEtion): MOEtion {
         val cameraTrans = getCameraTrans(rawSlamTrans)
         return getRobotTrans(cameraTrans)
     }
 
 }
 
-fun Transformation.getPatrickAxesRotationOffset(pointFromThis: Point): Point {
+fun MOEtion.getPatrickAxesRotationOffset(pointFromThis: Point): Point {
 
     val xOffset = pointFromThis.y * sin(this.radAng) + pointFromThis.x * cos(this.radAng)
     val yOffset = pointFromThis.y * cos(this.radAng) - pointFromThis.x * sin(this.radAng)

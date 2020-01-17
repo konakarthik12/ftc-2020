@@ -1,13 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
-import android.util.Log
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEtion
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import kotlin.math.cos
@@ -15,11 +9,11 @@ import kotlin.math.sin
 
 data class MOEPositionalPidOptions(val xOptions: MOEPidOptions, val yOptions: MOEPidOptions, val turnOptions: MOEPidOptions)
 
-class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid: MOETurnPid) : MOEPidStructure<Transformation, Powers> {
-    override var input = { Transformation(Point(0.0, 0.0), 0.0) }
+class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid: MOETurnPid) : MOEPidStructure<MOEtion, Powers> {
+    override var input = { MOEtion(Point(0.0, 0.0), 0.0) }
 
     override var output: (pow: Powers) -> Unit = { }
-    override var setpoint: () -> Transformation = { Transformation() }
+    override var setpoint: () -> MOEtion = { MOEtion() }
 
     val pids = listOf(xPid, yPid, tPid)
 
@@ -52,7 +46,7 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
         tPid.threshold = 4.0
     }
 
-    override var endCondition: (Transformation) -> Boolean = {
+    override var endCondition: (MOEtion) -> Boolean = {
         val b = (xPid.endCondition(it.pose.x) &&
                 yPid.endCondition(it.pose.y)
                 && tPid.endCondition(it.degAng))
@@ -62,7 +56,7 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
     }
 
 
-    override fun getOutput(input: Transformation, setpoint: Transformation): Powers {
+    override fun getOutput(input: MOEtion, setpoint: MOEtion): Powers {
         val rawX = xPid.getOutput(input.pose.x, setpoint.pose.x)
         val rawY = yPid.getOutput(input.pose.y, setpoint.pose.y)
         val rawT = tPid.getOutput(input.degAng, setpoint.degAng)

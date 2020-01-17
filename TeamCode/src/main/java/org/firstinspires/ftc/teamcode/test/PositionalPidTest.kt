@@ -5,9 +5,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers.Companion.fromMecanum
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.*
-import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
@@ -148,7 +147,7 @@ class PositionalPidTest : MOERegularTest() {
 //        systemPid.setSetpoints(0.0, 0.0, 0.0)
     }
 
-    override fun getRobotConfig(): MOEBotConfig {
-        return super.getRobotConfig().apply { useSlam = true }
+    override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
+        return super.getRobotSubSystemConfig().apply { useSlam = true }
     }
 }
