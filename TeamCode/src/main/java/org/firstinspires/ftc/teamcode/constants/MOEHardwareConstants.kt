@@ -63,8 +63,8 @@ object MOEHardwareConstants {
     }
 
     object Odometry {
-        val RightForward = OdometryConfig(RightIntake, 0.0, 8192.0, 2.0, true)
-        val Strafe = OdometryConfig(BackRight, 0.0, 8192.0, 2.0, true)
+        val RightForward = OdometryConfig(RightIntake, -0.103, 8192.0, 2.0, true)
+        val Strafe = OdometryConfig(BackRight, 0.0882, 8192.0, 2.0, true)
     }
 
     object AutonArms {
@@ -75,6 +75,10 @@ object MOEHardwareConstants {
                 val LeftConfig = AutonArmConfig(LeftArm, LeftClaw)
                 val RightArm = ServoConfig("RAA", 2, 1, min = 0.5)
                 val RightClaw = ServoConfig("RAC", 2, 5, direction = Servo.Direction.REVERSE)
+<<<<<<< HEAD
+=======
+                val RightConfig = AutonArmConfig(RightArm, RightClaw)
+>>>>>>> d7f3725f3d1f64cd92886753c8d1efc284a9e2d8
             }
         }
     }

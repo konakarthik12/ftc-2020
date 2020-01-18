@@ -1,13 +1,22 @@
 package org.firstinspires.ftc.robotcontroller.moeglobal.sheets
 
 import android.content.Context
+<<<<<<< HEAD
+=======
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.Scope
+>>>>>>> d7f3725f3d1f64cd92886753c8d1efc284a9e2d8
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity
 
 class MOESheetsHandler {
     companion object {
         @JvmStatic
         fun init(activity: FtcRobotControllerActivity) {
+<<<<<<< HEAD
 //            SheetsQu
+=======
+
+>>>>>>> d7f3725f3d1f64cd92886753c8d1efc284a9e2d8
         }
     }
 

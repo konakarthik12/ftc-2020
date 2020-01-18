@@ -59,8 +59,13 @@ class PatrickPositionalPIDTest : MOERegularTest() {
         val pose1 = moePatrickTrans.getRobotTrans(cameraTrans)
         val pose = pose1.pose
         val angle = robot.gyro.angle + moePatrickTrans.config.getRobotInitialState().robotInitial.degAng
+<<<<<<< HEAD
 //        pc.getPose *= MOEConstants.Units.ASTARS_PER_METER
 //        pc.getPose *= -1.0
+=======
+//        pose *= MOEConstants.Units.ASTARS_PER_METER
+//        pose *= -1.0
+>>>>>>> d7f3725f3d1f64cd92886753c8d1efc284a9e2d8
         //        while (gamepad1.a){
         //        }
         //val setPointPoint = Point(systemPid.xPid.setpoint(), systemPid.yPid.setpoint());

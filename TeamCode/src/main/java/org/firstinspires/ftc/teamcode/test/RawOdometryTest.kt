@@ -24,12 +24,15 @@ class RawOdometryTest : CompTeleOp() {
     }
 
     override fun log() {
-        val rightForwardValue = robot.odometry.rightForwardWheel.getScaledValue()
-        val strafe = robot.odometry.strafeWheel.getScaledValue()
+
+
         val robotPose = robot.odometry.pose
 
 
         val angle = robot.gyro.angle
+        val rightForwardValue = robot.odometry.rightForwardWheel.updateValue(angle)
+        val strafe = robot.odometry.strafeWheel.updateValue(angle)
+
 
         val angleWrapped = robot.odometry.angleWrappedValue
         val fieldCentricPose = robot.odometry.fieldCentricPose
