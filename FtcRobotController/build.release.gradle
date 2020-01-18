@@ -12,17 +12,14 @@ dependencies {
     implementation('com.google.firebase:firebase-database:19.1.0')
     implementation('com.google.firebase:firebase-storage:19.0.1')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-<<<<<<< HEAD
-
-
-//    implementation 'com.google.android.gms:play-services-auth:17.0.0'
-=======
-//    implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation('com.google.api-client:google-api-client-android:1.30.7') {
+    implementation "com.google.android.gms:play-services-auth:17.0.0"
+    implementation "com.google.android.gms:play-services-drive:17.0.0"
+    implementation('com.google.api-client:google-api-client-android:1.23.0') {
         exclude group: 'org.apache.httpcomponents'
     }
->>>>>>> d7f3725f3d1f64cd92886753c8d1efc284a9e2d8
-
+    implementation('com.google.apis:google-api-services-sheets:v4-rev505-1.23.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
 
 //    implementation ('com.github.TooTallNate:Java-WebSocket:v1.4.0'){
 //        exclude group: 'org.slf4j'

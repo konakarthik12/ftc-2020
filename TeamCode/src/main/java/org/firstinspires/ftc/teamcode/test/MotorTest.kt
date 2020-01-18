@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
-@TeleOp(name = "MotorTest")
+@TeleOp()
 class MotorTest : MOETeleOp() {
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return ref
@@ -16,6 +16,15 @@ class MotorTest : MOETeleOp() {
     }
 
     override fun mainLoop() {
-        robot.chassis.setPower(FLP = 1.0, FRP = 0.0, BLP = 0.0, BRP = 0.0)
+
+        val motor = robot.chassis.backRightMotor.mMotor
+        telemetry.addData("hub", motor.controller.connectionInfo)
+        telemetry.addData("connectionInfo", motor.connectionInfo)
+        telemetry.addData("power", motor.power)
+//        telemetry.addData("power", motor.motorType.)
+        motor.power = gpad1.left.trigger()
+        telemetry.update()
+        robot.chassis.frontRightMotor.mMotor.power = gpad1.right.trigger()
+//        hardwareMap.get()
     }
 }

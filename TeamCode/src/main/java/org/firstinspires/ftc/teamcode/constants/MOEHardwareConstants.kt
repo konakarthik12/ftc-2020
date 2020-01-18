@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.constants
 
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.*
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.DriveTrain.Motors.Configs.BackRight
@@ -25,7 +26,7 @@ object MOEHardwareConstants {
         object Motors {
             object Configs {
                 val LeftIntake = MotorConfig("LIN", 1, 1, maxPow = 0.9)
-                val RightIntake = MotorConfig("RIN", 2, 1, maxPow = 0.9)
+                val RightIntake = MotorConfig("RIN", 2, 1, maxPow = 0.9, direction = DcMotorSimple.Direction.REVERSE)
             }
 
 //            const val MaxPower = 0.9
@@ -70,15 +71,12 @@ object MOEHardwareConstants {
     object AutonArms {
         object Servos {
             object Configs {
-                val LeftArm = ServoConfig("LAA", 1, 1, max = 0.5, direction = Servo . Direction . REVERSE)
+                val LeftArm = ServoConfig("LAA", 1, 1, max = 0.5, direction = Servo.Direction.REVERSE)
                 val LeftClaw = ServoConfig("LAC", 1, 5)
                 val LeftConfig = AutonArmConfig(LeftArm, LeftClaw)
                 val RightArm = ServoConfig("RAA", 2, 1, min = 0.5)
                 val RightClaw = ServoConfig("RAC", 2, 5, direction = Servo.Direction.REVERSE)
-<<<<<<< HEAD
-=======
                 val RightConfig = AutonArmConfig(RightArm, RightClaw)
->>>>>>> d7f3725f3d1f64cd92886753c8d1efc284a9e2d8
             }
         }
     }

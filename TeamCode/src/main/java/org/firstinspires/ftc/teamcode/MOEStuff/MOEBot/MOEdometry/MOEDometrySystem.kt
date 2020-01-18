@@ -25,11 +25,8 @@ class MOEDometrySystem(val config: MOEBotConstants) : MOELocalizationSystem {
     var angleWrappedValue = 0.0
 
     var pose = Point(0.0, 0.0)
-<<<<<<< HEAD
     //    var fieldCentricPose  = RotationsHandler({robot.odometry.pc.getPose}, {robot.gyro.radians})
-=======
     //    var fieldCentricPose  = RotationsHandler({robot.odometry.pose}, {robot.gyro.radians})
->>>>>>> d7f3725f3d1f64cd92886753c8d1efc284a9e2d8
     var fieldCentricPose = config.getRobotInitialState().robotInitial.pose
     var prevPose = Point(0.0, 0.0)
     fun runLoop() {
@@ -47,14 +44,8 @@ class MOEDometrySystem(val config: MOEBotConstants) : MOELocalizationSystem {
         val angle = robot.gyro.radAng
         val deltaPose = currPose - prevPose
         prevPose = currPose
-<<<<<<< HEAD
         return Point((deltaPose.x) * cos(angle) + (deltaPose.y) * sin(angle),
                 -(deltaPose.x) * sin(angle) + (deltaPose.y) * cos(angle))
-=======
-
-        return Point((deltaPose.x) * sin(angle) + (deltaPose.y) * cos(angle),
-                (deltaPose.x) * cos(angle) - (deltaPose.y) * sin(angle))
->>>>>>> d7f3725f3d1f64cd92886753c8d1efc284a9e2d8
     }
 
     fun launchLoop() {

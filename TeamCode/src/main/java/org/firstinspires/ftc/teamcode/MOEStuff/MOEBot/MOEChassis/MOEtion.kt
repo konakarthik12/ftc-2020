@@ -10,11 +10,8 @@ data class MOEtion(var pose: Point = Point(0.0, 0.0), var degAng: Double = 0.0) 
         get() = degAng.toRadians()
 
     override fun toString(): String {
-<<<<<<< HEAD
         return "pc.getPose: $pose\n angle:$degAng"
-=======
         return "pose: $pose\n angle:$degAng"
->>>>>>> d7f3725f3d1f64cd92886753c8d1efc284a9e2d8
     }
 
 }

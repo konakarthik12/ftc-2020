@@ -17,8 +17,8 @@ class MOEtor(val config: MotorConfig) {
     private val powRange = 0.0..config.maxPow
 
     init {
-        mMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        mMotor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+//        mMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+//        mMotor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         setDirection(config.direction)
         setZeroPowerBehavior(config.zeroPowerBehavior)
     }

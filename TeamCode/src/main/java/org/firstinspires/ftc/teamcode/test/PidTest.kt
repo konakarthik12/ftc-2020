@@ -45,22 +45,16 @@ class PidTest : MOEAuton() {
         robot.chassis.stop()
 
         while (opModeIsActive()) {
-<<<<<<< HEAD
             telemetry.addData("pc.getPose", robot.odometry.astarMoetion())
-=======
             telemetry.addData("pose", robot.odometry.astarMoetion())
->>>>>>> d7f3725f3d1f64cd92886753c8d1efc284a9e2d8
             telemetry.update()
         }
     }
 
     private fun slamWait() {
         robot.chassis.stop()
-<<<<<<< HEAD
         telemetry.addData("pc.getPose", robot.odometry.astarMoetion())
-=======
         telemetry.addData("pose", robot.odometry.astarMoetion())
->>>>>>> d7f3725f3d1f64cd92886753c8d1efc284a9e2d8
         telemetry.update()
         wait(2000)
     }
