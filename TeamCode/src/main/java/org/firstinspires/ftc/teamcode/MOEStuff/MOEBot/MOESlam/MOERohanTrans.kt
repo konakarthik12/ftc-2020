@@ -16,7 +16,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam
 //
 //    fun convertToFieldAxis(cameraRawTrans: Transformation): Transformation {
 //        val theta = config.CAMERA_TO_ROBOT_DIST.radAng + cameraRawTrans.radAng
-//        val robotInCameraAxis = cameraRawTrans.pose.getRelativePoint(config.CAMERA_TO_ROBOT_DIST.r, theta)
+//        val robotInCameraAxis = cameraRawTrans.pc.getPose.getRelativePoint(config.CAMERA_TO_ROBOT_DIST.r, theta)
 //
 ////        ReferenceHolder.telemetry.addData("theta", theta.toDegrees())
 ////        ReferenceHolder.telemetry.addData("robCamAxis", robotInCameraAxis)
@@ -28,7 +28,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam
 //
 //        val cameraInRobotPoint = centeredPoint.rotateAroundOrigin(config.ROBOT_TO_CAMERA_THETA.toRadians())
 ////        ReferenceHolder.telemetry.addData("camRobot", cameraInRobotPoint)
-//        val offsetPoint = cameraInRobotPoint + config.robotInitial.pose
+//        val offsetPoint = cameraInRobotPoint + config.robotInitial.pc.getPose
 //        val fieldDegrees = (config.robotInitial.radAng + cameraRawTrans.radAng).toDegrees()
 //        return Transformation(offsetPoint, fieldDegrees)
 //    }

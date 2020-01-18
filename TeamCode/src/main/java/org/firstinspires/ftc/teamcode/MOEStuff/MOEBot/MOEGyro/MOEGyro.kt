@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEGyroConfig
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toRadians
 
 abstract class MOEGyro {
     var config = MOEGyroConfig()
@@ -12,7 +13,6 @@ abstract class MOEGyro {
         }
     var offset = 0.0
     private var eulerOffset = 0.0
-    var userSetOffset = 0.0
     val angle: Double
         get() = (getRawAngle() + offset).toNormalAngle()
     /**
@@ -20,8 +20,8 @@ abstract class MOEGyro {
      * @param offset the offset to set
      */
 
-    val radians: Double
-        get() = Math.toRadians(getRawAngle())
+    val radAng: Double
+        get() = angle.toRadians()
 
     /**
      * Set the current angle as 0

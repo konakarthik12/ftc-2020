@@ -6,15 +6,10 @@ import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler.moeWebServer
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOELoopedOpMode
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.*
 import org.firstinspires.ftc.teamcode.utilities.external.toFixed
-import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.firstinspires.ftc.teamcode.utilities.internal.get
 
 @TeleOp()
@@ -34,7 +29,7 @@ class PurePursuitTest : MOELoopedTest() {
         //        val string = Point(2.0, 4.0)
         //        Log.e("string", string.toString())
         //        telemetry.addData("testagain$string")
-        //        val purePursuit = MOEPurePursuitSystem(pose.x, pose.y, pose.x, pose.y + 100, MOEConstants.PurePursuit.DefaultOptions)
+        //        val purePursuit = MOEPurePursuitSystem(pc.getPose.x, pc.getPose.y, pc.getPose.x, pc.getPose.y + 100, MOEConstants.PurePursuit.DefaultOptions)
 
     }
 
@@ -92,7 +87,7 @@ class PurePursuitTest : MOELoopedTest() {
         pushSockets()
         val pose = robot.slam.transformation.pose
         pose *= MOEConstants.Units.ASTARS_PER_METER
-        telemetry.addData("pose", pose.toString())
+        telemetry.addData("pc.getPose", pose.toString())
         val (leftActualVelocity, rightActualVelocity) = robot.chassis.getFrontVelocities()
 
         val (leftTargetVelocity, rightTargetVelocity) = getWheelVelocities(
@@ -120,11 +115,11 @@ class PurePursuitTest : MOELoopedTest() {
         timer.reset()
         val pose = robot.slam.transformation.pose
         pose *= MOEConstants.Units.ASTARS_PER_METER
-        moeWebServer.broadcast("slam/pose/${pose.x+48}/${pose.y+48}")
+        moeWebServer.broadcast("slam/pc.getPose/${pose.x+48}/${pose.y+48}")
     }
 
-    override fun getRobotConfig(): MOEBotConfig {
-        return super.getRobotConfig().apply { useSlam = true }
+    override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
+        return super.getRobotSubSystemConfig().apply { useSlam = true }
     }
 
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {

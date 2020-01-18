@@ -119,13 +119,11 @@ open class CompTeleOp() : MOETeleOp() {
 //            robot.lift.setRunToPosition()
 //        }
 
-        //val right = gamepad2.right_trigger.toDouble()
         val up = gpad2.left.stick.y()
 //        val multi = if (target > 0) 3.0 else 0.0
-        //val left = gamepad2.left_trigger.toDouble() * 3.0
 //        val down = gpad2.left.stick.y() * -1
         val upSlow = gpad2.right.stick.y() * 0.5
-//        val downSlow = gpad2.right.stick.y() * -0.25
+//        val downSlow = gpad2.right.    stick.y() * -0.25
         robot.lift.motors.forEach {
             val error = it.error
             if (error > 0) {

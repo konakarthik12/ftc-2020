@@ -1,17 +1,13 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEGyroConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERohanSlamConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.*
 import org.firstinspires.ftc.teamcode.constants.MOESlamConstants
 
 interface MOEBotConstants {
-    fun getRobotConfig(): MOEBotConfig {
-        return MOEBotConfig()
+    fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
+        return MOEBotSubSystemConfig()
     }
 
-    fun getInitialGyro() = 0.0
     fun createRobot(): MOEBot {
         return MOEBot(this)
     }
@@ -20,8 +16,12 @@ interface MOEBotConstants {
         return MOESlamConstants.DefaultValues
     }
 
+    fun getRobotInitialState(): MOERobotInitialStateConfig {
+        return MOERobotInitialStateConfig()
+    }
+
     fun getGyroConfig(): MOEGyroConfig {
-        return MOEGyroConfig()
+        return MOEGyroConfig( getRobotInitialState().robotInitial.degAng)
     }
 
 

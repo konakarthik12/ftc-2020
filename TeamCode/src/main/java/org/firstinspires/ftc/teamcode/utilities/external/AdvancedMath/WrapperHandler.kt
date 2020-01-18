@@ -9,14 +9,8 @@ class WrapperHandler(private val max: Double, val function: () -> Double) {
         return prev.closestAngleDifference(curr)
     }
 
-    var firstRun = true
     fun getValue(): Double {
-        if(firstRun){
-            prev = function()
-            finalValue = prev
-            firstRun=false
-            return prev
-        }
+
         val curr = function()
         val delta = getDelta(curr)
         finalValue += delta

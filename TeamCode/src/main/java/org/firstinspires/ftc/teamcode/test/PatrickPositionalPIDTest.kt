@@ -5,13 +5,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers.Companion.fromMecanum
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Transformation
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEtion
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.*
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOEPatrickTrans
 import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
-import org.firstinspires.ftc.teamcode.constants.MOESlamConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
@@ -54,15 +52,15 @@ class PatrickPositionalPIDTest : MOERegularTest() {
     var ySet = 0.0
     var xSet = 0.0
     var tSet = 0.0
-    private val moePatrickTrans = MOEPatrickTrans(MOESlamConstants.DefaultValues)
+    private val moePatrickTrans = MOEPatrickTrans(this)
 
     fun mainLoop() {
-        val cameraTrans = moePatrickTrans.getCameraTrans(Transformation(robot.slam.getRawTrans().pose, robot.gyro.angle))
+        val cameraTrans = moePatrickTrans.getCameraTrans(MOEtion(robot.slam.getRawTrans().pose, robot.gyro.angle))
         val pose1 = moePatrickTrans.getRobotTrans(cameraTrans)
         val pose = pose1.pose
-        val angle = robot.gyro.angle + moePatrickTrans.config.robotInitial.degAng
-//        pose *= MOEConstants.Units.ASTARS_PER_METER
-//        pose *= -1.0
+        val angle = robot.gyro.angle + moePatrickTrans.config.getRobotInitialState().robotInitial.degAng
+//        pc.getPose *= MOEConstants.Units.ASTARS_PER_METER
+//        pc.getPose *= -1.0
         //        while (gamepad1.a){
         //        }
         //val setPointPoint = Point(systemPid.xPid.setpoint(), systemPid.yPid.setpoint());
@@ -78,10 +76,10 @@ class PatrickPositionalPIDTest : MOERegularTest() {
         telemetry.addData("STR", str.toFixed())
         telemetry.addData("ROT", rot.toFixed())
 
-        //        telemetry.addData("curPose", pose.x.toFixed())
+        //        telemetry.addData("curPose", pc.getPose.x.toFixed())
         //        telemetry.addData("curAngle", robot.gyro.angle)
         //        telemetry.addData("goal", systemPid.yPid.setpoint.toFixed())
-        //        telemetry.addData("error", systemPid.yPid.getError(systemPid.yPid.setpoint, pose.y).toPrecision())
+        //        telemetry.addData("error", systemPid.yPid.getError(systemPid.yPid.setpoint, pc.getPose.y).toPrecision())
 
 
         val powers = fromMecanum(fwd, str, rot)
@@ -156,7 +154,7 @@ class PatrickPositionalPIDTest : MOERegularTest() {
 //        systemPid.setSetpoints(0.0, 0.0, 0.0)
     }
 
-    override fun getRobotConfig(): MOEBotConfig {
-        return super.getRobotConfig().apply { useSlam = true }
+    override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
+        return super.getRobotSubSystemConfig().apply { useSlam = true }
     }
 }

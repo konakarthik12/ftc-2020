@@ -315,7 +315,7 @@ implements <a href="../../../../../../org/firstinspires/ftc/robotcore/external/n
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/firstinspires/ftc/robotcore/external/matrices/OpenGLMatrix.html" title="class in org.firstinspires.ftc.robotcore.external.matrices">OpenGLMatrix</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getFtcCameraFromTarget--">getFtcCameraFromTarget</a></span>()</code>
-<div class="block">Returns the pose of the trackable if it is currently visible.</div>
+<div class="block">Returns the pc.getPose of the trackable if it is currently visible.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
@@ -328,7 +328,7 @@ implements <a href="../../../../../../org/firstinspires/ftc/robotcore/external/n
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/firstinspires/ftc/robotcore/external/matrices/OpenGLMatrix.html" title="class in org.firstinspires.ftc.robotcore.external.matrices">OpenGLMatrix</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getLastTrackedPoseVuforiaCamera--">getLastTrackedPoseVuforiaCamera</a></span>()</code>
-<div class="block">Returns the pose associated with the last known tracked location of this trackable, if any.</div>
+<div class="block">Returns the pc.getPose associated with the last known tracked location of this trackable, if any.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
@@ -372,7 +372,7 @@ implements <a href="../../../../../../org/firstinspires/ftc/robotcore/external/n
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/firstinspires/ftc/robotcore/external/matrices/OpenGLMatrix.html" title="class in org.firstinspires.ftc.robotcore.external.matrices">OpenGLMatrix</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getPosePhone--">getPosePhone</a></span>()</code>
-<div class="block">Returns the pose of the trackable if it is currently visible.</div>
+<div class="block">Returns the pc.getPose of the trackable if it is currently visible.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
@@ -407,14 +407,14 @@ implements <a href="../../../../../../org/firstinspires/ftc/robotcore/external/n
 <tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/firstinspires/ftc/robotcore/external/matrices/OpenGLMatrix.html" title="class in org.firstinspires.ftc.robotcore.external.matrices">OpenGLMatrix</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getUpdatedVuforiaCameraFromTarget--">getUpdatedVuforiaCameraFromTarget</a></span>()</code>
-<div class="block">Returns the raw pose of the trackable, but only if a new pose is available since the last call
+<div class="block">Returns the raw pc.getPose of the trackable, but only if a new pc.getPose is available since the last call
  to <a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getUpdatedVuforiaCameraFromTarget--"><code>getUpdatedVuforiaCameraFromTarget()</code></a>.</div>
 </td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/firstinspires/ftc/robotcore/external/matrices/OpenGLMatrix.html" title="class in org.firstinspires.ftc.robotcore.external.matrices">OpenGLMatrix</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getVuforiaCameraFromTarget--">getVuforiaCameraFromTarget</a></span>()</code>
-<div class="block">Returns the raw pose of the trackable as reported by Vuforia.</div>
+<div class="block">Returns the raw pc.getPose of the trackable as reported by Vuforia.</div>
 </td>
 </tr>
 <tr id="i20" class="altColor">
@@ -840,7 +840,7 @@ public&nbsp;<a href="../../../../../../org/firstinspires/ftc/robotcore/external/
  transformation will map coordinates in the Robot Coordinate System to coordinates in the
  FTC Field Coordinate System.</p>
 
- <p>The pose will be null if the trackable is not currently visible. The location of the trackable
+ <p>The pc.getPose will be null if the trackable is not currently visible. The location of the trackable
  will be null if a location wasn't previously provided with <a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackable.html#setLocation-org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix-"><code>VuforiaTrackable.setLocation(OpenGLMatrix)</code></a>.
  The camera location on the robot will be null if <a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#setCameraLocationOnRobot-org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName-org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix-"><code>setCameraLocationOnRobot(org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName, org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix)</code></a>
  has not been called. All three must be non-null for the location to be computable.</p></div>
@@ -876,7 +876,7 @@ public&nbsp;<a href="../../../../../../org/firstinspires/ftc/robotcore/external/
 public&nbsp;<a href="../../../../../../org/firstinspires/ftc/robotcore/external/matrices/OpenGLMatrix.html" title="class in org.firstinspires.ftc.robotcore.external.matrices">OpenGLMatrix</a>&nbsp;getPoseCorrectionMatrix(<a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaLocalizer.CameraDirection.html" title="enum in org.firstinspires.ftc.robotcore.external.navigation">VuforiaLocalizer.CameraDirection</a>&nbsp;direction)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">These phone-based matrices are no longer of much relevance, as the
              correct values, when of interest, are fixed and known.</span></div>
-<div class="block">The pose correction matrices correct for the different coordinate systems used
+<div class="block">The pc.getPose correction matrices correct for the different coordinate systems used
  in Vuforia and our phone coordinate system here.</div>
 </li>
 </ul>
@@ -930,8 +930,8 @@ public&nbsp;void&nbsp;setPoseCorrectionMatrix(<a href="../../../../../../org/fir
 <li class="blockList">
 <h4>getPosePhone</h4>
 <pre>public&nbsp;<a href="../../../../../../org/firstinspires/ftc/robotcore/external/matrices/OpenGLMatrix.html" title="class in org.firstinspires.ftc.robotcore.external.matrices">OpenGLMatrix</a>&nbsp;getPosePhone()</pre>
-<div class="block">Returns the pose of the trackable if it is currently visible. If it is not currently
- visible, null is returned. The pose of the trackable is the location of the trackable
+<div class="block">Returns the pc.getPose of the trackable if it is currently visible. If it is not currently
+ visible, null is returned. The pc.getPose of the trackable is the location of the trackable
  in the phone's coordinate system.
 
  Note that this function is of little use if a webcam is used instead of a builtin phone
@@ -943,7 +943,7 @@ public&nbsp;void&nbsp;setPoseCorrectionMatrix(<a href="../../../../../../org/fir
  result.</p></div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the pose of the trackable, if visible; if not visible, then null is returned.</dd>
+<dd>the pc.getPose of the trackable, if visible; if not visible, then null is returned.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getPhoneFromVuforiaCamera-org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection-"><code>getPhoneFromVuforiaCamera(VuforiaLocalizer.CameraDirection)</code></a>, 
 <a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getVuforiaCameraFromTarget--"><code>getVuforiaCameraFromTarget()</code></a>, 
@@ -971,8 +971,8 @@ public&nbsp;void&nbsp;setPoseCorrectionMatrix(<a href="../../../../../../org/fir
 <li class="blockList">
 <h4>getFtcCameraFromTarget</h4>
 <pre>public&nbsp;<a href="../../../../../../org/firstinspires/ftc/robotcore/external/matrices/OpenGLMatrix.html" title="class in org.firstinspires.ftc.robotcore.external.matrices">OpenGLMatrix</a>&nbsp;getFtcCameraFromTarget()</pre>
-<div class="block">Returns the pose of the trackable if it is currently visible. If it is not currently
- visible, null is returned. The pose of the trackable is the location of the trackable
+<div class="block">Returns the pc.getPose of the trackable if it is currently visible. If it is not currently
+ visible, null is returned. The pc.getPose of the trackable is the location of the trackable
  in the FTC Camera Coordinate System.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -987,12 +987,12 @@ public&nbsp;void&nbsp;setPoseCorrectionMatrix(<a href="../../../../../../org/fir
 <li class="blockList">
 <h4>getVuforiaCameraFromTarget</h4>
 <pre>public&nbsp;<a href="../../../../../../org/firstinspires/ftc/robotcore/external/matrices/OpenGLMatrix.html" title="class in org.firstinspires.ftc.robotcore.external.matrices">OpenGLMatrix</a>&nbsp;getVuforiaCameraFromTarget()</pre>
-<div class="block">Returns the raw pose of the trackable as reported by Vuforia. This differs from the
+<div class="block">Returns the raw pc.getPose of the trackable as reported by Vuforia. This differs from the
  value reported by <a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getPosePhone--"><code>getPosePhone()</code></a> because of the differing coordinate systems
  used by Vuforia and FTC</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the raw pose of the trackable as reported by Vuforia</dd>
+<dd>the raw pc.getPose of the trackable as reported by Vuforia</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getPhoneFromVuforiaCamera-org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection-"><code>getPhoneFromVuforiaCamera(VuforiaLocalizer.CameraDirection)</code></a>, 
 <a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getRawPose--"><code>getRawPose()</code></a></dd>
@@ -1017,11 +1017,11 @@ public&nbsp;<a href="../../../../../../org/firstinspires/ftc/robotcore/external/
 <li class="blockList">
 <h4>getUpdatedVuforiaCameraFromTarget</h4>
 <pre>public&nbsp;<a href="../../../../../../org/firstinspires/ftc/robotcore/external/matrices/OpenGLMatrix.html" title="class in org.firstinspires.ftc.robotcore.external.matrices">OpenGLMatrix</a>&nbsp;getUpdatedVuforiaCameraFromTarget()</pre>
-<div class="block">Returns the raw pose of the trackable, but only if a new pose is available since the last call
+<div class="block">Returns the raw pc.getPose of the trackable, but only if a new pc.getPose is available since the last call
  to <a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getUpdatedVuforiaCameraFromTarget--"><code>getUpdatedVuforiaCameraFromTarget()</code></a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the raw pose of the trackable</dd>
+<dd>the raw pc.getPose of the trackable</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getVuforiaCameraFromTarget--"><code>getVuforiaCameraFromTarget()</code></a>, 
 <a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getRawUpdatedPose--"><code>getRawUpdatedPose()</code></a></dd>
@@ -1062,11 +1062,11 @@ public&nbsp;<a href="../../../../../../org/firstinspires/ftc/robotcore/external/
 <li class="blockList">
 <h4>getLastTrackedPoseVuforiaCamera</h4>
 <pre>public&nbsp;<a href="../../../../../../org/firstinspires/ftc/robotcore/external/matrices/OpenGLMatrix.html" title="class in org.firstinspires.ftc.robotcore.external.matrices">OpenGLMatrix</a>&nbsp;getLastTrackedPoseVuforiaCamera()</pre>
-<div class="block">Returns the pose associated with the last known tracked location of this trackable, if any.
- This can be used to recall the last pose seen, even if the trackable is no longer visible.</div>
+<div class="block">Returns the pc.getPose associated with the last known tracked location of this trackable, if any.
+ This can be used to recall the last pc.getPose seen, even if the trackable is no longer visible.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the pose associated with the last known tracked location of this trackable, if any.</dd>
+<dd>the pc.getPose associated with the last known tracked location of this trackable, if any.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../../org/firstinspires/ftc/robotcore/external/navigation/VuforiaTrackableDefaultListener.html#getVuforiaCameraFromTarget--"><code>getVuforiaCameraFromTarget()</code></a></dd>
 </dl>
