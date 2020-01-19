@@ -4,11 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER
 import java.lang.Math.PI
 
-class OdometryConfig(config: MotorConfig,
+class OdometryConfig(val motorConfig: MotorConfig,
                      val turnCorrection: Double,
-                     val ticsPerRevolution: Double,
-                     val odometryDiameter: Double, val negate: Boolean
+                     val scalar:Double
 ) {
-    var scalar = odometryDiameter * PI / ticsPerRevolution * if(negate) -1 else 1
-    var motorConfig = config
+//    var scalar = odometryDiameter * PI / ticsPerRevolution * if (negate) -1 else 1
 }

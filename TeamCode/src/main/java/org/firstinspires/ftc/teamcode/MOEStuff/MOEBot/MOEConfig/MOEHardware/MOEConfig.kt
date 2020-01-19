@@ -12,7 +12,6 @@ open class MOEConfig<Type : HardwareDevice>(val name: String, val hub: Int, val 
 
         val fullName = name + hub + port
         return devices.getOrPut(fullName) {
-            Log.e("fullname",fullName)
             hardwareMap.get(fullName)
         } as Type
     }

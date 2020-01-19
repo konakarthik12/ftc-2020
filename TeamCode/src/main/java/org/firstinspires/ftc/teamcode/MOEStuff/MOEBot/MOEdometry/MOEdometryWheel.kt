@@ -2,23 +2,31 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.OdometryConfig
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.WrapperHandler
 
 class MOEDometryWheel(val config: OdometryConfig) {
     private val mMotor = config.motorConfig.getDevice()
+    private var offset = 0
 
-    init {
-        reset()
+    fun resetValues() {
+        val oldMOde = mMotor.mode
+        mMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        mMotor.mode = oldMOde
+
     }
 
-    fun reset() {
-//        mMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+//    fun resetValues() {
+//    }
+
+//    fun resetValues() {
+//
+//        offset = getRawValue()
+//    }
+
+    fun getFixedValue(angleWrapped: Double): Double {
+        return getTurnCorrectedValue(angleWrapped) / config.scalar
+
     }
 
-    fun updateValue(angleWrapped: Double): Double {
-        return getScaledValue() - (angleWrapped * config.turnCorrection)
-    }
-
-    fun getRawValue() = mMotor.currentPosition
-    fun getScaledValue() = getRawValue() * config.scalar
+    fun getRawValue() = mMotor.currentPosition * -1.0
+    fun getTurnCorrectedValue(angleWrapped: Double) = getRawValue() - (angleWrapped * config.turnCorrection)
 }

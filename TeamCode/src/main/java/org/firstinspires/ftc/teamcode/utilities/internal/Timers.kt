@@ -9,3 +9,9 @@ infix fun OpModeInterface.wait(milliseconds: Number) {
     val length = milliseconds.toLong()
     while (time.milliseconds() < length && iOpModeIsActive());
 }
+
+//infix fun OpModeInterface.waitA() {
+//    val time = ElapsedTime()
+//    val length = milliseconds.toLong()
+//    while (! && iOpModeIsActive());
+//}

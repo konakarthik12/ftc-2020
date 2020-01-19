@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEtion
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import kotlin.math.cos
@@ -41,17 +42,19 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
         tPid.setpoint = {
             this.setpoint().degAng
         }
-        xPid.threshold = 2.0
-        yPid.threshold = 2.0
-        tPid.threshold = 4.0
+        xPid.threshold = 1.0
+        yPid.threshold = 1.0
+        tPid.threshold = 1.0
+
+
     }
 
-    override var endCondition: (MOEtion) -> Boolean = {
-        val b = (xPid.endCondition(it.pose.x) &&
-                yPid.endCondition(it.pose.y)
-                && tPid.endCondition(it.degAng))
+    override var endCondition: (MOEtion, MOEtion) -> Boolean = { actual, setpoint ->
+        xPid.endCondition(actual.pose.x, setpoint.pose.x) &&
+                yPid.endCondition(actual.pose.y, setpoint.pose.y)
+                && tPid.endCondition(actual.degAng, setpoint.degAng)
 //        Log.e("wholeEnd", b.toString())
-        b
+
 
     }
 
@@ -68,12 +71,18 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
         telemetry.addData("x", x)
         telemetry.addData("y", y)
         telemetry.addData("t", rawT)
+        telemetry.addData("forwardOdo", robot.odometry.rightForwardWheel.getRawValue())
+        telemetry.addData("strafeOdo", robot.odometry.strafeWheel.getRawValue())
         telemetry.update()
 
 //        Log.e("x", x.toString())
 //        Log.e("y", y.toString())
 //        Log.e("t", rawT.toString())
-        return Powers.fromMecanum(y, x, rawT)
+        return Powers.fromMecanum(y, x, rawT, 0.4)
+    }
+
+    override fun onFinish() {
+        robot.chassis.stop()
     }
 
     fun reset() {

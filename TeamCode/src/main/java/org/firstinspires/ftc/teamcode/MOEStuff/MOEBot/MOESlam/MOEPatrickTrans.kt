@@ -9,9 +9,12 @@ import kotlin.math.sin
 class MOEPatrickTrans(val config: MOEBotConstants) {
     private val slamConfig = config.getSlamConfig()
     private val initialCameraTrans = findInitialCameraTrans()
-    private val robotInitial = config.getRobotInitialState().robotInitial
     private fun findInitialCameraTrans(): MOEtion {
-        val radTheta = robotInitial.radAng + slamConfig.ROBOT_TO_CAMERA_DIST.radAng
+        //    private val robotInitial=con
+        val robotInitial = config.getRobotInitialState().robotInitial
+        val roboRad = robotInitial.radAng
+        val slamyRad = slamConfig.ROBOT_TO_CAMERA_DIST.radAng
+        val radTheta = roboRad + slamyRad
         val pose = robotInitial.pose.getRelativePoint(slamConfig.ROBOT_TO_CAMERA_DIST.r, radTheta)
         val angle = (robotInitial.degAng + slamConfig.ROBOT_TO_CAMERA_THETA).toNormalAngle()
         return MOEtion(pose, angle)

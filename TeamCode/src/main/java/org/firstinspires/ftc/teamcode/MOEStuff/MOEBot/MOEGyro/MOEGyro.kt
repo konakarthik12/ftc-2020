@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro
 
+import android.util.Log
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEGyroConfig
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toRadians
@@ -31,6 +32,7 @@ abstract class MOEGyro {
     }
 
     private fun setInitialAngle(initialAng: Double) {
+        Log.e("setting gyro to ", initialAng.toString())
         offset = initialAng - getRawAngle()
     }
 

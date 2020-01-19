@@ -101,7 +101,7 @@ open class CompTeleOp() : MOETeleOp() {
     private fun intake() {
         val outPower = if (gpad1.b()) 0.25 else 0.0
         val harvesterPow = (outPower - gpad1.right.trigger())
-        robot.harvester.setPower(harvesterPow)
+        robot.intake.setPower(harvesterPow)
     }
 
     private fun foundation() {

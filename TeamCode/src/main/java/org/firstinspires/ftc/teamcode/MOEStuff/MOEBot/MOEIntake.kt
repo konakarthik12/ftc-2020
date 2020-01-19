@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs
 
-class MOEHarvester {
+class MOEIntake {
     private var leftIntakeMotor = MOEtor(Configs.LeftIntake)
-    private var rightIntakeMotor = MOEtor(Configs.RightIntake)
+     var rightIntakeMotor = MOEtor(Configs.RightIntake)
 
     fun setPower(P: Double) = setPower(P, P)
     fun setVelocity(V: Double) = setVelocity(V, V)

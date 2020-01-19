@@ -3,12 +3,14 @@ package org.firstinspires.ftc.teamcode.test
 import android.os.Environment
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEtion
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERobotInitialStateConfig
 import org.firstinspires.ftc.teamcode.teleop.CompTeleOp
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.WrapperHandler
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import java.io.File
 
-@TeleOp(name = "MOEdometry test")
+@TeleOp()
 class RawOdometryTest : CompTeleOp() {
     val sd_main = File(Environment.getExternalStorageDirectory().absolutePath + "/forward.txt")
     val writer = sd_main.printWriter()
@@ -18,25 +20,23 @@ class RawOdometryTest : CompTeleOp() {
 
     override fun initOpMode() {
         super.initOpMode()
-        robot.odometry.launchLoop()
+//        robot.odometry.launchLoop()
         telemetry.addData("test")
 //        robot.odometry.servos.initServosDown()
     }
 
     override fun log() {
 
-
         val robotPose = robot.odometry.pose
 
-
         val angle = robot.gyro.angle
-        val rightForwardValue = robot.odometry.rightForwardWheel.updateValue(angle)
-        val strafe = robot.odometry.strafeWheel.updateValue(angle)
-
-
         val angleWrapped = robot.odometry.angleWrappedValue
-        val fieldCentricPose = robot.odometry.fieldCentricPose
 
+        val rightForwardValue = robot.odometry.rightForwardWheel.getFixedValue(angleWrapped)
+        val strafe = robot.odometry.strafeWheel.getFixedValue(angleWrapped)
+        val fieldCentricPose = robot.odometry.fieldCentricPose
+//telemetry.addData("rawX",robot.odometry.)
+        telemetry.addData("finalPose", robot.odometry.astarMoetion())
         telemetry.addData("forward", rightForwardValue)
         telemetry.addData("strafe", strafe)
         telemetry.addData("robot pc.getPose", robotPose)
@@ -48,7 +48,14 @@ class RawOdometryTest : CompTeleOp() {
         writer.println("$angle\t$rightForwardValue\t$strafe")
     }
 
-    override fun stop() {
-        writer.close()
+    override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
+        return super.getRobotSubSystemConfig().apply { useOdometry = true }
     }
+
+    override fun getRobotInitialState(): MOERobotInitialStateConfig {
+        return super.getRobotInitialState().apply {
+            robotInitial = MOEtion(14.0, 96.0, 270.0)
+        }
+    }
+
 }

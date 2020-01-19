@@ -10,9 +10,11 @@ class PidChassisHandler {
 
     init {
         pid.input = {
-         //   robot.slam.transformation
+            //   robot.slam.transformation
             robot.odometry.astarMoetion()
+//            MOEtion(robot.odometry.pose, robot.gyro.angle)
         }
+
         pid.output = { powers ->
             //            if(!moeOpMode)
 //            Log.e("pow", powers.toString())

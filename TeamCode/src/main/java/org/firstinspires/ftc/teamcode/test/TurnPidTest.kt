@@ -23,7 +23,7 @@ class TurnPidTest : MOERegularTest() {
         pid.output = {
             robot.chassis.turnPower(it)
         }
-        pid.endCondition = { false }
+        pid.endCondition = { _, _ -> false }
         robot.slam.restart()
         robot.slam.waitForData()
 

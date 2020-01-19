@@ -14,7 +14,7 @@ interface MOEPidStructure<I, O> {
     var input: () -> I
     var output: ((O) -> Unit)
     var setpoint: () -> I
-    var endCondition: (I) -> Boolean
+    var endCondition: (I, I) -> Boolean
     fun run(sync: Boolean = true): Job {
         return GlobalScope.launch {
             Log.e("isittho", ReferenceHolder.moeOpMode.iOpModeIsActive().toString())
@@ -23,13 +23,16 @@ interface MOEPidStructure<I, O> {
                 Log.e("working", "work")
 //                Log.e("xPid", "work")
                 val curInput = input()
-                if (endCondition(curInput)) {
+                val curSetPoint = setpoint()
+
+                if (endCondition(curInput, curSetPoint)) {
                     Log.e("job", "done")
                     break
                 }
                 if (moeOpMode.iIsStopRequested) break
-                output(getOutput(curInput, setpoint()))
+                output(getOutput(curInput, curSetPoint))
             }
+            onFinish()
         }.also {
             if (sync) {
                 runBlocking { it.join() }
@@ -37,6 +40,7 @@ interface MOEPidStructure<I, O> {
         }
     }
 
+    fun onFinish(){}
     //    fun getOutput(input: I): O
     fun getOutput(input: I, setpoint: I): O
 

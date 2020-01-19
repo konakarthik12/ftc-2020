@@ -36,8 +36,8 @@ object MOEHardwareConstants {
     object OutTakeSystem {
         object Servos {
             object Configs {
-                val GrabberServo = ServoConfig("GRB", 1, 2)
-                val OuttakeServo = ServoConfig("OUT", 1, 4)
+                val OuttakeServo = ServoConfig("OUT", 1, 2)
+                val GrabberServo = ServoConfig("GRB", 1, 4)
 //                val CapstoneServo = ServoConfig("CAP", 1, 3)
             }
         }
@@ -64,8 +64,8 @@ object MOEHardwareConstants {
     }
 
     object Odometry {
-        val RightForward = OdometryConfig(RightIntake, -0.103, 8192.0, 2.0, true)
-        val Strafe = OdometryConfig(BackRight, 0.0882, 8192.0, 2.0, true)
+        val RightForward = OdometryConfig(RightIntake, -144.0, 1312.0)
+        val Strafe = OdometryConfig(BackRight, 60.9, 1366.67)
     }
 
     object AutonArms {

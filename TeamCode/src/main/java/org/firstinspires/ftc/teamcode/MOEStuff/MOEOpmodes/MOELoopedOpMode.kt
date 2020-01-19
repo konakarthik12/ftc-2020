@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
+import android.util.Log
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.HardwareMap
@@ -36,6 +37,7 @@ abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface, MOEBo
     //    override fun iOpModeIsActive(): Boolean =
 
     final override fun init() {
+
         opModeIsActive = false
         moeDoubleInternalInit()
         initRobot()
@@ -53,8 +55,12 @@ abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface, MOEBo
 
 
     override fun loop() {
+//        val currentTimeMillis = System.currentTimeMillis()
+
         opModeIsActive = true
         internalLoop()
+//        telemetry.addData(System.currentTimeMillis() - currentTimeMillis)
+
     }
 
     open fun internalLoop() {
@@ -94,5 +100,7 @@ abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface, MOEBo
 
     override fun stop() {
         isStopRequested = true
+        robot.stop()
+//        Log.e("stopped", "stop")
     }
 }

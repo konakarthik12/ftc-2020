@@ -103,4 +103,5 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, 
     }
 
     abstract fun run()
+
 }

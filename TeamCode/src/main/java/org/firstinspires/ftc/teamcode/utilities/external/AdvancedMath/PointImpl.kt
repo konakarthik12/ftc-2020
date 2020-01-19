@@ -15,6 +15,11 @@ interface PointImpl<T> : Cloneable<T> {
         this.x *= value; this.y *= value
     }
 
+    operator fun divAssign(value: Double) {
+        this.x /= value; this.y /= value
+
+    }
+
     /**
      * 0 up
      * 90 right

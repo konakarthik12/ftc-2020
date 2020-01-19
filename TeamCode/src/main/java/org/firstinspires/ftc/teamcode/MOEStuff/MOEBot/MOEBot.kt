@@ -18,7 +18,7 @@ class MOEBot(config: MOEBotConstants) {
     val foundation = MOEFoundation()
     val outtake = MOEOuttake()
     var chassis: MOEChassis = MOEChassis()
-    var harvester: MOEHarvester = MOEHarvester()
+    var intake: MOEIntake = MOEIntake()
     var odometry = MOEDometrySystem(config)
     lateinit var gyro: MOEGyro
     lateinit var vuforia: MOEVuforia
@@ -41,8 +41,17 @@ class MOEBot(config: MOEBotConstants) {
 //            slam.config = constants.getSlamConfig()
             slam.resetValues()
         }
+        if (robotConfig.useOdometry) {
+            odometry.resetValues()
+            odometry.launchLoop()
+        }
         gyro.config = constants.getGyroConfig()
 
+
+    }
+
+    fun stop() {
+        if (robotConfig.useOdometry) odometry.stop()
     }
 
     //    fun resetValues() {

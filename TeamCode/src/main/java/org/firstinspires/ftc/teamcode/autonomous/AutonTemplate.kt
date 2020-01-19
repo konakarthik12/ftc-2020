@@ -30,7 +30,7 @@ class AutonTemplate : MOEAuton() {
 //            }
 //        }
 
-        robot.harvester.setPower(0.6)
+        robot.intake.setPower(0.6)
         robot.chassis.encoders.moveForwardAStars(30.0, 0.5)
         robot.chassis.encoders.moveBackwardAStars(35.0, 0.5) // Adding 5 astars for good measure.
 

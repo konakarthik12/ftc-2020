@@ -21,7 +21,7 @@ interface MOEBotConstants {
     }
 
     fun getGyroConfig(): MOEGyroConfig {
-        return MOEGyroConfig( getRobotInitialState().robotInitial.degAng)
+        return MOEGyroConfig(getRobotInitialState().robotInitial.degAng)
     }
 
 

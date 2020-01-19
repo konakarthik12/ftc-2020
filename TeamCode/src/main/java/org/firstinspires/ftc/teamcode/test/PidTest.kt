@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.test
 
+import android.util.Log
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEtion
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemC
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERobotInitialStateConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
+import org.firstinspires.ftc.teamcode.constants.MOESlamConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.internal.get
 import org.firstinspires.ftc.teamcode.utilities.internal.wait
@@ -19,11 +21,14 @@ class PidTest : MOEAuton() {
     }
 
 
-    /*override fun initOpMode() {
+    override fun initOpMode() {
         super.initOpMode()
         telemetry.addData("test:", "test")
+
+//        robot.slam.restart()
+        telemetry.addData("pc.getPose", robot.odometry.astarMoetion())
         //robot.slam.restart()
-    }*/
+    }
 
 
     override fun run() {
@@ -36,47 +41,53 @@ class PidTest : MOEAuton() {
 //            telemetry.update()
 //        }
         robot.chassis.moveTo(62.0, 96.0, 270.0)
-        slamWait()
+//        slamWait()
         robot.chassis.turnTo(0.0)
-        slamWait()
+//        slamWait()
         robot.chassis.moveTo(62.0, 240.0)
-        slamWait()
+        robot.chassis.turn(90.0)
         robot.foundation.closeServo()
         robot.chassis.stop()
 
         while (opModeIsActive()) {
+
             telemetry.addData("pc.getPose", robot.odometry.astarMoetion())
             telemetry.addData("pose", robot.odometry.astarMoetion())
+            telemetry.addData("gyroType", robot.gyro::class.simpleName)
+            telemetry.addData("gyro", robot.gyro.angle)
             telemetry.update()
         }
     }
 
-    private fun slamWait() {
-        robot.chassis.stop()
-        telemetry.addData("pc.getPose", robot.odometry.astarMoetion())
-        telemetry.addData("pose", robot.odometry.astarMoetion())
-        telemetry.update()
-        wait(2000)
-    }
+//    private fun slamWait() {
+//        robot.chassis.stop()
+//        val angle = robot.gyro.angle
+//        val rightForwardValue = robot.odometry.rightForwardWheel.getRawValue()
+//        val strafe = robot.odometry.strafeWheel.getRawValue()
+//        telemetry.addData("rightFoward", rightForwardValue)
+//        telemetry.addData("strafe", strafe)
+//        telemetry.addData("angle", angle)
+//        telemetry.addData("pc.getPose", robot.odometry.astarMoetion())
+//        telemetry.addData("pose", robot.odometry.astarMoetion())
+//        telemetry.update()
+//
+//    }
 
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
-        return super.getRobotSubSystemConfig().apply { useOdometry = true }
+        return super.getRobotSubSystemConfig().apply {
+            useOdometry = true
+            useSlam = false
+        }
     }
 
     override fun getAutonConfig(): MOEAutonConfig {
         return super.getAutonConfig()
     }
 
-//    override fun getSlamConfig(): MOESlamConfig {
-//        return super.getSlamConfig().apply {
-//            ROBOT_TO_CAMERA_THETA = 180.0
-//        }
-//    }
-
     override fun getRobotInitialState(): MOERobotInitialStateConfig {
-        return super.getRobotInitialState().apply {
-            robotInitial = MOEtion(14.0, 96.0, 270.0)
-        }
+        return MOERobotInitialStateConfig(
+                MOEtion(14.0, 96.0, 270.0)
+        )
     }
 
 }

@@ -94,6 +94,4 @@ object MOEConstants {
             loggingEnabled = false
         }
     }
-
-
 }

@@ -23,16 +23,17 @@ class PatrickPositionalPIDTest : MOERegularTest() {
     //    lateinit var xPid: MOEPositionalPid
     //    lateinit var yPid: MOEPositionalPid
     //    lateinit var tPid: MOETurnPid
-    var systemPid = MOEPositionalSystemPid(MOEPidConstants.PositionalPid.DefaultOptions)
+//    var systemPid = MOEPositionalSystemPid(MOEPidConstants.PositionalPid.DefaultOptions)
+    lateinit var systemPid: MOEPositionalSystemPid
 
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return ref["desmos"]
     }
 
     override fun initOpMode() {
-        telemetry.addData("waiting for slam")
-        telemetry.update()
-        robot.slam.restart()
+//        telemetry.addData("waiting for slam")
+//        telemetry.update()
+//        robot.slam.restart()
         //        telemetry.addData("slam", "yeah")
 //        robot.slam.config = MOESlamConfig(0.0, 0.0, 0.0)
     }
@@ -52,13 +53,11 @@ class PatrickPositionalPIDTest : MOERegularTest() {
     var ySet = 0.0
     var xSet = 0.0
     var tSet = 0.0
-    private val moePatrickTrans = MOEPatrickTrans(this)
 
     fun mainLoop() {
-        val cameraTrans = moePatrickTrans.getCameraTrans(MOEtion(robot.slam.getRawTrans().pose, robot.gyro.angle))
-        val pose1 = moePatrickTrans.getRobotTrans(cameraTrans)
-        val pose = pose1.pose
-        val angle = robot.gyro.angle + moePatrickTrans.config.getRobotInitialState().robotInitial.degAng
+        val moetion = robot.odometry.astarMoetion()
+        val pose = moetion.pose
+        val angle = moetion.degAng
 //        pc.getPose *= MOEConstants.Units.ASTARS_PER_METER
 //        pc.getPose *= -1.0
 //        pose *= MOEConstants.Units.ASTARS_PER_METER
@@ -141,22 +140,26 @@ class PatrickPositionalPIDTest : MOERegularTest() {
         telemetry.addData("curX", pose.x)
         telemetry.addData("goaT", systemPid.tPid.setpoint())
         telemetry.addData("curT", angle)
+
     }
 
     override fun onConfigChanged(dataSnapshot: DataSnapshot) {
         val xOptions = dataSnapshot["xPID"].getValue(MOEPidOptions::class.java)!!
         val yOptions = dataSnapshot["yPID"].getValue(MOEPidOptions::class.java)!!
         val tOptions = dataSnapshot["tPID"].getValue(MOEPidOptions::class.java)!!
-        Log.e("focus", yOptions.toString())
+        Log.e("tOptions", tOptions.toString())
         systemPid = MOEPositionalSystemPid(xOptions, yOptions, tOptions)
-        systemPid.xPid.setOutputLimits(1.0)
-        systemPid.yPid.setOutputLimits(1.0)
-        systemPid.tPid.setOutputLimits(1.0)
+        systemPid.xPid.setOutputLimits(0.2)
+        systemPid.yPid.setOutputLimits(0.2)
+        systemPid.tPid.setOutputLimits(0.2)
         //(x,y,t)
 //        systemPid.setSetpoints(0.0, 0.0, 0.0)
     }
 
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
-        return super.getRobotSubSystemConfig().apply { useSlam = true }
+        return super.getRobotSubSystemConfig().apply {
+            useSlam = false
+            useOdometry = true
+        }
     }
 }
