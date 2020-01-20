@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAutonArm
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.AutonArmConfig
 
-class MOEAutonArm(val config: AutonArmConfig, val isLeft: Boolean) {
+class MOEAutonArm(val config: AutonArmConfig) {
 
     val clawServo = config.getClawServo()
     val armServo = config.getArmServo()

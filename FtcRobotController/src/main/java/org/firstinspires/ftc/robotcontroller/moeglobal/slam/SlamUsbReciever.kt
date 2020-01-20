@@ -6,7 +6,7 @@ import android.util.Log
 object SlamUsbReciever {
     private const val TAG = "MOE"
     fun handleDeviceRemoved(device: UsbDevice) {
-        Log.e("device", "removed")
+        Log.e("device", "removed " + Constants.T265_VID)
         if (device.vendorId == Constants.T265_VID) {
             val t265Handler = SlamHandler.t265Handler
             t265Handler?.killStream()

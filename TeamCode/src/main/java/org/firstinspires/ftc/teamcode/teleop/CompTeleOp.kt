@@ -1,20 +1,27 @@
 package org.firstinspires.ftc.teamcode.teleop
 
+import android.os.Environment
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
+import java.io.File
 import kotlin.math.cos
 import kotlin.math.sin
 
 @TeleOp
 open class CompTeleOp() : MOETeleOp() {
+//    val sd_main = File(Environment.getExternalStorageDirectory().absolutePath + "/comp_odometry.txt")
+//    val writer = sd_main.printWriter()
+
     //    val state: TeleOpState()
     override fun initOpMode() {
         addListeners()
         initLift()
         initOuttake()
+//        robot.odometry.launchLoop()
     }
+
 
     private fun initLift() {
         robot.lift.resetEncoders()
@@ -41,16 +48,28 @@ open class CompTeleOp() : MOETeleOp() {
 
     //    var oldTime = 0L
     override fun mainLoop() {
-//        telemetry.addData(System.currentTimeMillis() - oldTime)
-//        telemetry.update()
+        val oldTime = System.currentTimeMillis()
         chassis()
         intake()
         foundation()
         lift()
         outtake()
+        autonArms()
         log()
-//        oldTime = System.currentTimeMillis()
+        telemetry.addData("timed", System.currentTimeMillis() - oldTime)
+    }
 
+    private fun autonArms() {
+        robot.autonArms.left.apply {
+            if (gpad1.dpad.left.isToggled) lowerArm() else raiseArm()
+
+        }
+        robot.autonArms.right.apply {
+            if (gpad1.dpad.right.isToggled) lowerArm() else raiseArm()
+        }
+        robot.autonArms.apply {
+            if (gpad1.a.isToggled) closeClaws() else this.openClaws()
+        }
 
     }
 
@@ -60,10 +79,14 @@ open class CompTeleOp() : MOETeleOp() {
         telemetry.addData("lift", target)
         telemetry.addData("acutal", robot.lift.getPositions().average())
         telemetry.addData("switch", robot.lift.limitSwitch.isPressed)
+//        val motion = robot.odometry.astarMoetion()
+//        telemetry.addData("pose", motion.pose)
+//        telemetry.addData("degs", motion.degAng)
+//        writer.println("$motion.x\t$motion.y\t$motion.degAng")
     }
 
-    val minPower = 0.6
-    val maxPower = 1.0
+    val minPower = 0.4
+    val maxPower = 7.0
     val powerRange = minPower..maxPower
     private fun chassis() {
         //        val bumperThrottle = 0.5
@@ -132,7 +155,7 @@ open class CompTeleOp() : MOETeleOp() {
                 robot.lift.setPower(-0.4)
             }
         }
-        target += ((up + upSlow) * 35)
+        target += ((up + upSlow) * 45)
         if (gpad2.left.stick.y() > -0.1) {
             target = target.coerceAtLeast(0.0)
         }
@@ -149,4 +172,6 @@ open class CompTeleOp() : MOETeleOp() {
         robot.outtake.grabServo.setPosition(grabServo)
 //        robot.outtake.outtakeServo.se
     }
+
+
 }

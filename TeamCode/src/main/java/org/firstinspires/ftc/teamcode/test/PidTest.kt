@@ -50,7 +50,6 @@ class PidTest : MOEAuton() {
         robot.chassis.stop()
 
         while (opModeIsActive()) {
-
             telemetry.addData("pc.getPose", robot.odometry.astarMoetion())
             telemetry.addData("pose", robot.odometry.astarMoetion())
             telemetry.addData("gyroType", robot.gyro::class.simpleName)

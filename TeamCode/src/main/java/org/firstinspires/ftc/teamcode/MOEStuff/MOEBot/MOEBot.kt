@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAutonArm.MOEAutonArm
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAutonArm.MOEAutonArms
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEDometrySystem
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEChassis
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOEGyro
@@ -10,6 +12,7 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlam
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySystem
 
 class MOEBot(config: MOEBotConstants) {
+    val autonArms = MOEAutonArms()
     val robotConfig = config.getRobotSubSystemConfig()
 
 //    constructor(config: MOEBotConstants) : this(config.getRobotConfig().useGyro, config.getRobotConfig().useCamera, config.useSlam)
