@@ -6,7 +6,7 @@ class MOEButton(private val get: () -> Boolean) {
     //    {
     //        field = value
     //        //            Log.e("new value is", field.toString())
-    //        listeners.forEach { it(value) }
+    //        listeners.forEach { it(value) }sa
     //    }
 
     var isToggled: Boolean = false
