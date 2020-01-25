@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.*
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.DriveTrain.Motors.Configs.BackRight
+import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs.LeftIntake
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs.RightIntake
 import kotlin.math.max
 import kotlin.math.min
@@ -55,8 +56,8 @@ object MOEHardwareConstants {
 
     object Lift {
         object Motors {
-            val LeftLiftMotor = MotorConfig("LLF", 1, 0, direction = MotorDirection.REVERSE, maxPow = 0.7)
-            val RightLiftMotor = MotorConfig("RLF", 2, 0, direction = MotorDirection.REVERSE, maxPow = 0.7)
+            val LeftLiftMotor = MotorConfig("LLF", 1, 0, direction = MotorDirection.REVERSE)
+            val RightLiftMotor = MotorConfig("RLF", 2, 0, direction = MotorDirection.REVERSE)
         }
 
         object Switches {
@@ -65,8 +66,10 @@ object MOEHardwareConstants {
     }
 
     object Odometry {
-        val RightForward = OdometryConfig(RightIntake, -131.0, 1312.0)
-        val Strafe = OdometryConfig(BackRight, 60.9, 1366.67)
+        val RightForward = OdometryConfig(RightIntake, false)
+        val LeftForward = OdometryConfig(LeftIntake, false)
+        val Strafe = OdometryConfig(BackRight, false)
+
     }
 
     object AutonArms {

@@ -10,15 +10,15 @@ abstract class MOEAuton : MOERegularOpMode(), MOEAutonConfigImpl {
     //    protected val config: AutonConfig = if (isLeft) MOEAutonConstants.Left else MOEAutonConstants.Right
     // The values are ordered from top to bottom.
 //   protected var
-    private lateinit var skystonePositions: List<Point>
+//    private lateinit var skystonePositions: List<Point>
 
     override fun moeInternalInit() {
 
-        skystonePositions = getAutonConfig().positionConfig.topSkystonePosition.let { (x, y) ->
-            List(6) {
-                Point(x, y - (it * Units.SKYSTONE_LENGTH))
-            }
-        }
+//        skystonePositions = getAutonConfig().positionConfig.topSkystonePosition.let { (x, y) ->
+//            List(6) {
+//                Point(x, y - (it * Units.SKYSTONE_LENGTH))
+//            }
+//        }
     }
 
 //    protected val skystonePairs: List<Pair<Point, Point>>

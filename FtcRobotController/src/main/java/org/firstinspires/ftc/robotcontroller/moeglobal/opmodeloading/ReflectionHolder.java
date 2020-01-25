@@ -20,7 +20,7 @@ public class ReflectionHolder {
     public static LinkedHashMap<String, OpModeMetaAndInstance> opModesInstances;
     public static Object opModesLock;
 
-    public static void initReflection() {
+    public static void init() {
         try {
 
             RegisteredOpModes instance = RegisteredOpModes.getInstance();
@@ -43,7 +43,6 @@ public class ReflectionHolder {
         synchronized (opModesLock) {
             clearOpModes();
             loadOpModes(opModes);
-            Log.e("done", "opmodes");
         }
     }
 
@@ -51,7 +50,6 @@ public class ReflectionHolder {
      * synchronize on opModesLock
      */
     private static void loadOpModes(Map<String, OpModeMetaAndClass> opModes) {
-        Log.e("placing", "opmodes");
         opModeClasses.putAll(opModes);
     }
 

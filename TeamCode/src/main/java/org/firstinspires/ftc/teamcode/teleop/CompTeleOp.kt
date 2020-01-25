@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.teleop
 
-import android.os.Environment
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
-import java.io.File
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -39,37 +37,55 @@ open class CompTeleOp() : MOETeleOp() {
     private fun initOuttake() {
         robot.outtake.grabServo.setPosition(0.6)
         gpad2.left.bumper.onKeyDown {
-            robot.outtake.outtakeServo.setPosition(0.0)
+            robot.outtake.moveIn()
         }
         gpad2.right.bumper.onKeyDown {
-            robot.outtake.outtakeServo.setPosition(1.0)
+            robot.outtake.moveOut()
         }
     }
 
     //    var oldTime = 0L
     override fun mainLoop() {
-        val oldTime = System.currentTimeMillis()
-        chassis()
+        joystickChassis()
+        dpadChassis()
         intake()
         foundation()
         lift()
         outtake()
-        autonArms()
+//        autonArms()
         log()
-        telemetry.addData("timed", System.currentTimeMillis() - oldTime)
+//        telemetry.addData("timed", System.currentTimeMillis() - oldTime)
+    }
+
+    private fun dpadChassis() {
+        val scale = 0.3
+        when {
+            gpad1.dpad.up() -> {
+                robot.chassis.setFromMecanum(1.0, 0.0, gpad1.right.stick.x())
+            }
+            gpad1.dpad.down() -> {
+                robot.chassis.setFromMecanum(-1.0, 0.0, gpad1.right.stick.x())
+            }
+            gpad1.dpad.left() -> {
+                robot.chassis.setFromMecanum(0.0, -1.0, gpad1.right.stick.x())
+            }
+            gpad1.dpad.right() -> {
+                robot.chassis.setFromMecanum(0.0, 1.0, gpad1.right.stick.x())
+            }
+        }
+
     }
 
     private fun autonArms() {
-        robot.autonArms.left.apply {
-            if (gpad1.dpad.left.isToggled) lowerArm() else raiseArm()
-
-        }
-        robot.autonArms.right.apply {
-            if (gpad1.dpad.right.isToggled) lowerArm() else raiseArm()
-        }
-        robot.autonArms.apply {
-            if (gpad1.a.isToggled) closeClaws() else this.openClaws()
-        }
+//        robot.autonArms.left.apply {
+//            if (gpad1.dpad.left.isToggled) lowerArm() else raiseArm()
+//        }
+//        robot.autonArms.right.apply {
+//            if (gpad1.dpad.right.isToggled) lowerArm() else raiseArm()
+//        }
+//        robot.autonArms.apply {
+//            if (gpad1.a.isToggled) closeClaws() else this.openClaws()
+//        }
 
     }
 
@@ -88,7 +104,7 @@ open class CompTeleOp() : MOETeleOp() {
     val minPower = 0.4
     val maxPower = 7.0
     val powerRange = minPower..maxPower
-    private fun chassis() {
+    private fun joystickChassis() {
         //        val bumperThrottle = 0.5
         val scaleX = 1
         val scaleY = 0.85
@@ -128,7 +144,7 @@ open class CompTeleOp() : MOETeleOp() {
     }
 
     private fun foundation() {
-        robot.foundation.foundationServo.setPosition(if (gpad1.left.bumper()) 1.0 else 0.0)
+        robot.foundation.foundationServoSystem.setPosition(if (gpad1.left.bumper()) 1.0 else 0.0)
     }
 
     var target = 0.0
@@ -148,12 +164,12 @@ open class CompTeleOp() : MOETeleOp() {
         val upSlow = gpad2.right.stick.y() * 0.5
 //        val downSlow = gpad2.right.    stick.y() * -0.25
         robot.lift.motors.forEach {
-            val error = it.error
-            if (error > 0) {
-                robot.lift.setPower(1.0)
+            val power = if (it.targetIsHigherThanCurrent) {
+                if (gpad2.left.trigger.button()) 1.0 else 0.7
             } else {
-                robot.lift.setPower(-0.4)
+                if (gpad2.left.trigger.button()) 0.5 else 0.28
             }
+            it.setPower(power)
         }
         target += ((up + upSlow) * 45)
         if (gpad2.left.stick.y() > -0.1) {
@@ -164,13 +180,12 @@ open class CompTeleOp() : MOETeleOp() {
     }
 
     private fun outtake() {
-        val grabServo = when {
-            gpad2.b.isToggled -> 1.0
-            else -> 0.54
+        if (gpad2.b.isToggled) {
+            robot.outtake.grab()
+        } else {
+            robot.outtake.release()
         }
 
-        robot.outtake.grabServo.setPosition(grabServo)
-//        robot.outtake.outtakeServo.se
     }
 
 

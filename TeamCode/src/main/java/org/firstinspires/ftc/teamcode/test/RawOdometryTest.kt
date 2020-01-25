@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.test
 import android.os.Environment
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEtion
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.MOEtion
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERobotInitialStateConfig
 import org.firstinspires.ftc.teamcode.teleop.CompTeleOp
@@ -30,10 +30,9 @@ class RawOdometryTest : CompTeleOp() {
         val robotPose = robot.odometry.pose
 
         val angle = robot.gyro.angle
-        val angleWrapped = robot.odometry.angleWrappedValue
 
-        val rightForwardValue = robot.odometry.rightForwardWheel.getFixedValue(angleWrapped)
-        val strafe = robot.odometry.strafeWheel.getFixedValue(angleWrapped)
+        val rightForwardValue = robot.odometry.rightForwardWheel.getValue()
+        val strafe = robot.odometry.strafeWheel.getValue()
         val fieldCentricPose = robot.odometry.fieldCentricPose
 //telemetry.addData("rawX",robot.odometry.)
         telemetry.addData("finalPose", robot.odometry.astarMoetion())
@@ -41,7 +40,6 @@ class RawOdometryTest : CompTeleOp() {
         telemetry.addData("strafe", strafe)
         telemetry.addData("robot pc.getPose", robotPose)
         telemetry.addData("angle", angle)
-        telemetry.addData("wrapped angle", angleWrapped)
         telemetry.addData("fieldcentric pc.getPose", fieldCentricPose)
 //              sd_main.  .use { out -> out.println(fileContent) }
         telemetry.update()

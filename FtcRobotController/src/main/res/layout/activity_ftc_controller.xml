@@ -112,30 +112,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             android:text="" />
 
         <TextView
-            android:id="@+id/accuracy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="T265 Accuracy: "
-            android:layout_below="@+id/textRobotStatus"
-
-            android:visibility="visible" />
-
-        <TextView
-            android:id="@+id/textStreamingStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textRobotStatus"
-            android:layout_toRightOf="@id/accuracy"
-            android:text="Failed"
-            android:textColor="@color/bright_red"
-            android:textStyle="bold"
-            android:visibility="visible" />
-
-        <TextView
             android:id="@+id/textOpMode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textStreamingStatus"
+            android:layout_below="@+id/textRobotStatus"
             android:text=""
             android:visibility="invisible" />
 

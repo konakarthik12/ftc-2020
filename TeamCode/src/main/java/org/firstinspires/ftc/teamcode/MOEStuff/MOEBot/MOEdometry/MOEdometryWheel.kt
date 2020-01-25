@@ -4,8 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.OdometryConfig
 
 class MOEDometryWheel(val config: OdometryConfig) {
-     val mMotor = config.motorConfig.getDevice()
-    private var offset = 0
+    val mMotor = config.motorConfig.getDevice()
 
     fun resetValues() {
         val oldMOde = mMotor.mode
@@ -14,20 +13,6 @@ class MOEDometryWheel(val config: OdometryConfig) {
 
     }
 
-//    fun resetValues() {
-//    }
 
-//    fun resetValues() {
-//
-//        offset = getRawValue()
-//    }
-
-    fun getFixedValue(angleWrapped: Double): Double {
-        return getTurnCorrectedValue(angleWrapped) / config.scalar
-    }
-
-    fun getFixedAStars() = getFixedValue(0.0) * 2.0
-
-    fun getRawValue() = mMotor.currentPosition * -1.0
-    fun getTurnCorrectedValue(angleWrapped: Double) = getRawValue() - (angleWrapped * config.turnCorrection)
+    fun getValue() = if (config.negate) -mMotor.currentPosition else mMotor.currentPosition
 }

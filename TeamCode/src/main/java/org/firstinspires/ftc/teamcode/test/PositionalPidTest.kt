@@ -30,7 +30,7 @@ class PositionalPidTest : MOERegularTest() {
     override fun initOpMode() {
         telemetry.addData("waiting for slam")
         telemetry.update()
-        robot.slam.restart()
+//        robot.slam.restart()
         //        telemetry.addData("slam", "yeah")
 //        robot.slam.config = MOESlamConfig(0.0, 0.0, 0.0)
     }
@@ -51,7 +51,7 @@ class PositionalPidTest : MOERegularTest() {
     var xSet = 0.0
     var tSet = 0.0
     fun mainLoop() {
-        val pose = robot.slam.transformation.pose
+        val pose = robot.odometry.moetion().pose
 //        pc.getPose *= MOEConstants.Units.ASTARS_PER_METER
 //        pc.getPose *= -1.0
         //        while (gamepad1.a){
@@ -148,6 +148,6 @@ class PositionalPidTest : MOERegularTest() {
     }
 
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
-        return super.getRobotSubSystemConfig().apply { useSlam = true }
+        return super.getRobotSubSystemConfig().apply { useOdometry = true }
     }
 }

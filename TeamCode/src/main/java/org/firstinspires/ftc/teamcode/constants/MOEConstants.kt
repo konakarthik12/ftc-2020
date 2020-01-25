@@ -83,7 +83,7 @@ object MOEConstants {
 
 
     object Gamepad {
-        const val ON_THRESHOLD = 0.95
+        const val ON_THRESHOLD = 0.5
     }
 
     object GyroConfig {

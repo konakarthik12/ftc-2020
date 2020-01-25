@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEtion
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.MOEtion
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
@@ -71,8 +71,8 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
         telemetry.addData("x", x)
         telemetry.addData("y", y)
         telemetry.addData("t", rawT)
-        telemetry.addData("forwardOdo", robot.odometry.rightForwardWheel.getRawValue())
-        telemetry.addData("strafeOdo", robot.odometry.strafeWheel.getRawValue())
+        telemetry.addData("forwardOdo", robot.odometry.rightForwardWheel.getValue())
+        telemetry.addData("strafeOdo", robot.odometry.strafeWheel.getValue())
         telemetry.update()
 
 //        Log.e("x", x.toString())

@@ -5,14 +5,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers.Companion.fromMecanum
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEtion
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.*
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOEPatrickTrans
-import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
-import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.firstinspires.ftc.teamcode.utilities.internal.get
 import org.firstinspires.ftc.teamcode.utilities.external.toFixed
 import kotlin.math.cos
@@ -158,7 +154,6 @@ class PatrickPositionalPIDTest : MOERegularTest() {
 
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
         return super.getRobotSubSystemConfig().apply {
-            useSlam = false
             useOdometry = true
         }
     }

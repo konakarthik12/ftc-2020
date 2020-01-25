@@ -10,7 +10,5 @@ public class MOESocketHandler {
         moeWebServer.start();
     }
 
-    public static void fakePush() {
-        moeWebServer.fakePush();
-    }
+
 }

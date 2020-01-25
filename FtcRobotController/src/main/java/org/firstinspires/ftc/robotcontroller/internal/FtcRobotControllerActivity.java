@@ -42,9 +42,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,6 +54,9 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import com.google.blocks.ftcrobotcontroller.ProgrammingWebHandlers;
 import com.google.blocks.ftcrobotcontroller.runtime.BlocksOpMode;
 import com.qualcomm.ftccommon.*;
@@ -124,7 +125,6 @@ public class FtcRobotControllerActivity extends Activity {
     protected PreferencesHelper preferencesHelper;
     protected ImageButton buttonMenu;
     //    public static FtcRobotControllerActivity deleteThis;
-    public TextView textStreamingStatus;
     protected TextView textDeviceName;
     protected TextView textNetworkConnectionStatus;
     protected TextView textRobotStatus;
@@ -324,7 +324,6 @@ public class FtcRobotControllerActivity extends Activity {
             configFile.markClean();
             cfgFileMgr.setActiveConfig(false, configFile);
         }
-        textStreamingStatus = findViewById(R.id.textStreamingStatus);
         textDeviceName = findViewById(R.id.textDeviceName);
         textNetworkConnectionStatus = findViewById(R.id.textNetworkConnectionStatus);
         textRobotStatus = findViewById(R.id.textRobotStatus);

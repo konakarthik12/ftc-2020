@@ -8,8 +8,8 @@ import org.firstinspires.ftc.teamcode.utilities.internal.addData
 class GyroTest : MOETeleOp() {
     override fun mainLoop() {
         telemetry.addData(robot.gyro.angle)
-        telemetry.addData(robot.slam.getRawTheta())
-        telemetry.addData(robot.slam.getRawPose().toString())
+//        telemetry.addData(robot.slam.getRawTheta())
+//        telemetry.addData(robot.slam.getRawPose().toString())
     }
 
     override fun initOpMode() {

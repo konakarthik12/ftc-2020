@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro
 
 import android.util.Log
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEGyroConfig
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toEulerAngle
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toRadians
 
@@ -40,8 +41,7 @@ abstract class MOEGyro {
     abstract fun getRawAngle(): Double
 
     /** -179 to 180*/
-    abstract fun getRawEulerAngle(): Double
-
+    open fun getRawEulerAngle(): Double = getRawAngle().toEulerAngle()
 
     open fun init(sync: Boolean = false) {}
 

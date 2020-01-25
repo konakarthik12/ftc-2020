@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEGamepad
 
+import kotlin.reflect.KProperty
+
 class MOEButton(private val get: () -> Boolean) {
     //    private var wasPressed: Boolean = false
     //    set(value)

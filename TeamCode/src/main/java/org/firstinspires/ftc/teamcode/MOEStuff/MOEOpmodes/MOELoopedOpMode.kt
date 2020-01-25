@@ -1,12 +1,11 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
-import android.util.Log
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstants
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstantsImpl
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEFirebase
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad
 import org.firstinspires.ftc.teamcode.constants.OpModeInterface
@@ -14,7 +13,7 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRobotRef
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
-abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface, MOEBotConstants {
+abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface, MOEBotConstantsImpl {
     lateinit var ref: DatabaseReference
     lateinit var robot: MOEBot
     var opModeIsActive: Boolean = false
@@ -55,11 +54,10 @@ abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface, MOEBo
 
 
     override fun loop() {
-//        val currentTimeMillis = System.currentTimeMillis()
-
+        val currentTimeMillis = System.currentTimeMillis()
         opModeIsActive = true
         internalLoop()
-//        telemetry.addData(System.currentTimeMillis() - currentTimeMillis)
+        telemetry.addData(System.currentTimeMillis() - currentTimeMillis)
 
     }
 

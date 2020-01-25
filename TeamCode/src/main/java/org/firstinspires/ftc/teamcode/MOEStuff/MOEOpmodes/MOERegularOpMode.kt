@@ -6,14 +6,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstants
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstantsImpl
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEFirebase
 import org.firstinspires.ftc.teamcode.constants.OpModeInterface
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRobotRef
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
-abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, MOEBotConstants {
+abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, MOEBotConstantsImpl {
     lateinit var dataRef: DatabaseReference
     lateinit var robot: MOEBot
     override fun iOpModeIsActive(): Boolean = opModeIsActive()

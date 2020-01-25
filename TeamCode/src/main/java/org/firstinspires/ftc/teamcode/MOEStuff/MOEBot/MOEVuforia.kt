@@ -15,20 +15,18 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwa
 
 
 class MOEVuforia() {
-    var vuforia: VuforiaLocalizer
-//    val cameraMonitorViewId: Int = hardwareMap.appContext.resources
-//            .getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.packageName)
+    lateinit var vuforia: VuforiaLocalizer
     private val parameters: VuforiaLocalizer.Parameters = MOEVuforiaConstants.params
 
     init {
         setVuforiaSettings()
-        vuforia = ClassFactory.getInstance().createVuforia(parameters)
-        vuforia.enableConvertFrameToBitmap()
-        vuforia.frameQueueCapacity = 1
     }
 
     private fun setVuforiaSettings() {
         Vuforia.setFrameFormat(PIXEL_FORMAT.RGBA8888, true)
+        vuforia = ClassFactory.getInstance().createVuforia(parameters)
+        vuforia.enableConvertFrameToBitmap()
+        vuforia.frameQueueCapacity = 1
     }
 
     fun getBitmap(): Bitmap? {

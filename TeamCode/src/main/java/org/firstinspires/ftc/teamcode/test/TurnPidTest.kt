@@ -24,8 +24,6 @@ class TurnPidTest : MOERegularTest() {
             robot.chassis.turnPower(it)
         }
         pid.endCondition = { _, _ -> false }
-        robot.slam.restart()
-        robot.slam.waitForData()
 
         //        ref.setValue(MOEPidValues(0.01, 0.0, 0.0))
         //        telemetry.addData("testagain")

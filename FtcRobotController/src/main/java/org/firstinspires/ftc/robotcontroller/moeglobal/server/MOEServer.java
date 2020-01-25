@@ -8,13 +8,12 @@ import android.util.ArrayMap;
 import android.util.Log;
 import androidx.core.content.ContextCompat;
 import com.google.firebase.database.DatabaseReference;
+import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import dalvik.system.DexClassLoader;
 import org.firstinspires.ftc.robotcontroller.moeglobal.MOEFtcEventLoop;
-import org.firstinspires.ftc.robotcontroller.moeglobal.opmodeloading.OpModeLoading;
-import org.firstinspires.ftc.robotcontroller.moeglobal.opmodeloading.ReflectionHolder;
-import org.firstinspires.ftc.robotcontroller.moeglobal.opmodeloading.TeamLessClassLoader;
+import org.firstinspires.ftc.robotcontroller.moeglobal.opmodeloading.*;
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta.Flavor;
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMetaAndClass;
@@ -40,22 +39,10 @@ import static org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEDataba
 
 public class MOEServer extends WebSocketServer {
 
-    private final SharedPreferences sharedPref;
-    private final SharedPreferences.Editor editor;
-    private final String absolutePath;
-    private final ClassLoader contextClassLoader;
-    private TeamLessClassLoader parent;
-
-    File dexFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/firecode/classes.dex");
 
     MOEServer(Context context) {
         super(new InetSocketAddress(0));
-        sharedPref = context.getSharedPreferences(
-                context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        editor = sharedPref.edit();
-        absolutePath = ContextCompat.getCodeCacheDir(context).getAbsolutePath();
-        contextClassLoader = context.getClassLoader();
-        dexFile.mkdirs();
+
     }
 
 
@@ -76,14 +63,7 @@ public class MOEServer extends WebSocketServer {
     }
 
     private void writeDex(ByteBuffer message) {
-        try {
-//            Log.e("happening", dexFile.getAbsolutePath());
-            FileChannel fc = new FileOutputStream(dexFile).getChannel();
-            fc.write(message);
-            fc.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        DexHandler.writeDex(message);
     }
 
     @Override
@@ -91,75 +71,19 @@ public class MOEServer extends WebSocketServer {
         System.out.println("recieved: " + s);
 //        String[] split = s.split("/");
         if (s.startsWith("ops")) {
-            saveOpModes(s.substring(4));
+            OpModeLoader.updateOpModes(s.substring(4));
         }
 
     }
 
-    private void saveOpModes(String substring) {
-        String[] split = substring.split("\n");
-        saveOpModes("Autonomous", split[0]);
-        saveOpModes("TeleOp", split[1]);
-        editor.apply();
-        pushOpModes(split[0], split[1]);
-        //        editor.putInt(getString(R.string.saved_high_score_key), newHighScore);
 
-    }
-
-    private void pushOpModes(String auto, String tele) {
-//        editor
-        DexClassLoader classLoader = getClassLoader();
-        Map<String, OpModeMetaAndClass> opModeMetaAndClassMap = new ArrayMap<>();
-        String[] autoDetails = auto.split("/");
-        Log.e("socket", opModeMetaAndClassMap.toString());
-        for (int i = 0; i < autoDetails.length; i += 2) {
-            opModeMetaAndClassMap.put(autoDetails[i], getOpModeMetaAndClass(classLoader, autoDetails[i], autoDetails[i + 1], true));
-        }
-        String[] teleDetails = tele.split("/");
-        for (int i = 0; i < teleDetails.length; i += 2) {
-            opModeMetaAndClassMap.put(teleDetails[i], getOpModeMetaAndClass(classLoader, teleDetails[i], teleDetails[i + 1], false));
-        }
-//        for (Map.Entry<String, OpModeMetaAndClass> stringOpModeMetaAndClassEntry : opModeMetaAndClassMap.entrySet()) {
-//            if (stringOpModeMetaAndClassEntry.getValue().clazz == null) {
-//                Log.e("we" + stringOpModeMetaAndClassEntry.getKey(), "failed");
-//            }
-//        }
-        ReflectionHolder.replaceOpModes(opModeMetaAndClassMap);
-        refreshUI();
-        OpModeLoading.playInstalledSound();
-//        Log.e("done", "done");
-    }
-
-    private void refreshUI() {
+    private static void refreshUI() {
         MOEFtcEventLoop eventLoop = activityRef.get().eventLoop;
         if (eventLoop == null) return;
-        eventLoop.refreshUI();
+        eventLoop.sendUIState();
 
     }
 
-    private OpModeMetaAndClass getOpModeMetaAndClass(DexClassLoader classLoader, String name, String path, boolean isAuton) {
-        return new OpModeMetaAndClass(new OpModeMeta(name, isAuton ? Flavor.AUTONOMOUS : Flavor.TELEOP), getClass(classLoader, path));
-    }
-
-    private Class<OpMode> getClass(DexClassLoader classLoader, String path) {
-        try {
-            return (Class<OpMode>) classLoader.loadClass(path);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    private DexClassLoader getClassLoader() {
-        parent = new TeamLessClassLoader(contextClassLoader);
-        return new DexClassLoader(dexFile.getAbsolutePath(), absolutePath, null, parent);
-    }
-
-
-    private void saveOpModes(String type, String s) {
-        editor.putString(type, s);
-    }
 
     @Override
     public void onError(WebSocket webSocket, Exception e) {
@@ -200,8 +124,5 @@ public class MOEServer extends WebSocketServer {
         return ipAddressString;
     }
 
-    @SuppressWarnings("ConstantConditions")
-    public void fakePush() {
-        pushOpModes(sharedPref.getString("Autonomous", ""), sharedPref.getString("TeleOp", ""));
-    }
+
 }

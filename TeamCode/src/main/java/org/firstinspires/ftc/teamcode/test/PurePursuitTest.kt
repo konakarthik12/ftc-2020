@@ -25,7 +25,6 @@ class PurePursuitTest : MOELoopedTest() {
         telemetry.addData("wait for", "slam")
         telemetry.update()
         telemetry.update()
-        robot.slam.restart()
         //        val string = Point(2.0, 4.0)
         //        Log.e("string", string.toString())
         //        telemetry.addData("testagain$string")
@@ -85,7 +84,7 @@ class PurePursuitTest : MOELoopedTest() {
 
     override fun mainLoop() {
         pushSockets()
-        val pose = robot.slam.transformation.pose
+        val pose = robot.odometry.moetion().pose
         pose *= MOEConstants.Units.ASTARS_PER_METER
         telemetry.addData("pc.getPose", pose.toString())
         val (leftActualVelocity, rightActualVelocity) = robot.chassis.getFrontVelocities()
@@ -113,13 +112,13 @@ class PurePursuitTest : MOELoopedTest() {
     private fun pushSockets() {
         if (timer.milliseconds() < 5000) return
         timer.reset()
-        val pose = robot.slam.transformation.pose
+        val pose = robot.odometry.moetion().pose
         pose *= MOEConstants.Units.ASTARS_PER_METER
         moeWebServer.broadcast("slam/pc.getPose/${pose.x+48}/${pose.y+48}")
     }
 
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
-        return super.getRobotSubSystemConfig().apply { useSlam = true }
+        return super.getRobotSubSystemConfig().apply { useOdometry = true }
     }
 
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {

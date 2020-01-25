@@ -1,18 +1,13 @@
 package org.firstinspires.ftc.teamcode.test
 
-import android.util.Log
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEtion
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.MOEtion
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEAutonConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERobotInitialStateConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOESlamConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
-import org.firstinspires.ftc.teamcode.constants.MOESlamConstants
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.internal.get
-import org.firstinspires.ftc.teamcode.utilities.internal.wait
 
 @Autonomous
 class PidTest : MOEAuton() {
@@ -46,7 +41,7 @@ class PidTest : MOEAuton() {
 //        slamWait()
         robot.chassis.moveTo(62.0, 240.0)
         robot.chassis.turn(90.0)
-        robot.foundation.closeServo()
+        robot.foundation.moveDown()
         robot.chassis.stop()
 
         while (opModeIsActive()) {
@@ -75,7 +70,6 @@ class PidTest : MOEAuton() {
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
         return super.getRobotSubSystemConfig().apply {
             useOdometry = true
-            useSlam = false
         }
     }
 

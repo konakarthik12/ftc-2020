@@ -12,7 +12,7 @@ class MOEIMUGyro : MOEGyro() {
     private var initStarted = false
 
     override fun getRawAngle() = (-imu.angularOrientation.firstAngle).toDouble()
-    override fun getRawEulerAngle(): Double = getRawAngle().toEulerAngle()
+
 
     /**
      * Initializes IMU parameters-126, -91.7
