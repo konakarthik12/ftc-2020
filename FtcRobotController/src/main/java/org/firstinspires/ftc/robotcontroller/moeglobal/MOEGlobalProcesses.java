@@ -5,6 +5,7 @@ import org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEFirebase;
 import org.firstinspires.ftc.robotcontroller.moeglobal.opmodeloading.OpModeLoader;
 import org.firstinspires.ftc.robotcontroller.moeglobal.opmodeloading.ReflectionHolder;
 import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler;
+import org.firstinspires.ftc.robotcontroller.moeglobal.sheets.MOESheetsHandler;
 
 import java.lang.ref.WeakReference;
 
@@ -19,7 +20,7 @@ public class MOEGlobalProcesses {
         ReflectionHolder.init();
         MOEFirebase.init(activity);
         MOESocketHandler.init(activity);
-
+        MOESheetsHandler.init(activity);
     }
 
 }
