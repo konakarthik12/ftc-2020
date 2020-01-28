@@ -48,7 +48,7 @@ abstract class MOEGyro {
 
     var eulerAngle: Double
         get() {
-            return getRawEulerAngle() - eulerOffset;
+            return getRawEulerAngle() - eulerOffset
         }
         set(it) {
             eulerOffset = getRawEulerAngle() - it

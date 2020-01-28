@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.robotcontroller.moeglobal.opmodeloading;
 
 import android.util.ArrayMap;
+import android.util.Log;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMetaAndClass;
@@ -21,13 +22,17 @@ public class DexOpModeHandler {
         String[] teles = opmodes[1].split("/");
 
         for (int i = 0; i < teles.length; i += 2) {
-            opModeMetaAndClassMap.put(autoDetails[i], getOpModeMetaAndClass(classLoader, autoDetails[i], autoDetails[i + 1], TELEOP));
+            opModeMetaAndClassMap.put(teles[i], getOpModeMetaAndClass(classLoader, teles[i], teles[i + 1], TELEOP));
         }
         return opModeMetaAndClassMap;
     }
 
     private static OpModeMetaAndClass getOpModeMetaAndClass(ClassLoader classLoader, String name, String path, OpModeMeta.Flavor flavor) {
-        return new OpModeMetaAndClass(new OpModeMeta(name, flavor), getClass(classLoader, path));
+        Class<OpMode> aClass = getClass(classLoader, path);
+        if(aClass==null){
+            Log.e("hol up",path);
+        }
+        return new OpModeMetaAndClass(new OpModeMeta(name, flavor), aClass);
     }
 
     private static Class<OpMode> getClass(ClassLoader classLoader, String path) {

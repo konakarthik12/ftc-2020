@@ -20,9 +20,9 @@ class WrapperHandler(private val max: Double, val function: () -> Double) {
 
 }
 
-fun main() {
-    val wrapperHandler = WrapperHandler(360.0) { readLine()?.toDouble()!! }
-    while (true) {
-        println(wrapperHandler.getValue())
-    }
-}
+//fun main() {
+//    val wrapperHandler = WrapperHandler(360.0) { readLine()?.toDouble()!! }
+//    while (true) {
+//        println(wrapperHandler.getValue())
+//    }
+//}

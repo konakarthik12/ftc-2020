@@ -17,28 +17,6 @@ initServer();
 //     console.info("Connected and Watching files");
 //
 // });
-
-async function getNetworkDevice() {
-    let allDevices = await adbHandler.getDevices();
-    // console.log(allDevices.length);
-    if (allDevices.length === 0) {
-        throw "No android device connected"
-    } else {
-        let networkDevices = await adbHandler.getNetworkDevices();
-        if (networkDevices.length === 0) {
-            // console.log(allDevices[0].tcpip);
-
-            await allDevices[0].connectTcpip();
-        }
-        let networkDevices1 = await adbHandler.getNetworkDevices();
-        // console.log(networkDevices1);
-        return (networkDevices1)[0];
-        // console.log(networkDevices);
-
-    }
-}
-
-
 async function getIp() {
     const serviceAccount = require("./ftc-config");
 
@@ -52,7 +30,7 @@ async function getIp() {
             let address = data.val();
             console.info("Initialing Websocket Server...");
             console.log(address);
-            socketHandler.createServer(address.ip, address.port, sendOpModes, pushCode).then((it) => {
+            socketHandler.createServer(address.ip, address.port, sendOpModes, checkPushCode).then((it) => {
                 client = it;
 
                 watchFiles();
@@ -80,32 +58,40 @@ function watchFiles() {
     watching = true;
     let paths = resolve(__dirname, constants.dexFolder);
     console.log(paths);
-    chokidar.watch(paths)
+    chokidar.watch(paths, {ignoreInitial: true})
         .on('add', fileChange)
     // .on('change', pushCode);
 }
 
 function fileChange(path) {
-    return pushCode(path, client)
+    return checkPushCode(path, client)
 }
 
-async function pushCode(path, client) {
+async function checkPushCode(path, client) {
     if (!path.endsWith('classes.txt')) {
         return;
     }
-    // console.log("Pushing...");
-    console.log(`Sending ${path}`);
+
+    pushCode(client);
+}
+
+function pushCode(client) {
+    // console.log("pushing code");
+    // console.trace();
     client.send(fs.readFileSync(resolve(__dirname, constants.dexFile)), (err) => {
         if (err) throw err;
         console.log("Sent Dex")
         // client.send()
     });
-    console.log(client.bufferedAmount)
 }
 
 function sendOpModes() {
     console.log("sending op modes");
     // console.log(s);
-    return fs.readFileSync(resolve(__dirname, constants.listFile), 'utf8');
+    try {
+        return fs.readFileSync(resolve(__dirname, constants.listFile), 'utf8')
+    } catch (e) {
+        console.error(e)
+    }
     // console.log("asked");
 }

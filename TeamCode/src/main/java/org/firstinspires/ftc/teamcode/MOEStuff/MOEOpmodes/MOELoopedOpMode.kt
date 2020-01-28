@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
-import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstantsImpl
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEFirebase
@@ -21,14 +19,9 @@ abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface, MOEBo
     @Volatile
     var isStopRequested = false
 
+    override fun iRequestOpModeStop() = requestOpModeStop()
 
-    override fun iOpModeIsActive(): Boolean = opModeIsActive
-
-    override val iTelemetry: Telemetry
-        get() = telemetry
-
-    override val iHardwareMap: HardwareMap
-        get() = this.hardwareMap
+    override fun iOpModeIsActive(): Boolean = opModeIsActive && !iIsStopRequested
 
     override val iIsStopRequested: Boolean
         get() = isStopRequested
@@ -52,12 +45,20 @@ abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface, MOEBo
         robot = createRobot()
     }
 
+    override fun internalPostInitLoop() {
+        super.internalPostInitLoop()
+        afterInit()
+    }
+
+    open fun afterInit() {
+        telemetry.update()
+    }
 
     override fun loop() {
-        val currentTimeMillis = System.currentTimeMillis()
+        val currTime = System.nanoTime()
         opModeIsActive = true
         internalLoop()
-        telemetry.addData(System.currentTimeMillis() - currentTimeMillis)
+        telemetry.addData(System.nanoTime() - currTime)
 
     }
 
@@ -97,6 +98,7 @@ abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface, MOEBo
     open fun initOpMode() {}
 
     override fun stop() {
+
         isStopRequested = true
         robot.stop()
 //        Log.e("stopped", "stop")

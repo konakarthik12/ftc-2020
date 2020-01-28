@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.*
-import org.firstinspires.ftc.teamcode.constants.MOESlamConstants
 
 interface MOEBotConstantsImpl {
     fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
@@ -12,9 +11,6 @@ interface MOEBotConstantsImpl {
         return MOEBot(this)
     }
 
-    fun getSlamConfig(): MOESlamConfig {
-        return MOESlamConstants.DefaultValues
-    }
 
     fun getRobotInitialState(): MOERobotInitialStateConfig {
         return MOERobotInitialStateConfig()
@@ -24,7 +20,9 @@ interface MOEBotConstantsImpl {
         return MOEGyroConfig(getRobotInitialState().robotInitial.degAng)
     }
 
-
+    fun getVuforiaConfig(): MOEVuforiaConfig {
+        return MOEVuforiaConfig()
+    }
 
 
 }

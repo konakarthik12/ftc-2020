@@ -3,23 +3,16 @@ import com.android.tools.r8.D8
 import com.android.tools.r8.D8Command
 import com.android.tools.r8.OutputMode
 import io.github.classgraph.ClassGraph
-import org.java_websocket.WebSocket
-import org.java_websocket.client.WebSocketClient
-import org.java_websocket.handshake.ClientHandshake
-import org.java_websocket.server.WebSocketServer
-import java.lang.Exception
 
 buildscript {
     repositories {
         google()
         mavenCentral()
-        maven { setUrl("https://jitpack.io") }
 
     }
     dependencies {
-        classpath("com.android.tools:r8:1.5.68")
-        classpath("com.github.TooTallNate:Java-WebSocket:v1.4.0")
-        classpath("io.github.classgraph:classgraph:4.8.53")
+        classpath("com.android.tools:r8:1.5.70")
+        classpath("io.github.classgraph:classgraph:4.8.60")
     }
 }
 
@@ -27,40 +20,38 @@ tasks.register("writeOpModes") {
     dependsOn("compileClasses")
     val packageToScan = "org.firstinspires.ftc.teamcode"
     val prefix = "com.qualcomm.robotcore.eventloop.opmode."
-    val annotations = arrayOf("Autonomous", "TeleOp")
+    val annotations = arrayOf("Autonomous", "TeleOp").map { prefix + it }
+    val disabledAnnotation = prefix + "Disabled"
     val classPackageRoot = "$buildDir/classes"
-    //    println(classPackageRoot)
-    // compileTask.destinationDir
     val outFile = File("$buildDir/dex/classes.txt")
     doLast {
-        ClassGraph()
-                // [Configure your ClassGraph instance here]
-                .overrideClasspath(classPackageRoot)
-                .whitelistPackages(packageToScan)
-                .enableAnnotationInfo()
-                .scan()
-                .use { scanResult ->
-                    outFile.printWriter().use { out ->
-                        for (annotation in annotations) {
-                            val resultList = scanResult.getClassesWithAnnotation(prefix + annotation)
-                            resultList.forEach { clazz ->
-                                //                                if (clazz.isAbstract || clazz.isAnonymousInnerClass || !clazz.isPublic || clazz.declaredConstructorInfo.none { it.isPublic && it.parameterInfo.isEmpty() }) {
-                                //                                    throw kotlin.IllegalStateException(clazz + "seems suspisious")
-                                //                                }
-                                val annotationInfo = clazz.getAnnotationInfo(prefix + annotation)
-                                var toString = annotationInfo.parameterValues.getValue("name")?.toString()
-                                if (toString.isNullOrEmpty()) {
-                                    toString = clazz.simpleName
-                                }
-                                out.write(toString!!)
-                                out.write("/")
-                                out.write(clazz.name)
-                                out.write("/")
-                            }
-                            out.write("\n")
-                        }
-                    }
+        val scanResult =
+                ClassGraph()
+                        .overrideClasspath(classPackageRoot)
+                        .whitelistPackages(packageToScan)
+                        .enableAnnotationInfo()
+                        .scan()
+
+        val out = outFile.printWriter()
+        for (annotation in annotations) {
+            val annotatedClasses =
+                    scanResult.getClassesWithAnnotation(annotation).filterNot { it.hasAnnotation(disabledAnnotation) }
+            annotatedClasses.forEach { clazz ->
+                val annotationInfo = clazz.getAnnotationInfo(annotation)
+
+                var toString = annotationInfo.parameterValues.getValue("name")?.toString()
+                if (toString.isNullOrEmpty()) {
+                    toString = clazz.simpleName
                 }
+                out.write(toString!!)
+                out.write("/")
+                out.write(clazz.name)
+                out.write("/")
+            }
+            out.write("\n")
+        }
+        out.close()
+        scanResult.close()
     }
 }
 
@@ -82,15 +73,15 @@ tasks.register("copyClasses", Copy::class) {
     dependsOn("clearClassesCache")
     includeEmptyDirs = false
     val mainPath = "${project(":TeamCode").buildDir}/tmp/kotlin-classes/debug"
-    //    val libPath = "${project(":MOELibraries").buildDir}/classes/kotlin/jvm/main"
+//    val libPath = "${project(":MOELibraries").buildDir}/classes/kotlin/jvm/main"
     from(mainPath)
-    //    from(libPath)
+//    from(libPath)
     include("**/*.class")
     into("$buildDir/classes")
-    //    doFirst {
-    //
-    //    }
-    //    delete( buildDir.toString()+('/classes'))
+//    doFirst {
+//
+//    }
+//    delete( buildDir.toString()+('/classes'))
 }
 tasks.register("compileClasses") {
     dependsOn("copyClasses")
@@ -113,7 +104,7 @@ tasks.register("compileClasses") {
         } catch (e: RuntimeException) {
             println(e.toString())
         }
-        //        println("done" + outputDir)
+//        println("done" + outputDir)
     }
 }
 //tasks.register("temp") {

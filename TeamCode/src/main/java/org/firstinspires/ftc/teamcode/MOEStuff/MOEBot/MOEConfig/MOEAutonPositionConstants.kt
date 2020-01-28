@@ -1,30 +1,21 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig
 
-import org.firstinspires.ftc.teamcode.constants.MOEConstants
+import org.firstinspires.ftc.teamcode.autonomous.constants.AutonConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Rectangle
 
-data class AutonPositionConfig(val skystoneCropRect: Rectangle,
-                               val robotToFieldOffset: Double,
-                               val positionOffsets: Point,
-                               val topSkystonePosition: Point,
+data class AutonPositionConfig(val positionOffsets: Point,
                                val afterSkystonePosition: Point,
                                val dumpSkystonePosition: Point,
-                               val parkPosition: Point)
+                               val parkPosition: Point) {
+    private fun flipAboutFieldYAxis(p: Point): Point = Point(AutonConstants.FIELD_SIZE - p.x, p.y)
 
-fun flipAboutFieldYAxis(p: Point): Point = Point(MOEConstants.Units.FIELD_SIZE - p.x, p.y)
+    fun reflect(): AutonPositionConfig {
 
-fun reflectAutonConfig(config: AutonPositionConfig): AutonPositionConfig {
-    val (skystoneCropRect, robotToFieldOffset, positionOffsets, topSkystonePosition,
-            afterSkystonePosition, dumpSkystonePosition, parkPosition) = config
-
-    return AutonPositionConfig(
-            skystoneCropRect = skystoneCropRect,
-            robotToFieldOffset = -robotToFieldOffset,
-            positionOffsets = flipAboutFieldYAxis(positionOffsets),
-            topSkystonePosition = flipAboutFieldYAxis(topSkystonePosition),
-            afterSkystonePosition = flipAboutFieldYAxis(afterSkystonePosition),
-            dumpSkystonePosition = flipAboutFieldYAxis(dumpSkystonePosition),
-            parkPosition = flipAboutFieldYAxis(parkPosition)
-    )
+        return AutonPositionConfig(
+                positionOffsets = flipAboutFieldYAxis(positionOffsets),
+                afterSkystonePosition = flipAboutFieldYAxis(afterSkystonePosition),
+                dumpSkystonePosition = flipAboutFieldYAxis(dumpSkystonePosition),
+                parkPosition = flipAboutFieldYAxis(parkPosition)
+        )
+    }
 }

@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAutonArm.MOEAutonArms
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEometrySystem
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySystem
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEChassis
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOEGyro
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOEIMUGyro
@@ -23,18 +23,17 @@ class MOEBot(config: MOEBotConstantsImpl) {
     val outtake = MOEOuttake()
     var chassis: MOEChassis = MOEChassis()
     var intake: MOEIntake = MOEIntake()
-    var odometry = MOEometrySystem(config)
+    var odometry = MOEdometrySystem(config)
     lateinit var gyro: MOEGyro
     lateinit var vuforia: MOEVuforia
-    lateinit var camera: MOECamera
 
     init {
         if (robotConfig.useGyro) {
             gyro = (if (robotConfig.useOdometry) MOEdometryGyro(config) else MOEIMUGyro())
         }
         if (robotConfig.useCamera) {
-            camera = MOECamera()
-            vuforia = MOEVuforia()
+
+            vuforia = MOEVuforia(config.getVuforiaConfig())
         }
     }
 

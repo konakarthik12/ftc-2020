@@ -22,7 +22,7 @@ public class DexHandler {
     private static ClassLoader contextClassLoader;
 
     public static void init(FtcRobotControllerActivity context) {
-        dexFile.mkdirs();
+        dexFile.getParentFile().mkdirs();
         absolutePath = ContextCompat.getCodeCacheDir(context).getAbsolutePath();
         contextClassLoader = context.getClassLoader();
 

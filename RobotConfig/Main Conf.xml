@@ -8,12 +8,11 @@
             <NeveRest20Gearmotor name="FLDM12" port="2" />
             <NeveRest20Gearmotor name="BLDM13" port="3" />
             <Servo name="LFGS10" port="0" />
-            <Servo name="GRBS12" port="2" />
+            <Servo name="LAAS11" port="1" />
+            <Servo name="OUTS12" port="2" />
             <Servo name="CAPS13" port="3" />
             <Servo name="OUTS14" port="4" />
-            <AnalogInput name="ROAA10" port="0" />
-            <AnalogInput name="ROSA11" port="1" />
-            <AnalogInput name="LOAA12" port="2" />
+            <Servo name="LACS15" port="5" />
             <DigitalDevice name="LIMD10" port="0" />
             <LynxEmbeddedIMU name="imu" port="0" bus="0" />
         </LynxModule>
@@ -23,7 +22,10 @@
             <NeveRest20Gearmotor name="FRDM22" port="2" />
             <NeveRest20Gearmotor name="BRDM23" port="3" />
             <Servo name="RFGS20" port="0" />
+            <Servo name="RAAS21" port="1" />
             <Servo name="FDRS23" port="3" />
+            <Servo name="GRBS14" port="4" />
+            <Servo name="RACS25" port="5" />
             <LynxEmbeddedIMU name="imu2" port="0" bus="0" />
         </LynxModule>
     </LynxUsbDevice>

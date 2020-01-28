@@ -1,30 +1,18 @@
 package org.firstinspires.ftc.teamcode.utilities.external
 
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.PointImpl
 import org.firstinspires.ftc.teamcode.utilities.external.other.Cloneable
-import kotlin.math.*
-//
-//fun Double.toPrecision(digits: Int = 3): String {
-//    return toPrecision(this, digits.toDouble()).toString()
-//}
-//
-//fun toPrecision(n: Double, p: Double): Double {
-//    if (n == 0.0) return 0.0
-//    val e: Double = floor(log10(abs(n)))
-//    val f = round(exp(abs(e - p + 1) * ln(10.0)))
-//    //    val e: Double = Math.floor(Math.log10(Math.abs(n)))
-//    //    val f: Double = Math.round(Math.exp(Math.abs(e - p + 1) * log(10)))
-//    return if (e - p + 1 < 0) {
-//        round(n * f) / f
-//    } else round(n / f) * f
-//}
+import kotlin.math.pow
 
 fun Double.toFixed(digits: Int = 3): String {
-    return "%.${digits}f".format(this)
+    //for the sake of javascript
+    val multiplyer = 10.0.pow(digits)
+    val temp = (this * multiplyer).toInt()
+    return (temp.toDouble() / multiplyer).toString()
+//    return "%.${digits}f".format(this)
 }
 
- fun IntRange.coerceIn(indices: IntRange): IntRange {
+fun IntRange.coerceIn(indices: IntRange): IntRange {
     return IntRange(start.coerceAtLeast(indices.first), last.coerceAtMost(indices.last))
 }
 

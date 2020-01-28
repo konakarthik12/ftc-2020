@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.constants
 
 import android.content.Context
 import com.google.firebase.database.DatabaseReference
+import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
@@ -11,8 +12,8 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
 interface OpModeInterface {
     fun iOpModeIsActive(): Boolean
     val iIsStopRequested: Boolean
-    val iTelemetry: Telemetry
-    val iHardwareMap: HardwareMap
+    fun iRequestOpModeStop()
+
 }
 
 
@@ -25,9 +26,10 @@ class ReferenceHolder {
         lateinit var robot: MOEBot
 
         fun setRefs(opMode: OpModeInterface) {
+            if(opMode !is OpMode) throw IllegalStateException("How is opmode not an OpMode")
             moeOpMode = opMode
-            telemetry = opMode.iTelemetry
-            hardwareMap = opMode.iHardwareMap
+            telemetry = opMode.telemetry
+            hardwareMap = opMode.hardwareMap
             appContext = hardwareMap.appContext
         }
 

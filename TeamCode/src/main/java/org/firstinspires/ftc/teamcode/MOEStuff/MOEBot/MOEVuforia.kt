@@ -4,40 +4,46 @@ import android.graphics.Bitmap
 import com.vuforia.PIXEL_FORMAT
 import com.vuforia.Vuforia
 import org.firstinspires.ftc.robotcore.external.ClassFactory
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer
-import org.firstinspires.ftc.teamcode.constants.MOEConstants
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEVuforiaConfig
+import org.firstinspires.ftc.teamcode.R
 import org.firstinspires.ftc.teamcode.constants.MOEVuforiaConstants
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Rectangle
+import org.firstinspires.ftc.teamcode.utilities.internal.crop
 
 
+class MOEVuforia(val config: MOEVuforiaConfig) {
+    var vuforia = getVuforiaLocalizaer()
 
 
+    private fun getVuforiaLocalizaer(): VuforiaLocalizer? {
+        Vuforia.setFrameFormat(PIXEL_FORMAT.RGBA8888, true)
+        if (config.enablePreview) {
+            MOEVuforiaConstants.params.cameraMonitorViewIdParent = getMonitorViewId()
+        }
 
-class MOEVuforia() {
-    lateinit var vuforia: VuforiaLocalizer
-    private val parameters: VuforiaLocalizer.Parameters = MOEVuforiaConstants.params
-
-    init {
-        setVuforiaSettings()
+        return ClassFactory.getInstance().createVuforia(MOEVuforiaConstants.params).apply {
+            enableConvertFrameToBitmap()
+            frameQueueCapacity = 1
+        }
     }
 
-    private fun setVuforiaSettings() {
-        Vuforia.setFrameFormat(PIXEL_FORMAT.RGBA8888, true)
-        vuforia = ClassFactory.getInstance().createVuforia(parameters)
-        vuforia.enableConvertFrameToBitmap()
-        vuforia.frameQueueCapacity = 1
+
+    fun getMonitorViewId(): Int {
+        return R.id.cameraMonitorViewId
+
+    }
+
+    fun getCroppedBitmap(cropRect: Rectangle): Bitmap? {
+        return getBitmap()?.crop(cropRect)
     }
 
     fun getBitmap(): Bitmap? {
-        val frame: VuforiaLocalizer.CloseableFrame
 
-        try {
-            frame = vuforia.frameQueue.take()
-        } catch (e: InterruptedException) {
-            return null
+        return vuforia?.let {
+            it.convertFrameToBitmap(it.frameQueue.take())
         }
 
-        return vuforia.convertFrameToBitmap(frame)
     }
 }

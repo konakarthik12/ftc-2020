@@ -15,7 +15,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 
-class MOEometrySystem(val config: MOEBotConstantsImpl) : MOELocalizationSystem {
+class MOEdometrySystem(val config: MOEBotConstantsImpl) : MOELocalizationSystem {
 
     override fun moetion(): MOEtion {
         return MOEtion(fieldCentricPose, robot.gyro.angle)
@@ -41,7 +41,7 @@ class MOEometrySystem(val config: MOEBotConstantsImpl) : MOELocalizationSystem {
     var fieldCentricPose = (config.getRobotInitialState().robotInitial.pose.clone()) / 2.0
 
     private fun runLoop() {
-        val currTime = System.currentTimeMillis()
+//        val currTime = System.currentTimeMillis()
         val rightForwardDist = rightForwardWheel.getValue()
         val averageForwardDist = (rightForwardDist + leftForwardWheel.getValue()) / 2.0
         val forwardDelta = averageForwardDist - oldForwardDist
@@ -57,7 +57,7 @@ class MOEometrySystem(val config: MOEBotConstantsImpl) : MOELocalizationSystem {
         //update pose
         fieldCentricPose.x += forwardDelta * sin(angleRad) + strafeDelta * cos(angleRad)
         fieldCentricPose.y += (forwardDelta * cos(angleRad) - strafeDelta * sin(angleRad))
-        telemetry.addData("odoTime", System.currentTimeMillis() - currTime)
+//        telemetry.addData("odoTime", System.currentTimeMillis() - currTime)
     }
 
     lateinit var launch: Job

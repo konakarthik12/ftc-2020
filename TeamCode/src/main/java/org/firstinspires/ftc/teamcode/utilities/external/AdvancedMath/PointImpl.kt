@@ -10,7 +10,6 @@ interface PointImpl<T> : Cloneable<T> {
     operator fun times(value: Double) = create(this.x * value, this.y * value)
     operator fun div(value: Double) = create(this.x / value, this.y / value)
     operator fun unaryMinus() = create(-this.x, -this.y)
-
     operator fun timesAssign(value: Double) {
         this.x *= value; this.y *= value
     }

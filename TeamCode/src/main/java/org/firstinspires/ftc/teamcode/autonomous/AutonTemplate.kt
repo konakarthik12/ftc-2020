@@ -1,22 +1,20 @@
 package org.firstinspires.ftc.teamcode.autonomous
 
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad.Button
-import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
-import org.firstinspires.ftc.teamcode.utilities.internal.addData
-import org.firstinspires.ftc.teamcode.utilities.internal.getSkyStoneLocationFromBitmap
+import org.firstinspires.ftc.teamcode.autonomous.constants.AutonConstants
+import org.firstinspires.ftc.teamcode.autonomous.vision.SkyStoneLocation
+import org.firstinspires.ftc.teamcode.autonomous.vision.getSkyStoneLocationFromBitmap
 
 @Autonomous(name = "AutonTemplate")
 class AutonTemplate : MOEAuton() {
     override fun initOpMode() {
-        Log.e("stuffe", "stuffe")
-        telemetry.addData("testagain")
+
     }
 
     override fun run() {
-        val bm = robot.camera.getCroppedBitmap(getAutonConfig().positionConfig.skystoneCropRect)!!
-        val location = getSkyStoneLocationFromBitmap(bm)
+        val location = getSkyStoneLocation()
 
 //        when (location) {
 //            SkyStoneLocation.LEFT -> {
@@ -35,6 +33,11 @@ class AutonTemplate : MOEAuton() {
         robot.chassis.encoders.moveBackwardAStars(35.0, 0.5) // Adding 5 astars for good measure.
 
         robot.chassis.moveTo(-1.0 /* foundation */, -1.0)
+    }
+
+    private fun getSkyStoneLocation(): SkyStoneLocation {
+        val bm = robot.vuforia.getCroppedBitmap(AutonConstants.Skystone.SKYSTONE_CROP)!!
+        return getSkyStoneLocationFromBitmap(bm)
     }
 
     //    override fun getInitialSlam(): Point {

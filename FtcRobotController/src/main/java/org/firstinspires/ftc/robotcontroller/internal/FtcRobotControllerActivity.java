@@ -178,7 +178,6 @@ public class FtcRobotControllerActivity extends Activity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(intent.getAction())) {
-            Log.e("usb connect", intent.getAction());
             UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
             RobotLog.vv(TAG, "ACTION_USB_DEVICE_ATTACHED: %s", usbDevice.getDeviceName());
             Log.e("Device added", String.valueOf(usbDevice.getVendorId()));

@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 interface MOEFirebase : ChildEventListener {
 
 
-
     //    var localConfigSnapshot: DataSnapshot
     fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return null

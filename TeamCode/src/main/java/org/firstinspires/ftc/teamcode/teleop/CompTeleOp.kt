@@ -104,7 +104,7 @@ open class CompTeleOp() : MOETeleOp() {
     val minPower = 0.4
     val maxPower = 7.0
     val powerRange = minPower..maxPower
-    private fun joystickChassis() {
+    open fun joystickChassis() {
         //        val bumperThrottle = 0.5
         val scaleX = 1
         val scaleY = 0.85

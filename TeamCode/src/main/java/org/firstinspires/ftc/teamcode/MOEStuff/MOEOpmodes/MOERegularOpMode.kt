@@ -17,34 +17,20 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, 
     lateinit var dataRef: DatabaseReference
     lateinit var robot: MOEBot
     override fun iOpModeIsActive(): Boolean = opModeIsActive()
+    override fun iRequestOpModeStop() = requestOpModeStop()
 
-    override val iTelemetry: Telemetry
-        get() = this.telemetry
-
-    override val iHardwareMap: HardwareMap
-        get() = this.hardwareMap
 
     override val iIsStopRequested: Boolean
         get() = this.isStopRequested
 
     final override fun runOpMode() {
         moeDoubleInternalInit()
-//        Log.e("wait", "wait")
         initRobot()
-//        Log.e("wait2", "wait")
-
         moeInternalInit()
-//        Log.e("wait3", "wait")
         setRobotRef(robot)
-//        Log.e("wait4", "wait")
-
         initOpMode()
-//        Log.e("wait5", "wait")
-
         moeInternalPostInit()
-//        Log.e("start wait", "wait")
         waitForStart()
-//        Log.e("end wait", "end")
         offsetRobotValues()
         run()
     }
@@ -97,6 +83,7 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, 
     open fun moeInternalPostInit() {
 
     }
+
 
     private fun offsetRobotValues() {
         robot.offsetValues(this)

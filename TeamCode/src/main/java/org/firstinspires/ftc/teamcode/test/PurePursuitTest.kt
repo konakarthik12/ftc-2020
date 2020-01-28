@@ -7,13 +7,16 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler.moeWebServer
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOELoopedOpMode
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
+import org.firstinspires.ftc.teamcode.teleop.CompTeleOp
 import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.*
 import org.firstinspires.ftc.teamcode.utilities.external.toFixed
 import org.firstinspires.ftc.teamcode.utilities.internal.get
 
 @TeleOp()
-class PurePursuitTest : MOELoopedTest() {
+class PurePursuitTest : MOETeleOp() {
     val points = listOf(
             PurePursuitPoint(0.0, 0.0),
             PurePursuitPoint(0.0, 100.0)
@@ -25,6 +28,7 @@ class PurePursuitTest : MOELoopedTest() {
         telemetry.addData("wait for", "slam")
         telemetry.update()
         telemetry.update()
+
         //        val string = Point(2.0, 4.0)
         //        Log.e("string", string.toString())
         //        telemetry.addData("testagain$string")

@@ -17,9 +17,10 @@ function createServer(address, port, getOpModes, pushCode) {
         console.log(full);
         const client = new ReconnectingWebSocket(full, null, options);
         client.addEventListener('open', () => {
-            // console.log("yes");
-            if (fs.existsSync(defaultPath))
-                pushCode(defaultPath,client);
+            if (fs.existsSync(defaultPath)) {
+                console.log("yes");
+                pushCode(defaultPath, client);
+            }
             resolve(client);
         });
         client.addEventListener('error', (err) => {
@@ -27,7 +28,13 @@ function createServer(address, port, getOpModes, pushCode) {
         });
         client.addEventListener('message', (message) => {
             if (message.data === 'ops') {
-                client.send('ops/' + getOpModes());
+                let opModes = getOpModes();
+                if (!opModes) {
+                    console.log("cant find txt");
+
+                    return;
+                }
+                client.send('ops/' + opModes);
                 console.log("sent opmodes")
             }
         });

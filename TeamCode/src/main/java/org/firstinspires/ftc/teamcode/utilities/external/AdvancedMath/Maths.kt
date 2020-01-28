@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath
 
+import kotlin.math.PI
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -34,5 +35,5 @@ fun ClosedFloatingPointRange<Double>.lerp(t: Double): Double {
 }
 
 
-fun Double.toDegrees() = Math.toDegrees(this)
-fun Double.toRadians() = Math.toRadians(this)
+fun Double.toDegrees() = this * 180 / PI
+fun Double.toRadians() = this / 180.0 * PI

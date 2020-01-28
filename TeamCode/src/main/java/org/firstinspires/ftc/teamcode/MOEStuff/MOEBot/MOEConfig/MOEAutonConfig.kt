@@ -1,12 +1,9 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig
 
-import org.firstinspires.ftc.teamcode.constants.MOEAutonConstants
+import org.firstinspires.ftc.teamcode.autonomous.constants.AutonConstants
 
-data class MOEAutonConfig(val isLeft: Boolean = true,
-                          val useCamera: Boolean = true,
-                          val useSlam: Boolean = true) {
-    val positionConfig = if (isLeft) MOEAutonConstants.Left else MOEAutonConstants.Right
-
+data class MOEAutonConfig(val isLeft: Boolean = true) {
+    val positionConfig = if (isLeft) AutonConstants.Locations.Left else AutonConstants.Locations.Right
 }
 
 interface MOEAutonConfigImpl {

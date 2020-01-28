@@ -8,7 +8,7 @@ import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
-@TeleOp(name = "USBHostTest")
+@TeleOp()
 class USBHostTest : MOERegularTest() {
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return null
@@ -23,7 +23,7 @@ class USBHostTest : MOERegularTest() {
 
     override fun run() {
         //        robot.chassis.turnPower(gamepad1.left_stick_x.toDouble())
-        val appContext = iHardwareMap.appContext
+        val appContext = hardwareMap.appContext
         val manager = appContext.getSystemService(Context.USB_SERVICE) as UsbManager
         val deviceList = manager.deviceList.map { it.key }
         //
