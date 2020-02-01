@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.robotcontroller.moeglobal;
 
+import android.app.Activity;
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEFirebase;
 import org.firstinspires.ftc.robotcontroller.moeglobal.opmodeloading.OpModeLoader;
@@ -20,7 +21,10 @@ public class MOEGlobalProcesses {
         ReflectionHolder.init();
         MOEFirebase.init(activity);
         MOESocketHandler.init(activity);
-        MOESheetsHandler.init(activity);
     }
 
+    public static void postLayoutInit(FtcRobotControllerActivity activity) {
+        MOESheetsHandler.init(activity);
+
+    }
 }

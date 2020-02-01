@@ -11,7 +11,7 @@ class MOEPidConstants {
     object PositionalPid {
         val yOptions = MOEPidOptions(P = 0.025, I = 0.005, D = 0.35)
         val xOptions = MOEPidOptions(P = 0.06, D = 0.2)
-        val tOptions = MOEPidOptions(P = 0.017, I = 0.005, D = 0.035)
+        val tOptions = MOEPidOptions(P = 0.017, I = 0.0, D = 0.035)
         val DefaultOptions = MOEPositionalPidOptions(xOptions, yOptions, tOptions)
     }
 }

@@ -19,8 +19,10 @@ import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta.Flavor;
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMetaAndClass;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
+import org.java_websocket.server.DefaultSSLWebSocketServerFactory;
 import org.java_websocket.server.WebSocketServer;
 
+import javax.net.ssl.SSLContext;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -40,9 +42,10 @@ import static org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEDataba
 public class MOEServer extends WebSocketServer {
 
 
-    MOEServer(Context context) {
+    MOEServer(SSLContext sslContext) {
         super(new InetSocketAddress(0));
-
+        if(sslContext==null) return;
+        setWebSocketFactory(new DefaultSSLWebSocketServerFactory(sslContext));
     }
 
 

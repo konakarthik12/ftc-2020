@@ -1,23 +1,22 @@
 package org.firstinspires.ftc.robotcontroller.moeglobal.sheets
 
+import com.google.api.client.extensions.android.http.AndroidHttp
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.JsonFactory
+import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.services.sheets.v4.Sheets
 import com.google.api.services.sheets.v4.model.Spreadsheet
 import java.util.*
 
-class SheetsAPIDataSource(private val authManager: SheetAuthenticationManager,
-                          private val transport: HttpTransport,
-                          private val jsonFactory: JsonFactory) {
+class SheetsAPIDataSource(private val authManager: SheetAuthenticationManager) {
 
-    private val sheetsAPI: Sheets
-        get() {
-            return Sheets.Builder(transport,
-                    jsonFactory,
-                    authManager.googleAccountCredential)
-                    .setApplicationName("test")
-                    .build()
-        }
+//    private val sheetsAPI: Sheets =
+//            Sheets.Builder(AndroidHttp.newCompatibleTransport(),
+//                    JacksonFactory.getDefaultInstance(),
+//                    authManager.googleAccountCredential)
+//                    .setApplicationName("test")
+//                    .build()
+
 
 //    override fun readSpreadSheet(spreadsheetId: String,
 //                                 spreadsheetRange: String): Single<List<Person>> {

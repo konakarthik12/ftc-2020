@@ -57,20 +57,20 @@ open class CompTeleOp() : MOETeleOp() {
 //        telemetry.addData("timed", System.currentTimeMillis() - oldTime)
     }
 
-    private fun dpadChassis() {
+    protected fun dpadChassis() {
         val scale = 0.3
         when {
             gpad1.dpad.up() -> {
-                robot.chassis.setFromMecanum(1.0, 0.0, gpad1.right.stick.x())
+                robot.chassis.setFromMecanum(1.0 * scale, 0.0, gpad1.right.stick.x())
             }
             gpad1.dpad.down() -> {
-                robot.chassis.setFromMecanum(-1.0, 0.0, gpad1.right.stick.x())
+                robot.chassis.setFromMecanum(-1.0 * scale, 0.0, gpad1.right.stick.x())
             }
             gpad1.dpad.left() -> {
-                robot.chassis.setFromMecanum(0.0, -1.0, gpad1.right.stick.x())
+                robot.chassis.setFromMecanum(0.0, -1.0 * scale, gpad1.right.stick.x())
             }
             gpad1.dpad.right() -> {
-                robot.chassis.setFromMecanum(0.0, 1.0, gpad1.right.stick.x())
+                robot.chassis.setFromMecanum(0.0, 1.0 * scale, gpad1.right.stick.x())
             }
         }
 

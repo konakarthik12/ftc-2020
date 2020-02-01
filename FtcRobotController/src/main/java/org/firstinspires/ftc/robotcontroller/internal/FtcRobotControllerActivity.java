@@ -88,6 +88,8 @@ import org.firstinspires.ftc.onbotjava.OnBotJavaHelperImpl;
 import org.firstinspires.ftc.onbotjava.OnBotJavaProgrammingMode;
 import org.firstinspires.ftc.robotcontroller.moeglobal.MOEFtcEventLoop;
 import org.firstinspires.ftc.robotcontroller.moeglobal.MOEGlobalProcesses;
+import org.firstinspires.ftc.robotcontroller.moeglobal.sheets.MOESheetsHandler;
+import org.firstinspires.ftc.robotcontroller.moeglobal.sheets.SheetAuthenticationManager;
 import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
 import org.firstinspires.ftc.robotcore.internal.hardware.android.AndroidBoard;
 import org.firstinspires.ftc.robotcore.internal.network.*;
@@ -275,7 +277,7 @@ public class FtcRobotControllerActivity extends Activity {
         eventLoop = null;
 
         setContentView(R.layout.activity_ftc_controller);
-
+        MOEGlobalProcesses.postLayoutInit(this);
         preferencesHelper = new PreferencesHelper(TAG, context);
         preferencesHelper.writeBooleanPrefIfDifferent(context.getString(R.string.pref_rc_connected), true);
         preferencesHelper.getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferencesListener);
@@ -610,6 +612,9 @@ public class FtcRobotControllerActivity extends Activity {
 
     @Override
     protected void onActivityResult(int request, int result, Intent intent) {
+        if (request == SheetAuthenticationManager.RQ_GOOGLE_SIGN_IN) {
+            SheetAuthenticationManager.handleSignIn(result);
+        }
         if (request == REQUEST_CONFIG_WIFI_CHANNEL) {
             if (result == RESULT_OK) {
                 AppUtil.getInstance().showToast(UILocation.BOTH, context.getString(R.string.toastWifiConfigurationComplete));

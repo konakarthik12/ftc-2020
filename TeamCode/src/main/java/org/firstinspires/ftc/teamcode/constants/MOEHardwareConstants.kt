@@ -66,9 +66,9 @@ object MOEHardwareConstants {
     }
 
     object Odometry {
-        val RightForward = OdometryConfig(RightIntake, false)
-        val LeftForward = OdometryConfig(LeftIntake, false)
-        val Strafe = OdometryConfig(BackRight, false)
+        val RightForward = OdometryConfig(RightIntake, true)
+        val LeftForward = OdometryConfig(LeftIntake, true)
+        val Strafe = OdometryConfig(BackRight, true)
 
     }
 

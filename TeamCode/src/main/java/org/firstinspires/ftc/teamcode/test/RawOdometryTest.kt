@@ -27,7 +27,7 @@ class RawOdometryTest : CompTeleOp() {
 
     override fun log() {
 
-        val robotPose = robot.odometry.pose
+        val robotPose = robot.odometry.debugPose
 
         val angle = robot.gyro.angle
 

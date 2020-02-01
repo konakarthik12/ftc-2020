@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Odometry.Ri
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Odometry.Strafe
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toDegrees
 import kotlin.math.cos
@@ -35,9 +34,10 @@ class MOEdometrySystem(val config: MOEBotConstantsImpl) : MOELocalizationSystem 
     fun resetValues() {
         rightForwardWheel.resetValues()
         strafeWheel.resetValues()
+        leftForwardWheel.resetValues()
     }
 
-    var pose = Point(0.0, 0.0)
+    var debugPose = Point(0.0, 0.0)
     var fieldCentricPose = (config.getRobotInitialState().robotInitial.pose.clone()) / 2.0
 
     private fun runLoop() {
@@ -47,12 +47,15 @@ class MOEdometrySystem(val config: MOEBotConstantsImpl) : MOELocalizationSystem 
         val forwardDelta = averageForwardDist - oldForwardDist
         oldForwardDist = averageForwardDist
 
-        val strafeDist = strafeWheel.getValue().toDouble()
-        val strafeDelta = strafeDist - oldStrafeDist
-        oldStrafeDist = strafeDist
-        angleRad = (rightForwardDist - averageForwardDist) / MOEdometryConstants.TICS_TO_RADIANS
+        angleRad = (rightForwardDist - averageForwardDist) / MOEdometryConstants.TICS_PER_RADIANS
 
-        pose = Point(averageForwardDist, strafeDist)
+        val strafeDist = strafeWheel.getValue().toDouble()
+        val strafeCorrected = strafeDist - (angleRad * MOEdometryConstants.TICS_PER_STRAFE_ROTATION)
+        val strafeDelta = strafeCorrected - oldStrafeDist
+        oldStrafeDist = strafeCorrected
+
+
+        debugPose = Point(averageForwardDist, strafeDist)
 
         //update pose
         fieldCentricPose.x += forwardDelta * sin(angleRad) + strafeDelta * cos(angleRad)

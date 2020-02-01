@@ -4,7 +4,7 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEGamepad.MOEGamepad
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
 
-abstract class MOETeleOp() : MOELoopedOpMode() {
+abstract class MOETeleOp : MOELoopedOpMode() {
     lateinit var gpad1: MOEGamepad
     lateinit var gpad2: MOEGamepad
     final override fun moeInternalInit() {

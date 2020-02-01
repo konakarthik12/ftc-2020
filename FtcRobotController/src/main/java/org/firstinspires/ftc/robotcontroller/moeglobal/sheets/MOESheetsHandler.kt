@@ -6,10 +6,12 @@ import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity
 
 //
 class MOESheetsHandler {
+//    lateinit var sheetsApi: MOESheetsAPI
+
     companion object {
         @JvmStatic
         fun init(activity: FtcRobotControllerActivity) {
-            SheetAuthenticationManager
+            SheetAuthenticationManager.init(activity)
         }
     }
 }
