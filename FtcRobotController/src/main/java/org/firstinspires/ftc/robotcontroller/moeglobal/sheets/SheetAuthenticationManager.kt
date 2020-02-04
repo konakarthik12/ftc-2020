@@ -9,8 +9,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.drive.Drive
+import com.google.api.client.extensions.android.http.AndroidHttp
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.ExponentialBackOff
+import com.google.api.services.sheets.v4.Sheets
 import com.google.api.services.sheets.v4.SheetsScopes
 import kotlinx.android.synthetic.main.activity_ftc_controller.*
 import org.firstinspires.ftc.robotcontroller.moeglobal.ActivityReferenceHolder.activityRef
@@ -43,20 +46,30 @@ object SheetAuthenticationManager {
         }
     }
 
+    @JvmField
     val RQ_GOOGLE_SIGN_IN = 365
+
     private fun callSignInActivity(activity: Activity) {
         activity.startActivityForResult(googleSignInClient.signInIntent, RQ_GOOGLE_SIGN_IN)
     }
 
     private fun createApi() {
 
+
+        MOESheetsHandler.internalApi = getApi()
+    }
+
+    fun getApi(): Sheets {
         val googleAccountCredential = GoogleAccountCredential
                 .usingOAuth2(activityRef.get(), SCOPES.toList())
                 .setBackOff(ExponentialBackOff())
                 .setSelectedAccount(getLastSignedAccount()?.account)
-
+        return Sheets.Builder(AndroidHttp.newCompatibleTransport(),
+                JacksonFactory.getDefaultInstance(),
+                googleAccountCredential)
+                .setApplicationName("test")
+                .build()
     }
-
 
     private fun getLastSignedAccount(): GoogleSignInAccount? {
         return GoogleSignIn.getLastSignedInAccount(activityRef.get())
@@ -77,7 +90,7 @@ object SheetAuthenticationManager {
     }
 
     private fun loginFailed() {
-        activityRef.get()?.sheetsSignInButton.text = "Sign In Failed"
+        activityRef.get()?.sheetsSignInButton?.text = "Sign In Failed"
     }
 
     private fun loginSuccessful() {
