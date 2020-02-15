@@ -17,14 +17,10 @@
 
 import java.util.regex.Pattern
 
-tasks.whenTaskAdded { task ->
-    if (task.name.contains("lint")) {
-        task.enabled = false
-    }
-}
 apply plugin: 'com.android.application'
 
 android {
+
     compileSdkVersion 28
 
     signingConfigs {
@@ -41,6 +37,7 @@ android {
     }
 
     defaultConfig {
+        signingConfig signingConfigs.debug
         applicationId 'com.qualcomm.ftcrobotcontroller'
         minSdkVersion 23
         targetSdkVersion 28
@@ -55,7 +52,7 @@ android {
          * correspondence automatically.
          *
          */
-        def manifestFile = project(':FtcRobotController').file('src/main/AndroidManifest.xml')
+        def manifestFile = project(':FtcRobotController').file('src/main/AndroidManifest.xml');
         def manifestText = manifestFile.getText()
         //
         def vCodePattern = Pattern.compile("versionCode=\"(\\d+(\\.\\d+)*)\"")
@@ -64,7 +61,7 @@ android {
         def vCode = Integer.parseInt(matcher.group(1))
         //
         def vNamePattern = Pattern.compile("versionName=\"(.*)\"")
-        matcher = vNamePattern.matcher(manifestText)
+        matcher = vNamePattern.matcher(manifestText);
         matcher.find()
         def vName = matcher.group(1)
         //
@@ -79,7 +76,7 @@ android {
             // Disable debugging for release versions so it can be uploaded to Google Play.
             //debuggable true
             ndk {
-                abiFilters "armeabi-v7a"
+                abiFilters "armeabi-v7a", "arm64-v8a"
             }
         }
         debug {
@@ -87,7 +84,7 @@ android {
             jniDebuggable true
             renderscriptDebuggable true
             ndk {
-                abiFilters "armeabi-v7a"
+                abiFilters "armeabi-v7a", "arm64-v8a"
             }
         }
     }
@@ -96,10 +93,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
-    }
+
     sourceSets.main {
         jni.srcDirs = []
         jniLibs.srcDir rootProject.file('libs')
