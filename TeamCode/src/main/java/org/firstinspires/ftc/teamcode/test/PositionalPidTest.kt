@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers.Companion.fromMecanum
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers.Companion.fromMechanum
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.*
 import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
@@ -75,7 +75,7 @@ class PositionalPidTest : MOERegularTest() {
         //        telemetry.addData("error", systemPid.yPid.getError(systemPid.yPid.setpoint, pc.getPose.y).toPrecision())
 
 
-        val powers = fromMecanum(fwd, str, rot)
+        val powers = fromMechanum(fwd, str, rot)
         //        telemetry.addData("powers", powers.toString())
         val yPid = systemPid.yPid
         val xPid = systemPid.xPid

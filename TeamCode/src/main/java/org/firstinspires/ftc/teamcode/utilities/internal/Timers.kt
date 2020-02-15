@@ -10,11 +10,15 @@ infix fun LinearOpMode.wait(milliseconds: Number) {
     timer.reset()
     val length = milliseconds.toLong()
     while (timer.milliseconds() < length && opModeIsActive()) {
-        telemetry.addData("please wait another${timer.seconds()} seconds")
+//        telemetry.addData("please wait another${timer.seconds()} seconds")
+//        telemetry.update()
     };
 }
 
 infix fun LinearOpMode.waitSeconds(seconds: Number) = this.wait(seconds.toLong() * 1000)
+fun LinearOpMode.waitForStop() {
+
+}
 
 //infix fun OpModeInterface.waitA() {
 //    val time = ElapsedTime()

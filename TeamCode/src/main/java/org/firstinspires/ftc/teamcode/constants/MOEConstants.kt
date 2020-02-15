@@ -8,8 +8,6 @@ import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.MOEPurePurs
 object MOEConstants {
 
 
-
-
     object PurePursuit {
         val DefaultOptions = MOEPurePursuitOptions(
                 overallMaxVelocity = 1.0,
@@ -42,9 +40,8 @@ object MOEConstants {
         const val METERS_PER_ASTAR = METERS_PER_TILE / ASTARS_PER_TILE
         const val ASTARS_PER_METER = ASTARS_PER_TILE / METERS_PER_TILE
 
-
-        const val TICKS_PER_ASTAR = 19.8333333
-        const val ASTARS_PER_TICK = 1 / TICKS_PER_ASTAR
+        const val TICS_PER_INCH = 1170.0 //tics per inch of encoder
+//        const val TICS_PER_ASTAR = TICS_PER_INCH / 2
     }
 
 

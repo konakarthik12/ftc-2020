@@ -13,8 +13,8 @@ class LiftTeleOp : MOETeleOp() {
         if (gpad1.right.bumper.isPressed) right--
         robot.lift.leftMotor.setPower(left)
         robot.lift.rightMotor.setPower(right)
-        telemetry.addData("left", robot.lift.leftMotor.distanceTraveled)
-        telemetry.addData("right", robot.lift.rightMotor.distanceTraveled)
+//        telemetry.addData("left", robot.lift.leftMotor.distanceTraveled)
+//        telemetry.addData("right", robot.lift.rightMotor.distanceTraveled)
         telemetry.update()
     }
 

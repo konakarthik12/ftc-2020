@@ -13,7 +13,7 @@ data class Powers(var FLP: Double, var FRP: Double, var BLP: Double, var BRP: Do
 
     companion object {
 
-        fun fromMecanum(fwd: Double, str: Double, rot: Double, maxPower: Double = 1.0): Powers {
+        fun fromMechanum(fwd: Double, str: Double, rot: Double, maxPower: Double = 1.0): Powers {
             val flp = fwd + str + rot
             val frp = fwd - str - rot
             val blp = fwd - str + rot
@@ -30,7 +30,7 @@ data class Powers(var FLP: Double, var FRP: Double, var BLP: Double, var BRP: Do
         fun fromRadAngle(radAng: Double, magnitude: Double, rot: Double, maxPower: Double = 1.0): Powers {
             //            val radAng = degAng.toRadians()
             //            telemetry.addData("magsin", magnitude* sin(radAng))
-            return fromMecanum(magnitude * sin(radAng), magnitude * cos(radAng), rot, maxPower)
+            return fromMechanum(magnitude * sin(radAng), magnitude * cos(radAng), rot, maxPower)
         }
 
     }

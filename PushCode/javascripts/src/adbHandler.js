@@ -25,7 +25,7 @@ async function getNetworkDevices() {
 }
 
 function connect(ip) {
-    console.log(ip);
+    // console.log(ip);
     client.connect(ip)
 }
 

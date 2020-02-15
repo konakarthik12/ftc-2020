@@ -4,15 +4,12 @@ import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers.Companion.fromMecanum
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.*
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
+import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 import org.firstinspires.ftc.teamcode.utilities.internal.get
 import org.firstinspires.ftc.teamcode.utilities.external.toFixed
-import kotlin.math.cos
-import kotlin.math.sin
 
 @TeleOp(name = "PatrickPositionalPidTest")
 class PatrickPositionalPIDTest : MOERegularTest() {
@@ -20,7 +17,7 @@ class PatrickPositionalPIDTest : MOERegularTest() {
     //    lateinit var yPid: MOEPositionalPid
     //    lateinit var tPid: MOETurnPid
 //    var systemPid = MOEPositionalSystemPid(MOEPidConstants.PositionalPid.DefaultOptions)
-    lateinit var systemPid: MOEPositionalSystemPid
+    var tPid: MOETurnPid = MOETurnPid(MOEPidConstants.tOptions)
 
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return ref["desmos"]
@@ -51,9 +48,9 @@ class PatrickPositionalPIDTest : MOERegularTest() {
     var tSet = 0.0
 
     fun mainLoop() {
-        val moetion = robot.odometry.astarMoetion()
-        val pose = moetion.pose
-        val angle = moetion.degAng
+//        val moetion = robot.odometry.()
+//        val pose = moetion.pose
+
 //        pc.getPose *= MOEConstants.Units.ASTARS_PER_METER
 //        pc.getPose *= -1.0
 //        pose *= MOEConstants.Units.ASTARS_PER_METER
@@ -61,17 +58,19 @@ class PatrickPositionalPIDTest : MOERegularTest() {
         //        while (gamepad1.a){
         //        }
         //val setPointPoint = Point(systemPid.xPid.setpoint(), systemPid.yPid.setpoint());
-        logData(pose, angle)
-        val rawX = systemPid.xPid.getOutput(pose.x)
-        val rawY = systemPid.yPid.getOutput(pose.y)
+//        logData(pose, angle)
+//        val rawX = systemPid.xPid.getOutput(pose.x)
+//        val rawY = systemPid.yPid.getOutput(pose.y)
 
-        val rot = systemPid.tPid.getOutput(angle)
+        val input = robot.gyro.angle
+        val rot = tPid.getOutput(input)
 
-        val fwd = rawX * sin(Math.toRadians(angle)) + rawY * cos(Math.toRadians(angle))
-        val str = rawX * cos(Math.toRadians(angle)) - rawY * sin(Math.toRadians(angle))
-        telemetry.addData("FWD", fwd.toFixed())
-        telemetry.addData("STR", str.toFixed())
+//        val fwd = rawX * sin(Math.toRadians(angle)) + rawY * cos(Math.toRadians(angle))
+//        val str = rawX * cos(Math.toRadians(angle)) - rawY * sin(Math.toRadians(angle))
+//        telemetry.addData("FWD", fwd.toFixed())
+//        telemetry.addData("STR", str.toFixed())
         telemetry.addData("ROT", rot.toFixed())
+        logData(input)
 
         //        telemetry.addData("curPose", pc.getPose.x.toFixed())
         //        telemetry.addData("curAngle", robot.gyro.angle)
@@ -79,46 +78,52 @@ class PatrickPositionalPIDTest : MOERegularTest() {
         //        telemetry.addData("error", systemPid.yPid.getError(systemPid.yPid.setpoint, pc.getPose.y).toPrecision())
 
 
-        val powers = fromMecanum(fwd, str, rot)
+//        val powers = fromMecanum(fwd, str, rot)
         //        telemetry.addData("powers", powers.toString())
-        val yPid = systemPid.yPid
-        val xPid = systemPid.xPid
-        val tPid = systemPid.tPid
-        val multi = 48.0
+//        val yPid = systemPid.yPid
+//        val xPid = systemPid.xPid
+//        val multi = 48.0
 //        val yPid =
-        if (gamepad1.y && !oldUp) ySet += multi
-        if (gamepad1.a && !oldDown) ySet -= multi
-        if (gamepad1.b && !oldRight) xSet += multi
-        if (gamepad1.x && !oldLeft) xSet -= multi
-        if (gamepad1.dpad_left && !oldDpadLeft) tSet -= 90
-        if (gamepad1.dpad_right && !oldDpadRight) tSet += 90
+//        if (gamepad1.y && !oldUp) ySet += multi
+//        if (gamepad1.a && !oldDown) ySet -= multi
+//        if (gamepad1.b && !oldRight) xSet += multi
+//        if (gamepad1.x && !oldLeft) xSet -= multi
+        if (gamepad1.dpad_left && !oldDpadLeft) {
+            tSet -= 90
+            tPid.reset()
+        }
+        if (gamepad1.dpad_right && !oldDpadRight) {
+            tSet += 90
+            tPid.reset()
+
+        }
         tSet = tSet.toNormalAngle()
 
         if (gamepad1.right_bumper) {
-            xSet = 0.0
-            ySet = 0.0
+//            xSet = 0.0
+//            ySet = 0.0
             tSet = 0.0
         }
 
-        yPid.setpoint = { ySet }
-        xPid.setpoint = { xSet }
+//        yPid.setpoint = { ySet }
+//        xPid.setpoint = { xSet }
         tPid.setpoint = { tSet }
 //        tPid.setpoint = { tPid.setpoint().coerceIn(0.0..359.0) }
 
-        oldUp = gamepad1.y
-        oldDown = gamepad1.a
-        oldLeft = gamepad1.x
-        oldRight = gamepad1.b
+//        oldUp = gamepad1.y
+//        oldDown = gamepad1.a
+//        oldLeft = gamepad1.x
+//        oldRight = gamepad1.b
         oldDpadLeft = gamepad1.dpad_left
         oldDpadRight = gamepad1.dpad_right
-        telemetry.update()
+//        telemetry.update()
 
         if (gamepad1.right_trigger > 0.5) {
-            robot.chassis.setPower(0.0)
+            robot.chassis.stop()
             return
         }
 
-        robot.chassis.setPower(powers)
+        robot.chassis.turnPower(rot)
         //        while (gamepad1.a) {
         //            robot.chassis.setVelocity(0.0)
         //            telemetry.addData("waiting for key")
@@ -126,16 +131,20 @@ class PatrickPositionalPIDTest : MOERegularTest() {
         //        }
     }
 
-    private fun logData(pose: Point, angle: Double) {
+    private fun logData(angle: Double) {
         //        systemPid.yPid.setpoint += gamepad1.left_stick_y
         //        systemPid.xPid.setpoint += gamepad1.left_stick_x
         //        systemPid.tPid.setpoint += gamepad1.right_stick_x
-        telemetry.addData("egoalY", systemPid.yPid.setpoint())
-        telemetry.addData("curY", pose.y)
-        telemetry.addData("egoalX", systemPid.xPid.setpoint())
-        telemetry.addData("curX", pose.x)
-        telemetry.addData("goaT", systemPid.tPid.setpoint())
+//        telemetry.addData("egoalY", systemPid.yPid.setpoint())
+//        telemetry.addData("curY", pose.y)
+//        telemetry.addData("egoalX", systemPid.xPid.setpoint())
+//        telemetry.addData("curX", pose.x)
+        val setpoint = tPid.setpoint()
+        tPid.setOutputLimits(0.5)
+        telemetry.addData("goaT", setpoint)
         telemetry.addData("curT", angle)
+        telemetry.addData("error", tPid.internalPid.getError(setpoint, angle))
+        telemetry.update()
 
     }
 
@@ -144,17 +153,17 @@ class PatrickPositionalPIDTest : MOERegularTest() {
         val yOptions = dataSnapshot["yPID"].getValue(MOEPidOptions::class.java)!!
         val tOptions = dataSnapshot["tPID"].getValue(MOEPidOptions::class.java)!!
         Log.e("tOptions", tOptions.toString())
-        systemPid = MOEPositionalSystemPid(xOptions, yOptions, tOptions)
-        systemPid.xPid.setOutputLimits(0.2)
-        systemPid.yPid.setOutputLimits(0.2)
-        systemPid.tPid.setOutputLimits(0.2)
+//        systemPid = MOEPositionalSystemPid(xOptions, yOptions, tOptions)
+//        systemPid.xPid.setOutputLimits(0.2)
+//        systemPid.yPid.setOutputLimits(0.2)
+//        systemPid.tPid.setOutputLimits(0.2)
         //(x,y,t)
 //        systemPid.setSetpoints(0.0, 0.0, 0.0)
     }
 
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
         return super.getRobotSubSystemConfig().apply {
-            useOdometry = true
+            useOdometry = false
         }
     }
 }

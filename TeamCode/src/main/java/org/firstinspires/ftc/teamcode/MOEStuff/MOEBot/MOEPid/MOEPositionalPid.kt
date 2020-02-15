@@ -49,10 +49,11 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
 
     }
 
-    override var endCondition: (MOEtion, MOEtion) -> Boolean = { actual, setpoint ->
-        xPid.endCondition(actual.pose.x, setpoint.pose.x) &&
-                yPid.endCondition(actual.pose.y, setpoint.pose.y)
-                && tPid.endCondition(actual.degAng, setpoint.degAng)
+    //todo: handle output
+    override var endCondition: (MOEtion, MOEtion, MOEtion) -> Boolean = { actual, setpoint, output ->
+        xPid.endCondition(actual.pose.x, setpoint.pose.x, 0.0) &&
+                yPid.endCondition(actual.pose.y, setpoint.pose.y, 0.0)
+                && tPid.endCondition(actual.degAng, setpoint.degAng, 0.0)
 //        Log.e("wholeEnd", b.toString())
 
 
@@ -78,15 +79,19 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
 //        Log.e("x", x.toString())
 //        Log.e("y", y.toString())
 //        Log.e("t", rawT.toString())
-        return Powers.fromMecanum(y, x, rawT, 0.4)
+        return Powers.fromMechanum(y, x, rawT, 0.4)
     }
+//
+//    override fun onFinish() {
+//        robot.chassis.stop()
+//    }
 
-    override fun onFinish() {
-        robot.chassis.stop()
-    }
-
-    fun reset() {
+    override fun reset() {
         pids.forEach { it.reset() }
+    }
+
+    override fun getAbsActualDiff(): MOEtion {
+        return MOEtion()
     }
 
     constructor(Px: Double = 0.0, Ix: Double = 0.0, Dx: Double = 0.0, Fx: Double = 0.0,

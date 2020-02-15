@@ -130,7 +130,7 @@ open class CompTeleOp() : MOETeleOp() {
         //        telemetry.addData("angle", gpad1.left_stick_angle)
         //        telemetry.addData("magnitute", gpad1.left_stick_mag)
 
-        robot.chassis.setPower(Powers.fromMecanum(fwd, str, rot, maxPower))
+        robot.chassis.setPower(Powers.fromMechanum(fwd, str, rot, maxPower))
 //        val powers = Powers.fromRadAngle(gpad1.left.stick.angle
 //                + Math.toRadians(robot.gyro.angle), gpad1.left.stick.mag, rot)
 //        telemetry.addData("powers", powers)

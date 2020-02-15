@@ -2,35 +2,41 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis
 
 import kotlinx.coroutines.Job
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEPositionalSystemPid
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOETurnPid
 import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.MOEtion
 
 class PidChassisHandler {
-    private val pid = MOEPositionalSystemPid(MOEPidConstants.PositionalPid.DefaultOptions)
+    private val pid = MOETurnPid(MOEPidConstants.PositionalPid.DefaultOptions.turnOptions)
 
     init {
         pid.input = {
             //   robot.slam.transformation
-            robot.odometry.astarMoetion()
+            robot.gyro.angle
 //            MOEtion(robot.odometry.pose, robot.gyro.angle)
         }
 
-        pid.output = { powers ->
+        pid.output = { power ->
             //            if(!moeOpMode)
 //            Log.e("pow", powers.toString())
-            robot.chassis.setPower(powers)
+            robot.chassis.turnPower(power)
         }
-        //TODO: weak rn
-        pid.pids.forEach { it.setOutputLimits(0.5) }
+        pid.setOutputLimits(0.5)
+
+//        pid.pids.forEach { it.setOutputLimits(0.5) }
     }
 
-    fun moveTo(goal: MOEtion): Job {
-        pid.reset()
-        pid.setpoint = { goal }
-        return pid.run()
-    }
+//    fun moveTo(goal: MOEtion): Job {
+//        pid.reset()
+//        pid.setpoint = { goal }
+//        return pid.run()
+//    }
 
-    fun moveTo(x: Double, y: Double, angle: Double = robot.gyro.angle) = moveTo(MOEtion(x, y, angle))
+    //    fun moveTo(x: Double, y: Double, angle: Double = robot.gyro.angle) = moveTo(MOEtion(x, y, angle))
+    fun turnTo(i: Double) {
+        pid.setpoint = { i }
+        pid.run()
+    }
 
 }

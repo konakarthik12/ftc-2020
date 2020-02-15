@@ -4,8 +4,6 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPurePursuitHandler
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEHardware.MOEtor
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.DriveTrain.Motors.Configs
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.MOEtion
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 
 
@@ -59,7 +57,7 @@ class MOEChassis {
     }
 
     fun setFromMecanum(fwd: Double, str: Double, rot: Double, maxPower: Double = 1.0) {
-         robot.chassis.setPower(Powers.fromMecanum(fwd, str, rot, maxPower))
+        robot.chassis.setPower(Powers.fromMechanum(fwd, str, rot, maxPower))
     }
 
     fun stop() {
@@ -81,10 +79,10 @@ class MOEChassis {
 //        //            telemetry.update();
 //        //        }
 //    }
-    fun moveTo(trans: MOEtion) = pidChassisHandler.moveTo(trans)
+//    fun moveTo(trans: MOEtion) = pidChassisHandler.moveTo(trans)
 
-    fun moveTo(x: Double, y: Double, angle: Double) = moveTo(MOEtion(x, y, angle))
-    fun moveTo(x: Double, y: Double) = moveTo(MOEtion(Point(x, y), robot.gyro.angle))
+//    fun moveTo(x: Double, y: Double, angle: Double) = moveTo(MOEtion(x, y, angle))
+//    fun moveTo(x: Double, y: Double) = moveTo(MOEtion(Point(x, y), robot.gyro.angle))
 
 //        val pid = MOEPositionalSystemPid(MOE/Constants.PositionalPid.DefaultOptions)
 
@@ -93,14 +91,18 @@ class MOEChassis {
     }
 
     //    fun turn(deg: Double) = pidChassisHandler.turn(deg)
-    fun turnTo(deg: Double) {
-        pidChassisHandler.moveTo(robot.odometry.astarMoetion().apply { degAng = deg.toNormalAngle() })
+//    fun turnTo(deg: Double) {
+
+//        pidChassisHandler.moveTo(robot.odometry.astarMoetion().apply { degAng = deg.toNormalAngle() })
+//    }
+
+    //    fun turn(deg: Double) = pidChassisHandler.moveTo(robot.odometry.astarMoetion().apply {
+//        degAng += deg
+//        degAng = degAng.toNormalAngle()
+//    })
+    fun turnTo(i: Double) {
+
+        robot.chassis.pidChassisHandler.turnTo(i.toNormalAngle())
     }
-
-    fun turn(deg: Double) = pidChassisHandler.moveTo(robot.odometry.astarMoetion().apply {
-        degAng += deg
-        degAng = degAng.toNormalAngle()
-    })
-
 
 }

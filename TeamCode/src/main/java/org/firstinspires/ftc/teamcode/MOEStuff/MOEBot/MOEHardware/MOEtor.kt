@@ -10,11 +10,11 @@ import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
 
 
 class MOEtor(val config: MotorConfig) {
+    var mMotor = config.getDevice()
     val targetIsHigherThanCurrent
         get() = mMotor.targetPosition > mMotor.currentPosition
     val error
         get() = mMotor.targetPosition - mMotor.currentPosition
-    var mMotor = config.getDevice()
     //    private var powerScale = config.minPow..config.maxPow
     private val powRange = 0.0..config.maxPow
 
@@ -30,9 +30,6 @@ class MOEtor(val config: MotorConfig) {
 
     val isBusy: Boolean
         get() = mMotor.isBusy
-
-    val distanceTraveled: Double
-        get() = position * MOEConstants.Units.ASTARS_PER_TICK
 
     //    fun setPosition() {
     //        mMotor.setPos
@@ -51,7 +48,7 @@ class MOEtor(val config: MotorConfig) {
     }
 
     fun setZeroPowerBehavior(zeroPowerBehavior: ZeroPowerBehavior) {
-        mMotor.zeroPowerBehavior = zeroPowerBehavior;
+        mMotor.zeroPowerBehavior = zeroPowerBehavior
     }
 
     fun setVelocity(velocity: Double) = mMotor.setVelocity(velocity, AngleUnit.RADIANS)

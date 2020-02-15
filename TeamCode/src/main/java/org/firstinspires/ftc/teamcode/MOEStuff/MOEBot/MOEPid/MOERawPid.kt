@@ -1,27 +1,48 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
-import android.util.Log
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import kotlin.math.abs
 
 open class MOERawPid(options: MOEPidOptions) : MOEPidStructure<Double, Double> {
 
-
+    //    var printWriter = PrintWriter(Environment.getExternalStorageDirectory().toString() + "/FirstLogs/Test.txt")
     var internalPid = MOEPid(options)
 
     override var input = { 0.0 }
     override var output: (Double) -> Unit = { }
-    var threshold = 1.0
+    var threshold = 0.5
+    var dActualTolerance = 0.005
     override var setpoint: () -> Double = { 0.0 }
-    override var endCondition: (Double, Double) -> Boolean = { actual, setpoint ->
-        //        Log.e("curValue", it.toString())
-//        Log.e("setpoint", setpoint().toString())
-        abs(internalPid.getError(setpoint, actual)) < threshold
+    override var endCondition: (Double, Double, Double) -> Boolean = { actual, setpoint, dActual ->
+        telemetry.addData("output", output)
+        telemetry.addData("actual", actual)
+        val error = internalPid.getError(setpoint, actual)
+        telemetry.addData("error", error)
+        telemetry.addData("dActual", dActual)
+        telemetry.update()
+        val b = abs(error) < threshold && dActual < dActualTolerance
+        b
+//        printWriter.println("$output\t$actual")
+
+//        if (b) {
+//            printWriter.close()
+//            telemetry.addData("output", output).setRetained(true)
+//            telemetry.addData("actual", actual).setRetained(true)
+//            telemetry.addData("error", error).setRetained(true)
+//            telemetry.addData("dActual", dActual).setRetained(true)
+
+//            telemetry.addData("error", ).setRetained(true)
+//            telemetry.update()
+//            while (moeOpMode.iOpModeIsActive()) {
+//                telemetry.addData("angle", robot.gyro.angle)
+//                telemetry.update()
+//                robot.chassis.stop()
+//            }
+//            moeOpMode.iRequestOpModeStop()
     }
+//    b
 
 
     fun setOptions(options: MOEPidOptions) {
@@ -35,8 +56,11 @@ open class MOERawPid(options: MOEPidOptions) : MOEPidStructure<Double, Double> {
     fun getOutput(input: Double) = getOutput(input, setpoint())
     override fun getOutput(input: Double, setpoint: Double): Double = internalPid.getOutput(input, setpoint)
 
-    fun reset() = internalPid.reset()
+    override fun reset() = internalPid.reset()
     fun setOutputLimits(limit: Double) = internalPid.setOutputLimits(limit)
+    override fun getAbsActualDiff(): Double {
+        return abs(internalPid.lastActual - input())
+    }
 
     constructor(P: Double = 0.0,
                 I: Double = 0.0,

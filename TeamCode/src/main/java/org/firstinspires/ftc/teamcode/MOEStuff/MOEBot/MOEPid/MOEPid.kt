@@ -47,7 +47,7 @@ open class MOEPid(var P: Double = 0.0,
 
     var setpoint = 0.0
 
-    private var lastActual = 0.0
+    var lastActual = 0.0
 
     private var firstRun = true
     private var reversed = false

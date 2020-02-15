@@ -11,7 +11,8 @@ const options = {
 let defaultPath = 'C:/Users/konak/Documents/ftc2020/MOETime/PushCode/build/dex/classes.txt';
 
 function createServer(address, port, getOpModes, pushCode) {
-    console.info(address);
+    console.log("yep");
+    console.log(address);
     return new Promise((resolve, reject) => {
         let full = `ws://${address}:${port}`;
         console.log(full);

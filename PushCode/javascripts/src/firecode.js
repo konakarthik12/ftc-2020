@@ -29,19 +29,29 @@ async function getIp() {
         try {
             let address = data.val();
             console.info("Initialing Websocket Server...");
+
             console.log(address);
-            socketHandler.createServer(address.ip, address.port, sendOpModes, checkPushCode).then((it) => {
-                client = it;
-
-                watchFiles();
-
-            });
+            createServer(address)
         } catch (e) {
             console.error(e);
             throw `Unable to connect to ${address.ip}:${address.port}`
         }
     });
+    handleCommandLine()
+}
 
+function handleCommandLine() {
+//TODO:temp
+//     createServer({ip:'192.168.49.1',port:'43876'})
+}
+
+function createServer(address) {
+    socketHandler.createServer(address.ip, address.port, sendOpModes, checkPushCode).then((it) => {
+        client = it;
+
+        watchFiles();
+
+    });
 }
 
 async function initServer() {

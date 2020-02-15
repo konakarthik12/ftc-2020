@@ -26,7 +26,7 @@ class OdoRawVals : MOETeleOp() {
         logOdo()
     }
 
-    val tPid = MOETurnPid(MOEPidConstants.PositionalPid.tOptions)
+    val tPid = MOETurnPid(MOEPidConstants.tOptions)
     private fun dpadChassis() {
         val scale = 0.3
         var x = gpad1.right.stick.x()

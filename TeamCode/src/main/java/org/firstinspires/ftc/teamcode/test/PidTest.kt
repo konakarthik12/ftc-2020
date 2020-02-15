@@ -35,12 +35,12 @@ class PidTest : MOEAuton() {
 //            telemetry.addData("pc.getPose", robot.slam.transformation)
 //            telemetry.update()
 //        }
-        robot.chassis.moveTo(62.0, 96.0, 270.0)
+//        robot.chassis.moveTo(62.0, 96.0, 270.0)
 //        slamWait()
         robot.chassis.turnTo(0.0)
 //        slamWait()
-        robot.chassis.moveTo(62.0, 240.0)
-        robot.chassis.turn(90.0)
+//        robot.chassis.moveTo(62.0, 240.0)
+//        robot.chassis.turn(90.0)
         robot.foundation.moveDown()
         robot.chassis.stop()
 
