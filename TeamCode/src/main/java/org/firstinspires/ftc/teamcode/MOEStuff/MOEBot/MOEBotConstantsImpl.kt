@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.*
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV.MOEOpenCVConfig
 
 interface MOEBotConstantsImpl {
     fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
@@ -22,6 +23,10 @@ interface MOEBotConstantsImpl {
 
     fun getVuforiaConfig(): MOEVuforiaConfig {
         return MOEVuforiaConfig()
+    }
+
+    fun getOpenCVConfig(): MOEOpenCVConfig {
+        return MOEOpenCVConfig()
     }
 
 

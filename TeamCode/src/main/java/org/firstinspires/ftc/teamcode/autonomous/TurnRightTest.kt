@@ -32,7 +32,7 @@ class TurnRightTest : MOEAuton() {
             telemetry.addData("waiting2", timer.milliseconds())
             telemetry.update()
         }
-        robot.chassis.stop();
+        robot.chassis.stop()
     }
 
 }

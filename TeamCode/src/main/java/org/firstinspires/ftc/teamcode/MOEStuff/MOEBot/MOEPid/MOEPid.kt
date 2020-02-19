@@ -25,7 +25,7 @@ open class MOEPid(var P: Double = 0.0,
     // Class private variables
     //**********************************
 
-    private var lastTime: Long = 0;
+    private var lastTime: Long = 0
     var I = I
         set(value) {
             if (field != 0.0) {

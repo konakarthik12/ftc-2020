@@ -8,7 +8,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @TeleOp
-open class CompTeleOp() : MOETeleOp() {
+open class CompTeleOp : MOETeleOp() {
 //    val sd_main = File(Environment.getExternalStorageDirectory().absolutePath + "/comp_odometry.txt")
 //    val writer = sd_main.printWriter()
 

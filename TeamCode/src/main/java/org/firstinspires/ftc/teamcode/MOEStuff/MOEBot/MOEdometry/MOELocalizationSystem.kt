@@ -9,5 +9,5 @@ interface MOELocalizationSystem {
         return MOEtion(original.pose * 2.0, original.degAng)
     }
 
-    abstract fun getRawTheta(): Double
+    fun getRawTheta(): Double
 }

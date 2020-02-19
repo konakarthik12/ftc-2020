@@ -28,6 +28,6 @@ class TurnLeftTest : MOEAuton() {
             telemetry.addData("waiting", timer.milliseconds())
             telemetry.update()
         }
-        robot.chassis.stop();
+        robot.chassis.stop()
     }
 }

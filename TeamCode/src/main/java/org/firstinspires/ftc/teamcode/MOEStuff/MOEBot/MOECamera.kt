@@ -6,6 +6,4 @@ import org.firstinspires.ftc.teamcode.utilities.internal.crop
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 
 
-class MOECamera {
-
-}
+class MOECamera

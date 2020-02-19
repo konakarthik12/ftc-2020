@@ -44,7 +44,7 @@ class MOEtor(val config: MotorConfig) {
     }
 
     fun setDirection(direction: Direction) {
-        mMotor.direction = direction;
+        mMotor.direction = direction
     }
 
     fun setZeroPowerBehavior(zeroPowerBehavior: ZeroPowerBehavior) {

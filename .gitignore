@@ -32,3 +32,5 @@ MOETime.iml
 node_modules
 JsApp/node/
 /JsApp/static/main.bundle.js
+
+!.idea

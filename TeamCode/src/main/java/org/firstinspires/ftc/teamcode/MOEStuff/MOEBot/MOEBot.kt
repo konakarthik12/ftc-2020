@@ -10,7 +10,9 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOEdometryGyro
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEHardware.MOEIntake
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEHardware.MOELift
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEHardware.MOEOuttake
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV.MOEPenCV
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESlam.MOESlam
+import java.lang.IllegalStateException
 
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySystem
 
@@ -29,6 +31,7 @@ class MOEBot(config: MOEBotConstantsImpl) {
     lateinit var gyro: MOEGyro
     lateinit var vuforia: MOEVuforia
     lateinit var slam: MOESlam
+    lateinit var opencv: MOEPenCV
 
     init {
         if (robotConfig.useSlam) {
@@ -41,8 +44,10 @@ class MOEBot(config: MOEBotConstantsImpl) {
                 else -> MOEIMUGyro()
             })
         }
-        if (robotConfig.useVuforia) {
-
+        if (robotConfig.useOpenCV && robotConfig.useVuforia) throw IllegalStateException("Can't use both opencv and vuforia")
+        if (robotConfig.useOpenCV) {
+            opencv = MOEPenCV(config.getOpenCVConfig())
+        } else if (robotConfig.useVuforia) {
             vuforia = MOEVuforia(config.getVuforiaConfig())
         }
     }
@@ -60,6 +65,7 @@ class MOEBot(config: MOEBotConstantsImpl) {
 
     fun stop() {
         if (robotConfig.useOdometry) odometry.stop()
+        if (robotConfig.useOpenCV) opencv.stop()
     }
 
     //    fun resetValues() {

@@ -48,8 +48,8 @@ object MOEHardwareConstants {
     object FoundationSystem {
         object Servos {
             object Configs {
-                val FoundationServo1 = ServoConfig("LFG", 1, 0, 0.0, 0.5, ServoDirection.FORWARD)
-                val FoundationServo2 = ServoConfig("RFG", 2, 0, 0.5, 1.0, ServoDirection.REVERSE)
+                val LeftFoundationGrabber = ServoConfig("LFG", 1, 0, 0.0, 0.5, ServoDirection.FORWARD)
+                val RightFoundationGrabber = ServoConfig("RFG", 2, 0, 0.5, 1.0, ServoDirection.REVERSE)
             }
         }
     }

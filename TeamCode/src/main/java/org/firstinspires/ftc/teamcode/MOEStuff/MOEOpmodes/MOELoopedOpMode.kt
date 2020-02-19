@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRobotRef
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
-abstract class MOELoopedOpMode() : OpMode(), MOEFirebase, OpModeInterface, MOEBotConstantsImpl {
+abstract class MOELoopedOpMode : OpMode(), MOEFirebase, OpModeInterface, MOEBotConstantsImpl {
     lateinit var ref: DatabaseReference
     lateinit var robot: MOEBot
     var opModeIsActive: Boolean = false

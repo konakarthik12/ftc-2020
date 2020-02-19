@@ -1,3 +1,5 @@
 package org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath
 
-data class Rectangle(val x: Int = 0, val y: Int = 0, val width: Int = 0, val height: Int = 0)
+import org.opencv.core.Rect
+
+class Rectangle(x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0) : Rect(x, y, width, height)

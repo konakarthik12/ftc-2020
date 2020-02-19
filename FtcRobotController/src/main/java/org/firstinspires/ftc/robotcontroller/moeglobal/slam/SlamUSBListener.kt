@@ -12,9 +12,9 @@ class SlamUSBListener : BroadcastReceiver() {
         val usbDevice = intent.getParcelableExtra<UsbDevice>(UsbManager.EXTRA_DEVICE)
 
         if (UsbManager.ACTION_USB_DEVICE_ATTACHED == intent.action) {
-            SlamUsbReciever.handleDeviceAdded(usbDevice);
+            SlamUsbReciever.handleDeviceAdded(usbDevice)
         } else if (UsbManager.ACTION_USB_DEVICE_DETACHED == intent.action) {
-            SlamUsbReciever.handleDeviceRemoved(usbDevice);
+            SlamUsbReciever.handleDeviceRemoved(usbDevice)
         }
     }
 }

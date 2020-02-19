@@ -73,10 +73,6 @@ class PidTest : MOEAuton() {
         }
     }
 
-    override fun getAutonConfig(): MOEAutonConfig {
-        return super.getAutonConfig()
-    }
-
     override fun getRobotInitialState(): MOERobotInitialStateConfig {
         return MOERobotInitialStateConfig(
                 MOEtion(14.0, 96.0, 270.0)

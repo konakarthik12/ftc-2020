@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="481b13f1-bfd7-44a8-8c61-b81afb126cca" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOEPenCV/MOEOpenCVConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOEPenCV/MOEPenCV.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOEPenCV/MOEPipeline.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/test/WebcamTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/utilities/external/OpenCVExtensions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/moeglobal/slam/SlamUSBListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/moeglobal/slam/SlamUSBListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/build.release.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/build.release.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/AutonSetup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/AutonSetup.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOEBot.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOEBot.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOEBotConstantsImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOEBotConstantsImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOECamera.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOECamera.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOEConfig/MOEBotSubSystemConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOEConfig/MOEBotSubSystemConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOEFoundation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOEFoundation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOEPid/MOEPid.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEBot/MOEPid/MOEPid.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEFirebase/MOEFirebase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEFirebase/MOEFirebase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEOpmodes/MOELoopedOpMode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MOEStuff/MOEOpmodes/MOELoopedOpMode.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/FoundationAuton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/RedFoundationAuton.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/TurnLeftTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/TurnLeftTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/TurnRightTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/TurnRightTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/localization/SkyStonePositionHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/localization/SkyStonePositionHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/constants/MOEHardwareConstants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/constants/MOEHardwareConstants.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/teleop/CompTeleOp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/teleop/CompTeleOp.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/test/PidTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/test/PidTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/test/PositionalPidTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/test/PositionalPidTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/test/SkystoneDetectionTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/test/SkystoneDetectionTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/utilities/external/AdvancedMath/Rectangle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/utilities/external/AdvancedMath/Rectangle.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/utilities/internal/PureUtiltiy.kt" beforeDir="false" afterPath="$PROJECT_DIR$/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/utilities/internal/PureUtiltiy.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.common.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.common.gradle" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="ZL522B5FTM" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view />
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1Xqiq3QLHinKCdF7Y52SgDGLNyi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="not.eligible.for.single.variant.sync" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.intentionPowerPack" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="481b13f1-bfd7-44a8-8c61-b81afb126cca" name="Default Changelist" comment="" />
+      <created>1581780212449</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581780212449</updated>
+      <workItem from="1581780216627" duration="6000" />
+      <workItem from="1581780240271" duration="10044000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581788312612">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1581788312612" />
+    <state x="552" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1581782993554">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="552" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1581782993554" />
+    <state width="1493" height="337" key="GridCell.Tab.0.bottom" timestamp="1581785036944">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="337" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1581785036944" />
+    <state width="1493" height="337" key="GridCell.Tab.0.center" timestamp="1581785036944">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="337" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1581785036944" />
+    <state width="1493" height="337" key="GridCell.Tab.0.left" timestamp="1581785036944">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="337" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1581785036944" />
+    <state width="1493" height="337" key="GridCell.Tab.0.right" timestamp="1581785036944">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="337" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1581785036944" />
+    <state x="277" y="0" key="SettingsEditor" timestamp="1581793005624">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="277" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1581793005624" />
+    <state x="444" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1581780241746">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="444" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1581780241746" />
+    <state x="209" y="0" key="new project wizard" timestamp="1581784697573">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="209" y="0" key="new project wizard/0.0.1536.824@0.0.1536.824" timestamp="1581784697573" />
+    <state x="510" y="55" key="refactoring.ChangeSignatureDialog" timestamp="1581787578197">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="510" y="55" key="refactoring.ChangeSignatureDialog/0.0.1536.824@0.0.1536.824" timestamp="1581787578197" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1581793027555">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1581793027555" />
+  </component>
+</project>

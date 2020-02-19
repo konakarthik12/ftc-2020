@@ -26,7 +26,7 @@ class SkystoneDetectionTest : MOEAuton() {
     override fun run() {
         telemetry.addData("running")
         while (opModeIsActive()) {
-            telemetry.update();
+            telemetry.update()
         }
     }
 

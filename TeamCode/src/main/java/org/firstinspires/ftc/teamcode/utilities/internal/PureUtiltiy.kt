@@ -18,7 +18,7 @@ fun Telemetry.addData(data: Any) {
 }
 
 operator fun DatabaseReference.get(child: String): DatabaseReference {
-    return this.child(child);
+    return this.child(child)
 }
 
 fun Bitmap.crop(frame: Rectangle): Bitmap {

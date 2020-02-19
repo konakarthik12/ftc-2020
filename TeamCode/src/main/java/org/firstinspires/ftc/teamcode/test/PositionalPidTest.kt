@@ -56,7 +56,7 @@ class PositionalPidTest : MOERegularTest() {
 //        pc.getPose *= -1.0
         //        while (gamepad1.a){
         //        }
-        val setPointPoint = Point(systemPid.xPid.setpoint(), systemPid.yPid.setpoint());
+        val setPointPoint = Point(systemPid.xPid.setpoint(), systemPid.yPid.setpoint())
         logData(pose, setPointPoint)
         val rawX = systemPid.xPid.getOutput(pose.x)
         val rawY = systemPid.yPid.getOutput(pose.y)

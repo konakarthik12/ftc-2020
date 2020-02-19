@@ -12,7 +12,7 @@ infix fun LinearOpMode.wait(milliseconds: Number) {
     while (timer.milliseconds() < length && opModeIsActive()) {
 //        telemetry.addData("please wait another${timer.seconds()} seconds")
 //        telemetry.update()
-    };
+    }
 }
 
 infix fun LinearOpMode.waitSeconds(seconds: Number) = this.wait(seconds.toLong() * 1000)

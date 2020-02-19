@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase;
+package org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase
 
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
