@@ -28,7 +28,7 @@ class AutonTemplate : MOEAuton() {
         val verticalDistance = when (location) {
             LEFT -> 1.5
             MIDDLE -> -1.5
-            RIGHT -> 9.5
+            RIGHT -> -9.5
         }
         robot.chassis.encoders.moveVertical(verticalDistance)
         val strafeDistance = when (location) {
