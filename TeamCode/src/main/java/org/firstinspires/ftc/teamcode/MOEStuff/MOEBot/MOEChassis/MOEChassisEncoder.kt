@@ -27,6 +27,10 @@ class MOEChassisEncoder(val chassis: MOEChassis) {
         motor.power = power
     }
 
+    fun moveVertical(inches: Double, power: Double = defaultForwardPower, holdAngle: Double = robot.gyro.angle) {
+        if (inches > 0) moveForwardInches(inches, power, holdAngle) else moveBackwardInches(inches, power, holdAngle)
+    }
+
     fun moveForwardInches(inches: Double, power: Double = defaultForwardPower, holdAngle: Double = robot.gyro.angle) {
 
 //        val position = (robot.odometry.rightForwardWheel.position + ticks * INCHS_PER_TICK).toInt()
@@ -69,7 +73,7 @@ class MOEChassisEncoder(val chassis: MOEChassis) {
         robot.chassis.stop()
     }
 
-    fun moveRightInches(inches: Double, power: Double=0.5, synchronous: Boolean = true) {
+    fun moveRightInches(inches: Double, power: Double = 0.5, synchronous: Boolean = true) {
         robot.chassis.setStrafePower(power)
         val wheel = robot.odometry.strafeWheel
 
@@ -83,7 +87,7 @@ class MOEChassisEncoder(val chassis: MOEChassis) {
         robot.chassis.stop()
     }
 
-    fun moveLeftInches(inches: Double, power: Double=0.5, synchronous: Boolean = true) {
+    fun moveLeftInches(inches: Double, power: Double = 0.5, synchronous: Boolean = true) {
         robot.chassis.setStrafePower(-power)
         val wheel = robot.odometry.strafeWheel
 

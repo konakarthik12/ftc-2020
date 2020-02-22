@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.utilities.internal
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.constants.OpModeInterface
 
 private val timer by lazy { ElapsedTime() }
 
@@ -16,9 +15,7 @@ infix fun LinearOpMode.wait(milliseconds: Number) {
 }
 
 infix fun LinearOpMode.waitSeconds(seconds: Number) = this.wait(seconds.toLong() * 1000)
-fun LinearOpMode.waitForStop() {
 
-}
 
 //infix fun OpModeInterface.waitA() {
 //    val time = ElapsedTime()

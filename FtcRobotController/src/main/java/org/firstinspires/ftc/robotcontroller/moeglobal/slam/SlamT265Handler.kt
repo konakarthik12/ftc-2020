@@ -136,7 +136,6 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
     }
 
     fun killStream() {
-        Log.e("killing", "dead")
         isRunning = false
         SlamData.confidence = 0
         updateConfidence()
@@ -160,6 +159,7 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
                 } else {
 //                    Log.e("sleeping","sleep")
                     Thread.sleep(500)
+                    SlamData.confidence = 0
                 }
             }
             //            Log.e("done", "finished")

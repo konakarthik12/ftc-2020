@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
 import kotlin.math.abs
 
@@ -13,7 +11,7 @@ open class MOERawPid(options: MOEPidOptions) : MOEPidStructure<Double, Double> {
     override var input = { 0.0 }
     override var output: (Double) -> Unit = { }
     var threshold = 0.5
-    var dActualTolerance = 0.005
+    var dActualTolerance = 0.05
     override var setpoint: () -> Double = { 0.0 }
     override var endCondition: (Double, Double, Double) -> Boolean = { actual, setpoint, dActual ->
         telemetry.addData("output", output)

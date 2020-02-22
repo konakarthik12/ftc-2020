@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.autonomous
 
-//import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad.Button
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
@@ -14,6 +13,7 @@ class AutonTemplate : MOEAuton() {
     override fun initOpMode() {
         robot.autonArms.right.raiseArm()
         robot.autonArms.right.openClaw()
+        robot.foundation.moveUp()
     }
 
     override fun run() {
@@ -25,12 +25,12 @@ class AutonTemplate : MOEAuton() {
         robot.chassis.encoders.moveBackwardInches(26.0)
 
         robot.chassis.turnTo(90.0)
-
-        when (location) {
-            LEFT -> robot.chassis.encoders.moveForwardInches(1.0)
-            MIDDLE -> robot.chassis.encoders.moveBackwardInches(2.0)
-            RIGHT -> robot.chassis.encoders.moveBackwardInches(11.0)
+        val verticalDistance = when (location) {
+            LEFT -> 1.5
+            MIDDLE -> -1.5
+            RIGHT -> 9.5
         }
+        robot.chassis.encoders.moveVertical(verticalDistance)
         val strafeDistance = when (location) {
             LEFT -> 4.5
             MIDDLE -> 2.0
@@ -38,19 +38,27 @@ class AutonTemplate : MOEAuton() {
         }
         robot.chassis.encoders.moveRightInches(strafeDistance)
 
+        wait(1500)
         robot.autonArms.right.lowerArm()
+
         wait(500)
         robot.autonArms.right.closeClaw()
         wait(750)
         robot.autonArms.right.raiseArm()
         wait(500)
 
-        robot.chassis.encoders.moveLeftInches(strafeDistance + 2.0)
-        when (location) {
-            LEFT -> robot.chassis.encoders.moveForwardInches(60.0)
-            MIDDLE -> robot.chassis.encoders.moveBackwardInches(2.0)
-            RIGHT -> robot.chassis.encoders.moveBackwardInches(11.0)
-        }
+        robot.chassis.encoders.moveLeftInches(strafeDistance + 4.0)
+        robot.chassis.turnTo(90.0)
+        robot.chassis.encoders.moveVertical(67.0 - verticalDistance)
+
+        robot.chassis.encoders.moveRightInches(9.0)
+        robot.chassis.turnTo(90.0)
+        robot.autonArms.right.lowerArm()
+        wait(500)
+        robot.autonArms.right.openClaw()
+        wait(1000)
+        robot.autonArms.right.raiseArm()
+        wait(1000)
 
 //        val currentGyro = robot.gyro.angle;
 //        val target = (currentGyro + 90).toNormalAngle()
