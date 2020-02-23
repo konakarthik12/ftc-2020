@@ -17,6 +17,7 @@ open class CompTeleOp : MOETeleOp() {
         addListeners()
         initLift()
         initOuttake()
+        robot.foundation.moveUp()
 //        robot.odometry.launchLoop()
     }
 
@@ -36,12 +37,6 @@ open class CompTeleOp : MOETeleOp() {
 
     private fun initOuttake() {
         robot.outtake.grabServo.setPosition(0.6)
-        gpad2.left.bumper.onKeyDown {
-            robot.outtake.moveIn()
-        }
-        gpad2.right.bumper.onKeyDown {
-            robot.outtake.moveOut()
-        }
     }
 
     //    var oldTime = 0L
@@ -94,6 +89,9 @@ open class CompTeleOp : MOETeleOp() {
 //        telemetry.addData("limswitch", robot.lift.limitSwitch.isPressed)
         telemetry.addData("lift", target)
         telemetry.addData("acutal", robot.lift.getPositions().average())
+        telemetry.addData("lastHighest", lastHighest)
+        telemetry.addData("lastHighestTol", (robot.lift.getPositions().average() + heightTol))
+
         telemetry.addData("switch", robot.lift.limitSwitch.isPressed)
 //        val motion = robot.odometry.astarMoetion()
 //        telemetry.addData("pose", motion.pose)
@@ -148,6 +146,16 @@ open class CompTeleOp : MOETeleOp() {
     }
 
     var target = 0.0
+    val initialHeight = 600.0
+    val stoneHeight = 600.0
+    var lastHighest = 0.0
+    val heightTol = 0.0
+    var liftPower = 1.0
+
+    var dpadPressed = false
+    var aPressed = false
+
+
     open fun lift() {
 //        robot.lift.bottomOutIfNeeded()
 //        if (gpad2.dpad.down()) {
@@ -157,36 +165,117 @@ open class CompTeleOp : MOETeleOp() {
 //        } else {
 //            robot.lift.setRunToPosition()
 //        }
-
         val up = gpad2.left.stick.y()
 //        val multi = if (target > 0) 3.0 else 0.0
 //        val down = gpad2.left.stick.y() * -1
         val upSlow = gpad2.right.stick.y() * 0.5
 //        val downSlow = gpad2.right.    stick.y() * -0.25
-        robot.lift.motors.forEach {
+
+        /*robot.lift.motors.forEach {
             val power = if (it.targetIsHigherThanCurrent) {
                 if (gpad2.left.trigger.button()) 1.0 else 0.7
             } else {
                 if (gpad2.left.trigger.button()) 0.5 else 0.28
             }
             it.setPower(power)
-        }
+        }*/
+
+
+        var liftCurPos = robot.lift.getPositions().average()
+
+
         target += ((up + upSlow) * 45)
         if (gpad2.left.stick.y() > -0.1) {
             target = target.coerceAtLeast(0.0)
         }
-//        target = target.coerceAtLeast(0.0)
+
+
+        if (gpad2.dpad.up.isPressed) {
+            if (!dpadPressed) {
+                if (liftCurPos < initialHeight * .9) {
+                    target = initialHeight
+                    dpadPressed = true
+                }
+                if (liftCurPos > initialHeight * .9) {
+                    target += stoneHeight
+                    dpadPressed = true
+                }
+
+            }
+        }
+
+        if (gpad2.dpad.down.isPressed) {
+            if (!dpadPressed) {
+                if (liftCurPos > stoneHeight) {
+                    target -= stoneHeight
+                }
+                dpadPressed = true
+            }
+        }
+        if ((!gpad2.dpad.down.isPressed && !gpad2.dpad.up.isPressed)) {
+            dpadPressed = false
+        }
+
+        if (gpad2.a.isPressed){
+
+            if (!aPressed) {
+                val getCurPos = liftCurPos + heightTol
+                if (getCurPos >= lastHighest) {
+                    aPressed = true
+                    lastHighest = liftCurPos
+                    target = 0.0
+                }else{
+                    aPressed = true
+                    target = lastHighest
+                }
+
+            }
+        }
+
+        if (!gpad2.a.isPressed){
+            aPressed = false
+        }
+        if (gpad2.y.isPressed){
+            lastHighest = liftCurPos
+        }
+
+        if (liftCurPos > target){
+            liftPower = 1.0
+        }
+        if (liftCurPos < target){
+            liftPower = 1.0
+        }
+        robot.lift.setPower(liftPower)
         robot.lift.setTargetPosition(target.toInt())
+
+
     }
 
-    private fun outtake() {
+    open fun outtake() {
+
         if (gpad2.b.isToggled) {
             robot.outtake.grab()
         } else {
             robot.outtake.release()
         }
+        var outtakeCurPos = robot.outtake.outtakeServo.getPosition()
+        val outtakeSpeed = .025
+
+        if (gpad2.left.trigger() > .1 && outtakeCurPos > .05) {
+            robot.outtake.outtakeServo.setPosition(outtakeCurPos - gpad2.left.trigger()*outtakeSpeed)
+        }
+        if (gpad2.right.trigger() > .1 && outtakeCurPos < .95) {
+            robot.outtake.outtakeServo.setPosition(outtakeCurPos + gpad2.right.trigger()*outtakeSpeed)
+        }
+        if (gpad2.left.bumper.isPressed) {
+            robot.outtake.moveIn()
+        }
+        if (gpad2.right.bumper.isPressed) {
+            robot.outtake.moveOut()
+        }
 
     }
+
 
 
 }

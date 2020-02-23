@@ -17,7 +17,7 @@ class MOEServo(config: ServoConfig) {
         setDirection(config.direction)
     }
 
-    private fun getPosition(): Double = mServo.position
+    fun getPosition(): Double = mServo.position
 
     fun setPosition(position: Double) {
         mServo.position = position
