@@ -151,6 +151,7 @@ open class CompTeleOp : MOETeleOp() {
     var lastHighest = 0.0
     val heightTol = 0.0
     var liftPower = 1.0
+    val intakeHeight = 250
 
     var dpadPressed = false
     var aPressed = false
@@ -246,8 +247,12 @@ open class CompTeleOp : MOETeleOp() {
             liftPower = 1.0
         }
         robot.lift.setPower(liftPower)
-        robot.lift.setTargetPosition(target.toInt())
-
+        if (gpad1.right.trigger() > .1 && !gpad2.x.isPressed){
+            robot.lift.setTargetPosition(intakeHeight)
+        }
+        else {
+            robot.lift.setTargetPosition(target.toInt())
+        }
 
     }
 
