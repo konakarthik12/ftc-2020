@@ -5,8 +5,18 @@ class MOEDpad(upB: () -> Boolean, downB: () -> Boolean, leftB: () -> Boolean, ri
     val down = MOEButton(downB)
     val left = MOEButton(leftB)
     val right = MOEButton(rightB)
-    private val buttons = arrayOf(up,down,left,right)
+    private val buttons = arrayOf(up, down, left, right)
     fun update() {
-    buttons.forEach { it.update() }
+        buttons.forEach { it.update() }
+    }
+
+    fun angle(): Double? {
+        return when {
+            up() -> 0.0
+            right() -> 90.0
+            left() -> 180.0
+            down() -> 270.0
+            else -> null
+        }
     }
 }

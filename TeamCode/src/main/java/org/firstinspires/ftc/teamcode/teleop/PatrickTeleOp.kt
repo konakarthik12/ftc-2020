@@ -2,14 +2,13 @@ package org.firstinspires.ftc.teamcode.teleop
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEHardware.initialHeight
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
 import kotlin.math.cos
 import kotlin.math.sin
 
 @TeleOp
-open class CompTeleOp : MOETeleOp() {
+open class PatrickTeleOp : MOETeleOp() {
 //    val sd_main = File(Environment.getExternalStorageDirectory().absolutePath + "/comp_odometry.txt")
 //    val writer = sd_main.printWriter()
 
@@ -28,29 +27,6 @@ open class CompTeleOp : MOETeleOp() {
         robot.lift.setTargetPosition(10)
         robot.lift.setRunToPosition()
         robot.lift.setTargetTolorence(25)
-        gpad2.dpad.up.onKeyDown {
-            val liftCurPos = robot.lift.getAveragePosition()
-            if (liftCurPos < initialHeight * .9) {
-                robot.lift.moveToInitial()
-            } else {
-                robot.lift.moveUpSkystones(1.0)
-            }
-        }
-        gpad2.dpad.down.onKeyDown {
-            robot.lift.moveDownSkystones(1.0)
-        }
-
-        gpad2.a.onKeyDown {
-            if (robot.lift.getAveragePosition() >= lastHighest) {
-                lastHighest = robot.lift.getAveragePosition()
-                robot.lift.target = 0.0
-            } else {
-                robot.lift.target = lastHighest
-            }
-        }
-        gpad2.y.onKeyDown {
-            lastHighest = robot.lift.getAveragePosition()
-        }
     }
 
     private fun addListeners() {
@@ -76,30 +52,11 @@ open class CompTeleOp : MOETeleOp() {
 //        telemetry.addData("timed", System.currentTimeMillis() - oldTime)
     }
 
-    protected fun dpadChassis() {
+    private fun dpadChassis() {
         val scale = 0.3
-        val angle = gpad1.dpad.angle()
-
-
-        when {
-            gpad1.dpad.up() -> {
-                robot.chassis.setFromMecanum(1.0 * scale, 0.0, gpad1.right.stick.x())
-
-            }
-            gpad1.dpad.down() -> {
-                robot.chassis.setFromMecanum(-1.0 * scale, 0.0, gpad1.right.stick.x())
-
-            }
-            gpad1.dpad.left() -> {
-                robot.chassis.setFromMecanum(0.0, -1.0 * scale, gpad1.right.stick.x())
-
-            }
-            gpad1.dpad.right() -> {
-                robot.chassis.setFromMecanum(0.0, 1.0 * scale, gpad1.right.stick.x())
-
-            }
-        }
-
+        val angle = gpad1.dpad.angle() ?: return
+        val rot = gpad1.right.stick.x()
+        robot.chassis.setPower(Powers.fromAng(angle, scale, rot))
     }
 
     private fun autonArms() {
@@ -118,7 +75,7 @@ open class CompTeleOp : MOETeleOp() {
     open fun log() {
         telemetry.addData("Runninge", this::class.simpleName)
 //        telemetry.addData("limswitch", robot.lift.limitSwitch.isPressed)
-        telemetry.addData("lift", robot.lift.target)
+        telemetry.addData("lift", target)
         telemetry.addData("acutal", robot.lift.getPositions().average())
         telemetry.addData("lastHighest", lastHighest)
         telemetry.addData("lastHighestTol", (robot.lift.getPositions().average() + heightTol))
@@ -133,11 +90,12 @@ open class CompTeleOp : MOETeleOp() {
     val minPower = 0.4
     val maxPower = 7.0
     val powerRange = minPower..maxPower
+    val scaleX = 1
+    val scaleY = 0.85
+    val scaleRot = 0.75
     open fun joystickChassis() {
         //        val bumperThrottle = 0.5
-        val scaleX = 1
-        val scaleY = 0.85
-        val scaleRot = 0.75
+
         val angle = robot.gyro.angle
 
 //        telemetry.addData("gyro", angle)
@@ -174,11 +132,13 @@ open class CompTeleOp : MOETeleOp() {
 
     private fun foundation() {
         robot.foundation.apply {
-            if (gpad1.left.bumper()) moveDown() else moveUp()
+            if (gpad1.left.bumper()) this.moveDown() else this.moveUp()
         }
     }
 
-    //    var target = 0.0
+    var target = 0.0
+    val initialHeight = 600.0
+    val stoneHeight = 600.0
     var lastHighest = 0.0
     val heightTol = 0.0
     var liftPower = 1.0
@@ -189,18 +149,85 @@ open class CompTeleOp : MOETeleOp() {
 
 
     open fun lift() {
-        var target = robot.lift.target
-
+//        robot.lift.bottomOutIfNeeded()
+//        if (gpad2.dpad.down()) {
+//            robot.lift.setRunWithoutEncoder()
+//            robot.lift.setPower(1.0)
+//            return
+//        } else {
+//            robot.lift.setRunToPosition()
+//        }
         val up = gpad2.left.stick.y()
+//        val multi = if (target > 0) 3.0 else 0.0
+//        val down = gpad2.left.stick.y() * -1
         val upSlow = gpad2.right.stick.y() * 0.5
-        val liftCurPos = robot.lift.getPositions().average()
+//        val downSlow = gpad2.right.    stick.y() * -0.25
+
+        /*robot.lift.motors.forEach {
+            val power = if (it.targetIsHigherThanCurrent) {
+                if (gpad2.left.trigger.button()) 1.0 else 0.7
+            } else {
+                if (gpad2.left.trigger.button()) 0.5 else 0.28
+            }
+            it.setPower(power)
+        }*/
 
 
-        robot.lift.target += ((up + upSlow) * 45)
+        var liftCurPos = robot.lift.getPositions().average()
+
+
+        target += ((up + upSlow) * 45)
         if (gpad2.left.stick.y() > -0.1) {
             target = target.coerceAtLeast(0.0)
         }
-        robot.lift.target = target
+
+
+        if (gpad2.dpad.up.isPressed) {
+            if (!dpadPressed) {
+                if (liftCurPos < initialHeight * .9) {
+                    target = initialHeight
+                    dpadPressed = true
+                }
+                if (liftCurPos > initialHeight * .9) {
+                    target += stoneHeight
+                    dpadPressed = true
+                }
+
+            }
+        }
+
+        if (gpad2.dpad.down.isPressed) {
+            if (!dpadPressed) {
+                target -= stoneHeight
+                dpadPressed = true
+            }
+        }
+        if ((!gpad2.dpad.down.isPressed && !gpad2.dpad.up.isPressed)) {
+            dpadPressed = false
+        }
+
+        if (gpad2.a.isPressed) {
+
+            if (!aPressed) {
+                val getCurPos = liftCurPos + heightTol
+                if (getCurPos >= lastHighest) {
+                    aPressed = true
+                    lastHighest = liftCurPos
+                    target = 0.0
+                } else {
+                    aPressed = true
+                    target = lastHighest
+                }
+
+            }
+        }
+
+        if (!gpad2.a.isPressed) {
+            aPressed = false
+        }
+        if (gpad2.y.isPressed) {
+            lastHighest = liftCurPos
+        }
 
         if (liftCurPos > target) {
             liftPower = 1.0

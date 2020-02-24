@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOESwitch
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Lift.Motors
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Lift.Switches
 
-class MOELift {
+open class MOELift {
     val leftMotor = MOEtor(Motors.LeftLiftMotor)
     val rightMotor = MOEtor(Motors.RightLiftMotor)
     val motors = arrayOf(leftMotor, rightMotor)
@@ -56,4 +56,7 @@ class MOELift {
     fun setTargetTolorence(i: Int) {
         motors.forEach { it.mMotor.targetPositionTolerance - i }
     }
+
+    fun getAveragePosition() = getPositions().average()
+
 }
