@@ -78,27 +78,10 @@ open class CompTeleOp : MOETeleOp() {
 
     protected fun dpadChassis() {
         val scale = 0.3
-        val angle = gpad1.dpad.angle()
-
-
-        when {
-            gpad1.dpad.up() -> {
-                robot.chassis.setFromMecanum(1.0 * scale, 0.0, gpad1.right.stick.x())
-
-            }
-            gpad1.dpad.down() -> {
-                robot.chassis.setFromMecanum(-1.0 * scale, 0.0, gpad1.right.stick.x())
-
-            }
-            gpad1.dpad.left() -> {
-                robot.chassis.setFromMecanum(0.0, -1.0 * scale, gpad1.right.stick.x())
-
-            }
-            gpad1.dpad.right() -> {
-                robot.chassis.setFromMecanum(0.0, 1.0 * scale, gpad1.right.stick.x())
-
-            }
-        }
+        var angle = gpad1.dpad.angle() ?: return
+        angle += if (robot.gyro.angle in 90.0..270.0) -90 else 90
+        val rot = gpad1.right.stick.x()
+        robot.chassis.setPower(Powers.fromAng(angle, scale, rot))
 
     }
 

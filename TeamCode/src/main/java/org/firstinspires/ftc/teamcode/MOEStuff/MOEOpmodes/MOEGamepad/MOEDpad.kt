@@ -12,8 +12,8 @@ class MOEDpad(upB: () -> Boolean, downB: () -> Boolean, leftB: () -> Boolean, ri
 
     fun angle(): Double? {
         return when {
-            up() -> 0.0
-            right() -> 90.0
+            right() -> 0.0
+            up() -> 90.0
             left() -> 180.0
             down() -> 270.0
             else -> null
