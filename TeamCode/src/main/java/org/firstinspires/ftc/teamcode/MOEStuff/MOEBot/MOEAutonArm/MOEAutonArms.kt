@@ -15,4 +15,7 @@ class MOEAutonArms {
     fun closeClaws() {
         arms.forEach { it.closeClaw() }
     }
+    fun initAutonArms(){
+        arms.forEach { it.initAutonArm() }
+    }
 }

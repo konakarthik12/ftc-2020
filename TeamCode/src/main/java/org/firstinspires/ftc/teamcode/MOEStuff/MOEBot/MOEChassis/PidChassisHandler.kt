@@ -22,7 +22,7 @@ class PidChassisHandler {
 //            Log.e("pow", powers.toString())
             robot.chassis.turnPower(power)
         }
-        pid.setOutputLimits(0.5)
+        pid.setOutputLimits(0.8)
 
 //        pid.pids.forEach { it.setOutputLimits(0.5) }
     }

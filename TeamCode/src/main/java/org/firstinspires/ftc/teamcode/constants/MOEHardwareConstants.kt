@@ -6,8 +6,6 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.*
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.DriveTrain.Motors.Configs.BackRight
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs.LeftIntake
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs.RightIntake
-import kotlin.math.max
-import kotlin.math.min
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction as MotorDirection
 import com.qualcomm.robotcore.hardware.Servo.Direction as ServoDirection
 
@@ -76,12 +74,12 @@ object MOEHardwareConstants {
 
 
         object Configs {
-            val LeftArm = ServoConfig("LAA", 1, 1, min = 0.55, max = 1.0, direction = Servo.Direction.REVERSE)
+            val LeftArm = ServoConfig("LAA", 1, 1, min = 0.45, max = 1.0, direction = Servo.Direction.REVERSE)
             val LeftClaw = ServoConfig("LAC", 1, 5, min = 0.0, max = 0.65)
-            val LeftConfig = AutonArmConfig(LeftArm, LeftClaw)
-            val RightArm = ServoConfig("RAA", 2, 1, min = 0.35, max = 0.9, direction = Servo.Direction.FORWARD)
+            val LeftConfig = AutonArmConfig(LeftArm, LeftClaw, 0.1,0.73)
+            val RightArm = ServoConfig("RAA", 2, 1, min = 0.33, max = 0.9, direction = Servo.Direction.FORWARD)
             val RightClaw = ServoConfig("RAC", 2, 5, min = 0.25, max = 1.0, direction = Servo.Direction.REVERSE)
-            val RightConfig = AutonArmConfig(RightArm, RightClaw)
+            val RightConfig = AutonArmConfig(RightArm, RightClaw, 0.0, 0.5)
         }
     }
 }

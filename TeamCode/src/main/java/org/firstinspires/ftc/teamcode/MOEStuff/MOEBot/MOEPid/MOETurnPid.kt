@@ -12,7 +12,6 @@ class MOETurnPid(P: Double = 0.0,
 
     init {
         internalPid.getError = { setpoint, actual -> actual.closestAngleDifference(setpoint) }
-        setOutputLimits(0.5)
 //        endCondition = { actual, setpoint, output ->
 //            abs(internalPid.getError(setpoint, actual)) < 0.5 &&
 //        }
