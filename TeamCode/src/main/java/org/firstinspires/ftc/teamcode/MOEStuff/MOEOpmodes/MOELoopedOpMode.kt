@@ -55,10 +55,10 @@ abstract class MOELoopedOpMode : OpMode(), MOEFirebase, OpModeInterface, MOEBotC
     }
 
     override fun loop() {
-//        val currTime = System.nanoTime()
+        val currTime = System.nanoTime()
         opModeIsActive = true
         internalLoop()
-//        telemetry.addData(System.nanoTime() - currTime)
+        telemetry.addData(System.nanoTime() - currTime)
 
     }
 

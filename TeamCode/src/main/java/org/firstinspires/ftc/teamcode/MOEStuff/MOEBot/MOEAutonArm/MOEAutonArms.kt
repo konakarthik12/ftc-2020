@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAutonArm
 
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.AutonArmConfig
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants
 
 class MOEAutonArms {
@@ -14,5 +13,9 @@ class MOEAutonArms {
 
     fun closeClaws() {
         arms.forEach { it.closeClaw() }
+    }
+
+    fun initAutonArms() {
+        arms.forEach { it.initAutonArm() }
     }
 }

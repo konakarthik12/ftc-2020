@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEGamepad.MOEGamepad
-import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
 
 abstract class MOETeleOp : MOELoopedOpMode() {
@@ -15,7 +14,6 @@ abstract class MOETeleOp : MOELoopedOpMode() {
     }
 
     private fun setUpJoysticks() {
-
         gpad1 = MOEGamepad(gamepad1)
         gpad2 = MOEGamepad(gamepad2)
 
@@ -31,10 +29,8 @@ abstract class MOETeleOp : MOELoopedOpMode() {
     }
 
     override fun internalLoop() {
-
         gpad1.update()
         gpad2.update()
-
         mainLoop()
     }
 

@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAutonArm
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.AutonArmConfig
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
+import org.firstinspires.ftc.teamcode.utilities.internal.wait
 
 class MOEAutonArm(val config: AutonArmConfig) {
 
@@ -22,4 +24,27 @@ class MOEAutonArm(val config: AutonArmConfig) {
         armServo.setPosition(1.0)
     }
 
+    fun grabStone() {
+        lowerArm()
+        moeOpMode.wait(500)
+        closeClaw()
+        moeOpMode.wait(750)
+    }
+
+    fun liftStone() {
+        raiseArm()
+        moeOpMode.wait(500)
+    }
+
+    fun dropStone() {
+        lowerArm()
+        moeOpMode.wait(100)
+        openClaw()
+        moeOpMode.wait(1000)
+    }
+
+    fun initAutonArm() {
+        clawServo.setPosition(config.initClawPos)
+        armServo.setPosition(config.initArmPos)
+    }
 }

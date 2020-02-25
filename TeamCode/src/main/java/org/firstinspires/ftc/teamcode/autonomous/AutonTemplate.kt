@@ -18,7 +18,7 @@ class AutonTemplate : MOEAuton() {
 
     override fun run() {
         val location = getSkyStoneLocation()
-        telemetry.addData("location", location)
+        telemetry.addData("locatiob", location)
         telemetry.addData("gyro", robot.gyro.angle)
         telemetry.update()
 
@@ -27,68 +27,63 @@ class AutonTemplate : MOEAuton() {
         robot.chassis.turnTo(90.0)
         val verticalDistance = when (location) {
             LEFT -> 1.5
-            MIDDLE -> -2.5
-            RIGHT -> -9.5
+            MIDDLE -> -1.75
+            RIGHT -> -8.0
         }
+        telemetry.addData("distance", verticalDistance)
+        telemetry.update()
         robot.chassis.encoders.moveVertical(verticalDistance)
         val strafeDistance = when (location) {
             LEFT -> 4.5
-            MIDDLE -> 2.0
+            MIDDLE -> 1.0
             RIGHT -> 1.5
         }
+        robot.chassis.turnTo(90.0)
         robot.chassis.encoders.moveRightInches(strafeDistance)
-
-        wait(1500)
-        robot.autonArms.right.lowerArm()
-
-        wait(500)
-        robot.autonArms.right.closeClaw()
-        wait(750)
-        robot.autonArms.right.raiseArm()
-        wait(500)
-
-        robot.chassis.encoders.moveLeftInches(strafeDistance + 4.0)
+//        wait(50)
+        robot.autonArms.right.grabStone()
+        robot.autonArms.right.liftStone()
+        val firstLeftStrafe = when (location) {
+            LEFT -> 8.5
+            MIDDLE -> 5.0
+            RIGHT -> 5.5
+        }
+        robot.chassis.encoders.moveLeftInches(firstLeftStrafe)
+        val toFoundationDistance = when (location) {
+            LEFT -> 66.5
+            MIDDLE -> 72.0
+            RIGHT -> 80.0
+        }
+        robot.chassis.encoders.moveVertical(toFoundationDistance, 0.8)
         robot.chassis.turnTo(90.0)
-        robot.chassis.encoders.moveVertical(67.0 - verticalDistance)
-
-        robot.chassis.encoders.moveRightInches(9.0)
-        robot.chassis.turnTo(90.0)
-        robot.autonArms.right.lowerArm()
         wait(500)
-        robot.autonArms.right.openClaw()
-        wait(1000)
+        val rightToFoundation = when (location) {
+            LEFT -> 8.0
+            MIDDLE -> 9.0
+            RIGHT -> 9.0
+        }
+        robot.chassis.encoders.moveRightInches(rightToFoundation)
+        robot.chassis.turnTo(90.0)
+        robot.autonArms.right.dropStone()
         robot.autonArms.right.raiseArm()
         wait(1000)
+        robot.chassis.encoders.moveLeftInches(9.0)
+        robot.chassis.turnTo(90.0)
 
-//        val currentGyro = robot.gyro.angle;
-//        val target = (currentGyro + 90).toNormalAngle()
-//        telemetry.addData("angle", currentGyro)
-//        telemetry.addData("target", target)
-//        telemetry.update()
-//        wait(2000)
-//        robot.chassis.turnPower(0.5)
-//        while (opModeIsActive() && robot.gyro.angle < target) {
-//            telemetry.addData("angle", robot.gyro.angle)
-//            telemetry.update()
-//        }
+        val firstBackwards = when (location) {
+            LEFT -> 98.0
+            MIDDLE -> 101.0
+            RIGHT -> 105.0
+        }
+        robot.chassis.encoders.moveBackwardInches(firstBackwards, 0.8)
+        val rightStrafe = when (location) {
+            LEFT -> 3.0
+            MIDDLE -> 3.0
+            RIGHT -> 3.5
+        }
+        robot.chassis.encoders.moveRightInches(rightStrafe)
+        robot.autonArms.right.grabStone()
         robot.chassis.stop()
-//        when (location) {
-//            SkyStoneLocation.LEFT -> {
-//                robot.chassis.moveTo(getAutonConfig().positionConfig.leftSkystonePosition)
-//            }
-//            SkyStoneLocation.MIDDLE -> {
-//                robot.chassis.moveTo(getAutonConfig().positionConfig.middleSkystonePosition)
-//            }
-//            SkyStoneLocation.RIGHT -> {
-//                robot.chassis.moveTo(getAutonConfig().positionConfig.rightSkystonePosition)
-//            }
-//        }
-
-//        robot.intake.setPower(0.6)
-//        robot.chassis.encoders.moveForwardInches(30.0, 0.5)
-//        robot.chassis.encoders.moveBackwardInches(35.0, 0.5) // Adding 5 astars for good measure.
-//
-//        robot.chassis.moveTo(-1.0 /* foundation */, -1.0)
     }
 
     private fun getSkyStoneLocation(): SkyStoneLocation {

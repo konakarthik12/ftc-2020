@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.closestAngleDifference
-import kotlin.math.abs
 
 class MOETurnPid(P: Double = 0.0,
                  I: Double = 0.0,
@@ -12,9 +11,5 @@ class MOETurnPid(P: Double = 0.0,
 
     init {
         internalPid.getError = { setpoint, actual -> actual.closestAngleDifference(setpoint) }
-        setOutputLimits(0.5)
-//        endCondition = { actual, setpoint, output ->
-//            abs(internalPid.getError(setpoint, actual)) < 0.5 &&
-//        }
     }
 }

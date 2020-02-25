@@ -18,8 +18,12 @@ open class CompTeleOp : MOETeleOp() {
         addListeners()
         initLift()
         initOuttake()
-        robot.foundation.moveUp()
+        initFoundation()
 //        robot.odometry.launchLoop()
+    }
+
+    private fun initFoundation() {
+        robot.foundation.moveUp()
     }
 
 
@@ -41,10 +45,10 @@ open class CompTeleOp : MOETeleOp() {
         }
 
         gpad2.a.onKeyDown {
-            if (robot.lift.getAveragePosition() >= lastHighest) {
+            if (robot.lift.getAveragePosition() >= lastHighest && !gpad2.b.isToggled) {
                 lastHighest = robot.lift.getAveragePosition()
                 robot.lift.target = 0.0
-            } else {
+            } else if (robot.lift.getAveragePosition() < lastHighest) {
                 robot.lift.target = lastHighest
             }
         }
@@ -76,7 +80,7 @@ open class CompTeleOp : MOETeleOp() {
 //        telemetry.addData("timed", System.currentTimeMillis() - oldTime)
     }
 
-    protected fun dpadChassis() {
+    private fun dpadChassis() {
         val scale = 0.3
         var angle = gpad1.dpad.angle() ?: return
         angle += if (robot.gyro.angle in 90.0..270.0) -90 else 90
@@ -179,11 +183,11 @@ open class CompTeleOp : MOETeleOp() {
         val liftCurPos = robot.lift.getPositions().average()
 
 
-        robot.lift.target += ((up + upSlow) * 45)
+        target += ((up + upSlow) * 45)
         if (gpad2.left.stick.y() > -0.1) {
             target = target.coerceAtLeast(0.0)
         }
-        robot.lift.target = target
+
 
         if (liftCurPos > target) {
             liftPower = 1.0
@@ -197,6 +201,7 @@ open class CompTeleOp : MOETeleOp() {
         } else {
             robot.lift.setTargetPosition(target.toInt())
         }
+        robot.lift.target = target
 
     }
 
