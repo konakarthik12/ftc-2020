@@ -99,9 +99,9 @@ class BlueAuton : MOEAuton() {
         }
         robot.chassis.encoders.moveLeftInches(rightStrafe + leftStrafeOff)
         val toFoundationDistance2 = when (location) {
-            LEFT -> 115.0
-            MIDDLE -> 120.0
-            RIGHT -> 130.0
+            LEFT -> 100.0
+            MIDDLE -> 110.0
+            RIGHT -> 118.0
         }
         robot.chassis.encoders.moveVertical(toFoundationDistance2, 0.8)
         robot.chassis.turnTo(90.0)
