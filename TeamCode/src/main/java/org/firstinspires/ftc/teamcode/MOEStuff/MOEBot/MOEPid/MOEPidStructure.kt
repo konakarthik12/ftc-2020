@@ -5,7 +5,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 
@@ -18,18 +17,19 @@ interface MOEPidStructure<I, O> {
     var endCondition: (I, I, I) -> Boolean
     fun run(sync: Boolean = true): Job {
         return GlobalScope.launch {
-            Log.e("isittho", ReferenceHolder.moeOpMode.iOpModeIsActive().toString())
             reset()
-            while (ReferenceHolder.moeOpMode.iOpModeIsActive()) {
-//                Log.e("working", "work")
-//                Log.e("xPid", "work")
+            var iteration = 0
+            var startTime = System.currentTimeMillis()
+            while (moeOpMode.iOpModeIsActive()) {
                 val curInput = input()
                 val curSetPoint = setpoint()
                 val dActual = getAbsActualDiff()
                 val neededOutput = getOutput(curInput, curSetPoint)
-
+                iteration++
                 if (endCondition(curInput, curSetPoint, dActual)) {
-                    Log.e("job", "done")
+                    Log.e("iteration", iteration.toString())
+
+                    Log.e("time", (System.currentTimeMillis() - startTime).toString())
                     break
                 }
                 if (moeOpMode.iIsStopRequested) break
