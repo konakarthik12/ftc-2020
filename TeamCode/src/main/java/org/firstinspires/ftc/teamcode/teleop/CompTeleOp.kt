@@ -19,6 +19,7 @@ open class CompTeleOp : MOETeleOp() {
         initLift()
         initOuttake()
         initFoundation()
+        robot.autonArms.initAutonArms()
 //        robot.odometry.launchLoop()
     }
 

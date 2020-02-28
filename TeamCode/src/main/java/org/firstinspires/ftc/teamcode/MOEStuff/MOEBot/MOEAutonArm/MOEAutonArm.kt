@@ -25,6 +25,7 @@ class MOEAutonArm(val config: AutonArmConfig) {
     }
 
     fun grabStone() {
+        openClaw()
         lowerArm()
         moeOpMode.wait(500)
         closeClaw()
@@ -40,7 +41,7 @@ class MOEAutonArm(val config: AutonArmConfig) {
         lowerArm()
         moeOpMode.wait(100)
         openClaw()
-        moeOpMode.wait(1000)
+        moeOpMode.wait(500)
     }
 
     fun initAutonArm() {
