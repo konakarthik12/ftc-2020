@@ -20,3 +20,4 @@ fun <T> Iterable<PointImpl<T>>.toDoubleList(): List<Double> = flatMap { listOf(i
 
 fun <T : Cloneable<T>> Iterable<T>.clone(): List<T> = map { it.clone() }
 
+fun <T : Comparable<T>> Iterable<T>.minIndex() = withIndex().minBy { it.value }?.index

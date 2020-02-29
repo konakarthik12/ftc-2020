@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV
 
-import org.firstinspires.ftc.teamcode.autonomous.constants.AutonConstants
 import org.opencv.core.Mat
 import org.opencv.core.Point
 import org.opencv.core.Scalar
@@ -17,7 +16,7 @@ class MOEPipeline(private val instance: MOEPenCV) : OpenCvPipeline() {
             lastFrame = input
             frameRequested = false
         }
-        val subMatrix = input.submat(AutonConstants.Skystone.SKYSTONE_CROP)
+        val subMatrix = input.submat(instance.config.autonConfig.cropRectangle)
         val newMat = Mat()
         Imgproc.resize(subMatrix, newMat, Size(600.0, 200.0))
 
@@ -30,8 +29,8 @@ class MOEPipeline(private val instance: MOEPenCV) : OpenCvPipeline() {
     private fun drawLines(newMat: Mat) {
         val width = newMat.width().toDouble()
         val height = newMat.height().toDouble()
-        Imgproc.line(newMat, Point(width * (1 / 3.0), height), Point(width / 3.0, height), redLine, 4)
-        Imgproc.line(newMat, Point(width * (2 / 3.0), height), Point(width / 3.0, height), redLine, 4)
+        Imgproc.line(newMat, Point(width * (1 / 3.0), 0.0), Point(width * (1 / 3.0), height), redLine, 4)
+        Imgproc.line(newMat, Point(width * (2 / 3.0), 0.0), Point(width * (2 / 3.0), height), redLine, 4)
     }
 
     fun requestFrame() {

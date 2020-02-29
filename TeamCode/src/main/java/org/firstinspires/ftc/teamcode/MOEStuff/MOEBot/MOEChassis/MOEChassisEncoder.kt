@@ -1,17 +1,26 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis
 
 import com.qualcomm.robotcore.hardware.DcMotor
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Direction.*
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOETurnPid
+import org.firstinspires.ftc.teamcode.autonomous.sideconfig.Movement
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Units.TICS_PER_INCH
 import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
-import java.lang.IllegalStateException
 import kotlin.math.abs
 
 
 val defaultForwardPower = 0.8
 val defaultStrafePower = 0.5
+
+enum class Direction {
+    Forward, Backwards, Left, Right, Vertical, Horizontal;
+
+    fun isVerticalDirection(): Boolean {
+        return this == Vertical || this == Forward || this == Backwards
+    }
+}
 
 class MOEChassisEncoder(val chassis: MOEChassis) {
     var tPid = MOETurnPid(MOEPidConstants.tOptions)
@@ -28,8 +37,32 @@ class MOEChassisEncoder(val chassis: MOEChassis) {
         motor.power = power
     }
 
+    fun move(options: Movement) {
+        move(options.direction, options.distance, options.power)
+    }
+
+    private fun move(direction: Direction, inches: Double, power: Double? = null) {
+        //negate if opposite direction
+//        val newInches = if (direction == Direction.Left || direction == Direction.Backwards) -inches else inches
+        when (direction) {
+            Vertical -> moveVertical(inches, power ?: defaultForwardPower)
+            Horizontal -> moveVertical(inches, power ?: defaultStrafePower)
+            Forward -> moveForwardInches(inches, power ?: defaultStrafePower)
+            Backwards -> moveBackwardInches(inches, power ?: defaultStrafePower)
+            Right -> moveRightInches(inches, power ?: defaultStrafePower)
+            Left -> moveLeftInches(inches, power ?: defaultStrafePower)
+
+        }
+
+    }
+
+
     fun moveVertical(inches: Double, power: Double = defaultForwardPower, holdAngle: Double = robot.gyro.angle) {
         if (inches > 0) moveForwardInches(inches, power, holdAngle) else moveBackwardInches(-inches, power, holdAngle)
+    }
+
+    fun moveHorizontal(inches: Double, power: Double = defaultForwardPower) {
+        if (inches > 0) moveRightInches(inches, power) else moveLeftInches(-inches, power)
     }
 
     fun moveForwardInches(inches: Double, power: Double = defaultForwardPower, holdAngle: Double = robot.gyro.angle) {
@@ -44,8 +77,8 @@ class MOEChassisEncoder(val chassis: MOEChassis) {
         tPid.reset()
         while (wheel.getValue() < final && moeOpMode.iOpModeIsActive()) {
             val anglePower = tPid.getOutput(robot.gyro.angle)
-            var curPower = power;
-            if (Math.abs(final - wheel.getValue()) < 24 * TICS_PER_INCH) curPower = power*.5
+            var curPower = power
+            if (Math.abs(final - wheel.getValue()) < 24 * TICS_PER_INCH) curPower = power * .5
             robot.chassis.setPower(Powers.fromMechanum(curPower, 0.0, anglePower))
 
         }
@@ -65,8 +98,8 @@ class MOEChassisEncoder(val chassis: MOEChassis) {
 
         while (wheel.getValue() > final && moeOpMode.iOpModeIsActive()) {
             val anglePower = tPid.getOutput(robot.gyro.angle)
-            var curPower = power;
-            if (Math.abs(final - wheel.getValue()) < 24 * TICS_PER_INCH) curPower *= power*.5
+            var curPower = power
+            if (abs(final - wheel.getValue()) < 24 * TICS_PER_INCH) curPower *= power * .5
 
             robot.chassis.setPower(Powers.fromMechanum(-curPower, 0.0, anglePower))
 
