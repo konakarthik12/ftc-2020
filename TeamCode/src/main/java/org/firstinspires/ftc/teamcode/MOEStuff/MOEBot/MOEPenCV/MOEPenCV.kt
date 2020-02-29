@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV
 
 import android.graphics.Bitmap
+import android.util.Log
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
-import org.openftc.easyopencv.OpenCvCamera
-import org.openftc.easyopencv.OpenCvCameraFactory
-import org.openftc.easyopencv.OpenCvCameraRotation
-import org.openftc.easyopencv.OpenCvInternalCamera
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
+import org.openftc.easyopencv.*
 
 
 class MOEPenCV(val config: MOEOpenCVConfig) {
@@ -17,8 +16,14 @@ class MOEPenCV(val config: MOEOpenCVConfig) {
     init {
         webcam = if (config.useInternalCamera) getInternalCamera() else getExternalCamera()
         webcam.setPipeline(pipeline)
-        webcam.openCameraDevice()
-        webcam.startStreaming(800, 448, OpenCvCameraRotation.UPRIGHT)
+//        webcam.stopStreaming()
+//        webcam.closeCameraDevice()
+        try {
+            webcam.openCameraDevice()
+            webcam.startStreaming(config.resolution, OpenCvCameraRotation.UPRIGHT)
+        } catch (e: OpenCvCameraException) {
+            moeOpMode.iRequestOpModeStop()
+        }
     }
 
     private fun getInternalCamera(): OpenCvCamera {
@@ -40,8 +45,9 @@ class MOEPenCV(val config: MOEOpenCVConfig) {
             ReferenceHolder.appContext.resources.getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.packageName)
 
     fun stop() {
-        webcam.stopStreaming()
-        webcam.closeCameraDevice()
+        Log.e("isCalled", "opencv")
+//        webcam.stopStreaming()
+//        webcam.closeCameraDevice()
     }
 
     fun getBitmap(): Bitmap? {

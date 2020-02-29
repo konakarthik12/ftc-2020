@@ -8,6 +8,10 @@ import org.firstinspires.ftc.teamcode.autonomous.sideconfig.AutonSideConstants
 
 @Autonomous
 class BlueAutonSetup : MOETeleOp() {
+    override fun initOpMode() {
+        robot.autonArms.moveToShowCamera()
+    }
+
     override fun mainLoop() {}
 
 

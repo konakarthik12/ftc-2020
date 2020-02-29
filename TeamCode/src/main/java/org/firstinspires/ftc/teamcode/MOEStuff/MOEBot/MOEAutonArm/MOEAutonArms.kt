@@ -23,5 +23,9 @@ class MOEAutonArms {
         left.armServo.setPosition(.17)
     }
 
+    fun raiseArms() {
+        arms.forEach { it.raiseArm() }
+    }
+
 
 }

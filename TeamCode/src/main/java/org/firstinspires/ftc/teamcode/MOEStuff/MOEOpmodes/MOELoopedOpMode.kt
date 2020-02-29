@@ -86,7 +86,7 @@ abstract class MOELoopedOpMode : OpMode(), MOEFirebase, OpModeInterface, MOEBotC
 
     private fun notifyInitFinished() {
         telemetry.addData("waiting for start")
-        telemetry.speak("Initialized")
+//        telemetry.speak("Initialized")
         telemetry.update()
     }
 

@@ -1,7 +1,6 @@
-package org.firstinspires.ftc.teamcode.autonomous.vision
+package org.firstinspires.ftc.teamcode.autonomous
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
-import org.firstinspires.ftc.teamcode.autonomous.AutonTemplate
 import org.firstinspires.ftc.teamcode.autonomous.sideconfig.AutonSideConstants
 
 @Autonomous

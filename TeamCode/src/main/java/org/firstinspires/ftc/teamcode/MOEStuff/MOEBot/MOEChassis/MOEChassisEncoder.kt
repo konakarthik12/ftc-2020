@@ -11,8 +11,8 @@ import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 import kotlin.math.abs
 
 
-val defaultForwardPower = 0.8
-val defaultStrafePower = 0.5
+val defaultVerticalPower = 0.8
+val defaultHorizontalPower = 0.5
 
 enum class Direction {
     Forward, Backwards, Left, Right, Vertical, Horizontal;
@@ -47,31 +47,27 @@ class MOEChassisEncoder(val chassis: MOEChassis) {
         //negate if opposite direction
 //        val newInches = if (direction == Direction.Left || direction == Direction.Backwards) -inches else inches
         when (direction) {
-            Vertical -> moveVertical(inches, power ?: defaultForwardPower)
-            Horizontal -> moveVertical(inches, power ?: defaultStrafePower)
-            Forward -> moveForwardInches(inches, power ?: defaultStrafePower)
-            Backwards -> moveBackwardInches(inches, power ?: defaultStrafePower)
-            Right -> moveRightInches(inches, power ?: defaultStrafePower)
-            Left -> moveLeftInches(inches, power ?: defaultStrafePower)
-
+            Vertical -> moveVertical(inches, power ?: defaultVerticalPower)
+            Horizontal -> moveHorizontal(inches, power ?: defaultHorizontalPower)
+            Forward -> moveForwardInches(inches, power ?: defaultVerticalPower)
+            Backwards -> moveBackwardInches(inches, power ?: defaultVerticalPower)
+            Right -> moveRightInches(inches, power ?: defaultHorizontalPower)
+            Left -> moveLeftInches(inches, power ?: defaultHorizontalPower)
         }
 
     }
 
 
-    fun moveVertical(inches: Double, power: Double = defaultForwardPower, holdAngle: Double = robot.gyro.angle) {
+    fun moveVertical(inches: Double, power: Double = defaultVerticalPower, holdAngle: Double = robot.gyro.angle) {
         if (inches > 0) moveForwardInches(inches, power, holdAngle) else moveBackwardInches(-inches, power, holdAngle)
     }
 
-    fun moveHorizontal(inches: Double, power: Double = defaultForwardPower) {
+    fun moveHorizontal(inches: Double, power: Double = defaultVerticalPower) {
         if (inches > 0) moveRightInches(inches, power) else moveLeftInches(-inches, power)
     }
 
-    fun moveForwardInches(inches: Double, power: Double = defaultForwardPower, holdAngle: Double = robot.gyro.angle) {
-
-//        val position = (robot.odometry.rightForwardWheel.position + ticks * INCHS_PER_TICK).toInt()
-//        setTargetPositionAndPower(robot.odometry.rightForwardWheel.mMotor, position, power)
-//        robot.chassis.setPower(power)
+    fun moveForwardInches(inches: Double, power: Double = defaultVerticalPower, holdAngle: Double = robot.gyro.angle) {
+        val weakPower = power * 0.5
         val wheel = robot.odometry.rightForwardWheel
 
         val final = wheel.getValue() + inches * TICS_PER_INCH
@@ -79,19 +75,16 @@ class MOEChassisEncoder(val chassis: MOEChassis) {
         tPid.reset()
         while (wheel.getValue() < final && moeOpMode.iOpModeIsActive()) {
             val anglePower = tPid.getOutput(robot.gyro.angle)
-            var curPower = power
-            if (abs(final - wheel.getValue()) < 24 * TICS_PER_INCH) curPower = power * .5
+            val curPower = if (abs(final - wheel.getValue()) < 24 * TICS_PER_INCH) weakPower else power
             robot.chassis.setPower(Powers.fromMechanum(curPower, 0.0, anglePower))
-
         }
-
         robot.chassis.stop()
 
     }
 
-    fun moveBackwardInches(inches: Double, power: Double = defaultForwardPower, holdAngle: Double = robot.gyro.angle) {
-        //if (inches < 0) throw IllegalStateException("you're an idiot")
-        //robot.chassis.setPower(-power)
+    fun moveBackwardInches(inches: Double, power: Double = defaultVerticalPower, holdAngle: Double = robot.gyro.angle) {
+        val weakPower = power * 0.5
+
         val wheel = robot.odometry.rightForwardWheel
 
         val final = wheel.getValue() - inches * TICS_PER_INCH
@@ -100,34 +93,25 @@ class MOEChassisEncoder(val chassis: MOEChassis) {
 
         while (wheel.getValue() > final && moeOpMode.iOpModeIsActive()) {
             val anglePower = tPid.getOutput(robot.gyro.angle)
-            var curPower = power
-            if (abs(final - wheel.getValue()) < 24 * TICS_PER_INCH) curPower *= power * .5
-
+            val curPower = if (abs(final - wheel.getValue()) < 24 * TICS_PER_INCH) weakPower else power
             robot.chassis.setPower(Powers.fromMechanum(-curPower, 0.0, anglePower))
-
-//            telemetry.addData("cur inches", wheel.getValue())
-//            telemetry.addData("final inches", final)
-//            telemetry.update()
         }
 
         robot.chassis.stop()
     }
 
-    fun moveRightInches(inches: Double, power: Double = 0.5, synchronous: Boolean = true) {
+    fun moveRightInches(inches: Double, power: Double = 0.5) {
         robot.chassis.setStrafePower(power)
         val wheel = robot.odometry.strafeWheel
 
         val final = wheel.getValue() + inches * TICS_PER_INCH
         while (wheel.getValue() < final && moeOpMode.iOpModeIsActive()) {
-//            telemetry.addData("cur inches", wheel.getValue())
-//            telemetry.addData("final inches", final)
-//            telemetry.update()
         }
 
         robot.chassis.stop()
     }
 
-    fun moveLeftInches(inches: Double, power: Double = 0.5, synchronous: Boolean = true) {
+    fun moveLeftInches(inches: Double, power: Double = 0.5) {
         if (inches < 0) throw IllegalStateException("you're an idiot")
 
         robot.chassis.setStrafePower(-power)

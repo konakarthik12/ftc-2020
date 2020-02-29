@@ -11,7 +11,7 @@ object AutonSideConstants {
                     // 0 - move from wall to stones
                     MovementOptions(Backwards, 28.0),
                     //1 - move to align with skystone
-                    MovementOptions(Vertical, 2.0, -4.0, -11.0),
+                    MovementOptions(Vertical, 2.0, -2.0, -11.0),
                     //2 - strafe towards skystone
                     MovementOptions(Right, 4.5, 4.0, 3.5),
                     //3 - strafe away from skystone
