@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
-import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -19,7 +18,7 @@ interface MOEPidStructure<I, O> {
         return GlobalScope.launch {
             reset()
             var iteration = 0
-            var startTime = System.currentTimeMillis()
+            val startTime = System.currentTimeMillis()
             while (moeOpMode.iOpModeIsActive()) {
                 val curInput = input()
                 val curSetPoint = setpoint()
@@ -27,9 +26,9 @@ interface MOEPidStructure<I, O> {
                 val neededOutput = getOutput(curInput, curSetPoint)
                 iteration++
                 if (endCondition(curInput, curSetPoint, dActual)) {
-                    Log.e("iteration", iteration.toString())
+//                    Log.e("iteration", iteration.toString())
 
-                    Log.e("time", (System.currentTimeMillis() - startTime).toString())
+//                    Log.e("time", (System.currentTimeMillis() - startTime).toString())
                     break
                 }
                 if (moeOpMode.iIsStopRequested) break

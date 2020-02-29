@@ -6,17 +6,12 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler.moeWebServer
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOELoopedOpMode
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.utilities.external.toFixed
-import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import kotlin.random.Random
 
 @TeleOp(name = "ServerTest")
 class ServerTest : MOELoopedOpMode(), SensorEventListener {

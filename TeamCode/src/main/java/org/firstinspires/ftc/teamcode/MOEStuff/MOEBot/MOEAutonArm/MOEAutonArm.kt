@@ -48,4 +48,5 @@ class MOEAutonArm(val config: AutonArmConfig) {
         clawServo.setPosition(config.initClawPos)
         armServo.setPosition(config.initArmPos)
     }
+
 }

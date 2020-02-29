@@ -18,7 +18,7 @@ class MOEPenCV(val config: MOEOpenCVConfig) {
         webcam = if (config.useInternalCamera) getInternalCamera() else getExternalCamera()
         webcam.setPipeline(pipeline)
         webcam.openCameraDevice()
-        webcam.startStreaming(1920, 1080, OpenCvCameraRotation.UPRIGHT)
+        webcam.startStreaming(800, 448, OpenCvCameraRotation.UPRIGHT)
     }
 
     private fun getInternalCamera(): OpenCvCamera {
@@ -41,6 +41,7 @@ class MOEPenCV(val config: MOEOpenCVConfig) {
 
     fun stop() {
         webcam.stopStreaming()
+        webcam.closeCameraDevice()
     }
 
     fun getBitmap(): Bitmap? {

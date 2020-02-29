@@ -1,70 +1,74 @@
 package org.firstinspires.ftc.teamcode.autonomous
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAutonArm.MOEAutonArm
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
 import org.firstinspires.ftc.teamcode.autonomous.sideconfig.AutonSideConfig
 import org.firstinspires.ftc.teamcode.autonomous.sideconfig.Movement
 import org.firstinspires.ftc.teamcode.autonomous.vision.SkyStoneLocation
 import org.firstinspires.ftc.teamcode.autonomous.vision.getSkyStoneLocationFromBitmap
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Rectangle
 import org.firstinspires.ftc.teamcode.utilities.internal.wait
 
-@Autonomous
+//@Autonomous
 open class AutonTemplate(val config: AutonSideConfig) : MOEAuton() {
+    lateinit var autonArms: MOEAutonArm
     override fun initOpMode() {
-//        robot.autonArms.right.raiseArm()
-//        robot.autonArms.right.openClaw()
+//     autonArms.raiseArm()
+//     autonArms.openClaw()
+        autonArms = if (config.negateStuff) robot.autonArms.left else robot.autonArms.right
+
         robot.autonArms.initAutonArms()
-        robot.autonArms.left.armServo.setPosition(.17)
+        robot.autonArms.moveToShowCamera()
         robot.foundation.moveUp()
     }
 
+    val turnToAngle = if (config.negateStuff) -90.0 else 90.0
     override fun run() {
-        val location = getSkyStoneLocation(config.cropRectangle)
+        val location = getSkyStoneLocation()
+        robot.autonArms.initAutonArms()
         val distances = config.getDistances(location)
         telemetry.addData("location", location)
         telemetry.addData("gyro", robot.gyro.angle)
         telemetry.update()
         //FROM WALL TO STONES
         move(distances[0])
-        robot.chassis.turnTo(90.0)
+        robot.chassis.turnTo(turnToAngle)
         //GRAB 1ST SKYSTONE
         move(distances[1])
         wait(300)
         move(distances[2])
-        robot.autonArms.right.grabStone()
-        robot.autonArms.right.liftStone()
+        autonArms.grabStone()
+        autonArms.liftStone()
         move(distances[3])
-        robot.chassis.turnTo(90.0)
+        robot.chassis.turnTo(turnToAngle)
         //PLACE 1ST STONE ON FOUNDATION
         move(distances[4])
         wait(300)
         move(distances[5])
-        robot.autonArms.right.dropStone()
-        robot.autonArms.right.raiseArm()
-        robot.autonArms.right.initAutonArm()
-        robot.chassis.turnTo(90.0)
+        autonArms.dropStone()
+        autonArms.raiseArm()
+        autonArms.initAutonArm()
+        robot.chassis.turnTo(turnToAngle)
         move(distances[6])
         //GRAB 2ND SKYSTONE
-        robot.chassis.turnTo(90.0)
+        robot.chassis.turnTo(turnToAngle)
         move(distances[7])
         wait(300)
         move(distances[8])
-        robot.autonArms.right.grabStone()
-        robot.autonArms.right.liftStone()
+        autonArms.grabStone()
+        autonArms.liftStone()
         move(distances[9])
-        robot.chassis.turnTo(90.0)
+        robot.chassis.turnTo(turnToAngle)
         //PLACE 2ND STONE ON FOUNDATION
         move(distances[10])
         wait(300)
         move(distances[11])
-        robot.autonArms.right.dropStone()
-        robot.autonArms.right.raiseArm()
-        robot.autonArms.right.initAutonArm()
-        robot.chassis.turnTo(90.0)
+        autonArms.dropStone()
+        autonArms.raiseArm()
+        autonArms.initAutonArm()
+        robot.chassis.turnTo(turnToAngle)
         move(distances[12])
-        robot.chassis.turnTo(90.0)
+        robot.chassis.turnTo(turnToAngle)
         //PARK
         move(distances[13])
 
@@ -75,9 +79,9 @@ open class AutonTemplate(val config: AutonSideConfig) : MOEAuton() {
         robot.chassis.encoders.move(movement)
     }
 
-    private fun getSkyStoneLocation(cropRectangle: Rectangle): SkyStoneLocation {
+    private fun getSkyStoneLocation(): SkyStoneLocation {
 //        val bm = robot.vuforia.getCroppedBitmap(AutonConstants.Skystone.SKYSTONE_CROP)!!
-        return getSkyStoneLocationFromBitmap(robot.vuforia.getBitmap()!!, cropRectangle)
+        return getSkyStoneLocationFromBitmap(robot.vuforia.getBitmap()!!, config.cropRectangle, config.negateStuff)
     }
 
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {

@@ -38,7 +38,7 @@ object MOEHardwareConstants {
             object Configs {
                 val OuttakeServo = ServoConfig("OUT", 1, 2)
                 val GrabberServo = ServoConfig("GRB", 1, 4)
-//                val CapstoneServo = ServoConfig("CAP", 1, 3)
+                val CapstoneServo = ServoConfig("CAP", 1, 3)
             }
         }
     }

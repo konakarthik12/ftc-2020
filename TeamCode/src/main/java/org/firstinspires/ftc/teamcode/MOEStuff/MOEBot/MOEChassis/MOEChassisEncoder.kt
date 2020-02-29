@@ -20,6 +20,8 @@ enum class Direction {
     fun isVerticalDirection(): Boolean {
         return this == Vertical || this == Forward || this == Backwards
     }
+
+
 }
 
 class MOEChassisEncoder(val chassis: MOEChassis) {
@@ -78,7 +80,7 @@ class MOEChassisEncoder(val chassis: MOEChassis) {
         while (wheel.getValue() < final && moeOpMode.iOpModeIsActive()) {
             val anglePower = tPid.getOutput(robot.gyro.angle)
             var curPower = power
-            if (Math.abs(final - wheel.getValue()) < 24 * TICS_PER_INCH) curPower = power * .5
+            if (abs(final - wheel.getValue()) < 24 * TICS_PER_INCH) curPower = power * .5
             robot.chassis.setPower(Powers.fromMechanum(curPower, 0.0, anglePower))
 
         }

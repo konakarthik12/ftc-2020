@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEAutonConfigImpl
-import org.firstinspires.ftc.teamcode.constants.MOEConstants.Units
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Rectangle
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 
 
 abstract class MOEAuton : MOERegularOpMode(), MOEAutonConfigImpl {
@@ -26,7 +23,8 @@ abstract class MOEAuton : MOERegularOpMode(), MOEAutonConfigImpl {
 
 
     final override fun moeInternalPostInit() {
-        robot.gyro.init(true)
+        if (robot.robotConfig.useGyro)
+            robot.gyro.init(true)
     }
 
 }

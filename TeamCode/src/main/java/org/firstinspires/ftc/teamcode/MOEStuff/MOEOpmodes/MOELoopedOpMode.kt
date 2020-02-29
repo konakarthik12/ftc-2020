@@ -86,6 +86,7 @@ abstract class MOELoopedOpMode : OpMode(), MOEFirebase, OpModeInterface, MOEBotC
 
     private fun notifyInitFinished() {
         telemetry.addData("waiting for start")
+        telemetry.speak("Initialized")
         telemetry.update()
     }
 
@@ -100,7 +101,8 @@ abstract class MOELoopedOpMode : OpMode(), MOEFirebase, OpModeInterface, MOEBotC
     override fun stop() {
 
         isStopRequested = true
-        robot.stop()
+        if (robot != null)
+            robot.stop()
 //        Log.e("stopped", "stop")
     }
 }

@@ -76,9 +76,19 @@ open class CompTeleOp : MOETeleOp() {
         foundation()
         lift()
         outtake()
+        capstone()
 //        autonArms()
         log()
 //        telemetry.addData("timed", System.currentTimeMillis() - oldTime)
+    }
+
+    private fun capstone() {
+        if (gamepad2.back) {
+            robot.outtake.capstoneServo.setPosition(0.48)
+        } else {
+            robot.outtake.capstoneServo.setPosition(1.0)
+
+        }
     }
 
     private fun dpadChassis() {
@@ -110,7 +120,7 @@ open class CompTeleOp : MOETeleOp() {
         telemetry.addData("acutal", robot.lift.getPositions().average())
         telemetry.addData("lastHighest", lastHighest)
         telemetry.addData("lastHighestTol", (robot.lift.getPositions().average() + heightTol))
-
+        telemetry.addData("gpad2back", gamepad2.back)
         telemetry.addData("switch", robot.lift.limitSwitch.isPressed)
 //        val motion = robot.odometry.astarMoetion()
 //        telemetry.addData("pose", motion.pose)

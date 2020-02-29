@@ -16,7 +16,8 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySyste
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySystem
 
 class MOEBot(config: MOEBotConstantsImpl) {
-    val autonArms = MOEAutonArms()
+//    val capstoneSystem = MOECapstoneSystem()
+val autonArms = MOEAutonArms()
     val robotConfig = config.getRobotSubSystemConfig()
 
 //    constructor(config: MOEBotConstants) : this(config.getRobotConfig().useGyro, config.getRobotConfig().useCamera, config.useSlam)
@@ -57,7 +58,9 @@ class MOEBot(config: MOEBotConstantsImpl) {
             odometry.resetValues()
             odometry.launchLoop()
         }
-        gyro.config = constants.getGyroConfig()
+        if (robotConfig.useGyro) {
+            gyro.config = constants.getGyroConfig()
+        }
 
 
     }

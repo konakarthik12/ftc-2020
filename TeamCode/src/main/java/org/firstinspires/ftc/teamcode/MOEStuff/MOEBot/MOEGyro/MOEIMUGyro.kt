@@ -4,8 +4,6 @@ import com.qualcomm.hardware.bosch.BNO055IMU
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.GyroConfig
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toDegrees
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toEulerAngle
 
 class MOEIMUGyro : MOEGyro() {
     val imu = hardwareMap.get(BNO055IMU::class.java, "imu")

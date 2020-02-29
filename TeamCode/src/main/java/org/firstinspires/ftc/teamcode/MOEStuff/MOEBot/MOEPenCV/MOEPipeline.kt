@@ -29,8 +29,9 @@ class MOEPipeline(private val instance: MOEPenCV) : OpenCvPipeline() {
     private fun drawLines(newMat: Mat) {
         val width = newMat.width().toDouble()
         val height = newMat.height().toDouble()
-        Imgproc.line(newMat, Point(width * (1 / 3.0), 0.0), Point(width * (1 / 3.0), height), redLine, 4)
-        Imgproc.line(newMat, Point(width * (2 / 3.0), 0.0), Point(width * (2 / 3.0), height), redLine, 4)
+        Imgproc.line(newMat, Point(width * (1 / 4.0), 0.0), Point(width * (1 / 4.0), height), redLine, 4)
+//        Imgproc.line(newMat, Point(width * (2 / 4.0), 0.0), Point(width * (2 / 4.0), height), redLine, 4)
+        Imgproc.line(newMat, Point(width * (3 / 4.0), 0.0), Point(width * (3 / 4.0), height), redLine, 4)
     }
 
     fun requestFrame() {
