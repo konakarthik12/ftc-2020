@@ -4,7 +4,6 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV.MOEPenCVConstants
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV.MOEPenCVConstants.PINK
 import org.opencv.core.Mat
 import org.opencv.core.Point
-import org.opencv.core.Rect
 import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
 import org.opencv.imgproc.Imgproc.COLOR_BGR2HSV
@@ -23,7 +22,7 @@ class MOEPipeline(private val instance: MOEPenCV) : OpenCvPipeline() {
         val subMatrix = input.submat(instance.config.autonConfig.cropRectangle)
         val newMat = Mat(Size(798.0, 466.0), input.type())
 
-        Imgproc.resize(subMatrix, newMat.submat(Rect(0, 0, 798, 466)), Size(798.0, 266.0))
+        Imgproc.resize(subMatrix, newMat, Size(798.0, 266.0))
 
         if (instance.config.drawOverlay) {
             drawLines(newMat)

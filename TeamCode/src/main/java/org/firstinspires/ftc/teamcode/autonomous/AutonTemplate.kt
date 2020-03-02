@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.autonomous
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAutonArm.MOEAutonArm
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV.MOEOpenCVConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
 import org.firstinspires.ftc.teamcode.autonomous.sideconfig.AutonSideConfig
 import org.firstinspires.ftc.teamcode.autonomous.sideconfig.Movement
@@ -24,12 +25,13 @@ open class AutonTemplate(val config: AutonSideConfig) : MOEAuton() {
 
     val turnToAngle = if (config.negateStuff) -90.0 else 90.0
     override fun run() {
-        val location = getSkyStoneLocation()
+//        var location = getSkyStoneLocation()
+        var location = SkyStoneLocation.LEFT
         robot.autonArms.initAutonArms()
-        val distances = config.getDistances(location)
         telemetry.addData("location", location)
         telemetry.addData("gyro", robot.gyro.angle)
         telemetry.update()
+        val distances = config.getDistances(location)
         //FROM WALL TO STONES
         move(distances[0])
         robot.chassis.turnTo(turnToAngle)
@@ -81,13 +83,21 @@ open class AutonTemplate(val config: AutonSideConfig) : MOEAuton() {
 
     private fun getSkyStoneLocation(): SkyStoneLocation {
 //        val bm = robot.vuforia.getCroppedBitmap(AutonConstants.Skystone.SKYSTONE_CROP)!!
-        return getSkyStoneLocationFromBitmap(robot.vuforia.getBitmap()!!, config.cropRectangle, config.negateStuff)
+        return getSkyStoneLocationFromBitmap(robot.vuforia.getBitmap(), config.cropRectangle, config.negateStuff)
     }
 
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
         return super.getRobotSubSystemConfig().apply {
-            useVuforia = true
+            useOpenCV = true
             useSlam = true
+        }
+    }
+
+    override fun getOpenCVConfig(): MOEOpenCVConfig {
+        return super.getOpenCVConfig().apply {
+            useInternalCamera = false
+            processExtra = false
+            drawOverlay = true
         }
     }
     //    override fun getInitialSlam(): Point {

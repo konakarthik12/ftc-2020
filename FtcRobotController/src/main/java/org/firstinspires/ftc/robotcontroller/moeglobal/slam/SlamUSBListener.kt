@@ -9,7 +9,6 @@ import android.hardware.usb.UsbManager
 class SlamUSBListener : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent) {
         val usbDevice = intent.getParcelableExtra<UsbDevice>(UsbManager.EXTRA_DEVICE)
-
         if (UsbManager.ACTION_USB_DEVICE_ATTACHED == intent.action) {
             SlamUsbReciever.handleDeviceAdded(usbDevice)
         } else if (UsbManager.ACTION_USB_DEVICE_DETACHED == intent.action) {

@@ -155,7 +155,6 @@ class SlamT265Handler internal constructor(device: UsbDevice) {
                         it.updateSlam()
                         it.updateUI()
                     }
-
                 } else {
 //                    Log.e("sleeping","sleep")
                     Thread.sleep(500)

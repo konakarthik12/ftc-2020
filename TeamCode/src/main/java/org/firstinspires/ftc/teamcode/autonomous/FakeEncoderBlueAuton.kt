@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.autonomous
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
 
+@Disabled
 @Autonomous
 class FakeEncoderBlueAuton : MOEAuton() {
     override fun run() {

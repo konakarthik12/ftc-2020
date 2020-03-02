@@ -13,7 +13,9 @@ import java.util.*
 enum class SkyStoneLocation { LEFT, MIDDLE, RIGHT }
 
 //1920 x 1080 | 800 x 448
-fun getSkyStoneLocationFromBitmap(bm: Bitmap, frame: Rectangle, flipSkystoneIndex: Boolean): SkyStoneLocation {
+fun getSkyStoneLocationFromBitmap(bm: Bitmap?, frame: Rectangle, flipSkystoneIndex: Boolean): SkyStoneLocation {
+    Log.e("vuforia", "error")
+    if (bm == null) return SkyStoneLocation.LEFT
     val randomUUID = UUID.randomUUID()
     val file = Environment.getExternalStorageDirectory().absolutePath + "/FirstTest/skystone_$randomUUID.png"
     Log.e("imagePath", file)

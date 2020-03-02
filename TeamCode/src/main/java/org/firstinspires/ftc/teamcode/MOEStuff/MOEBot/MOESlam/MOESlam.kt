@@ -28,7 +28,7 @@ class MOESlam(var config: MOEBotConstantsImpl) {
 //        resetValues()
 //    }
 
-    fun checkConnection() {
+    private fun checkConnection() {
         //        handler?.killStream()
         handler?.startStream()
     }

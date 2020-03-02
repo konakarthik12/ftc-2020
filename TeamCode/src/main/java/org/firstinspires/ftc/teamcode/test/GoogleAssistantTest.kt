@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.test
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 
+@Disabled
 @TeleOp(name = "Google Assistant Test")
 class GoogleAssistantTest : MOETeleOp() {
     var goal = 0

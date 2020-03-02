@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstantsImpl
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEFirebase
@@ -18,7 +16,6 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, 
     lateinit var robot: MOEBot
     override fun iOpModeIsActive(): Boolean = opModeIsActive()
     override fun iRequestOpModeStop() = requestOpModeStop()
-
 
     override val iIsStopRequested: Boolean
         get() = this.isStopRequested
@@ -41,7 +38,7 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, 
 
 
     override fun waitForStart() {
-        while (!isStarted) {
+        while (!isStarted && !isStopRequested) {
             notifyTelemetry()
         }
     }

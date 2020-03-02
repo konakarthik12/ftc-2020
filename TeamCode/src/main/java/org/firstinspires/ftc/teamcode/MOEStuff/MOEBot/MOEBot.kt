@@ -40,7 +40,7 @@ val autonArms = MOEAutonArms()
         if (robotConfig.useGyro) {
             gyro = (when {
                 robotConfig.useOdometry -> MOEdometryGyro(config)
-                robotConfig.useSlam -> MOESlamGyro(config)
+                robotConfig.useSlam -> MOESlamGyro()
                 else -> MOEIMUGyro()
             })
         }

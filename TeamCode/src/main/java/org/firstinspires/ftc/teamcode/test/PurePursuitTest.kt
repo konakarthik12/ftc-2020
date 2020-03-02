@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.test
 import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler.moeWebServer
@@ -16,7 +17,8 @@ import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.getSignedCu
 import org.firstinspires.ftc.teamcode.utilities.external.toFixed
 import org.firstinspires.ftc.teamcode.utilities.internal.get
 
-@TeleOp()
+@Disabled
+@TeleOp
 class PurePursuitTest : MOETeleOp() {
     val points = listOf(
             PurePursuitPoint(0.0, 0.0),

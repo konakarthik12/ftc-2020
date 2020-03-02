@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.autonomous
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
 import org.firstinspires.ftc.teamcode.utilities.internal.waitSeconds
 
+@Disabled
 @Autonomous
 class OldBlueAuton : MOEAuton() {
     override fun initOpMode() {

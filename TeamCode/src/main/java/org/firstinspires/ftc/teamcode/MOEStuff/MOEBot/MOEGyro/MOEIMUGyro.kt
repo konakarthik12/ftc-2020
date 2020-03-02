@@ -26,7 +26,9 @@ class MOEIMUGyro : MOEGyro() {
     }
 
     private fun waitForGyroInit() {
-        while (!moeOpMode.iIsStopRequested && !imu.isGyroCalibrated) {
+        while (!moeOpMode.iIsStopRequested && !initFinished()) {
         }
     }
+
+    override fun initFinished() = imu.isGyroCalibrated
 }

@@ -6,6 +6,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler.moeWebServer
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOELoopedOpMode
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
+@Disabled
 @TeleOp(name = "ServerTest")
 class ServerTest : MOELoopedOpMode(), SensorEventListener {
 
@@ -24,10 +26,10 @@ class ServerTest : MOELoopedOpMode(), SensorEventListener {
     }
 
     val timer = ElapsedTime()
-    override fun afterInit() {
-        super.afterInit()
-        timer.reset()
-    }
+//    override fun afterInit() {
+//        super.afterInit()
+//        timer.reset()
+//    }
 
     val wait = 100
     val data = ByteBuffer.allocate(12).order(ByteOrder.LITTLE_ENDIAN)

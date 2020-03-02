@@ -3,10 +3,12 @@ package org.firstinspires.ftc.teamcode.autonomous
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad.Button
 import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.firstinspires.ftc.teamcode.utilities.internal.wait
 
+@Disabled
 @Autonomous
 class RedFoundationAuton : MOEAuton() {
     override fun initOpMode() {

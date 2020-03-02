@@ -6,6 +6,8 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
+import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.openftc.easyopencv.*
 
 
@@ -22,6 +24,9 @@ class MOEPenCV(val config: MOEOpenCVConfig) {
             webcam.openCameraDevice()
             webcam.startStreaming(config.resolution, OpenCvCameraRotation.UPRIGHT)
         } catch (e: OpenCvCameraException) {
+            telemetry.addData(e.message.toString())
+            telemetry.update()
+            Thread.sleep(500)
             moeOpMode.iRequestOpModeStop()
         }
     }

@@ -1,3 +1,3 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig
 
-data class MOEVuforiaConfig(val enablePreview: Boolean = true)
+data class MOEVuforiaConfig(val enablePreview: Boolean = false)

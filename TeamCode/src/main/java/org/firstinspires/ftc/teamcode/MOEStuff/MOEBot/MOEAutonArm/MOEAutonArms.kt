@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAutonArm
 
+import org.firstinspires.ftc.teamcode.autonomous.constants.AutonConstants
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants
 
 class MOEAutonArms {
@@ -20,7 +21,7 @@ class MOEAutonArms {
     }
 
     fun moveToShowCamera() {
-        left.armServo.setPosition(.17)
+        left.armServo.setPosition(AutonConstants.OPEN_FOR_CAMERA_SERVO)
     }
 
     fun raiseArms() {

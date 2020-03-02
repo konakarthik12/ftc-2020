@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.test
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEDometryWheel
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants
-import org.firstinspires.ftc.teamcode.teleop.PatrickTeleOp
+import org.firstinspires.ftc.teamcode.teleop.CompTeleOp
 
+@Disabled
 @TeleOp(name = "EncoderDriveTest")
-class EncoderDriveTest : PatrickTeleOp() {
+class EncoderDriveTest : CompTeleOp() {
     lateinit var strafeWheel: MOEDometryWheel
     lateinit var leftForward: MOEDometryWheel
     lateinit var rightForward: MOEDometryWheel

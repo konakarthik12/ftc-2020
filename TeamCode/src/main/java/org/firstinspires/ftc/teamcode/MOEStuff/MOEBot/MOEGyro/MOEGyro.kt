@@ -58,4 +58,7 @@ abstract class MOEGyro {
         eulerAngle = 0.0
     }
 
+    abstract fun initFinished(): Boolean
+
+
 }

@@ -20,7 +20,6 @@ open class CompTeleOp : MOETeleOp() {
         initOuttake()
         initFoundation()
         robot.autonArms.initAutonArms()
-//        robot.odometry.launchLoop()
     }
 
     private fun initFoundation() {
@@ -115,31 +114,23 @@ open class CompTeleOp : MOETeleOp() {
 
     open fun log() {
         telemetry.addData("Runninge", this::class.simpleName)
-//        telemetry.addData("limswitch", robot.lift.limitSwitch.isPressed)
         telemetry.addData("lift", robot.lift.target)
         telemetry.addData("acutal", robot.lift.getPositions().average())
         telemetry.addData("lastHighest", lastHighest)
         telemetry.addData("lastHighestTol", (robot.lift.getPositions().average() + heightTol))
         telemetry.addData("gpad2back", gamepad2.back)
         telemetry.addData("switch", robot.lift.limitSwitch.isPressed)
-//        val motion = robot.odometry.astarMoetion()
-//        telemetry.addData("pose", motion.pose)
-//        telemetry.addData("degs", motion.degAng)
-//        writer.println("$motion.x\t$motion.y\t$motion.degAng")
     }
 
     val minPower = 0.4
     val maxPower = 7.0
     val powerRange = minPower..maxPower
     open fun joystickChassis() {
-        //        val bumperThrottle = 0.5
         val scaleX = 1
         val scaleY = 0.85
         val scaleRot = 0.75
+
         val angle = robot.gyro.angle
-
-//        telemetry.addData("gyro", angle)
-
         var rawY = gpad1.left.stick.y()
         var rawX = gpad1.left.stick.x()
         var rot = gpad1.right.stick.x()
@@ -151,17 +142,10 @@ open class CompTeleOp : MOETeleOp() {
         rot *= scaleRot * throttle
 
         val angRad = Math.toRadians(angle)
-//        telemetry.addData()
         val fwd = rawX * sin(angRad) + rawY * cos(angRad)
         val str = rawX * cos(angRad) - rawY * sin(angRad)
-        //        telemetry.addData("angle", gpad1.left_stick_angle)
-        //        telemetry.addData("magnitute", gpad1.left_stick_mag)
 
         robot.chassis.setPower(Powers.fromMechanum(fwd, str, rot, maxPower))
-//        val powers = Powers.fromRadAngle(gpad1.left.stick.angle
-//                + Math.toRadians(robot.gyro.angle), gpad1.left.stick.mag, rot)
-//        telemetry.addData("powers", powers)
-//        robot.chassis.setPower(powers)
     }
 
     private fun intake() {
@@ -181,9 +165,6 @@ open class CompTeleOp : MOETeleOp() {
     val heightTol = 0.0
     var liftPower = 1.0
     val intakeHeight = 250
-
-    var dpadPressed = false
-    var aPressed = false
 
 
     open fun lift() {

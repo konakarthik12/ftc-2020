@@ -37,24 +37,41 @@ abstract class MOELoopedOpMode : OpMode(), MOEFirebase, OpModeInterface, MOEBotC
         setRobotRef(robot)
         initOpMode()
         moeInternalPostInit()
-        offsetRobotValues()
-        notifyInitFinished()
+
     }
 
     private fun initRobot() {
         robot = createRobot()
     }
 
-    override fun internalPostInitLoop() {
-        super.internalPostInitLoop()
-        afterInit()
+    open fun initLoop(): Boolean {
+        return true
     }
 
-    open fun afterInit() {
-        telemetry.update()
+    var needToLoop = true
+    final override fun init_loop() {
+        if (needToLoop) {
+            val result = initLoop()
+            if (result) needToLoop = false
+        } else {
+            postInitLoop()
+        }
     }
+
+    private fun postInitLoop() {
+        notifyInitFinished()
+    }
+
+    //    open fun afterInit() {
+//        telemetry.update()
+//    }
+    var firstTime = true
 
     override fun loop() {
+        if (firstTime) {
+            offsetRobotValues()
+            firstTime = false
+        }
         val currTime = System.nanoTime()
         opModeIsActive = true
         internalLoop()
@@ -86,7 +103,6 @@ abstract class MOELoopedOpMode : OpMode(), MOEFirebase, OpModeInterface, MOEBotC
 
     private fun notifyInitFinished() {
         telemetry.addData("waiting for start")
-//        telemetry.speak("Initialized")
         telemetry.update()
     }
 
@@ -101,6 +117,7 @@ abstract class MOELoopedOpMode : OpMode(), MOEFirebase, OpModeInterface, MOEBotC
     override fun stop() {
 
         isStopRequested = true
+        @Suppress("SENSELESS_COMPARISON")
         if (robot != null)
             robot.stop()
 //        Log.e("stopped", "stop")

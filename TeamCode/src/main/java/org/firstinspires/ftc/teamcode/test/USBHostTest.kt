@@ -5,10 +5,12 @@ import android.hardware.usb.UsbManager
 
 
 import com.google.firebase.database.DatabaseReference
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
-@TeleOp()
+@Disabled
+@TeleOp
 class USBHostTest : MOERegularTest() {
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
         return null

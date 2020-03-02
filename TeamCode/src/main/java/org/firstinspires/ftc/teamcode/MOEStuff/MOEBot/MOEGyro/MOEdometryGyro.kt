@@ -9,6 +9,9 @@ class MOEdometryGyro(val botConstants: MOEBotConstantsImpl) : MOEGyro() {
 
 
     override fun getRawEulerAngle(): Double = robot.odometry.getRawTheta()
+    override fun initFinished(): Boolean {
+        return true
+    }
 
     override fun getRawAngle(): Double = getRawEulerAngle().toNormalAngle()
 }

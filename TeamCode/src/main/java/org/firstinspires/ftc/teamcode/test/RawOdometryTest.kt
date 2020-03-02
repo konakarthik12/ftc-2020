@@ -2,16 +2,18 @@ package org.firstinspires.ftc.teamcode.test
 
 import android.os.Environment
 import com.google.firebase.database.DatabaseReference
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERobotInitialStateConfig
-import org.firstinspires.ftc.teamcode.teleop.PatrickTeleOp
+import org.firstinspires.ftc.teamcode.teleop.CompTeleOp
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.MOEtion
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import java.io.File
 
-@TeleOp()
-class RawOdometryTest : PatrickTeleOp() {
+@Disabled
+@TeleOp
+class RawOdometryTest : CompTeleOp() {
     val sd_main = File(Environment.getExternalStorageDirectory().absolutePath + "/forward.txt")
     val writer = sd_main.printWriter()
     override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {

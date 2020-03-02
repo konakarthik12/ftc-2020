@@ -14,19 +14,7 @@ object AutonConstants {
         val Right = Left.reflect()
     }
 
-    object Skystone {
-        //        val TOP_SKYSTONE_POS = Point(96.0 + 4.0, 96.0 - 8.0)
-//        const val SKYSTONE_WIDTH = 4.0 * 2.0
-//        const val SKYSTONE_LENGTH = 8.0 * 2.0
-//        const val NUM_STONES = 6
-        // Top-right and bottom-left points: (775, 234) | (322, 271)
-//        val SKYSTONE_CROP =
-        // is the stone a yellow stone
-//        val isYellowStone: HSVFilter = { (h, s, v) ->
-//            h in 30F..60F && s > 0.4 && v > 0.6
-//        }
-    }
-
 
     const val FIELD_SIZE = 288.0
+    const val OPEN_FOR_CAMERA_SERVO = 0.1489
 }

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.test
 
 import android.os.Environment
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOETurnPid
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.WrapperHandler
 import java.io.File
 
+@Disabled
 @TeleOp
 class OdoRawVals : MOETeleOp() {
     val odo_sd_main = File(Environment.getExternalStorageDirectory().absolutePath + "/forward.txt")

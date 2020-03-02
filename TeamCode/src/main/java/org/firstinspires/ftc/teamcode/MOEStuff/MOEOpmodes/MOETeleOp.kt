@@ -13,6 +13,11 @@ abstract class MOETeleOp : MOELoopedOpMode() {
         }
     }
 
+    override fun initLoop(): Boolean {
+        telemetry.addData("Initializing", "gyro")
+        return robot.gyro.initFinished()
+    }
+
     private fun setUpJoysticks() {
         gpad1 = MOEGamepad(gamepad1)
         gpad2 = MOEGamepad(gamepad2)
@@ -22,9 +27,9 @@ abstract class MOETeleOp : MOELoopedOpMode() {
     final override fun moeInternalPostInit() {
 //        telemetry.addData("Gryo", LOADING_ICON)
 //        telemetry.update()
-        if (getRobotSubSystemConfig().useGyro) {
-            robot.gyro.init(true)
-        }
+//        if (getRobotSubSystemConfig().useGyro) {
+//            robot.gyro.init(true)
+//        }
 //        telemetry.addData("Gryo", LOADING_ICON)
     }
 

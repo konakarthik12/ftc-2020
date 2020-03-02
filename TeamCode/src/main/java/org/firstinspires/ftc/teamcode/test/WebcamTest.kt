@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.test
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
@@ -29,7 +30,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation
  */
 
 
-
+@Disabled
 @TeleOp
 class WebcamExample : MOETeleOp() {
     lateinit var webcam: OpenCvCamera

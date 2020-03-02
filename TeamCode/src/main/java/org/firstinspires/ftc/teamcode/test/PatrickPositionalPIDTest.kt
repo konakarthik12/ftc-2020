@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.test
 import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEPidOptions
@@ -12,6 +13,7 @@ import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAn
 import org.firstinspires.ftc.teamcode.utilities.external.toFixed
 import org.firstinspires.ftc.teamcode.utilities.internal.get
 
+@Disabled
 @TeleOp(name = "PatrickPositionalPidTest")
 class PatrickPositionalPIDTest : MOERegularTest() {
     //    lateinit var xPid: MOEPositionalPid
