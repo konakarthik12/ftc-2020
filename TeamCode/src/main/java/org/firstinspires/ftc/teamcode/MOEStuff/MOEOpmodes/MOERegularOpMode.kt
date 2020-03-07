@@ -36,13 +36,11 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, 
         robot = createRobot()
     }
 
-
     override fun waitForStart() {
         while (!isStarted && !isStopRequested) {
             notifyTelemetry()
         }
     }
-
 
     private fun moeDoubleInternalInit() {
         ReferenceHolder.setRefs(this)

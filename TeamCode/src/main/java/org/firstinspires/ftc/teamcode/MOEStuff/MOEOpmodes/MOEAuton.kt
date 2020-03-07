@@ -26,5 +26,4 @@ abstract class MOEAuton : MOERegularOpMode(), MOEAutonConfigImpl {
         if (robot.robotConfig.useGyro)
             robot.gyro.init(true)
     }
-
 }

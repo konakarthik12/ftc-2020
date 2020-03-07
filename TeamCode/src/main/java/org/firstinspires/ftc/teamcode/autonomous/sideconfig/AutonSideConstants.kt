@@ -4,8 +4,6 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Direction.*
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Rectangle
 
 object AutonSideConstants {
-
-
     val blue = AutonSideConfig(
             movements = listOf(
                     // 0 - move from wall to stones
