@@ -24,6 +24,7 @@ open class AutonTemplate(val config: AutonSideConfig) : MOEAuton() {
     }
 
     val turnToAngle = if (config.negateStuff) -90.0 else 90.0
+
     override fun run() {
 //        var location = getSkyStoneLocation()
         var location = SkyStoneLocation.LEFT
@@ -90,6 +91,9 @@ open class AutonTemplate(val config: AutonSideConfig) : MOEAuton() {
         return super.getRobotSubSystemConfig().apply {
             useOpenCV = true
             useSlam = true
+            useGyro = true
+            useVuforia = false
+            useOdometry = false
         }
     }
 
