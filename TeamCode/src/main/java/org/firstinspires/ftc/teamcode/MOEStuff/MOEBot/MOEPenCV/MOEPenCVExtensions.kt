@@ -3,10 +3,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV
 import android.graphics.Bitmap
 import android.util.Log
 import org.opencv.android.Utils
-import org.opencv.core.CvException
-import org.opencv.core.Mat
-import org.opencv.core.Point
-import org.opencv.core.Scalar
+import org.opencv.core.*
 import org.opencv.imgproc.Imgproc
 import org.openftc.easyopencv.OpenCvCamera
 import org.openftc.easyopencv.OpenCvCameraRotation
@@ -31,4 +28,12 @@ fun OpenCvCamera.startStreaming(res: Resolution, rotation: OpenCvCameraRotation)
 fun Mat.drawText(x: Double, y: Double, text: String, fontSize: Double = 1.0, color: Scalar = MOEPenCVConstants.BLACK) {
     Imgproc.putText(this, text, Point(x, y), 0, fontSize, color)
 
+}
+
+fun Mat.resize(width: Double, height: Double): Mat = resize(Size(width, height))
+
+fun Mat.resize(size: Size): Mat {
+    val dest = Mat()
+    Imgproc.resize(this, dest, size)
+    return dest
 }

@@ -51,26 +51,14 @@ class WebcamExample : MOETeleOp() {
         telemetry.addData("Overhead time ms", webcam.overheadTimeMs)
         telemetry.addData("Theoretical max FPS", webcam.currentPipelineMaxFps)
         telemetry.update()
-        /*
-             * NOTE: stopping the stream from the camera early (before the end of the OpMode
-             * when it will be automatically stopped for you) *IS* supported. The "if" statement
-             * below will stop streaming from the camera when the "A" button on gamepad 1 is pressed.
-             */when {
-            gamepad1.a -> {
-                webcam.stopStreaming()
-            }
-            gamepad1.x -> {
-                webcam.pauseViewport()
-            }
-            gamepad1.y -> {
+//              NOTE: stopping the stream from the camera early (before the end of the OpMode
+//              when it will be automatically stopped for you) *IS* supported. The "if" statement
+//              below will stop streaming from the camera when the "A" button on gamepad 1 is pressed.
+        when {
+            gamepad1.a -> webcam.stopStreaming()
+            gamepad1.x -> webcam.pauseViewport()
+            gamepad1.y -> webcam.resumeViewport()
 
-                webcam.resumeViewport()
-            }
-            /*
-                 * For the purposes of this sample, throttle ourselves to 10Hz loop to avoid burning
-                 * excess CPU cycles for no reason. (By default, telemetry is only sent to the DS at 4Hz
-                 * anyway). Of course in a real OpMode you will likely not want to do this.
-                 */
         }
     }
 
