@@ -66,16 +66,16 @@ abstract class MOELoopedOpMode : OpMode(), MOEFirebase, OpModeInterface, MOEBotC
 //        telemetry.update()
 //    }
     var firstTime = true
-
+    var currTime = 0L
     override fun loop() {
         if (firstTime) {
             offsetRobotValues()
             firstTime = false
         }
-        val currTime = System.nanoTime()
+        currTime = System.nanoTime()
         opModeIsActive = true
         internalLoop()
-        telemetry.addData(System.nanoTime() - currTime)
+        telemetry.addData((System.nanoTime() - currTime) / 1000000)
 
     }
 

@@ -2,9 +2,14 @@ package org.firstinspires.ftc.teamcode.teleop
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEGyroConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEHardware.initialHeight
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
+import org.firstinspires.ftc.teamcode.utilities.PrefKeys
+import org.firstinspires.ftc.teamcode.utilities.PrefsHandler
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
+import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -32,6 +37,7 @@ open class CompTeleOp : MOETeleOp() {
         robot.lift.setTargetPosition(10)
         robot.lift.setRunToPosition()
         robot.lift.setTargetTolorence(25)
+//        robot.lift.setPower(1.0)
         gpad2.dpad.up.onKeyDown {
             val liftCurPos = robot.lift.getAveragePosition()
             if (liftCurPos < initialHeight * .9) {
@@ -69,23 +75,21 @@ open class CompTeleOp : MOETeleOp() {
 
     //    var oldTime = 0L
     override fun mainLoop() {
-        joystickChassis()
+        joystickDrive()
         dpadChassis()
         intake()
         foundation()
         lift()
         outtake()
         capstone()
-//        autonArms()
         log()
-//        telemetry.addData("timed", System.currentTimeMillis() - oldTime)
     }
 
     private fun capstone() {
-        if (gamepad2.back) {
+        if (gpad2.back()) {
             robot.outtake.capstoneServo.setPosition(0.48)
         } else {
-            robot.outtake.capstoneServo.setPosition(1.0)
+            robot.outtake.capstoneServo.setPosition(0.0)
 
         }
     }
@@ -116,18 +120,17 @@ open class CompTeleOp : MOETeleOp() {
         telemetry.addData("Runninge", this::class.simpleName)
         telemetry.addData("lift", robot.lift.target)
         telemetry.addData("acutal", robot.lift.getPositions().average())
-        telemetry.addData("lastHighest", lastHighest)
-        telemetry.addData("lastHighestTol", (robot.lift.getPositions().average() + heightTol))
-        telemetry.addData("gpad2back", gamepad2.back)
-        telemetry.addData("switch", robot.lift.limitSwitch.isPressed)
+//        telemetry.addData("lastHighest", lastHighest)
+//        telemetry.addData("lastHighestTol", (robot.lift.getPositions().average() + heightTol))
+//        telemetry.addData("switch", robot.lift.limitSwitch.isPressed)
     }
 
     val minPower = 0.4
-    val maxPower = 7.0
+    val maxPower = 1.0
     val powerRange = minPower..maxPower
-    open fun joystickChassis() {
-        val scaleX = 1
-        val scaleY = 0.85
+    open fun joystickDrive() {
+        val scaleX = 1.0
+        val scaleY = 1.0
         val scaleRot = 0.75
 
         val angle = robot.gyro.angle
@@ -135,11 +138,15 @@ open class CompTeleOp : MOETeleOp() {
         var rawX = gpad1.left.stick.x()
         var rot = gpad1.right.stick.x()
 
-        val throttle = powerRange.lerp(gpad1.left.trigger())
-
+        var throttle = powerRange.lerp(gpad1.left.trigger())
+        if (gpad1.right.trigger() > 0.1) throttle = 0.4
         rawX *= scaleX * throttle
         rawY *= scaleY * throttle
         rot *= scaleRot * throttle
+
+        if (gpad1.left.bumper() && abs(rot) > 0.1) {
+            rawY = rawY.coerceAtLeast(0.0)
+        }
 
         val angRad = Math.toRadians(angle)
         val fwd = rawX * sin(angRad) + rawY * cos(angRad)
@@ -162,31 +169,33 @@ open class CompTeleOp : MOETeleOp() {
 
     //    var target = 0.0
     var lastHighest = 0.0
-    val heightTol = 0.0
-    var liftPower = 1.0
-    val intakeHeight = 250
 
+    //    val heightTol = 0.0
+    var liftPower = 1.0
+    val intakeHeight = 200
+    var liftJoystickSpeed = 45.0
 
     open fun lift() {
         var target = robot.lift.target
 
         val up = gpad2.left.stick.y()
-        val upSlow = gpad2.right.stick.y() * 0.5
-        val liftCurPos = robot.lift.getPositions().average()
+        val liftCurPos = robot.lift.getPositions().average().toInt()
 
 
-        target += ((up + upSlow) * 45)
+        target += up * liftJoystickSpeed
         if (gpad2.left.stick.y() > -0.1) {
             target = target.coerceAtLeast(0.0)
         }
 
 
-        if (liftCurPos > target) {
-            liftPower = 1.0
+        liftPower = when {
+            liftCurPos > 50 -> 1.0
+            gpad2.left.stick.button() -> 1.0
+            liftCurPos in 0..50 -> 0.5
+            else -> 0.25
         }
-        if (liftCurPos < target) {
-            liftPower = 1.0
-        }
+
+
         robot.lift.setPower(liftPower)
         if (gpad1.right.trigger() > .1 && !gpad2.x.isPressed) {
             robot.lift.setTargetPosition(intakeHeight)
@@ -200,8 +209,11 @@ open class CompTeleOp : MOETeleOp() {
     open fun outtake() {
 
         if (gpad2.b.isToggled) {
+            telemetry.addData("grab servo", "grabbing")
             robot.outtake.grab()
         } else {
+            telemetry.addData("grab servo", "release")
+
             robot.outtake.release()
         }
         val outtakeCurPos = robot.outtake.outtakeServo.getPosition()
@@ -219,6 +231,16 @@ open class CompTeleOp : MOETeleOp() {
             robot.outtake.moveOut()
         }
 
+    }
+
+    override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
+        return super.getRobotSubSystemConfig().apply { useSlam = true }
+    }
+
+    override fun getGyroConfig(): MOEGyroConfig {
+        return super.getGyroConfig().apply {
+            initalAng = PrefsHandler.getDouble(PrefKeys.AUTON_GYRO_FINAL_ANGLE) ?: 0.0
+        }
     }
 
 

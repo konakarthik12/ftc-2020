@@ -49,7 +49,7 @@ public class MOECommands {
 
     private static void handleCommandAdded(FireCommand value) {
         try {
-            ActivityReferenceHolder.activityRef.get().eventLoop.processCommand(value.toRealCommand());
+            ActivityReferenceHolder.activityRefHolder.get().eventLoop.processCommand(value.toRealCommand());
         } catch (InterruptedException | RobotCoreException e) {
             e.printStackTrace();
         }

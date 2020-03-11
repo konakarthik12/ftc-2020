@@ -33,8 +33,12 @@ class MOEAutonArm(val config: AutonArmConfig) {
     }
 
     fun liftStone() {
-        raiseArm()
+        holdStone()
         moeOpMode.wait(500)
+    }
+
+    fun holdStone() {
+        armServo.setPosition(config.holdStonePosition)
     }
 
     fun dropStone() {

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEGamepad.MOEGamepad
+import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
 
 abstract class MOETeleOp : MOELoopedOpMode() {
@@ -14,6 +15,7 @@ abstract class MOETeleOp : MOELoopedOpMode() {
     }
 
     override fun initLoop(): Boolean {
+        if (!robot.robotConfig.useGyro) return true
         telemetry.addData("Initializing", "gyro")
         return robot.gyro.initFinished()
     }

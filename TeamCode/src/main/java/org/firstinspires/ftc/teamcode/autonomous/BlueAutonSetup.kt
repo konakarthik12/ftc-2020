@@ -23,6 +23,6 @@ class BlueAutonSetup : MOETeleOp() {
     }
 
     override fun getOpenCVConfig(): MOEOpenCVConfig {
-        return super.getOpenCVConfig().apply { enablePreview = true; drawOverlay = true; autonConfig = AutonSideConstants.blue }
+        return super.getOpenCVConfig().apply { enablePreview = true; drawOverlay = true; processExtra = true; autonConfig = AutonSideConstants.blue }
     }
 }

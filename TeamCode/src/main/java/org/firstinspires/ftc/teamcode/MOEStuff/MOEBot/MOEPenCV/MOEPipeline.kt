@@ -4,6 +4,7 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV.MOEPenCVConstants
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV.MOEPenCVConstants.PINK
 import org.opencv.core.Mat
 import org.opencv.core.Point
+import org.opencv.core.Rect
 import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
 import org.opencv.imgproc.Imgproc.COLOR_BGR2HSV
@@ -20,9 +21,9 @@ class MOEPipeline(private val instance: MOEPenCV) : OpenCvPipeline() {
             frameRequested = false
         }
         val subMatrix = input.submat(instance.config.autonConfig.cropRectangle)
-        val newMat = Mat(Size(798.0, 466.0), input.type())
+        val newMat = Mat(Size(798.0, 310.0), input.type())
 
-        Imgproc.resize(subMatrix, newMat, Size(798.0, 266.0))
+        Imgproc.resize(subMatrix, newMat.submat(Rect(0, 0, 798, 266)), Size(798.0, 266.0))
 
         if (instance.config.drawOverlay) {
             drawLines(newMat)
@@ -35,12 +36,27 @@ class MOEPipeline(private val instance: MOEPenCV) : OpenCvPipeline() {
         return newMat
     }
 
+
     private fun drawText(newMat: Mat) {
         val croppedMat = Mat()
         Imgproc.resize(newMat, croppedMat, Size(4.0, 1.0))
         Imgproc.cvtColor(croppedMat, croppedMat, COLOR_BGR2HSV)
-        val get = croppedMat.get(0, 0)
-        newMat.drawText(60.0, 265.0, get[2].roundToInt().toString(), color = PINK)
+        val data = processData(croppedMat)
+
+        data.forEachIndexed { index, it ->
+            newMat.drawText(60.0 + 300 * index, 295.0, it.roundToInt().toString(), color = PINK)
+        }
+
+    }
+
+    private fun processData(croppedMat: Mat): MutableList<Double> {
+        val data = MutableList(4) {
+            croppedMat.get(0, it)[2]
+        }
+
+        data[1] = (data[1] + data[2]) / 2.0
+        data.removeAt(2)
+        return data
     }
 
     private fun drawLines(newMat: Mat) {

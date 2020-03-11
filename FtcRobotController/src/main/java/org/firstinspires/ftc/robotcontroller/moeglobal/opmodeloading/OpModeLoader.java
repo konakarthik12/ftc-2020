@@ -1,14 +1,10 @@
 package org.firstinspires.ftc.robotcontroller.moeglobal.opmodeloading;
 
-import android.os.Environment;
-import androidx.core.content.ContextCompat;
 import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.ftcrobotcontroller.R;
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 
-import java.io.File;
-
-import static org.firstinspires.ftc.robotcontroller.moeglobal.ActivityReferenceHolder.activityRef;
+import static org.firstinspires.ftc.robotcontroller.moeglobal.ActivityReferenceHolder.activityRefHolder;
 
 public class OpModeLoader {
 
@@ -27,7 +23,11 @@ public class OpModeLoader {
     }
 
     public static void playInstalledSound() {
-        SoundPlayer.getInstance().startPlaying(activityRef.get(), R.raw.firecode);
+        SoundPlayer.getInstance().stopPlayingAll();
+//        SoundPlayer.getInstance().setMasterVolume(1.0f);
+        SoundPlayer.getInstance().startPlaying(activityRefHolder.get(), R.raw.firecode, new SoundPlayer.PlaySoundParams(false), null, null);
+//        SoundPlayer.getInstance().setMasterVolume(0.0f);
+
     }
 
     public static void updateOpModes(String substring) {
@@ -40,7 +40,7 @@ public class OpModeLoader {
     }
 
     private static void updateUI() {
-        FtcRobotControllerActivity ftcRobotControllerActivity = activityRef.get();
+        FtcRobotControllerActivity ftcRobotControllerActivity = activityRefHolder.get();
         if (ftcRobotControllerActivity == null) return;
         ftcRobotControllerActivity.eventLoop.sendUIState();
     }

@@ -9,7 +9,7 @@ open class MOELift {
     val leftMotor = MOEtor(Motors.LeftLiftMotor)
     val rightMotor = MOEtor(Motors.RightLiftMotor)
     val motors = arrayOf(leftMotor, rightMotor)
-    val limitSwitch = MOESwitch(Switches.BottomLimit)
+//    val limitSwitch = MOESwitch(Switches.BottomLimit)
 
     fun setPower(power: Double) {
         motors.forEach { it.setPower(power) }
@@ -23,11 +23,11 @@ open class MOELift {
         return motors.joinToString { it.getVelocity().toString() }
     }
 
-    fun bottomOutIfNeeded() {
-        if (limitSwitch.isPressed) {
-            resetEncoders()
-        }
-    }
+//    fun bottomOutIfNeeded() {
+//        if (limitSwitch.isPressed) {
+//            resetEncoders()
+//        }
+//    }
 
     fun resetEncoders() {
         motors.forEach { it.resetEncoder() }

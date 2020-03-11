@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad
 import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstantsImpl
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEFirebase
@@ -16,6 +17,7 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, 
     lateinit var robot: MOEBot
     override fun iOpModeIsActive(): Boolean = opModeIsActive()
     override fun iRequestOpModeStop() = requestOpModeStop()
+    val globalTimer = ElapsedTime(ElapsedTime.Resolution.MILLISECONDS)
 
     override val iIsStopRequested: Boolean
         get() = this.isStopRequested
@@ -28,17 +30,34 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, 
         initOpMode()
         moeInternalPostInit()
         waitForStart()
+        globalTimer.reset()
         offsetRobotValues()
         run()
+        postRun()
+    }
+
+    /** milliseconds*/
+    fun getActiveTime(): Double {
+        return globalTimer.time()
+    }
+
+    open fun postRun() {
+
     }
 
     private fun initRobot() {
         robot = createRobot()
     }
 
+    fun waitForStop() {
+        while (!isStopRequested) {
+            notifyTelemetry("waiting for stop")
+        }
+    }
+
     override fun waitForStart() {
         while (!isStarted && !isStopRequested) {
-            notifyTelemetry()
+            notifyTelemetry("waiting for start")
         }
     }
 
@@ -62,8 +81,8 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, 
     //        ref = customRef
     //    }
 
-    private fun notifyTelemetry() {
-        telemetry.addData("waiting for start")
+    private fun notifyTelemetry(message: String) {
+        telemetry.addData(message)
         telemetry.update()
     }
 

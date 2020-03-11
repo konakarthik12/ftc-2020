@@ -8,13 +8,15 @@ import org.opencv.imgproc.Imgproc
 import org.openftc.easyopencv.OpenCvCamera
 import org.openftc.easyopencv.OpenCvCameraRotation
 
+
 fun Mat.toBitMap(): Bitmap? {
+
     var bmp: Bitmap? = null
-    val rgb = Mat()
-    Imgproc.cvtColor(this, rgb, Imgproc.COLOR_BGR2RGB)
+//    val tmp = Mat(height(), width(), CvType.CV_8U, Scalar(4.0))
     try {
-        bmp = Bitmap.createBitmap(rgb.cols(), rgb.rows(), Bitmap.Config.ARGB_8888)
-        Utils.matToBitmap(rgb, bmp)
+//        Imgproc.cvtColor(this, tmp, Imgproc.COLOR_GRAY2RGBA, 4)
+        bmp = Bitmap.createBitmap(this.cols(), this.rows(), Bitmap.Config.ARGB_8888)
+        Utils.matToBitmap(this, bmp)
     } catch (e: CvException) {
         Log.d("Exception", e.message)
     }

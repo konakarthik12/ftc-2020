@@ -14,14 +14,12 @@ enum class SkyStoneLocation { LEFT, MIDDLE, RIGHT }
 
 //1920 x 1080 | 800 x 448
 fun getSkyStoneLocationFromBitmap(bm: Bitmap?, frame: Rectangle, flipSkystoneIndex: Boolean): SkyStoneLocation {
-    Log.e("vuforia", "error")
     if (bm == null) return SkyStoneLocation.LEFT
-    val randomUUID = UUID.randomUUID()
-    val file = Environment.getExternalStorageDirectory().absolutePath + "/FirstTest/skystone_$randomUUID.png"
+    val file = Environment.getExternalStorageDirectory().absolutePath + "/FirstTest/skystone_${System.currentTimeMillis()}.png"
     Log.e("imagePath", file)
     bm.saveTo(file)
     val crop = bm.crop(frame)
-    val cropped_file = Environment.getExternalStorageDirectory().absolutePath + "/FirstTest/skystone_${randomUUID}_cropped.png"
+    val cropped_file = Environment.getExternalStorageDirectory().absolutePath + "/FirstTest/skystone_${System.currentTimeMillis()}_cropped.png"
     crop.saveTo(cropped_file)
     val image = crop.scale(4, 1)!!
     val vList = List(4) { image.getPixel(it, 0).toHSV().V }
@@ -29,7 +27,7 @@ fun getSkyStoneLocationFromBitmap(bm: Bitmap?, frame: Rectangle, flipSkystoneInd
     // Averaging the values of the middle skystone (the left and right have only one unit).
     val mergedList = listOf(vList[0], (vList[1] + vList[2]) / 2, vList[3])
     val minIndex = mergedList.minIndex()!!
-    val skystoneIndex = if (flipSkystoneIndex) 2 - minIndex else minIndex
+    val skystoneIndex = minIndex
 
 //    val leftV = image.getPixel(0, 0).toHSV().V
 //    val centerV = image.getPixel(1, 0).toHSV().V

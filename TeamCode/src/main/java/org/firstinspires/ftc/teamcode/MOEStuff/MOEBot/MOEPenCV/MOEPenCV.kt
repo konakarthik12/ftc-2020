@@ -57,7 +57,7 @@ class MOEPenCV(val config: MOEOpenCVConfig) {
 
     fun getBitmap(): Bitmap? {
         pipeline.requestFrame()
-        while (ReferenceHolder.moeOpMode.iOpModeIsActive() && pipeline.lastFrame == null) {
+        while (moeOpMode.iOpModeIsActive() && pipeline.lastFrame == null) {
         }
         return pipeline.lastFrame!!.toBitMap()!!
     }

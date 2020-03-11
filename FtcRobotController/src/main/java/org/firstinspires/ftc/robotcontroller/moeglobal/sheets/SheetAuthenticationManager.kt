@@ -16,7 +16,7 @@ import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.sheets.v4.Sheets
 import com.google.api.services.sheets.v4.SheetsScopes
 import kotlinx.android.synthetic.main.activity_ftc_controller.*
-import org.firstinspires.ftc.robotcontroller.moeglobal.ActivityReferenceHolder.activityRef
+import org.firstinspires.ftc.robotcontroller.moeglobal.ActivityReferenceHolder.activityRefHolder
 
 object SheetAuthenticationManager {
     lateinit var googleSignInClient: GoogleSignInClient
@@ -61,18 +61,18 @@ object SheetAuthenticationManager {
 
     fun getApi(): Sheets {
         val googleAccountCredential = GoogleAccountCredential
-                .usingOAuth2(activityRef.get(), SCOPES.toList())
+                .usingOAuth2(activityRefHolder?.get(), SCOPES.toList())
                 .setBackOff(ExponentialBackOff())
                 .setSelectedAccount(getLastSignedAccount()?.account)
         return Sheets.Builder(AndroidHttp.newCompatibleTransport(),
-                JacksonFactory.getDefaultInstance(),
-                googleAccountCredential)
+                        JacksonFactory.getDefaultInstance(),
+                        googleAccountCredential)
                 .setApplicationName("test")
                 .build()
     }
 
     private fun getLastSignedAccount(): GoogleSignInAccount? {
-        return GoogleSignIn.getLastSignedInAccount(activityRef.get())
+        return GoogleSignIn.getLastSignedInAccount(activityRefHolder?.get())
     }
 
     fun alreadyAuth(): Boolean {
@@ -90,7 +90,7 @@ object SheetAuthenticationManager {
     }
 
     private fun loginFailed() {
-        activityRef.get()?.sheetsSignInButton?.text = "Sign In Failed"
+        activityRefHolder?.get()?.sheetsSignInButton?.text = "Sign In Failed"
     }
 
     private fun loginSuccessful() {

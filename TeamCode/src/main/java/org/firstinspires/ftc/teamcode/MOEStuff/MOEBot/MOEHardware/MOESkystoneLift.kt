@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEHardware
 
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
 
-val stoneHeight = 600.0
+val stoneHeight = 800.0
 val initialHeight = 600.0
 
 class MOESkystoneLift : MOELift() {

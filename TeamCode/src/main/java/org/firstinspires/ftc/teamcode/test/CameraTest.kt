@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
 import org.firstinspires.ftc.teamcode.autonomous.sideconfig.AutonSideConstants
 import org.firstinspires.ftc.teamcode.autonomous.vision.getSkyStoneLocationFromBitmap
 
-@TeleOp
 class CameraTest : MOEAuton() {
     override fun initOpMode() {
 //        val systemService = hardwareMap.appContext.getSystemService(Context.CAMERA_SERVICE) as CameraManager

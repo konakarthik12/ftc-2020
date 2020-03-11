@@ -1,42 +1,26 @@
 package org.firstinspires.ftc.robotcontroller.moeglobal.server;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
-import android.os.Environment;
-import android.util.ArrayMap;
 import android.util.Log;
-import androidx.core.content.ContextCompat;
 import com.google.firebase.database.DatabaseReference;
-import com.qualcomm.ftccommon.SoundPlayer;
-import com.qualcomm.ftcrobotcontroller.R;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import dalvik.system.DexClassLoader;
 import org.firstinspires.ftc.robotcontroller.moeglobal.MOEFtcEventLoop;
 import org.firstinspires.ftc.robotcontroller.moeglobal.opmodeloading.*;
-import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
-import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta.Flavor;
-import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMetaAndClass;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.DefaultSSLWebSocketServerFactory;
 import org.java_websocket.server.WebSocketServer;
 
 import javax.net.ssl.SSLContext;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.channels.FileChannel;
-import java.util.Map;
 
 import static android.content.Context.WIFI_SERVICE;
-import static org.firstinspires.ftc.robotcontroller.moeglobal.ActivityReferenceHolder.activityRef;
+import static org.firstinspires.ftc.robotcontroller.moeglobal.ActivityReferenceHolder.activityRefHolder;
 import static org.firstinspires.ftc.robotcontroller.moeglobal.firebase.MOEDatabase.dataRef;
 
 public class MOEServer extends WebSocketServer {
@@ -81,7 +65,7 @@ public class MOEServer extends WebSocketServer {
 
 
     private static void refreshUI() {
-        MOEFtcEventLoop eventLoop = activityRef.get().eventLoop;
+        MOEFtcEventLoop eventLoop = activityRefHolder.get().eventLoop;
         if (eventLoop == null) return;
         eventLoop.sendUIState();
 
@@ -106,7 +90,7 @@ public class MOEServer extends WebSocketServer {
     }
 
     private Object getIpAddress() {
-        Context context = activityRef.get();
+        Context context = activityRefHolder.get();
         WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(WIFI_SERVICE);
         int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
 

@@ -20,6 +20,6 @@ class RedAutonSetup : MOETeleOp() {
 
 
     override fun getOpenCVConfig(): MOEOpenCVConfig {
-        return super.getOpenCVConfig().apply { enablePreview = true; drawOverlay = true; autonConfig = AutonSideConstants.red }
+        return super.getOpenCVConfig().apply { enablePreview = true; processExtra = true; drawOverlay = true; autonConfig = AutonSideConstants.red }
     }
 }
