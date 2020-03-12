@@ -16,5 +16,5 @@ object AutonConstants {
 
 
     const val FIELD_SIZE = 288.0
-    const val OPEN_FOR_CAMERA_SERVO = 0.1489
+    const val OPEN_FOR_CAMERA_SERVO = 0.335
 }

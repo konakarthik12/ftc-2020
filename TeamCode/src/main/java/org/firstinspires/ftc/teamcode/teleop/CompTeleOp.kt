@@ -84,14 +84,21 @@ open class CompTeleOp : MOETeleOp() {
         capstone()
         log()
     }
-
+    var payloadPos = 0.35
+    var hitMax = false
     private fun capstone() {
-        if (gpad2.back()) {
-            robot.outtake.capstoneServo.setPosition(0.48)
-        } else {
-            robot.outtake.capstoneServo.setPosition(0.0)
-
+        if (gpad2.back() && !hitMax) {
+            payloadPos += .01
+        } else if (gpad2.back() && hitMax){
+            payloadPos -= .01
         }
+        if (!hitMax && payloadPos >= .65){
+            hitMax = true
+        }
+        if (hitMax && payloadPos <= 0.0){
+            hitMax = false
+        }
+        robot.outtake.capstoneServo.setPosition(payloadPos)
     }
 
     private fun dpadChassis() {
@@ -120,6 +127,7 @@ open class CompTeleOp : MOETeleOp() {
         telemetry.addData("Runninge", this::class.simpleName)
         telemetry.addData("lift", robot.lift.target)
         telemetry.addData("acutal", robot.lift.getPositions().average())
+        telemetry.addData("payloadpos", payloadPos)
 //        telemetry.addData("lastHighest", lastHighest)
 //        telemetry.addData("lastHighestTol", (robot.lift.getPositions().average() + heightTol))
 //        telemetry.addData("switch", robot.lift.limitSwitch.isPressed)
@@ -185,6 +193,9 @@ open class CompTeleOp : MOETeleOp() {
         target += up * liftJoystickSpeed
         if (gpad2.left.stick.y() > -0.1) {
             target = target.coerceAtLeast(0.0)
+        }
+        if (liftCurPos < 0 && (gpad2.left.stick.y() > -.1)){
+            robot.lift.resetEncoders()
         }
 
 

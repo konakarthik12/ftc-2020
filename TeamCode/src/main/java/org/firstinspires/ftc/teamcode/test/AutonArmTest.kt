@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 
-@Disabled
 @TeleOp
 class AutonArmTest : MOETeleOp() {
     var rightClawPos = 0.0

@@ -74,9 +74,9 @@ object MOEHardwareConstants {
 
 
         object Configs {
-            val LeftArm = ServoConfig("LAA", 1, 1, min = 0.45, max = 1.0, direction = Servo.Direction.REVERSE)
+            val LeftArm = ServoConfig("LAA", 1, 1, min = 0.00, max = 1.0, direction = Servo.Direction.REVERSE)
             val LeftClaw = ServoConfig("LAC", 1, 5, min = 0.08, max = 0.65)
-            val LeftConfig = AutonArmConfig(LeftArm, LeftClaw, 0.0, 0.73, 0.1489)
+            val LeftConfig = AutonArmConfig(LeftArm, LeftClaw, 0.0, 0.73, 0.335)
             val RightArm = ServoConfig("RAA", 2, 1, min = 0.0, max = 1.0, direction = Servo.Direction.FORWARD)
             val RightClaw = ServoConfig("RAC", 2, 5, min = 0.25, max = 1.0, direction = Servo.Direction.REVERSE)
             val RightConfig = AutonArmConfig(RightArm, RightClaw, 0.0, 0.5, 0.0)
