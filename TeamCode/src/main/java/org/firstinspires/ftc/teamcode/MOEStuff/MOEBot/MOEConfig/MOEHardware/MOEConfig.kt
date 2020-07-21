@@ -9,8 +9,10 @@ open class MOEConfig<Type : HardwareDevice>(val name: String, val hub: Int, val 
 
     fun getDevice(): Type {
         val fullName = name + hub + port
-        return devices.getOrPut(fullName) {
+        val device = devices.getOrPut(fullName) {
             hardwareMap.get(fullName)
-        } as Type
+        }
+        @Suppress("UNCHECKED_CAST")
+        return device as Type
     }
 }

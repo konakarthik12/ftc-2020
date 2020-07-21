@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.test
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV.MOEOpenCVConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
@@ -18,7 +17,7 @@ class CameraTest : MOEAuton() {
 
     override fun run() {
         val bitmap = robot.opencv.getBitmap()
-        val location = getSkyStoneLocationFromBitmap(bitmap!!, AutonSideConstants.blue.cropRectangle, AutonSideConstants.blue.negateStuff)
+        val location = getSkyStoneLocationFromBitmap(bitmap!!, AutonSideConstants.blue.cropRectangle)
         while (opModeIsActive()) {
             telemetry.addData("location", location)
             telemetry.update()

@@ -18,7 +18,7 @@ fun Mat.toBitMap(): Bitmap? {
         bmp = Bitmap.createBitmap(this.cols(), this.rows(), Bitmap.Config.ARGB_8888)
         Utils.matToBitmap(this, bmp)
     } catch (e: CvException) {
-        Log.d("Exception", e.message)
+        Log.d("Exception", e.message ?: "")
     }
     return bmp
 }

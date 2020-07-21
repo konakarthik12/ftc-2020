@@ -1,19 +1,17 @@
 package org.firstinspires.ftc.teamcode.test
 
-import android.os.Environment
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOETurnPid
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.WrapperHandler
-import java.io.File
 
 @Disabled
 @TeleOp
 class OdoRawVals : MOETeleOp() {
-    val odo_sd_main = File(Environment.getExternalStorageDirectory().absolutePath + "/forward.txt")
-    val odo_writer = odo_sd_main.printWriter()
+//    val odo_sd_main = File(Environment.getExternalStorageDirectory().absolutePath + "/forward.txt")
+//    val odo_writer = odo_sd_main.printWriter()
 
     override fun initOpMode() {
         super.initOpMode()
@@ -46,7 +44,7 @@ class OdoRawVals : MOETeleOp() {
 
 
     private fun logOdo() {
-        val angle = robot.gyro.angle
+//        val angle = robot.gyro.angle
         val rightForwardValue = robot.odometry.rightForwardWheel
         val leftForwardWheel = robot.odometry.leftForwardWheel
         val strafe = robot.odometry.strafeWheel
@@ -55,10 +53,10 @@ class OdoRawVals : MOETeleOp() {
         telemetry.addData("leftForward", leftForwardWheel.getValue())
         telemetry.addData("strafe", strafe.getValue())
         telemetry.addData("gyro", wrappedAngle)
-        odo_writer.println("$angle\t$rightForwardValue\t$strafe")
+//        odo_writer.println("$angle\t$rightForwardValue\t$strafe")
     }
 
     override fun stop() {
-        odo_writer.close()
+//        odo_writer.close()
     }
 }

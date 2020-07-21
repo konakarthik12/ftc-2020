@@ -1,20 +1,16 @@
 package org.firstinspires.ftc.teamcode.test
 
-import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOETurnPid
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
-import org.firstinspires.ftc.teamcode.utilities.internal.get
 
 @Disabled
 @Autonomous
 class TurnPidTest : MOEAuton() {
-    override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
-        return ref["chicken"]
-    }
+
 
     var pid = MOETurnPid()
 
@@ -51,7 +47,6 @@ class TurnPidTest : MOEAuton() {
 
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
         return super.getRobotSubSystemConfig().apply {
-            useSlam = true
             useVuforia = true
         }
     }

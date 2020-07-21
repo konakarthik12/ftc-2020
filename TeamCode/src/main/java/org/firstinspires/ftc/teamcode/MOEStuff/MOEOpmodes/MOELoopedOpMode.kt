@@ -1,18 +1,14 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
-import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstantsImpl
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEFirebase
-//import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad
 import org.firstinspires.ftc.teamcode.constants.OpModeInterface
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRobotRef
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
-abstract class MOELoopedOpMode : OpMode(), MOEFirebase, OpModeInterface, MOEBotConstantsImpl {
-    lateinit var ref: DatabaseReference
+abstract class MOELoopedOpMode : OpMode(), OpModeInterface, MOEBotConstantsImpl {
     lateinit var robot: MOEBot
     var opModeIsActive: Boolean = false
 
@@ -90,9 +86,7 @@ abstract class MOELoopedOpMode : OpMode(), MOEFirebase, OpModeInterface, MOEBotC
 
     private fun moeDoubleInternalInit() {
         setRefs()
-        addListener()?.let {
-            ref = it
-        }
+
     }
 
 

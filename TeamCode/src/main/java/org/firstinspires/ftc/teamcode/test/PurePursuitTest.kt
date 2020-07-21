@@ -1,12 +1,9 @@
 package org.firstinspires.ftc.teamcode.test
 
 import android.util.Log
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.robotcontroller.moeglobal.server.MOESocketHandler.moeWebServer
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 import org.firstinspires.ftc.teamcode.constants.MOEConstants
@@ -15,7 +12,6 @@ import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.MOEPurePurs
 import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.PurePursuitPoint
 import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.getSignedCurvatureFromLookaheadPoint
 import org.firstinspires.ftc.teamcode.utilities.external.toFixed
-import org.firstinspires.ftc.teamcode.utilities.internal.get
 
 @Disabled
 @TeleOp
@@ -42,9 +38,7 @@ class PurePursuitTest : MOETeleOp() {
 
     var lastKnownPointIndex = 0
     fun getWheelVelocities(currentPosition: PurePursuitPoint,
-                           currentHeading: Double,
-                           leftActualVelocity: Double,
-                           rightActualVelocity: Double): Pair<Double, Double> {
+                           currentHeading: Double): Pair<Double, Double> {
 
         lastKnownPointIndex = path.getClosestPointIndex(lastKnownPointIndex, currentPosition)
         //        telemetry.addData("lastKnownPointIndex", lastKnownPointIndex)
@@ -94,13 +88,12 @@ class PurePursuitTest : MOETeleOp() {
         val pose = robot.odometry.moetion().pose
         pose *= MOEConstants.Units.ASTARS_PER_METER
         telemetry.addData("pc.getPose", pose.toString())
-        val (leftActualVelocity, rightActualVelocity) = robot.chassis.getFrontVelocities()
+//        val (leftActualVelocity, rightActualVelocity) = robot.chassis.getFrontVelocities()
+
 
         val (leftTargetVelocity, rightTargetVelocity) = getWheelVelocities(
                 currentPosition = PurePursuitPoint(pose),
-                currentHeading = robot.gyro.angle,
-                leftActualVelocity = leftActualVelocity,
-                rightActualVelocity = rightActualVelocity
+                currentHeading = robot.gyro.angle
         )
         telemetry.addData("leftTarget", leftTargetVelocity)
         telemetry.addData("rightTarget", rightTargetVelocity)
@@ -121,22 +114,15 @@ class PurePursuitTest : MOETeleOp() {
         timer.reset()
         val pose = robot.odometry.moetion().pose
         pose *= MOEConstants.Units.ASTARS_PER_METER
-        moeWebServer.broadcast("slam/pc.getPose/${pose.x+48}/${pose.y+48}")
+//        moeWebServer.broadcast("slam/pc.getPose/${pose.x+48}/${pose.y+48}")
     }
 
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
         return super.getRobotSubSystemConfig().apply { useOdometry = true }
     }
 
-    override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
-        return ref["purest-pursuit"]
-    }
 
-    override fun onConfigChanged(dataSnapshot: DataSnapshot) {
-        options = dataSnapshot.getValue(MOEPurePursuitOptions::class.java)!!
-        path = MOEPurePursuitPath(points, options)
 
-    }
     //        robot.purePursuit.move(0.0, 50.0, 0.0)
 }
 

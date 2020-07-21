@@ -1,6 +1,0 @@
-{
-  "port": 53717,
-  "dexFolder": "../../build/dex",
-  "dexFile": "../../build/dex/classes.dex",
-  "listFile": "../../build/dex/classes.txt"
-}

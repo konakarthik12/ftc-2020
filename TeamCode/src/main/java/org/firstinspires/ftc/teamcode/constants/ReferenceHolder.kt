@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.constants
 
 import android.content.Context
-import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry

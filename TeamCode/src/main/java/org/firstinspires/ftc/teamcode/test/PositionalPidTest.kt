@@ -1,20 +1,15 @@
 package org.firstinspires.ftc.teamcode.test
 
-import android.util.Log
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers.Companion.fromMechanum
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEPidOptions
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEPositionalSystemPid
 import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 import org.firstinspires.ftc.teamcode.utilities.external.toFixed
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
-import org.firstinspires.ftc.teamcode.utilities.internal.get
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -26,9 +21,7 @@ class PositionalPidTest : MOERegularTest() {
     //    lateinit var tPid: MOETurnPid
     var systemPid = MOEPositionalSystemPid(MOEPidConstants.PositionalPid.DefaultOptions)
 
-    override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
-        return ref["desmos"]
-    }
+
 
     override fun initOpMode() {
         telemetry.addData("waiting for slam")
@@ -59,8 +52,8 @@ class PositionalPidTest : MOERegularTest() {
 //        pc.getPose *= -1.0
         //        while (gamepad1.a){
         //        }
-        val setPointPoint = Point(systemPid.xPid.setpoint(), systemPid.yPid.setpoint())
-        logData(pose, setPointPoint)
+//        val setPointPoint = Point(systemPid.xPid.setpoint(), systemPid.yPid.setpoint())
+        logData(pose)
         val rawX = systemPid.xPid.getOutput(pose.x)
         val rawY = systemPid.yPid.getOutput(pose.y)
         val angle = robot.gyro.angle
@@ -125,7 +118,7 @@ class PositionalPidTest : MOERegularTest() {
         //        }
     }
 
-    private fun logData(pose: Point, pointPoint: Point) {
+    private fun logData(pose: Point) {
         //        systemPid.yPid.setpoint += gamepad1.left_stick_y
         //        systemPid.xPid.setpoint += gamepad1.left_stick_x
         //        systemPid.tPid.setpoint += gamepad1.right_stick_x
@@ -137,18 +130,6 @@ class PositionalPidTest : MOERegularTest() {
         telemetry.addData("curT", robot.gyro.angle)
     }
 
-    override fun onConfigChanged(dataSnapshot: DataSnapshot) {
-        val xOptions = dataSnapshot["xPID"].getValue(MOEPidOptions::class.java)!!
-        val yOptions = dataSnapshot["yPID"].getValue(MOEPidOptions::class.java)!!
-        val tOptions = dataSnapshot["tPID"].getValue(MOEPidOptions::class.java)!!
-        Log.e("focus", yOptions.toString())
-        systemPid = MOEPositionalSystemPid(xOptions, yOptions, tOptions)
-        systemPid.xPid.setOutputLimits(1.0)
-        systemPid.yPid.setOutputLimits(1.0)
-        systemPid.tPid.setOutputLimits(1.0)
-        //(x,y,t)
-//        systemPid.setSetpoints(0.0, 0.0, 0.0)
-    }
 
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
         return super.getRobotSubSystemConfig().apply { useOdometry = true }

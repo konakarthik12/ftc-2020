@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.autonomous
 
-import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAutonArm.MOEAutonArm
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEGyroConfig
@@ -11,8 +10,6 @@ import org.firstinspires.ftc.teamcode.autonomous.sideconfig.Movement
 import org.firstinspires.ftc.teamcode.autonomous.vision.SkyStoneLocation
 import org.firstinspires.ftc.teamcode.autonomous.vision.getSkyStoneLocationFromBitmap
 import org.firstinspires.ftc.teamcode.teleop.CompTeleOp
-import org.firstinspires.ftc.teamcode.utilities.PrefKeys.AUTON_GYRO_FINAL_ANGLE
-import org.firstinspires.ftc.teamcode.utilities.PrefsHandler
 import org.firstinspires.ftc.teamcode.utilities.internal.initOtherOpMode
 import org.firstinspires.ftc.teamcode.utilities.internal.wait
 
@@ -84,7 +81,7 @@ open class AutonTemplate(val config: AutonSideConfig) : MOEAuton() {
     }
 
     override fun postRun() {
-        PrefsHandler.setDouble(AUTON_GYRO_FINAL_ANGLE, robot.gyro.angle + if (config.negateStuff) 180 else 0)
+//        PrefsHandler.setDouble(AUTON_GYRO_FINAL_ANGLE, robot.gyro.angle + if (config.negateStuff) 180 else 0)
         initOtherOpMode(CompTeleOp::class)
     }
 
@@ -95,13 +92,12 @@ open class AutonTemplate(val config: AutonSideConfig) : MOEAuton() {
 
     private fun getSkyStoneLocation(): SkyStoneLocation {
 //        val bm = robot.vuforia.getCroppedBitmap(AutonConstants.Skystone.SKYSTONE_CROP)!!
-        return getSkyStoneLocationFromBitmap(robot.opencv.getBitmap(), config.cropRectangle, config.negateStuff)
+        return getSkyStoneLocationFromBitmap(robot.opencv.getBitmap(), config.cropRectangle)
     }
 
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
         return super.getRobotSubSystemConfig().apply {
             useOpenCV = true
-            useSlam = true
             useGyro = true
             useVuforia = false
             useOdometry = false

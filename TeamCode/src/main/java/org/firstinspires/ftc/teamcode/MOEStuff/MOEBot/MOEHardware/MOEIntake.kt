@@ -14,7 +14,7 @@ class MOEIntake {
         rightIntakeMotor.setPower(RP)
     }
 
-    fun setVelocity(LV: Double, RV: Double) {
+    private fun setVelocity(LV: Double, RV: Double) {
         leftIntakeMotor.setPower(LV)
         rightIntakeMotor.setPower(RV)
     }

@@ -1,17 +1,12 @@
 package org.firstinspires.ftc.teamcode.test
 
-import android.util.Log
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEPidOptions
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOETurnPid
 import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 import org.firstinspires.ftc.teamcode.utilities.external.toFixed
-import org.firstinspires.ftc.teamcode.utilities.internal.get
 
 @Disabled
 @TeleOp(name = "PatrickPositionalPidTest")
@@ -22,9 +17,6 @@ class PatrickPositionalPIDTest : MOERegularTest() {
 //    var systemPid = MOEPositionalSystemPid(MOEPidConstants.PositionalPid.DefaultOptions)
     var tPid: MOETurnPid = MOETurnPid(MOEPidConstants.tOptions)
 
-    override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
-        return ref["desmos"]
-    }
 
     override fun initOpMode() {
 //        telemetry.addData("waiting for slam")
@@ -151,18 +143,6 @@ class PatrickPositionalPIDTest : MOERegularTest() {
 
     }
 
-    override fun onConfigChanged(dataSnapshot: DataSnapshot) {
-        val xOptions = dataSnapshot["xPID"].getValue(MOEPidOptions::class.java)!!
-        val yOptions = dataSnapshot["yPID"].getValue(MOEPidOptions::class.java)!!
-        val tOptions = dataSnapshot["tPID"].getValue(MOEPidOptions::class.java)!!
-        Log.e("tOptions", tOptions.toString())
-//        systemPid = MOEPositionalSystemPid(xOptions, yOptions, tOptions)
-//        systemPid.xPid.setOutputLimits(0.2)
-//        systemPid.yPid.setOutputLimits(0.2)
-//        systemPid.tPid.setOutputLimits(0.2)
-        //(x,y,t)
-//        systemPid.setSetpoints(0.0, 0.0, 0.0)
-    }
 
     override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
         return super.getRobotSubSystemConfig().apply {

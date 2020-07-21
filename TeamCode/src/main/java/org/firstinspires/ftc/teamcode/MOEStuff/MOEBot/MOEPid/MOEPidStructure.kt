@@ -18,7 +18,7 @@ interface MOEPidStructure<I, O> {
         return GlobalScope.launch {
             reset()
             var iteration = 0
-            val startTime = System.currentTimeMillis()
+//            val startTime = System.currentTimeMillis()
             while (moeOpMode.iOpModeIsActive()) {
                 val curInput = input()
                 val curSetPoint = setpoint()

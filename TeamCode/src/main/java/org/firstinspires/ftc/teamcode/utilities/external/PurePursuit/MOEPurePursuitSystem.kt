@@ -64,7 +64,7 @@ class MOEPurePursuitSystem(points: List<PurePursuitPoint>, private val options: 
         val leftFinalVelocity = leftFeedforward + leftFeedback
         val rightFinalVelocity = rightFeedforward + rightFeedback
         //TODO: Fins
-        val scaleDown = 0.4
+//        val scaleDown = 0.4
 
         return Pair(leftFinalVelocity, rightFinalVelocity)
     }

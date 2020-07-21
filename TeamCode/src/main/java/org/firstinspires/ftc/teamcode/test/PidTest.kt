@@ -1,20 +1,15 @@
 package org.firstinspires.ftc.teamcode.test
 
-import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERobotInitialStateConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.MOEtion
-import org.firstinspires.ftc.teamcode.utilities.internal.get
 
 @Disabled
 @Autonomous
 class PidTest : MOEAuton() {
-    override fun getCustomRef(ref: DatabaseReference): DatabaseReference? {
-        return ref["turn"]
-    }
 
 
     override fun initOpMode() {

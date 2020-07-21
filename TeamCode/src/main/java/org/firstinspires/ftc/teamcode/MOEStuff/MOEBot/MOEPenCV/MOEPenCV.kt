@@ -12,7 +12,7 @@ import org.openftc.easyopencv.*
 
 
 class MOEPenCV(val config: MOEOpenCVConfig) {
-    lateinit var webcam: OpenCvCamera
+    var webcam: OpenCvCamera
     val pipeline = MOEPipeline(this)
 
     init {

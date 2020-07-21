@@ -1,19 +1,16 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad
-import com.google.firebase.database.DatabaseReference
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstantsImpl
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEFirebase.MOEFirebase
 import org.firstinspires.ftc.teamcode.constants.OpModeInterface
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRobotRef
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
-abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, MOEBotConstantsImpl {
-    lateinit var dataRef: DatabaseReference
+abstract class MOERegularOpMode : LinearOpMode(), OpModeInterface, MOEBotConstantsImpl {
     lateinit var robot: MOEBot
     override fun iOpModeIsActive(): Boolean = opModeIsActive()
     override fun iRequestOpModeStop() = requestOpModeStop()
@@ -63,9 +60,7 @@ abstract class MOERegularOpMode : LinearOpMode(), MOEFirebase, OpModeInterface, 
 
     private fun moeDoubleInternalInit() {
         ReferenceHolder.setRefs(this)
-        addListener()?.let {
-            dataRef = it
-        }
+
         //        ref = addListener()
     }
 

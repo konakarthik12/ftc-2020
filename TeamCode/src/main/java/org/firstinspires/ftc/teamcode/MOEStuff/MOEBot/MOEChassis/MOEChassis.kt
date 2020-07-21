@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis
 
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPurePursuitHandler
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEHardware.MOEtor
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.DriveTrain.Motors.Configs
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
@@ -9,7 +8,6 @@ import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAn
 
 class MOEChassis {
     val pidChassisHandler = PidChassisHandler()
-    var purePursuit: MOEPurePursuitHandler = MOEPurePursuitHandler()
 
     var frontLeftMotor = MOEtor(Configs.FrontLeft)
     var frontRightMotor = MOEtor(Configs.FrontRight)

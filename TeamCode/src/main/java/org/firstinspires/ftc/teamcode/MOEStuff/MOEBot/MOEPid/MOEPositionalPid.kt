@@ -49,8 +49,7 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
 
     }
 
-    //todo: handle output
-    override var endCondition: (MOEtion, MOEtion, MOEtion) -> Boolean = { actual, setpoint, output ->
+    override var endCondition: (MOEtion, MOEtion, MOEtion) -> Boolean = { actual, setpoint, _ ->
         xPid.endCondition(actual.pose.x, setpoint.pose.x, 0.0) &&
                 yPid.endCondition(actual.pose.y, setpoint.pose.y, 0.0)
                 && tPid.endCondition(actual.degAng, setpoint.degAng, 0.0)

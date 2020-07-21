@@ -2,12 +2,9 @@ package org.firstinspires.ftc.teamcode.teleop
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEGyroConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEHardware.initialHeight
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.utilities.PrefKeys
-import org.firstinspires.ftc.teamcode.utilities.PrefsHandler
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
 import kotlin.math.abs
 import kotlin.math.cos
@@ -244,13 +241,9 @@ open class CompTeleOp : MOETeleOp() {
 
     }
 
-    override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
-        return super.getRobotSubSystemConfig().apply { useSlam = true }
-    }
-
     override fun getGyroConfig(): MOEGyroConfig {
         return super.getGyroConfig().apply {
-            initalAng = PrefsHandler.getDouble(PrefKeys.AUTON_GYRO_FINAL_ANGLE) ?: 0.0
+//            initalAng = PrefsHandler.getDouble(PrefKeys.AUTON_GYRO_FINAL_ANGLE) ?: 0.0
         }
     }
 

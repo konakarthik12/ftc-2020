@@ -2,13 +2,11 @@ package org.firstinspires.ftc.teamcode.constants
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer
-import org.firstinspires.ftc.teamcode.R
 import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
-import org.firstinspires.ftc.teamcode.utilities.internal.openRawResource
 
 object MOEVuforiaConstants {
     val params = VuforiaLocalizer.Parameters().apply {
-        vuforiaLicenseKey = openRawResource(R.raw.vuforia_key).readLine()
+//        vuforiaLicenseKey = openRawResource(R.raw.vuforia_key).readLine()
         cameraName = hardwareMap.get(WebcamName::class.java, "Webcam 1")
     }
 }

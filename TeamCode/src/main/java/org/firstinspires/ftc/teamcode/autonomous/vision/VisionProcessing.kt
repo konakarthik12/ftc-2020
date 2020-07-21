@@ -1,26 +1,22 @@
 package org.firstinspires.ftc.teamcode.autonomous.vision
 
 import android.graphics.Bitmap
-import android.os.Environment
-import android.util.Log
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Rectangle
 import org.firstinspires.ftc.teamcode.utilities.external.minIndex
 import org.firstinspires.ftc.teamcode.utilities.internal.crop
-import org.firstinspires.ftc.teamcode.utilities.internal.saveTo
 import org.firstinspires.ftc.teamcode.utilities.internal.scale
-import java.util.*
 
 enum class SkyStoneLocation { LEFT, MIDDLE, RIGHT }
 
 //1920 x 1080 | 800 x 448
-fun getSkyStoneLocationFromBitmap(bm: Bitmap?, frame: Rectangle, flipSkystoneIndex: Boolean): SkyStoneLocation {
+fun getSkyStoneLocationFromBitmap(bm: Bitmap?, frame: Rectangle): SkyStoneLocation {
     if (bm == null) return SkyStoneLocation.LEFT
-    val file = Environment.getExternalStorageDirectory().absolutePath + "/FirstTest/skystone_${System.currentTimeMillis()}.png"
-    Log.e("imagePath", file)
-    bm.saveTo(file)
+//    val file = Environment.getExternalStorageDirectory().absolutePath + "/FirstTest/skystone_${System.currentTimeMillis()}.png"
+//    Log.e("imagePath", file)
+//    bm.saveTo(file)
     val crop = bm.crop(frame)
-    val cropped_file = Environment.getExternalStorageDirectory().absolutePath + "/FirstTest/skystone_${System.currentTimeMillis()}_cropped.png"
-    crop.saveTo(cropped_file)
+//    val cropped_file = Environment.getExternalStorageDirectory().absolutePath + "/FirstTest/skystone_${System.currentTimeMillis()}_cropped.png"
+//    crop.saveTo(cropped_file)
     val image = crop.scale(4, 1)!!
     val vList = List(4) { image.getPixel(it, 0).toHSV().V }
 
