@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.utilities.internal
 
+import android.util.Log
 import com.qualcomm.ftccommon.CommandList
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
@@ -8,8 +9,9 @@ import org.firstinspires.ftc.teamcode.teleop.CompTeleOp
 import kotlin.reflect.KClass
 
 fun initOtherOpMode(opMode: KClass<CompTeleOp>) {
-    val name = getOpModeName(opMode.java) ?: return
-//    Log.e("handlingCommand", command.toString())
+
+//    val name = getOpModeName(opMode.java) ?: return
+    Log.e("handlingCommand", opMode.toString())
 //    moeOpMode.iRequestOpModeStop()
 
 //    activityRef?.eventLoop?.opModeManager?.apply {

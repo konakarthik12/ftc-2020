@@ -45,6 +45,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -95,6 +96,8 @@ import org.firstinspires.ftc.robotcore.internal.webserver.RobotControllerWebInfo
 import org.firstinspires.ftc.robotserver.internal.programmingmode.ProgrammingModeManager;
 import org.firstinspires.inspection.RcInspectionActivity;
 
+import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -220,6 +223,7 @@ public class FtcRobotControllerActivity extends Activity {
         }
     }
 
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -297,12 +301,8 @@ public class FtcRobotControllerActivity extends Activity {
         if (permissionsValidated) {
             ClassManager.getInstance().setOnBotJavaClassHelper(new OnBotJavaHelperImpl());
             ClassManagerFactory.registerFilters();
-            try {
-                ClassManagerFactory.processAllClasses();
+            ClassManagerFactory.processAllClasses();
 
-            } catch (Throwable ignored) {
-
-            }
         }
 
         cfgFileMgr = new RobotConfigFileManager(this);
