@@ -20,7 +20,7 @@ class OdoRawVals : MOETeleOp() {
 //        robot.odometry.launchLoop()
     }
 
-    val angleWrapped = WrapperHandler(360.0) { robot.gyro.getRawAngle() }
+    val angleWrappedb = WrapperHandler(360.0) { robot.gyro.getRawAngle() }
     override fun mainLoop() {
         dpadChassis()
         logOdo()
@@ -48,7 +48,7 @@ class OdoRawVals : MOETeleOp() {
         val rightForwardValue = robot.odometry.rightForwardWheel
         val leftForwardWheel = robot.odometry.leftForwardWheel
         val strafe = robot.odometry.strafeWheel
-        val wrappedAngle = angleWrapped.getValue()
+        val wrappedAngle = angleWrappedb.getValue()
         telemetry.addData("rightFoward", rightForwardValue.getValue())
         telemetry.addData("leftForward", leftForwardWheel.getValue())
         telemetry.addData("strafe", strafe.getValue())

@@ -10,8 +10,7 @@ buildscript {
 
     }
     dependencies {
-        //TODO: waiting for intellij
-        classpath("com.android.tools.build:gradle:3.6.4")
+        classpath("com.android.tools.build:gradle:4.0.1")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$embeddedKotlinVersion")
     }
 
@@ -23,11 +22,12 @@ extensions.findByName("buildScan")?.withGroovyBuilder {
 
 subprojects {
     repositories {
+        mavenLocal()
         flatDir {
             dirs("../libs")
         }
-        mavenLocal()
         google()
         jcenter()
+
     }
 }

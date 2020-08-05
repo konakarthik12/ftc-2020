@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package org.firstinspires.ftc.robotcontroller.internal;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.*;
@@ -101,7 +102,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-@SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity {
     public static final String TAG = "RCActivity";
 
@@ -223,7 +223,6 @@ public class FtcRobotControllerActivity extends Activity {
         }
     }
 
-    @SuppressWarnings({"unchecked", "ConstantConditions"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -262,7 +261,7 @@ public class FtcRobotControllerActivity extends Activity {
 
         PreferenceRemoterRC.getInstance().start(prefRemoterStartResult);
 
-        receivedUsbAttachmentNotifications = new ConcurrentLinkedQueue<UsbDevice>();
+        receivedUsbAttachmentNotifications = new ConcurrentLinkedQueue<>();
         eventLoop = null;
 
         setContentView(R.layout.activity_ftc_controller);
@@ -378,6 +377,7 @@ public class FtcRobotControllerActivity extends Activity {
         return result;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onStart() {
         super.onStart();
@@ -394,12 +394,9 @@ public class FtcRobotControllerActivity extends Activity {
         // check to see if there is a preferred Wi-Fi to use.
         checkPreferredChannel();
 
-        entireScreenLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                dimmer.handleDimTimer();
-                return false;
-            }
+        entireScreenLayout.setOnTouchListener((v, event) -> {
+            dimmer.handleDimTimer();
+            return false;
         });
     }
 
@@ -433,7 +430,6 @@ public class FtcRobotControllerActivity extends Activity {
 
         PreferenceRemoterRC.getInstance().stop(prefRemoterStartResult);
         DeviceNameManagerFactory.getInstance().stop(deviceNameStartResult);
-
         unbindFromService();
         // If the app manually (?) is stopped, then we don't need the auto-starting function (?)
         ServiceController.stopService(FtcRobotControllerWatchdogService.class);

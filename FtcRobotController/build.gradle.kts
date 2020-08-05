@@ -5,10 +5,10 @@ plugins {
 }
 android {
     defaultConfig {
-        minSdkVersion(23)
-        targetSdkVersion(30)
-        compileSdkVersion(30)
-        buildToolsVersion("30.0.1")
+        minSdkVersion(25)
+        targetSdkVersion(29)
+        compileSdkVersion(29)
+        buildToolsVersion("29.0.3")
     }
 
     compileOptions {
@@ -19,8 +19,6 @@ android {
 
 
 dependencies {
-    implementation("com.android.support:support-compat:28.0.0")
-    implementation("com.github.greenpizza1203:fast-code-service:0c00c4c467")
     aar("Inspection-release")
     aar("Blocks-release")
     aar("RobotCore-release")
@@ -29,6 +27,7 @@ dependencies {
     aar("Hardware-release")
     aar("FtcCommon-release")
     aar("WirelessP2p-release")
+    implementation("com.android.support:support-compat:28.0.0")
 
 }
 

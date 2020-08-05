@@ -49,7 +49,7 @@ class MOEdometrySystem(val config: MOEBotConstantsImpl) : MOELocalizationSystem 
 
         angleRad = (rightForwardDist - averageForwardDist) / MOEdometryConstants.TICS_PER_RADIANS
 
-        val strafeDist = strafeWheel.getValue().toDouble()
+        val strafeDist = strafeWheel.getValue()
         val strafeCorrected = strafeDist - (angleRad * MOEdometryConstants.TICS_PER_STRAFE_ROTATION)
         val strafeDelta = strafeCorrected - oldStrafeDist
         oldStrafeDist = strafeCorrected

@@ -14,5 +14,5 @@ class MOEDometryWheel(val config: OdometryConfig) {
     }
 
 
-    fun getValue() = if (config.negate) -mMotor.currentPosition else mMotor.currentPosition
+    fun getValue() = if (config.negate) -mMotor.currentPosition.toDouble() else mMotor.currentPosition.toDouble()
 }
