@@ -1,128 +1,128 @@
 package org.firstinspires.ftc.teamcode.test
-
-import android.util.Log
-import com.qualcomm.robotcore.eventloop.opmode.Disabled
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.constants.MOEConstants
-import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.MOEPurePursuitOptions
-import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.MOEPurePursuitPath
-import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.PurePursuitPoint
-import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.getSignedCurvatureFromLookaheadPoint
-import org.firstinspires.ftc.teamcode.utilities.external.toFixed
-
-@Disabled
-@TeleOp
-class PurePursuitTest : MOETeleOp() {
-    val points = listOf(
-            PurePursuitPoint(0.0, 0.0),
-            PurePursuitPoint(0.0, 100.0)
-    )
-    //    var options = MOEConstants.PurePursuit.DefaultOptions
-    lateinit var path: MOEPurePursuitPath
-    lateinit var options: MOEPurePursuitOptions
-    override fun initOpMode() {
-        telemetry.addData("wait for", "slam")
-        telemetry.update()
-        telemetry.update()
-
-        //        val string = Point(2.0, 4.0)
-        //        Log.e("string", string.toString())
-        //        telemetry.addData("testagain$string")
-        //        val purePursuit = MOEPurePursuitSystem(pc.getPose.x, pc.getPose.y, pc.getPose.x, pc.getPose.y + 100, MOEConstants.PurePursuit.DefaultOptions)
-
-    }
-
-
-    var lastKnownPointIndex = 0
-    fun getWheelVelocities(currentPosition: PurePursuitPoint,
-                           currentHeading: Double): Pair<Double, Double> {
-
-        lastKnownPointIndex = path.getClosestPointIndex(lastKnownPointIndex, currentPosition)
-        //        telemetry.addData("lastKnownPointIndex", lastKnownPointIndex)
-        val closestPoint: PurePursuitPoint = path[lastKnownPointIndex]
-        telemetry.addData("closestPoint", closestPoint)
-
-        val heading = currentHeading
-
-        val lookaheadPoint = path.getLookaheadPointFromPathing(lastKnownPointIndex, currentPosition)
-        telemetry.addData("lookAheadPoint", lookaheadPoint)
-
-        val curvature = getSignedCurvatureFromLookaheadPoint(
-                lookahead = lookaheadPoint,
-                currPos = currentPosition,
-                heading = heading,
-                lookaheadDistance = options.lookAheadDistance
-        )
-
-        telemetry.addData("gyro", robot.gyro.angle.toFixed())
-        telemetry.addData("curvature", curvature)
-        if (gpad1.left.trigger.button.isPressed) {
-            Log.e("hold", "up")
-        }
-        val leftTV = getLeftWheelTargetVelocity(closestPoint.velocity, curvature)
-        val rightTV = getRightWheelTargetVelocity(closestPoint.velocity, curvature)
-        return leftTV to rightTV
-    }
-
-    private fun getLeftWheelTargetVelocity(targetVelocity: Double, curvature: Double): Double {
-        return targetVelocity * (2 + curvature * options.track_width) / 2
-    }
-
-    private fun getRightWheelTargetVelocity(targetVelocity: Double, curvature: Double): Double {
-        return targetVelocity * (2 - curvature * options.track_width) / 2
-    }
-
-    //    override fun run() {
-    //        while (opModeIsActive()) {
-    //            mainLoop()
-    //            telemetry.update()
-    //        }
-    //    }
-
-
-    override fun mainLoop() {
-        pushSockets()
-        val pose = robot.odometry.moetion().pose
-        pose *= MOEConstants.Units.ASTARS_PER_METER
-        telemetry.addData("pc.getPose", pose.toString())
-//        val (leftActualVelocity, rightActualVelocity) = robot.chassis.getFrontVelocities()
-
-
-        val (leftTargetVelocity, rightTargetVelocity) = getWheelVelocities(
-                currentPosition = PurePursuitPoint(pose),
-                currentHeading = robot.gyro.angle
-        )
-        telemetry.addData("leftTarget", leftTargetVelocity)
-        telemetry.addData("rightTarget", rightTargetVelocity)
-        telemetry.addData("rightTrig", gpad1.right.trigger.button.isPressed)
-        telemetry.update()
-
-        if (gpad1.right.trigger.button.isPressed) {
-            robot.chassis.setVelocity(0.0)
-            return
-        }
-
-//        robot.chassis.setVelocity(leftTargetVelocity, rightTargetVelocity)
-    }
-
-    val timer = ElapsedTime()
-    private fun pushSockets() {
-        if (timer.milliseconds() < 5000) return
-        timer.reset()
-        val pose = robot.odometry.moetion().pose
-        pose *= MOEConstants.Units.ASTARS_PER_METER
-//        moeWebServer.broadcast("slam/pc.getPose/${pose.x+48}/${pose.y+48}")
-    }
-
-    override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
-        return super.getRobotSubSystemConfig().apply { useOdometry = true }
-    }
-
-
-
-    //        robot.purePursuit.move(0.0, 50.0, 0.0)
-}
-
+//
+//import android.util.Log
+//import com.qualcomm.robotcore.eventloop.opmode.Disabled
+//import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+//import com.qualcomm.robotcore.util.ElapsedTime
+//import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
+//import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
+//import org.firstinspires.ftc.teamcode.constants.MOEConstants
+//import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.MOEPurePursuitOptions
+//import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.MOEPurePursuitPath
+//import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.PurePursuitPoint
+//import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.getSignedCurvatureFromLookaheadPoint
+//import org.firstinspires.ftc.teamcode.utilities.external.toFixed
+//
+//@Disabled
+//@TeleOp
+//class PurePursuitTest : MOETeleOp() {
+//    val points = listOf(
+//            PurePursuitPoint(0.0, 0.0),
+//            PurePursuitPoint(0.0, 100.0)
+//    )
+//    //    var options = MOEConstants.PurePursuit.DefaultOptions
+//    lateinit var path: MOEPurePursuitPath
+//    lateinit var options: MOEPurePursuitOptions
+//    override fun initOpMode() {
+//        telemetry.addData("wait for", "slam")
+//        telemetry.update()
+//        telemetry.update()
+//
+//        //        val string = Point(2.0, 4.0)
+//        //        Log.e("string", string.toString())
+//        //        telemetry.addData("testagain$string")
+//        //        val purePursuit = MOEPurePursuitSystem(pc.getPose.x, pc.getPose.y, pc.getPose.x, pc.getPose.y + 100, MOEConstants.PurePursuit.DefaultOptions)
+//
+//    }
+//
+//
+//    var lastKnownPointIndex = 0
+//    fun getWheelVelocities(currentPosition: PurePursuitPoint,
+//                           currentHeading: Double): Pair<Double, Double> {
+//
+//        lastKnownPointIndex = path.getClosestPointIndex(lastKnownPointIndex, currentPosition)
+//        //        telemetry.addData("lastKnownPointIndex", lastKnownPointIndex)
+//        val closestPoint: PurePursuitPoint = path[lastKnownPointIndex]
+//        telemetry.addData("closestPoint", closestPoint)
+//
+//        val heading = currentHeading
+//
+//        val lookaheadPoint = path.getLookaheadPointFromPathing(lastKnownPointIndex, currentPosition)
+//        telemetry.addData("lookAheadPoint", lookaheadPoint)
+//
+//        val curvature = getSignedCurvatureFromLookaheadPoint(
+//                lookahead = lookaheadPoint,
+//                currPos = currentPosition,
+//                heading = heading,
+//                lookaheadDistance = options.lookAheadDistance
+//        )
+//
+//        telemetry.addData("gyro", robot.gyro.angle.toFixed())
+//        telemetry.addData("curvature", curvature)
+//        if (gpad1.left.trigger.button.isPressed) {
+//            Log.e("hold", "up")
+//        }
+//        val leftTV = getLeftWheelTargetVelocity(closestPoint.velocity, curvature)
+//        val rightTV = getRightWheelTargetVelocity(closestPoint.velocity, curvature)
+//        return leftTV to rightTV
+//    }
+//
+//    private fun getLeftWheelTargetVelocity(targetVelocity: Double, curvature: Double): Double {
+//        return targetVelocity * (2 + curvature * options.track_width) / 2
+//    }
+//
+//    private fun getRightWheelTargetVelocity(targetVelocity: Double, curvature: Double): Double {
+//        return targetVelocity * (2 - curvature * options.track_width) / 2
+//    }
+//
+//    //    override fun run() {
+//    //        while (opModeIsActive()) {
+//    //            mainLoop()
+//    //            telemetry.update()
+//    //        }
+//    //    }
+//
+//
+//    override fun mainLoop() {
+//        pushSockets()
+//        val pose = robot.odometry.moetion().pose
+//        pose *= MOEConstants.Units.ASTARS_PER_METER
+//        telemetry.addData("pc.getPose", pose.toString())
+////        val (leftActualVelocity, rightActualVelocity) = robot.chassis.getFrontVelocities()
+//
+//
+//        val (leftTargetVelocity, rightTargetVelocity) = getWheelVelocities(
+//                currentPosition = PurePursuitPoint(pose),
+//                currentHeading = robot.gyro.angle
+//        )
+//        telemetry.addData("leftTarget", leftTargetVelocity)
+//        telemetry.addData("rightTarget", rightTargetVelocity)
+//        telemetry.addData("rightTrig", gpad1.right.trigger.button.isPressed)
+//        telemetry.update()
+//
+//        if (gpad1.right.trigger.button.isPressed) {
+//            robot.chassis.setVelocity(0.0)
+//            return
+//        }
+//
+////        robot.chassis.setVelocity(leftTargetVelocity, rightTargetVelocity)
+//    }
+//
+//    val timer = ElapsedTime()
+//    private fun pushSockets() {
+//        if (timer.milliseconds() < 5000) return
+//        timer.reset()
+//        val pose = robot.odometry.moetion().pose
+//        pose *= MOEConstants.Units.ASTARS_PER_METER
+////        moeWebServer.broadcast("slam/pc.getPose/${pose.x+48}/${pose.y+48}")
+//    }
+//
+//    override fun getRobotSubSystemConfig(): MOEBotSubSystemConfig {
+//        return super.getRobotSubSystemConfig().apply { useOdometry = true }
+//    }
+//
+//
+//
+//    //        robot.purePursuit.move(0.0, 50.0, 0.0)
+//}
+//

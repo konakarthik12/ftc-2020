@@ -29,8 +29,9 @@ class MOEVuforia(val config: MOEVuforiaConfig) {
     }
 
 
-    fun getMonitorViewId(): Int {
-        return R.id.cameraMonitorViewId
+    private fun getMonitorViewId(): Int {
+        return 0
+//        return R.id.cameraMonitorViewId
 
     }
 

@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath
 
 import org.firstinspires.ftc.teamcode.utilities.external.toFixed
 
-open class Point(override var x: Double, override var y: Double) : PointImpl<Point> {
+class Point(override var x: Double, override var y: Double) : PointImpl<Point> {
     constructor(x: Number, y: Number) : this(x.toDouble(), y.toDouble())
 
     override fun toString(): String {

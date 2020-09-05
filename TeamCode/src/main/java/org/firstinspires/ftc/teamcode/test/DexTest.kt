@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil
 import org.firstinspires.ftc.robotcore.internal.ui.UILocation
+import java.lang.Thread.sleep
 
 @Autonomous
 class DexTest : OpMode() {
@@ -12,25 +13,25 @@ class DexTest : OpMode() {
         Log.e("plz", "work")
     }
 
-    private val code = 135
+    private val code = 202
 
     override fun init() {
-//        AppUtil.getInstance().showProgress(UILocation.BOTH, "progress", 0.5)
-//        Client.lastSocket.getOutputStream().write(code)
-
+        Log.e("testing","code")
     }
 
     override fun init_loop() {
-        telemetry.addData("hello", "word $code")
+        Log.e("testing","code")
+        sleep(500)
+//        telemetry.addData("hello", "word $code")
     }
 
-    var count = 0L
-    var progress = 0L
+    var sent = false
     override fun loop() {
-        count++
-        val speed = 300
-        if (count / speed > progress) progress = count / speed
-        AppUtil.getInstance().showProgress(UILocation.BOTH, "progress", progress / 100.0)
-        telemetry.addData("count", progress.toString())
+        if (sent) return
+        AppUtil.getInstance().dismissProgress(UILocation.BOTH)
+        sent = true
+//        AppUtil.getInstance().showToast(UILocation.BOTH, "code: $code")
+        AppUtil.getInstance().showProgress(UILocation.BOTH, "progress", code / 300.0)
+//        telemetry.addData("count", progress.toString())
     }
 }

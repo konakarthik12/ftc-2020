@@ -6,9 +6,9 @@ import kotlin.math.pow
 
 fun Double.toFixed(digits: Int = 3): String {
     //for the sake of javascript
-    val multiplyer = 10.0.pow(digits)
-    val temp = (this * multiplyer).toInt()
-    return (temp.toDouble() / multiplyer).toString()
+    val multiplier = 10.0.pow(digits)
+    val temp = (this * multiplier).toInt()
+    return (temp.toDouble() / multiplier).toString()
 //    return "%.${digits}f".format(this)
 }
 
@@ -21,4 +21,4 @@ fun <T> Iterable<PointImpl<T>>.toDoubleList(): List<Double> = flatMap { listOf(i
 fun <T : Cloneable<T>> Iterable<T>.clone(): List<T> = map { it.clone() }
 
 fun <T : Comparable<T>> Iterable<T>.minIndex() = withIndex().minBy { it.value }?.index
-
+fun <T> List<T>.subList(range: IntRange) = subList(range.first, range.last + 1)

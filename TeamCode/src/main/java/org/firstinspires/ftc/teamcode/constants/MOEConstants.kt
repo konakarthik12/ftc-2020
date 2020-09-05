@@ -1,32 +1,32 @@
 package org.firstinspires.ftc.teamcode.constants
 
 import com.qualcomm.hardware.bosch.BNO055IMU
-import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.MOEPurePursuitOptions
+//import org.firstinspires.ftc.teamcode.utilities.external.PurePursuit.MOEPurePursuitOptions
 
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.OdometryWheelConfig as OWC
 
 object MOEConstants {
 
 
-    object PurePursuit {
-        val DefaultOptions = MOEPurePursuitOptions(
-                overallMaxVelocity = 1.0,
-                spacing = 3.0,
-                tolerance = 0.0005,
-                smoothingA = 1 - 0.7,
-                smoothingB = 0.7,
-                turningConstant = 0.1,
-                lookBack = 4,
-                lookForward = 4,
-                lookAheadDistance = 20.0,
-                track_width = 28.0,
-                K_V = 0.0,
-                K_A = 0.0,
-                K_P = 0.0
-        )
-
-        const val FINISHED_TOLERANCE: Double = 0.5
-    }
+//    object PurePursuit {
+//        val DefaultOptions = MOEPurePursuitOptions(
+//                overallMaxVelocity = 1.0,
+//                spacing = 3.0,
+//                tolerance = 0.0005,
+//                smoothingA = 1 - 0.7,
+//                smoothingB = 0.7,
+//                turningConstant = 0.1,
+//                lookBack = 4,
+//                lookForward = 4,
+//                lookAheadDistance = 20.0,
+//                track_width = 28.0,
+//                K_V = 0.0,
+//                K_A = 0.0,
+//                K_P = 0.0
+//        )
+//
+//        const val FINISHED_TOLERANCE: Double = 0.5
+//    }
 
 
     object Units {
