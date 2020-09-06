@@ -11,8 +11,8 @@ android {
     defaultConfig {
         applicationId = "com.qualcomm.ftcrobotcontroller"
         resConfigs("en", "xxhdpi")
-        compileSdkVersion(29)
-        buildToolsVersion("30.0.1")
+        compileSdkVersion(30)
+        buildToolsVersion("30.0.2")
         minSdkVersion(25)
         targetSdkVersion(30)
         versionCode = 37

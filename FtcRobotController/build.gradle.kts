@@ -8,6 +8,7 @@ android {
     defaultConfig {
         minSdkVersion(25)
         targetSdkVersion(30)
+        buildToolsVersion("30.0.2")
     }
     compileSdkVersion(30)
 //this.
