@@ -6,7 +6,6 @@ import com.vuforia.Vuforia
 import org.firstinspires.ftc.robotcore.external.ClassFactory
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEVuforiaConfig
-import org.firstinspires.ftc.teamcode.R
 import org.firstinspires.ftc.teamcode.constants.MOEVuforiaConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Rectangle
 import org.firstinspires.ftc.teamcode.utilities.internal.crop

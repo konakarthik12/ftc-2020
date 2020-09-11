@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware
 
 import com.qualcomm.robotcore.hardware.HardwareDevice
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
+import org.firstinspires.ftc.teamcode.constants.Ref.hardwareMap
 
 val devices = mutableMapOf<String, HardwareDevice>()
 

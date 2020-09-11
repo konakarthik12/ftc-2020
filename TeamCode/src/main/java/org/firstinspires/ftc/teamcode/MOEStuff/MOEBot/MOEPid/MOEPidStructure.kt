@@ -4,8 +4,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
+import org.firstinspires.ftc.teamcode.constants.Ref.moeOpMode
+import org.firstinspires.ftc.teamcode.constants.Ref.robot
 
 interface MOEPidStructure<I, O> {
 //    var lastValue: T

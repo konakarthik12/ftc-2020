@@ -1,11 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <Robot type="FirstInspires-FTC">
-    <LynxUsbDevice name="Expansion Hub Portal 1" serialNumber="DQ2CRLNZ" parentModuleAddress="2">
-        <LynxModule name="Expansion Hub 1" port="1">
-            <NeveRest20Gearmotor name="LLFM10" port="0" />
-            <NeveRest20Gearmotor name="LINM11" port="1" />
-            <NeveRest20Gearmotor name="FLDM12" port="2" />
-            <NeveRest20Gearmotor name="BLDM13" port="3" />
+    <LynxUsbDevice name="Expansion Hub Portal 1" parentModuleAddress="173"
+        serialNumber="(embedded)">
+        <LynxModule name="Expansion Hub 2" port="173">
+            <goBILDA5202SeriesMotor name="FLDM10" port="0" />
+            <goBILDA5202SeriesMotor name="BLDM11" port="1" />
+            <goBILDA5202SeriesMotor name="BRDM12" port="2" />
+            <goBILDA5202SeriesMotor name="FRDM13" port="3" />
             <Servo name="LFGS10" port="0" />
             <Servo name="LAAS11" port="1" />
             <Servo name="OUTS12" port="2" />
@@ -13,19 +14,7 @@
             <Servo name="GRBS14" port="4" />
             <Servo name="LACS15" port="5" />
             <DigitalDevice name="LIMD10" port="0" />
-            <LynxEmbeddedIMU name="imu" port="0" bus="0" />
-        </LynxModule>
-        <LynxModule name="Expansion Hub 2" port="2">
-            <NeveRest60Gearmotor name="RLFM20" port="0" />
-            <Motor name="RINM21" port="1" />
-            <NeveRest20Gearmotor name="FRDM22" port="2" />
-            <NeveRest20Gearmotor name="BRDM23" port="3" />
-            <Servo name="RFGS20" port="0" />
-            <Servo name="RAAS21" port="1" />
-            <Servo name="FDRS23" port="3" />
-            <Servo name="RACS25" port="5" />
-            <LynxEmbeddedIMU name="imu2" port="0" bus="0" />
+            <LynxEmbeddedIMU name="imu" bus="0" port="0" />
         </LynxModule>
     </LynxUsbDevice>
-    <Webcam name="Webcam 1" serialNumber="E96F5C5F" />
 </Robot>

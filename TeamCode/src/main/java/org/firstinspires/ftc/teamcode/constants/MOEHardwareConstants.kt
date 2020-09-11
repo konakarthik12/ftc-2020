@@ -1,12 +1,11 @@
 package org.firstinspires.ftc.teamcode.constants
 
-import com.qualcomm.robotcore.hardware.DcMotorSimple
+import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.*
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.DriveTrain.Motors.Configs.BackRight
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs.LeftIntake
 import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs.RightIntake
-import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction as MotorDirection
 import com.qualcomm.robotcore.hardware.Servo.Direction as ServoDirection
 
 object MOEHardwareConstants {
@@ -14,10 +13,10 @@ object MOEHardwareConstants {
     object DriveTrain {
         object Motors {
             object Configs {
-                val FrontLeft = MotorConfig("FLD", 1, 2, MotorDirection.FORWARD)
-                val FrontRight = MotorConfig("FRD", 2, 2, MotorDirection.REVERSE)
-                val BackLeft = MotorConfig("BLD", 1, 3, MotorDirection.FORWARD)
-                val BackRight = MotorConfig("BRD", 2, 3, MotorDirection.REVERSE)
+                val FrontLeft = MotorConfig("FLD", 1, 0, REVERSE)
+                val BackLeft = MotorConfig("BLD", 1, 1, REVERSE)
+                val BackRight = MotorConfig("BRD", 1, 2)
+                val FrontRight = MotorConfig("FRD", 1, 3)
             }
         }
     }
@@ -26,7 +25,7 @@ object MOEHardwareConstants {
         object Motors {
             object Configs {
                 val LeftIntake = MotorConfig("LIN", 1, 1, maxPow = 0.9)
-                val RightIntake = MotorConfig("RIN", 2, 1, maxPow = 0.9, direction = DcMotorSimple.Direction.REVERSE)
+                val RightIntake = MotorConfig("RIN", 2, 1, maxPow = 0.9, direction = REVERSE)
             }
 
 //            const val MaxPower = 0.9
@@ -54,8 +53,8 @@ object MOEHardwareConstants {
 
     object Lift {
         object Motors {
-            val LeftLiftMotor = MotorConfig("LLF", 1, 0, direction = MotorDirection.REVERSE)
-            val RightLiftMotor = MotorConfig("RLF", 2, 0, direction = MotorDirection.REVERSE)
+            val LeftLiftMotor = MotorConfig("LLF", 1, 0, direction = REVERSE)
+            val RightLiftMotor = MotorConfig("RLF", 2, 0, direction = REVERSE)
         }
 
         object Switches {

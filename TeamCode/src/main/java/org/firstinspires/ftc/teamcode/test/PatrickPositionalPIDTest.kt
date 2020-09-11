@@ -4,13 +4,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOETurnPid
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
 import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 import org.firstinspires.ftc.teamcode.utilities.external.toFixed
 
 @Disabled
 @TeleOp(name = "PatrickPositionalPidTest")
-class PatrickPositionalPIDTest : MOERegularTest() {
+class PatrickPositionalPIDTest : MOEAuton() {
     //    lateinit var xPid: MOEPositionalPid
     //    lateinit var yPid: MOEPositionalPid
     //    lateinit var tPid: MOETurnPid

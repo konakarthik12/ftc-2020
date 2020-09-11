@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstantsImpl
 import org.firstinspires.ftc.teamcode.constants.OpModeInterface
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.setRobotRef
+import org.firstinspires.ftc.teamcode.constants.Ref
+import org.firstinspires.ftc.teamcode.constants.Ref.setRobotRef
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
 abstract class MOELoopedOpMode : OpMode(), OpModeInterface, MOEBotConstantsImpl {
@@ -91,7 +91,7 @@ abstract class MOELoopedOpMode : OpMode(), OpModeInterface, MOEBotConstantsImpl 
 
 
     private fun setRefs() {
-        ReferenceHolder.setRefs(this)
+        Ref.setRefs(this)
     }
 
 

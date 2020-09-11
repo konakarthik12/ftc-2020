@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers.Companion.fromMechanum
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOEPositionalSystemPid
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
 import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
@@ -15,12 +16,11 @@ import kotlin.math.sin
 
 @Disabled
 @TeleOp(name = "APositionalPidTest")
-class PositionalPidTest : MOERegularTest() {
+class PositionalPidTest : MOEAuton() {
     //    lateinit var xPid: MOEPositionalPid
     //    lateinit var yPid: MOEPositionalPid
     //    lateinit var tPid: MOETurnPid
     var systemPid = MOEPositionalSystemPid(MOEPidConstants.PositionalPid.DefaultOptions)
-
 
 
     override fun initOpMode() {

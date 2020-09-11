@@ -4,7 +4,7 @@ import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSyste
 
 class MOEIntake {
     private var leftIntakeMotor = MOEtor(Configs.LeftIntake)
-     var rightIntakeMotor = MOEtor(Configs.RightIntake)
+    var rightIntakeMotor = MOEtor(Configs.RightIntake)
 
     fun setPower(P: Double) = setPower(P, P)
     fun setVelocity(V: Double) = setVelocity(V, V)

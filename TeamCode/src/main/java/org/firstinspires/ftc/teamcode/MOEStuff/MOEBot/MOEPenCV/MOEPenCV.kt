@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV
 import android.graphics.Bitmap
 import android.util.Log
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
+import org.firstinspires.ftc.teamcode.constants.Ref
+import org.firstinspires.ftc.teamcode.constants.Ref.hardwareMap
+import org.firstinspires.ftc.teamcode.constants.Ref.moeOpMode
+import org.firstinspires.ftc.teamcode.constants.Ref.telemetry
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.openftc.easyopencv.*
 
@@ -47,7 +47,7 @@ class MOEPenCV(val config: MOEOpenCVConfig) {
     }
 
     private fun getCameraMonitorView() =
-            ReferenceHolder.appContext.resources.getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.packageName)
+            Ref.appContext.resources.getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.packageName)
 
     fun stop() {
         Log.e("isCalled", "opencv")

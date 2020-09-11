@@ -23,7 +23,6 @@ fun Bitmap.saveTo(file: String) {
 }
 
 
-
 fun Bitmap.saveTo(file: File) {
     try {
         FileOutputStream(file).use { out ->

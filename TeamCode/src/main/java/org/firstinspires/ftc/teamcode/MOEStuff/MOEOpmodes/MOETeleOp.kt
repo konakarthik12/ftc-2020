@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEGamepad.MOEGamepad
-import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
 
 abstract class MOETeleOp : MOELoopedOpMode() {

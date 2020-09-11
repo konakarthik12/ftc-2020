@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.teleop
 
+import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEGyroConfig
@@ -12,16 +13,9 @@ import kotlin.math.sin
 
 @TeleOp
 open class CompTeleOp : MOETeleOp() {
-//    val sd_main = File(Environment.getExternalStorageDirectory().absolutePath + "/comp_odometry.txt")
-//    val writer = sd_main.printWriter()
-
-    //    val state: TeleOpState()
     override fun initOpMode() {
         addListeners()
-        initLift()
-        initOuttake()
-        initFoundation()
-        robot.autonArms.initAutonArms()
+        Log.e("voltage", hardwareMap.voltageSensor["Expansion Hub 2"].voltage.toString())
     }
 
     private fun initFoundation() {
@@ -74,25 +68,26 @@ open class CompTeleOp : MOETeleOp() {
     override fun mainLoop() {
         joystickDrive()
         dpadChassis()
-        intake()
-        foundation()
-        lift()
-        outtake()
-        capstone()
+//        intake()
+//        foundation()
+//        lift()
+//        outtake()
+//        capstone()
         log()
     }
+
     var payloadPos = 0.35
     var hitMax = false
     private fun capstone() {
         if (gpad2.back() && !hitMax) {
             payloadPos += .01
-        } else if (gpad2.back() && hitMax){
+        } else if (gpad2.back() && hitMax) {
             payloadPos -= .01
         }
-        if (!hitMax && payloadPos >= .65){
+        if (!hitMax && payloadPos >= .65) {
             hitMax = true
         }
-        if (hitMax && payloadPos <= 0.0){
+        if (hitMax && payloadPos <= 0.0) {
             hitMax = false
         }
         robot.outtake.capstoneServo.setPosition(payloadPos)
@@ -122,9 +117,10 @@ open class CompTeleOp : MOETeleOp() {
 
     open fun log() {
         telemetry.addData("Runninge", this::class.simpleName)
-        telemetry.addData("lift", robot.lift.target)
-        telemetry.addData("acutal", robot.lift.getPositions().average())
-        telemetry.addData("payloadpos", payloadPos)
+        telemetry.addData("motor controolers", hardwareMap.voltageSensor.entrySet())
+//        telemetry.addData("lift", robot.lift.target)
+//        telemetry.addData("acutal", robot.lift.getPositions().average())
+//        telemetry.addData("payloadpos", payloadPos)
 //        telemetry.addData("lastHighest", lastHighest)
 //        telemetry.addData("lastHighestTol", (robot.lift.getPositions().average() + heightTol))
 //        telemetry.addData("switch", robot.lift.limitSwitch.isPressed)
@@ -139,7 +135,8 @@ open class CompTeleOp : MOETeleOp() {
         val scaleRot = 0.75
 
         val angle = robot.gyro.angle
-        var rawY = gpad1.left.stick.y()
+        var rawY = 1.0
+//        var rawY = gpad1.left.stick.y()
         var rawX = gpad1.left.stick.x()
         var rot = gpad1.right.stick.x()
 
@@ -191,7 +188,7 @@ open class CompTeleOp : MOETeleOp() {
         if (gpad2.left.stick.y() > -0.1) {
             target = target.coerceAtLeast(0.0)
         }
-        if (liftCurPos < 0 && (gpad2.left.stick.y() > -.1)){
+        if (liftCurPos < 0 && (gpad2.left.stick.y() > -.1)) {
             robot.lift.resetEncoders()
         }
 
@@ -243,7 +240,6 @@ open class CompTeleOp : MOETeleOp() {
 
     override fun getGyroConfig(): MOEGyroConfig {
         return super.getGyroConfig().apply {
-//            initalAng = PrefsHandler.getDouble(PrefKeys.AUTON_GYRO_FINAL_ANGLE) ?: 0.0
         }
     }
 

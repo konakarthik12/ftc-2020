@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAutonArm
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.AutonArmConfig
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
+import org.firstinspires.ftc.teamcode.constants.Ref.moeOpMode
 import org.firstinspires.ftc.teamcode.utilities.internal.wait
 
 class MOEAutonArm(val config: AutonArmConfig) {

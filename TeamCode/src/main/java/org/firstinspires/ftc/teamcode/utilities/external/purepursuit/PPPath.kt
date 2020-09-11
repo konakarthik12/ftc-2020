@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.utilities.external.clone
 import org.firstinspires.ftc.teamcode.utilities.external.coerceIn
 import org.firstinspires.ftc.teamcode.utilities.external.purepursuit.math.PPPoint
 import org.firstinspires.ftc.teamcode.utilities.external.purepursuit.math.getCircleLineIntersection
-import org.firstinspires.ftc.teamcode.utilities.external.subList
 import kotlin.math.abs
 import kotlin.math.min
 import kotlin.math.pow

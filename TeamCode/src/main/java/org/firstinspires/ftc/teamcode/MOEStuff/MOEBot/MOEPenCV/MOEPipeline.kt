@@ -14,6 +14,7 @@ import kotlin.math.roundToInt
 class MOEPipeline(private val instance: MOEPenCV) : OpenCvPipeline() {
     var lastFrame: Mat? = null
     var frameRequested = false
+
     //    lateinit var location: SkyStoneLocation
     override fun processFrame(input: Mat): Mat {
         if (frameRequested) {

@@ -1,29 +1,35 @@
 package org.firstinspires.ftc.teamcode.test
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled
+import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
-import org.firstinspires.ftc.teamcode.utilities.internal.addData
+import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE
 
-@Disabled
+
 @TeleOp
-class MotorTest : MOETeleOp() {
+class MotorTest : OpMode() {
+    lateinit var motors: List<DcMotor>
+    lateinit var frontLeft: DcMotor
+    lateinit var frontRight: DcMotor
+    lateinit var backLeft: DcMotor
+    lateinit var backRight: DcMotor
+    override fun init() {
+//        val vs = hardwareMap.voltageSensor["Motor Controller 1"]
+//        val voltage = vs.voltage
 
+        frontLeft = hardwareMap.dcMotor["FLDM10"]
+        frontLeft.direction = REVERSE
+        frontRight = hardwareMap.dcMotor["BLDM11"]
+        frontRight.direction = REVERSE
 
-    override fun initOpMode() {
-        telemetry.addData("testagain")
+        backLeft = hardwareMap.dcMotor["BRDM12"]
+        backRight = hardwareMap.dcMotor["FRDM13"]
+        motors = listOf(frontLeft, frontRight, backLeft, backRight)
+//        testMotor = hardwareMap.dcMotor["testMotor"]
     }
 
-    override fun mainLoop() {
+    override fun loop() {
+        motors.forEach { it.power = 1.0 }
 
-        val motor = robot.chassis.backRightMotor.mMotor
-        telemetry.addData("hub", motor.controller.connectionInfo)
-        telemetry.addData("connectionInfo", motor.connectionInfo)
-        telemetry.addData("power", motor.power)
-//        telemetry.addData("power", motor.motorType.)
-        motor.power = gpad1.left.trigger()
-        telemetry.update()
-        robot.chassis.frontRightMotor.mMotor.power = gpad1.right.trigger()
-//        hardwareMap.get()
     }
 }

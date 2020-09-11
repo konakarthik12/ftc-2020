@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.MotorConfig
-import org.firstinspires.ftc.teamcode.constants.MOEConstants
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
 
 
@@ -15,6 +14,7 @@ class MOEtor(val config: MotorConfig) {
         get() = mMotor.targetPosition > mMotor.currentPosition
     val error
         get() = mMotor.targetPosition - mMotor.currentPosition
+
     //    private var powerScale = config.minPow..config.maxPow
     private val powRange = 0.0..config.maxPow
 

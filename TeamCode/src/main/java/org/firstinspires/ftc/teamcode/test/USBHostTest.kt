@@ -6,11 +6,12 @@ import android.hardware.usb.UsbManager
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
 @Disabled
 @TeleOp
-class USBHostTest : MOERegularTest() {
+class USBHostTest : MOEAuton() {
 
 
     override fun initOpMode() {

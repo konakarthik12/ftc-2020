@@ -13,15 +13,23 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySyste
 
 
 class MOEBot(config: MOEBotConstantsImpl) {
-    val autonArms = MOEAutonArms()
-    val robotConfig = config.getRobotSubSystemConfig()
+    lateinit var autonArms: MOEAutonArms
 
-    val lift = MOESkystoneLift()
-    val foundation = MOEFoundation()
-    val outtake = MOEOuttake()
+    //    val autonArms = MOEAutonArms()
+    val robotConfig = config.getRobotSubSystemConfig()
+    lateinit var lift: MOESkystoneLift
+    lateinit var foundation: MOEFoundation
+    lateinit var outtake: MOEOuttake
+    lateinit var intake: MOEIntake
+    lateinit var odometry: MOEdometrySystem
+
+    //    val lift = MOESkystoneLift()
+//    val foundation = MOEFoundation()
+//    val outtake = MOEOuttake()
     var chassis: MOEChassis = MOEChassis()
-    var intake: MOEIntake = MOEIntake()
-    var odometry = MOEdometrySystem(config)
+
+    //    var intake: MOEIntake = MOEIntake()
+//    var odometry = MOEdometrySystem(config)
     lateinit var gyro: MOEGyro
     lateinit var vuforia: MOEVuforia
     lateinit var opencv: MOEPenCV
@@ -42,8 +50,8 @@ class MOEBot(config: MOEBotConstantsImpl) {
     fun offsetValues(constants: MOEBotConstantsImpl) {
 
         if (robotConfig.useOdometry) {
-            odometry.resetValues()
-            odometry.launchLoop()
+//            odometry.resetValues()
+//            odometry.launchLoop()
         }
         if (robotConfig.useGyro) {
             gyro.config = constants.getGyroConfig()
@@ -53,7 +61,7 @@ class MOEBot(config: MOEBotConstantsImpl) {
     }
 
     fun stop() {
-        if (robotConfig.useOdometry) odometry.stop()
+//        if (robotConfig.useOdometry) odometry.stop()
         if (robotConfig.useOpenCV) opencv.stop()
     }
 

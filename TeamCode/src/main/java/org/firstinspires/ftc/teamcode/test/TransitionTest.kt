@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.test
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
 import org.firstinspires.ftc.teamcode.teleop.CompTeleOp
 import org.firstinspires.ftc.teamcode.utilities.internal.addData
 import org.firstinspires.ftc.teamcode.utilities.internal.initOtherOpMode
 import org.firstinspires.ftc.teamcode.utilities.internal.wait
 
 @Autonomous
-class TransitionTest : MOERegularTest() {
+class TransitionTest : MOEAuton() {
 
     override fun run() {
         telemetry.addData("wait 5 seconds")

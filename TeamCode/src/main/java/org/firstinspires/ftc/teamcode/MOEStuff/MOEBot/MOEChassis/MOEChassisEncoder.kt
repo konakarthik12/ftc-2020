@@ -6,8 +6,8 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid.MOETurnPid
 import org.firstinspires.ftc.teamcode.autonomous.sideconfig.Movement
 import org.firstinspires.ftc.teamcode.constants.MOEConstants.Units.TICS_PER_INCH
 import org.firstinspires.ftc.teamcode.constants.MOEPidConstants
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.moeOpMode
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.robot
+import org.firstinspires.ftc.teamcode.constants.Ref.moeOpMode
+import org.firstinspires.ftc.teamcode.constants.Ref.robot
 import kotlin.math.abs
 
 

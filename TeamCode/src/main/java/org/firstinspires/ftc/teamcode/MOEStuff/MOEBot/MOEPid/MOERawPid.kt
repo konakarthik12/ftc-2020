@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.telemetry
+import org.firstinspires.ftc.teamcode.constants.Ref.telemetry
 import kotlin.math.abs
 
 open class MOERawPid(options: MOEPidOptions) : MOEPidStructure<Double, Double> {

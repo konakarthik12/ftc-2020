@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode.utilities.external.purepursuit
 
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toRadians
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.PointImpl
+import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toRadians
 import kotlin.math.*
 
 fun <T> getSignedCurvatureFromLookaheadPoint(lookahead: PointImpl<T>, currPos: PointImpl<T>,
-                                         heading: Double, lookaheadDistance: Double): Double {
-    var head = heading+90
+                                             heading: Double, lookaheadDistance: Double): Double {
+    var head = heading + 90
     if (head == 90.0 || head == 270.0) {
         head += 0.0001
     }

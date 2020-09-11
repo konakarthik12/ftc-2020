@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.*
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEBotSubSystemConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEGyroConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOERobotInitialStateConfig
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEVuforiaConfig
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV.MOEOpenCVConfig
 
 interface MOEBotConstantsImpl {

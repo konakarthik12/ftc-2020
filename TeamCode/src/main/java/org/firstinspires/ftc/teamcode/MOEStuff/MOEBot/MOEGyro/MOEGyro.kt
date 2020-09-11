@@ -2,11 +2,15 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro
 
 import android.util.Log
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEGyroConfig
+import org.firstinspires.ftc.teamcode.constants.Ref.moeOpMode
+import org.firstinspires.ftc.teamcode.constants.Ref.robot
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toEulerAngle
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toRadians
 
 abstract class MOEGyro {
+
+
     var config = MOEGyroConfig()
         set(value) {
             field = value
@@ -17,6 +21,7 @@ abstract class MOEGyro {
     private var eulerOffset = 0.0
     val angle: Double
         get() = (getRawAngle() + offset).toNormalAngle()
+
     /**
      * Sets an offset for the IMU angle values
      * @param offset the offset to set

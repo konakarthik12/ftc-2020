@@ -27,7 +27,7 @@ interface PointImpl<T> : Cloneable<T> {
 
     fun hypot(): Double = kotlin.math.hypot(x, y)
 
-   infix fun dot(p: PointImpl<T>): Double {
+    infix fun dot(p: PointImpl<T>): Double {
         return x * p.x + y * p.y
     }
 
@@ -43,6 +43,7 @@ interface PointImpl<T> : Cloneable<T> {
     }
 
     fun create(x: Double, y: Double): T
+
     //    abstract override clone(): T
     operator fun set(index: Int, value: Double) {
         when (index) {

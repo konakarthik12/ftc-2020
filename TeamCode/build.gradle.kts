@@ -3,7 +3,7 @@ import org.gradle.api.JavaVersion.VERSION_1_8
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("org.moeftc.fastcode") version "1.8"
+    id("org.moeftc.hotcode") version "1.9"
 }
 
 android {
@@ -51,4 +51,3 @@ dependencies {
     compileOnly("org.openftc:easyopencv:1.3.2")
     compileOnly("org.processing", "core", "3.3.7")
 }
-

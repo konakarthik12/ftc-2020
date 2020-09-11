@@ -16,11 +16,11 @@ class DexTest : OpMode() {
     private val code = 202
 
     override fun init() {
-        Log.e("testing","code")
+        Log.e("testing", "code")
     }
 
     override fun init_loop() {
-        Log.e("testing","code")
+        Log.e("testing", "code")
         sleep(500)
 //        telemetry.addData("hello", "word $code")
     }

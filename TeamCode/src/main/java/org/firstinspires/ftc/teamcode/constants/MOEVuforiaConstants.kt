@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.constants
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer
-import org.firstinspires.ftc.teamcode.constants.ReferenceHolder.Companion.hardwareMap
+import org.firstinspires.ftc.teamcode.constants.Ref.hardwareMap
 
 object MOEVuforiaConstants {
     val params = VuforiaLocalizer.Parameters().apply {
