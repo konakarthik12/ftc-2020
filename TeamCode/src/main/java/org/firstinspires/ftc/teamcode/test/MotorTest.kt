@@ -15,7 +15,7 @@ class MotorTest : OpMode() {
     lateinit var backRight: DcMotor
     override fun init() {
 //        val vs = hardwareMap.voltageSensor["Motor Controller 1"]
-//        val voltage = vs.voltage
+//        val voltage = vs.voltag
 
         frontLeft = hardwareMap.dcMotor["FLDM10"]
         frontLeft.direction = REVERSE

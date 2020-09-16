@@ -5,9 +5,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstantsImpl
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Odometry.LeftForward
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Odometry.RightForward
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Odometry.Strafe
+import org.firstinspires.ftc.teamcode.constants.OldMOEHardwareConstants.Odometry.LeftForward
+import org.firstinspires.ftc.teamcode.constants.OldMOEHardwareConstants.Odometry.RightForward
+import org.firstinspires.ftc.teamcode.constants.OldMOEHardwareConstants.Odometry.Strafe
 import org.firstinspires.ftc.teamcode.constants.Ref.moeOpMode
 import org.firstinspires.ftc.teamcode.constants.Ref.robot
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.MOEtion

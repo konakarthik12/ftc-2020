@@ -1,14 +1,28 @@
 package org.firstinspires.ftc.teamcode.constants
 
+import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.*
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.DriveTrain.Motors.Configs.BackRight
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs.LeftIntake
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs.RightIntake
+import org.firstinspires.ftc.teamcode.constants.OldMOEHardwareConstants.DriveTrain.Motors.Configs.BackRight
+import org.firstinspires.ftc.teamcode.constants.OldMOEHardwareConstants.IntakeSystem.Motors.Configs.LeftIntake
+import org.firstinspires.ftc.teamcode.constants.OldMOEHardwareConstants.IntakeSystem.Motors.Configs.RightIntake
 import com.qualcomm.robotcore.hardware.Servo.Direction as ServoDirection
 
+@Config
 object MOEHardwareConstants {
+    @JvmField
+    var LEFT_SCALAR = 1.0
+
+    @JvmField
+    var RIGHT_SCALAR = 1.0
+
+    @JvmField
+    var STRAFE_SCALAR = 1.0
+
+}
+
+object OldMOEHardwareConstants {
 
     object DriveTrain {
         object Motors {

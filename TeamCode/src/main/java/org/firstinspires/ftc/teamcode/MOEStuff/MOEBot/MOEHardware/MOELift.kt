@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEHardware
 
 import com.qualcomm.robotcore.hardware.DcMotor
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.Lift.Motors
+import org.firstinspires.ftc.teamcode.constants.OldMOEHardwareConstants.Lift.Motors
 
 open class MOELift {
     val leftMotor = MOEtor(Motors.LeftLiftMotor)

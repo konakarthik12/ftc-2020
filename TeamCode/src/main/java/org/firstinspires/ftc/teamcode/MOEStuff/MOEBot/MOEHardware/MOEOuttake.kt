@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEHardware
 
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.OutTakeSystem.Servos.Configs
+import org.firstinspires.ftc.teamcode.constants.OldMOEHardwareConstants.OutTakeSystem.Servos.Configs
 
 class MOEOuttake {
     val capstoneServo = MOEServo(Configs.CapstoneServo)

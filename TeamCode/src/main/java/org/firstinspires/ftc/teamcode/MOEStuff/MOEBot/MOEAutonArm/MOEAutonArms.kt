@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEAutonArm
 
 import org.firstinspires.ftc.teamcode.autonomous.constants.AutonConstants
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants
+import org.firstinspires.ftc.teamcode.constants.OldMOEHardwareConstants
 
 class MOEAutonArms {
-    val left = MOEAutonArm(MOEHardwareConstants.AutonArms.Configs.LeftConfig)
+    val left = MOEAutonArm(OldMOEHardwareConstants.AutonArms.Configs.LeftConfig)
 
-    val right = MOEAutonArm(MOEHardwareConstants.AutonArms.Configs.RightConfig)
+    val right = MOEAutonArm(OldMOEHardwareConstants.AutonArms.Configs.RightConfig)
     val arms = listOf(left, right)
     fun openClaws() {
         arms.forEach { it.openClaw() }

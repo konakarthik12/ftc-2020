@@ -31,6 +31,7 @@ dependencies {
     implementation("org.firstinspires.ftc:OnBotJava:5.5")
     implementation("org.firstinspires.ftc:Hardware:5.5")
     implementation("org.firstinspires.ftc:FtcCommon:5.5")
+    implementation("com.acmerobotics.dashboard:dashboard:0.3.9")
     implementation(name = "WirelessP2p-release", ext = "aar", group = "")
     implementation("androidx.appcompat:appcompat:1.2.0")
 }

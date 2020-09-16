@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEHardware
 
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.IntakeSystem.Motors.Configs
+import org.firstinspires.ftc.teamcode.constants.OldMOEHardwareConstants.IntakeSystem.Motors.Configs
 
 class MOEIntake {
     private var leftIntakeMotor = MOEtor(Configs.LeftIntake)
