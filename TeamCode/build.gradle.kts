@@ -52,4 +52,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
     compileOnly("org.openftc:easyopencv:1.3.2")
     compileOnly("org.processing", "core", "3.3.7")
+    implementation("org.apache.commons:commons-math3:3.6.1")
+
 }

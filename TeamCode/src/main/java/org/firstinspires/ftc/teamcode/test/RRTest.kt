@@ -1,17 +1,17 @@
 package org.firstinspires.ftc.teamcode.test
 
 import com.acmerobotics.dashboard.FtcDashboard
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.acmerobotics.roadrunner.localization.ThreeTrackingWheelLocalizer
+import com.qualcomm.hardware.bosch.BNO055IMU
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.LEFT_SCALAR
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.RIGHT_SCALAR
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.STRAFE_SCALAR
+
 
 @TeleOp
 class RRTest : OpMode() {
@@ -20,10 +20,13 @@ class RRTest : OpMode() {
     lateinit var frontRight: DcMotorEx
     lateinit var backLeft: DcMotorEx
     lateinit var backRight: DcMotorEx
-    lateinit var multi: MultipleTelemetry
     lateinit var localizer: StandardTrackingWheelLocalizer
+    lateinit var gyro: BNO055IMU
+    lateinit var dashboard: FtcDashboard
+
     override fun init() {
-        multi = MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().telemetry)
+        dashboard = FtcDashboard.getInstance()
+
         val voltage = hardwareMap.voltageSensor.first().voltage
         frontLeft = hardwareMap.dcMotor["FLDM10"] as DcMotorEx
         frontLeft.direction = DcMotorSimple.Direction.REVERSE
@@ -31,9 +34,9 @@ class RRTest : OpMode() {
         backLeft.direction = DcMotorSimple.Direction.REVERSE
         frontRight = hardwareMap.dcMotor["FRDM12"] as DcMotorEx
         backRight = hardwareMap.dcMotor["BRDM13"] as DcMotorEx
-
-        multi.addData("voltage", voltage)
-        multi.update()
+        val packet = TelemetryPacket()
+        packet.put("voltage is", voltage)
+        dashboard.sendTelemetryPacket(packet);
         motors = listOf(
                 frontLeft,
                 frontRight,
@@ -43,38 +46,64 @@ class RRTest : OpMode() {
         motors.forEach {
             it.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
             it.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+//            it.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         }
-        val localizer = StandardTrackingWheelLocalizer(backLeft, frontRight, backRight)
+
+
+        val parameters = BNO055IMU.Parameters()
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json" // see the calibration sample opmode
+
+        parameters.loggingEnabled = true
+        parameters.loggingTag = "IMU"
+        parameters.accelerationIntegrationAlgorithm = JustLoggingAccelerationIntegrator()
+
+        gyro = hardwareMap.get(BNO055IMU::class.java, "imu") as BNO055IMU
+        gyro.initialize(parameters)
+
+
+        localizer = StandardTrackingWheelLocalizer(backRight, frontRight, backLeft)
 
     }
 
     override fun loop() {
+
+//        if (localizer.poseEstimate.x > 22) {
+//            motors.forEach { it.power = 0.0 }
+//        } else {
+//            motors.forEach { it.power = 0.3 }
+//        }
         localizer.update()
-        multi.addData("x", localizer.poseEstimate.x)
-        multi.addData("y", localizer.poseEstimate.y)
-        multi.addData("theta", Math.toDegrees(localizer.poseEstimate.heading))
-        multi.addData("left", backLeft.currentPosition)
-        multi.addData("right", frontRight.currentPosition)
-        multi.addData("strafe", backRight.currentPosition)
-
-        multi.update()
-
-
+        val packet = TelemetryPacket()
+        packet.put("rr_x", localizer.poseEstimate.x)
+        packet.put("rr_y", localizer.poseEstimate.y)
+        packet.put("rr_theta", Math.toDegrees(localizer.poseEstimate.heading))
+        packet.put("raw_left", backRight.currentPosition)
+        packet.put("raw_right", frontRight.currentPosition)
+        packet.put("raw_strafe", backLeft.currentPosition)
+        packet.put("raw_gyro", gyro.angularOrientation.firstAngle)
+        dashboard.sendTelemetryPacket(packet)
     }
+
 
 }
 
+const val RIGHT_SCALAR = 306.3309693
+const val LEFT_SCALAR = -307.3191489
+const val STRAFE_SCALAR = -305.1867612
+
 class StandardTrackingWheelLocalizer(val left: DcMotor, val right: DcMotor, val strafe: DcMotor) : ThreeTrackingWheelLocalizer(listOf(
-        Pose2d(-0.417, 7.834), // left parallel
-        Pose2d(7.834, -0.417), // right parallel
-        Pose2d(0.343, -0.276, Math.toRadians(90.0)) // perpendicular
+        Pose2d(-0.343, 7.835), // left parallel
+        Pose2d(-0.343, -7.835), // right parallel
+        Pose2d(-0.276, 0.343, Math.toRadians(90.0)) // perpendicular
 )) {
+
     override fun getWheelPositions(): List<Double> {
         return listOf(
                 left.currentPosition / LEFT_SCALAR,
                 right.currentPosition / RIGHT_SCALAR,
                 strafe.currentPosition / STRAFE_SCALAR
         )
-        // return list of encoder readings in inches
     }
 }

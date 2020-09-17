@@ -9,18 +9,6 @@ import org.firstinspires.ftc.teamcode.constants.OldMOEHardwareConstants.IntakeSy
 import org.firstinspires.ftc.teamcode.constants.OldMOEHardwareConstants.IntakeSystem.Motors.Configs.RightIntake
 import com.qualcomm.robotcore.hardware.Servo.Direction as ServoDirection
 
-@Config
-object MOEHardwareConstants {
-    @JvmField
-    var LEFT_SCALAR = 1.0
-
-    @JvmField
-    var RIGHT_SCALAR = 1.0
-
-    @JvmField
-    var STRAFE_SCALAR = 1.0
-
-}
 
 object OldMOEHardwareConstants {
 

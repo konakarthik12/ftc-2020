@@ -10,10 +10,6 @@ import com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.LEFT_SCALAR
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.RIGHT_SCALAR
-import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.STRAFE_SCALAR
 
 
 @TeleOp
@@ -57,9 +53,9 @@ class EncoderDriveTest : OpMode() {
     val speed = 0.5
 
     override fun loop() {
-        multi.addData("left", backLeft.currentPosition * LEFT_SCALAR)
-        multi.addData("right", frontRight.currentPosition * RIGHT_SCALAR)
-        multi.addData("strafe", backRight.currentPosition * STRAFE_SCALAR)
+        multi.addData("left", backLeft.currentPosition)
+        multi.addData("right", frontRight.currentPosition )
+        multi.addData("strafe", backRight.currentPosition )
         multi.update()
     }
 }
