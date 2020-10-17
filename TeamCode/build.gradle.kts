@@ -43,8 +43,6 @@ dependencies {
     implementation("org.firstinspires.ftc:RobotCore:5.5")
     implementation("org.firstinspires.ftc:Hardware:5.5")
     implementation("org.firstinspires.ftc:FtcCommon:5.5")
-    implementation("com.acmerobotics.dashboard:dashboard:0.3.9")
-    implementation("com.acmerobotics.roadrunner:core:0.5.1")
     implementation(name = "WirelessP2p-release", ext = "aar", group = "")
     implementation(name = "tfod-release", ext = "aar", group = "")
     implementation(name = "tensorflow-lite-0.0.0-nightly", ext = "aar", group = "")
@@ -53,5 +51,7 @@ dependencies {
     compileOnly("org.openftc:easyopencv:1.3.2")
     compileOnly("org.processing", "core", "3.3.7")
     implementation("org.apache.commons:commons-math3:3.6.1")
+    implementation("com.acmerobotics.dashboard:dashboard:0.3.9")
+    implementation("com.acmerobotics.roadrunner:core:0.5.1")
 
 }

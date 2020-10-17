@@ -11,9 +11,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import org.firstinspires.ftc.teamcode.test.rr.drive.StandardTrackingWheelLocalizer
 
 
-@TeleOp
 class RRTest : OpMode() {
     lateinit var motors: List<DcMotorEx>
     lateinit var frontLeft: DcMotorEx
@@ -63,7 +63,7 @@ class RRTest : OpMode() {
         gyro.initialize(parameters)
 
 
-        localizer = StandardTrackingWheelLocalizer(backRight, frontRight, backLeft)
+        localizer = StandardTrackingWheelLocalizer(hardwareMap)
 
     }
 
@@ -93,17 +93,3 @@ const val RIGHT_SCALAR = 306.3309693
 const val LEFT_SCALAR = -307.3191489
 const val STRAFE_SCALAR = -305.1867612
 
-class StandardTrackingWheelLocalizer(val left: DcMotor, val right: DcMotor, val strafe: DcMotor) : ThreeTrackingWheelLocalizer(listOf(
-        Pose2d(-0.343, 7.835), // left parallel
-        Pose2d(-0.343, -7.835), // right parallel
-        Pose2d(-0.276, 0.343, Math.toRadians(90.0)) // perpendicular
-)) {
-
-    override fun getWheelPositions(): List<Double> {
-        return listOf(
-                left.currentPosition / LEFT_SCALAR,
-                right.currentPosition / RIGHT_SCALAR,
-                strafe.currentPosition / STRAFE_SCALAR
-        )
-    }
-}

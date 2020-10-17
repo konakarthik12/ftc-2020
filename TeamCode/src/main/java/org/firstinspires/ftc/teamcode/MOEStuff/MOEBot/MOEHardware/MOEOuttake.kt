@@ -7,9 +7,6 @@ class MOEOuttake {
     val grabServo = MOEServo(Configs.GrabberServo)
     val outtakeServo = MOEServo(Configs.OuttakeServo)
 
-//    init {
-//        moveIn()
-//    }
 
     fun grab() {
         grabServo.setPosition(1.0)

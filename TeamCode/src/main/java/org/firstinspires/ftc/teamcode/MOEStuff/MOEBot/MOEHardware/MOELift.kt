@@ -21,11 +21,6 @@ open class MOELift {
         return motors.joinToString { it.getVelocity().toString() }
     }
 
-//    fun bottomOutIfNeeded() {
-//        if (limitSwitch.isPressed) {
-//            resetEncoders()
-//        }
-//    }
 
     fun resetEncoders() {
         motors.forEach { it.resetEncoder() }

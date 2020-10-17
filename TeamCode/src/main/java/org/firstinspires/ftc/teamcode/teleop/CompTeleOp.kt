@@ -15,7 +15,7 @@ import kotlin.math.sin
 open class CompTeleOp : MOETeleOp() {
     override fun initOpMode() {
         addListeners()
-        Log.e("voltage", hardwareMap.voltageSensor["Expansion Hub 2"].voltage.toString())
+//        Log.e("voltage", hardwareMap.voltageSensor["Expansion Hub 2"].voltage.toString())
     }
 
     private fun initFoundation() {
@@ -135,8 +135,8 @@ open class CompTeleOp : MOETeleOp() {
         val scaleRot = 0.75
 
         val angle = robot.gyro.angle
-        var rawY = 1.0
-//        var rawY = gpad1.left.stick.y()
+
+        var rawY = gpad1.left.stick.y()
         var rawX = gpad1.left.stick.x()
         var rot = gpad1.right.stick.x()
 

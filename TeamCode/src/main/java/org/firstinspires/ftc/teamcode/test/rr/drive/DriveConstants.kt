@@ -1,7 +1,6 @@
-package org.firstinspires.ftc.teamcode.drive;
+package org.firstinspires.ftc.teamcode.test.rr.drive
 
-import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.roadrunner.trajectory.constraints.DriveConstraints;
+import com.acmerobotics.roadrunner.trajectory.constraints.DriveConstraints
 
 /*
  * Constants shared between multiple drive types.
@@ -14,10 +13,8 @@ import com.acmerobotics.roadrunner.trajectory.constraints.DriveConstraints;
  * These are not the only parameters; some are located in the localizer classes, drive base classes,
  * and op modes themselves.
  */
-@Config
-public class DriveConstants {
-
-    public static final double MAX_RPM = 312;
+object DriveConstants {
+    const val MAX_RPM = 312.0
 
     /*
      * These are physical constants that can be determined from your robot (including the track
@@ -27,9 +24,11 @@ public class DriveConstants {
      * angular distances although most angular parameters are wrapped in Math.toRadians() for
      * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
      */
-    public static double WHEEL_RADIUS = 2; // in
-    public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 1; // in
+    private var WHEEL_RADIUS = 1.9685 // in
+    var GEAR_RATIO = 1 // output (wheel) speed / input (motor) speed
+
+    @JvmStatic
+    var TRACK_WIDTH = 12.83 // in
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -37,9 +36,14 @@ public class DriveConstants {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    public static double kV = 1.0 / rpmToVelocity(MAX_RPM);
-    public static double kA = 0;
-    public static double kStatic = 0;
+    @JvmField
+    var kV = 200 * 0.0001
+
+    @JvmField
+    var kA = 50 * 0.0001
+
+    @JvmField
+    var kStatic = 0.039
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
@@ -49,14 +53,20 @@ public class DriveConstants {
      * acceleration values are required, and the jerk values are optional (setting a jerk of 0.0
      * forces acceleration-limited profiling). All distance units are inches.
      */
-    public static DriveConstraints BASE_CONSTRAINTS = new DriveConstraints(
-            10.0, 30.0, 0.0,
-            Math.toRadians(180.0), Math.toRadians(180.0), 0.0
-    );
+    @JvmField
+    var BASE_CONSTRAINTS = DriveConstraints(
+            24.0, 20.0, 0.0,
+            Math.toRadians(60.0), Math.toRadians(180.0), 0.0
+    )
 
-
-    public static double rpmToVelocity(double rpm) {
-        return rpm * GEAR_RATIO * 2 * Math.PI * WHEEL_RADIUS / 60.0;
+    @JvmStatic
+    fun rpmToVelocity(rpm: Double): Double {
+        val wheelCircumference = 2 * Math.PI * WHEEL_RADIUS
+        return rpm * GEAR_RATIO * wheelCircumference / 60.0
     }
+}
 
+fun main() {
+
+    println(DriveConstants.kV)
 }

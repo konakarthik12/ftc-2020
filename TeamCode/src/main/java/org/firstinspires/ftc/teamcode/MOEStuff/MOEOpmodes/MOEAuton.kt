@@ -20,7 +20,7 @@ abstract class MOEAuton : LinearOpMode(), OpModeInterface, MOEBotConstantsImpl {
     final override fun runOpMode() {
         Ref.setRefs(this)
         robot = createRobot()
-        robot.gyro?.init()
+        robot.gyro.init()
         Ref.setRobotRef(robot)
         initOpMode()
         moeInternalPostInit()
