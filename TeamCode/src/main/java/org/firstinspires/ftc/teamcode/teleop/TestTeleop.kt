@@ -36,6 +36,7 @@ class TestTeleop() : OpMode() {
         innerShooterMotor = hardwareMap.dcMotor["IRSM21"] as DcMotorEx
         ma3 = hardwareMap.analogInput["SPE21"]
         trigger = hardwareMap.crservo["RTS21"]
+        trigger.power
         gamepad1.setJoystickDeadzone(0.1f)
 
 

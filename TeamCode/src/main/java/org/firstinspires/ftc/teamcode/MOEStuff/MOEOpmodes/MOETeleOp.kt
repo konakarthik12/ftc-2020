@@ -53,5 +53,5 @@ abstract class MOETeleOp : MOELoopedOpMode() {
         loops.add { func(this) }
     }
 
-    abstract fun mainLoop()
+    open fun mainLoop() {}
 }
