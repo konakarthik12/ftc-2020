@@ -4,8 +4,7 @@ package org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath
 fun Double.toEulerAngle(): Double {
     // force into the minimum absolute value residue class, so that -180 < angle <= 180
     var angle = toNormalAngle()
-    if (angle > 180)
-        angle -= 360
+    if (angle > 180) angle -= 360
     return angle
 }
 

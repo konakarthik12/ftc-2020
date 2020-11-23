@@ -15,8 +15,8 @@ android {
         buildToolsVersion("30.0.2")
         minSdkVersion(25)
         targetSdkVersion(30)
-        versionCode = 37
-        versionName = "5.5"
+        versionCode = 38
+        versionName = "6.0"
     }
     compileOptions {
         sourceCompatibility = VERSION_1_8
@@ -40,9 +40,9 @@ android {
 
 dependencies {
     implementation(project(":FtcRobotController"))
-    implementation("org.firstinspires.ftc:RobotCore:5.5")
-    implementation("org.firstinspires.ftc:Hardware:5.5")
-    implementation("org.firstinspires.ftc:FtcCommon:5.5")
+    implementation("org.firstinspires.ftc:RobotCore:6.0.1")
+    implementation("org.firstinspires.ftc:Hardware:6.0.1")
+    implementation("org.firstinspires.ftc:FtcCommon:6.0.1")
     implementation(name = "WirelessP2p-release", ext = "aar", group = "")
     implementation(name = "tfod-release", ext = "aar", group = "")
     implementation(name = "tensorflow-lite-0.0.0-nightly", ext = "aar", group = "")
@@ -50,8 +50,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
     compileOnly("org.openftc:easyopencv:1.3.2")
     compileOnly("org.processing", "core", "3.3.7")
-    implementation("org.apache.commons:commons-math3:3.6.1")
-    implementation("com.acmerobotics.dashboard:dashboard:0.3.9")
-    implementation("com.acmerobotics.roadrunner:core:0.5.1")
+    compileOnly("org.apache.commons:commons-math3:3.6.1")
+    compileOnly("com.acmerobotics.dashboard:dashboard:0.3.9")
+    compileOnly("com.acmerobotics.roadrunner:core:0.5.1")
 
 }
