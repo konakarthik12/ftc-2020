@@ -58,17 +58,16 @@ open class UltimateGoalTeleOp : MOETeleOp() {
     }
 
 
-
     open fun log() {
         telemetry.addData("Running", this::class.simpleName)
-        val powers = this.robot.chassis.getPowers()
-        telemetry.addData("powers", powers.map { it.toFixed(3) })
-        val up = "\u2191"
-        val middle = " "
-        val down = "\u2193"
-        val arrows = powers.map { if (it > 0.0) up else if (it < 0.0) down else middle }
-        telemetry.addData("front", "${arrows[0]}\t${arrows[1]}")
-        telemetry.addData("backs", "${arrows[2]}\t${arrows[3]}")
+//        val powers = this.robot.chassis.getPowers()
+//        telemetry.addData("powers", powers.map { it.toFixed(3) })
+//        val up = "\u2191"
+//        val middle = " "
+//        val down = "\u2193"
+//        val arrows = powers.map { if (it > 0.0) up else if (it < 0.0) down else middle }
+//        telemetry.addData("front", "${arrows[0]}\t${arrows[1]}")
+//        telemetry.addData("backs", "${arrows[2]}\t${arrows[3]}")
     }
 
 
