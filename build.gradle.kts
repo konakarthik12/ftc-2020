@@ -3,7 +3,9 @@
  *
  * It is extraordinarily rare that you will ever need to edit this file.
  */
-
+//plugins {
+//    idea
+//}
 buildscript {
 //    var kotlin_version: String by extra
 //    kotlin_version = "1.3.72"
@@ -13,7 +15,7 @@ buildscript {
 
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.0.1")
+        classpath("com.android.tools.build:gradle:4.0.2")
 //        println(org.gradle.kotlin.dsl.embeddedKotlinVersion)
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$embeddedKotlinVersion")
 //        classpath(kotlinModule("gradle-plugin", kotlin_version))
@@ -37,3 +39,12 @@ subprojects {
 
     }
 }
+task("clean", Delete::class) {
+    this.delete(rootProject.buildDir)
+}
+//idea {
+//    module {
+////        excludeDirs = excludeDirs + (file("build"))
+//        excludeDirs = excludeDirs + file("build")
+//    }
+//}

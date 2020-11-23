@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
+import android.util.Log
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEGamepad.MOEGamepad
 
 
@@ -38,6 +39,18 @@ abstract class MOETeleOp : MOELoopedOpMode() {
         gpad1.update()
         gpad2.update()
         mainLoop()
+        handleLoops()
+
+    }
+
+    private fun handleLoops() {
+//        Log.e("count", loops.size.toString())
+        for (func in loops) func()
+    }
+
+    private val loops = mutableListOf<() -> Unit>()
+    fun <T : Any> T.loop(func: (T) -> Unit) {
+        loops.add { func(this) }
     }
 
     abstract fun mainLoop()
