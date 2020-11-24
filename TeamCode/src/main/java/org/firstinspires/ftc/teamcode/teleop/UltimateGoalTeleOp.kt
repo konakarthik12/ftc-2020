@@ -22,7 +22,6 @@ open class UltimateGoalTeleOp : MOETeleOp() {
 
     }
 
-
     private fun addListeners() {
         gpad1.y.onKeyDown {
             robot.gyro.setTo(90.0.toRadians())
