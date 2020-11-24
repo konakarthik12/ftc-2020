@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.teleop
 
-import com.jogamp.opengl.math.FixedPoint.toFixed
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOETeleOp
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toRadians
-import org.firstinspires.ftc.teamcode.utilities.external.toFixed
 
 @TeleOp
 open class UltimateGoalTeleOp : MOETeleOp() {
@@ -32,11 +30,12 @@ open class UltimateGoalTeleOp : MOETeleOp() {
     }
 
     override fun mainLoop() {
-        loop()
+        log()
     }
 
     open fun log() {
-
+        telemetry.addData("gyro", robot.gyro.angle)
+//        telemetry.addData("gyro", robot.gyro.getRawAngle())
     }
 
 

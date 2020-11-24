@@ -13,10 +13,11 @@ abstract class MOEGyro {
         set(value) {
             field = value
             setTo(value.initalAng)
-//            offset = getRawAngle() - value.initalAng
         }
     var offset = 0.0
     private var eulerOffset = 0.0
+
+    /** 0 to 2PI*/
     val angle: Double
         get() = (getRawAngle() + offset).toNormalAngle()
 

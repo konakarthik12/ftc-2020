@@ -103,7 +103,6 @@ class SampleMecanumDrive(hardwareMap: HardwareMap) : MecanumDrive(DriveConstants
                 Mode.TURN -> Pose2d(0.0, 0.0, turnController.lastError)
                 Mode.IDLE -> Pose2d()
             }
-            throw AssertionError()
         }
 
     fun update() {
