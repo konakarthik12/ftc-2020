@@ -26,7 +26,6 @@ class MOEBot(config: MOEBotConstantsImpl) {
     lateinit var opencv: MOEPenCV
 
     init {
-
         if (robotConfig.useGyro) {
             gyro = if (robotConfig.useOdometry) MOEdometryGyro(config) else MOEIMUGyro()
         }
@@ -39,11 +38,7 @@ class MOEBot(config: MOEBotConstantsImpl) {
     }
 
     fun offsetValues(constants: MOEBotConstantsImpl) {
-//
-//        if (robotConfig.useOdometry) {
-////            odometry.resetValues()
-////            odometry.launchLoop()
-//        }
+
         if (robotConfig.useGyro) {
             gyro.config = constants.getGyroConfig()
         }
@@ -56,9 +51,4 @@ class MOEBot(config: MOEBotConstantsImpl) {
         if (robotConfig.useOpenCV) opencv.stop()
     }
 
-    //    fun resetValues() {
-    //        if (useSlam)
-    //            slam.resetValues(thetaOffset)
-    //        gyro.setToZero()
-    //    }
 }

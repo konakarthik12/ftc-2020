@@ -34,7 +34,6 @@ open class UltimateGoalTeleOp : MOETeleOp() {
 
     open fun log() {
         telemetry.addData("gyro", robot.gyro.angle)
-//        telemetry.addData("gyro", robot.gyro.getRawAngle())
     }
 
 
