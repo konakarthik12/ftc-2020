@@ -39,25 +39,6 @@ class TestTeleop() : OpMode() {
         trigger.power
         gamepad1.setJoystickDeadzone(0.1f)
 
-
-        if(ma3Wrapped.getValue() >= 3.75 && ma3Wrapped.getValue() <= 5.0){
-            var triggerTarget = 2.5
-        }
-        else if(ma3Wrapped.getValue() >= 1.25 && ma3Wrapped.getValue() <= 3.75) {
-            var triggerTarget = 0.0
-        }
-        else if(ma3Wrapped.getValue() >= -1.25 && ma3Wrapped.getValue() <= 1.25) {
-            var triggerTarget = -2.5
-        }
-        else if(ma3Wrapped.getValue() >= -3.75 && ma3Wrapped.getValue() <= -1.25) {
-            var triggerTarget = -5.0
-        }
-        else if(ma3Wrapped.getValue() >= -5 && ma3Wrapped.getValue() <= -3.75) {
-            var triggerTarget = -7.5
-        }
-        else{
-            var triggerTarget = 0.0
-        }
     }
 
     override fun loop() {

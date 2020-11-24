@@ -46,7 +46,7 @@ abstract class MOEGyro {
     /** -2PI to 2PI*/
     open fun getRawEulerAngle(): Double = getRawAngle().toEulerAngle()
 
-    open fun init(sync: Boolean = false) {}
+    open fun init(sync: Boolean = true) {}
 
 
     var eulerAngle: Double
