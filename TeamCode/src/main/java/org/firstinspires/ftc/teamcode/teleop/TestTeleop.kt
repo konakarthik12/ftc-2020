@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.WrapperHandler
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.properties.Delegates
 
 @TeleOp(name = "TestTeleop", group = "Teleop")
 class TestTeleop() : OpMode() {
@@ -20,8 +21,10 @@ class TestTeleop() : OpMode() {
     lateinit var innerShooterMotor: DcMotorEx
     lateinit var trigger: CRServo
     lateinit var ma3: AnalogInput
-    var ma3Wrapped: WrapperHandler = WrapperHandler(5.0){
-        ma3.voltage
+    var ma3_offset =0.0
+    var triggerTarget =0.0
+    var ma3Wrapped: WrapperHandler = WrapperHandler(5.0) {
+        ma3.voltage-ma3_offset
     }
 
     override fun init() {
@@ -35,10 +38,30 @@ class TestTeleop() : OpMode() {
         outerShooterMotor = hardwareMap.dcMotor["ORSM20"] as DcMotorEx
         innerShooterMotor = hardwareMap.dcMotor["IRSM21"] as DcMotorEx
         ma3 = hardwareMap.analogInput["SPE21"]
+        ma3_offset=ma3.voltage
         trigger = hardwareMap.crservo["RTS21"]
         trigger.power
         gamepad1.setJoystickDeadzone(0.1f)
 
+
+//        if(ma3Wrapped.getValue() >= 3.75 && ma3Wrapped.getValue() <= 5.0){
+//            var triggerTarget = 2.5
+//        }
+//        else if(ma3Wrapped.getValue() >= 1.25 && ma3Wrapped.getValue() <= 3.75) {
+//            var triggerTarget = 0.0
+//        }
+//        else if(ma3Wrapped.getValue() >= -1.25 && ma3Wrapped.getValue() <= 1.25) {
+//            var triggerTarget = -2.5
+//        }
+//        else if(ma3Wrapped.getValue() >= -3.75 && ma3Wrapped.getValue() <= -1.25) {
+//            var triggerTarget = -5.0
+//        }
+//        else if(ma3Wrapped.getValue() >= -5 && ma3Wrapped.getValue() <= -3.75) {
+//            var triggerTarget = -7.5
+//        }
+//        else{
+//            var triggerTarget = 0.0
+//        }
     }
 
     override fun loop() {
@@ -52,33 +75,18 @@ class TestTeleop() : OpMode() {
         frontRightMotor.setPower((-y - x - rx) * 0.6)
         backRightMotor.setPower((-y + x -rx) * 0.6)
 
-//        if (gamepad1.x) {
-//            trigger.setPower(0.5)
-//
-//            if(ma3Wrapped.getValue() <= 0.0){
-//                trigger.setPower(0.0)
-//            }
-//        }
-
-
-//        if (!previousX && gamepad1.x) {
-//            enabledX = !enabledX
-//        }
-//
-//        previousX = gamepad1.x
-//
-//        if (!enabledX) {
-//            trigger.setPower(0.5)
-//            return
-//        }
-
-        if(gamepad1.x){
-            trigger.setPower(0.5)
+        if(!previousX&&gamepad1.x){
+            triggerTarget = triggerTarget + 2.5
         }
 
+        previousX = gamepad1.x
+
         if(ma3Wrapped.getValue() <= triggerTarget) {
+            trigger.setPower(0.5)
+      //      triggerTarget = (triggerTarget - 2.5).toDouble()
+        }
+        else {
             trigger.setPower(0.0)
-            triggerTarget = (triggerTarget - 2.5).toDouble()
         }
 
         if (!previousA && gamepad1.a) {
@@ -133,8 +141,6 @@ class TestTeleop() : OpMode() {
 
         var targetVelocity = 0.0
         val speed = 10
-
-        var triggerTarget:Double = 0.0
 
         var previousA = false
         var enabled = true
