@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.WrapperHan
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.properties.Delegates
+import com.qualcomm.robotcore.util.ElapsedTime
 
 @TeleOp(name = "TestTeleop", group = "Teleop")
 class TestTeleop() : OpMode() {
@@ -19,29 +20,32 @@ class TestTeleop() : OpMode() {
     lateinit var intakeMotor: DcMotor
     lateinit var outerShooterMotor: DcMotorEx
     lateinit var innerShooterMotor: DcMotorEx
-    lateinit var trigger: CRServo
-    lateinit var ma3: AnalogInput
-    var ma3_offset =0.0
-    var triggerTarget =0.0
-    var ma3Wrapped: WrapperHandler = WrapperHandler(5.0) {
-        ma3.voltage-ma3_offset
-    }
+//    lateinit var trigger: CRServo
+    lateinit var trigger: Servo
+//    lateinit var ma3: AnalogInput
+//    var ma3_offset = 0.0
+    var triggerTarget = 0.0
+//    var ma3Wrapped: WrapperHandler = WrapperHandler(5.0) {
+//        ma3.voltage-ma3_offset
+//    }
 
     override fun init() {
-        frontLeftMotor = hardwareMap.dcMotor["FLM"] as DcMotorEx
-        frontRightMotor = hardwareMap.dcMotor["FRM"] as DcMotorEx
-        backLeftMotor = hardwareMap.dcMotor["BLM"] as DcMotorEx
-        backRightMotor = hardwareMap.dcMotor["BRM"] as DcMotorEx
+        frontLeftMotor = hardwareMap.dcMotor["FLM20"] as DcMotorEx
+        frontRightMotor = hardwareMap.dcMotor["FRM22"] as DcMotorEx
+        backLeftMotor = hardwareMap.dcMotor["BLM21"] as DcMotorEx
+        backRightMotor = hardwareMap.dcMotor["BRM23"] as DcMotorEx
         frontLeftMotor.direction = DcMotorSimple.Direction.REVERSE
         backLeftMotor.direction = DcMotorSimple.Direction.REVERSE
-        intakeMotor = hardwareMap.dcMotor["intake_motor"] as DcMotorEx
-        outerShooterMotor = hardwareMap.dcMotor["ORSM20"] as DcMotorEx
-        innerShooterMotor = hardwareMap.dcMotor["IRSM21"] as DcMotorEx
-        ma3 = hardwareMap.analogInput["SPE21"]
-        ma3_offset=ma3.voltage
-        trigger = hardwareMap.crservo["RTS21"]
-        trigger.power
+        intakeMotor = hardwareMap.dcMotor["INM13"] as DcMotorEx
+        outerShooterMotor = hardwareMap.dcMotor["OFM10"] as DcMotorEx
+        innerShooterMotor = hardwareMap.dcMotor["IFM11"] as DcMotorEx
+//        ma3 = hardwareMap.analogInput["STE11"]
+//        ma3_offset = ma3.voltage
+        trigger = hardwareMap.servo["STS11"]
+//      trigger = hardwareMap.crservo["STS11"]
+//      trigger.power
         gamepad1.setJoystickDeadzone(0.1f)
+        trigger.setPosition(0.2)
 
 
 //        if(ma3Wrapped.getValue() >= 3.75 && ma3Wrapped.getValue() <= 5.0){
@@ -64,6 +68,8 @@ class TestTeleop() : OpMode() {
 //        }
     }
 
+    val timer = ElapsedTime()
+
     override fun loop() {
 
         var y = gamepad1.left_stick_y.toDouble()
@@ -75,19 +81,33 @@ class TestTeleop() : OpMode() {
         frontRightMotor.setPower((-y - x - rx) * 0.6)
         backRightMotor.setPower((-y + x -rx) * 0.6)
 
-        if(!previousX&&gamepad1.x){
-            triggerTarget = triggerTarget + 2.5
+//        if(!previousX && gamepad1.x){
+//            triggerTarget -= 2.5
+//        }
+//
+//        previousX = gamepad1.x
+//
+//        if(ma3Wrapped.getValue() > triggerTarget) {
+//            trigger.setPower(0.2)
+//        }
+//        else {
+//            trigger.setPower(0.0)
+//        }
+
+        if (!previousY && gamepad1.y){
+            timer.reset()
         }
 
-        previousX = gamepad1.x
+        when{
+            timer.time() > 1.75 -> trigger.setPosition(0.2)
+            timer.time() > 1.4 -> trigger.setPosition(0.6)
+            timer.time() > 1.05 -> trigger.setPosition(0.2)
+            timer.time() > 0.7 -> trigger.setPosition(0.6)
+            timer.time() > 0.35 -> trigger.setPosition(0.2)
+            timer.time() > 0.0 -> trigger.setPosition(0.6)
+        }
 
-        if(ma3Wrapped.getValue() <= triggerTarget) {
-            trigger.setPower(0.5)
-      //      triggerTarget = (triggerTarget - 2.5).toDouble()
-        }
-        else {
-            trigger.setPower(0.0)
-        }
+        previousY = gamepad1.y
 
         if (!previousA && gamepad1.a) {
             enabled = !enabled
@@ -96,7 +116,7 @@ class TestTeleop() : OpMode() {
         previousA = gamepad1.a
 
         if (!enabled) {
-            intakeMotor.power = 1.0
+            intakeMotor.power = 0.7
             return
         }
 
@@ -120,8 +140,11 @@ class TestTeleop() : OpMode() {
 
 //        targetVelocity += gamepad1.right_trigger.toDouble() * speed
 //        targetVelocity -= gamepad1.left_trigger.toDouble() * speed
-        telemetry.addData("ma3Raw", ma3.voltage)
-        telemetry.addData("ma3Wrapped", ma3Wrapped.getValue())
+        telemetry.addData("time",timer.seconds())
+        telemetry.addData("target", trigger.getPosition())
+        telemetry.addData("y", gamepad1.y)
+//        telemetry.addData("ma3Raw", ma3.voltage)
+//        telemetry.addData("ma3Wrapped", ma3Wrapped.getValue())
         telemetry.addData("triggerTarget",triggerTarget)
         telemetry.addData("FLP", frontLeftMotor.power)
         telemetry.addData("FRP", frontRightMotor.power)
@@ -146,7 +169,9 @@ class TestTeleop() : OpMode() {
         var enabled = true
         var previousB = false
         var enabledB = true
-        var previousX = false
-        var enabledX = true
+//        var previousX = false
+//        var enabledX = true
+        var previousY = false
+        var enabledY = true
 
 }
