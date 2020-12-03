@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
 
 // The 'i' prefix is used to avoid naming conflicts.
 interface OpModeInterface {
-    fun iOpModeIsActive(): Boolean
+    fun isActive(): Boolean
     val iIsStopRequested: Boolean
     fun iRequestOpModeStop()
 }

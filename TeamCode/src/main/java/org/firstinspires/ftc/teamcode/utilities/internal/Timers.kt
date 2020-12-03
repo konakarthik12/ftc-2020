@@ -8,7 +8,7 @@ private val timer by lazy { ElapsedTime() }
 infix fun OpModeInterface.wait(milliseconds: Number) {
     timer.reset()
     val length = milliseconds.toLong()
-    while (timer.milliseconds() < length && iOpModeIsActive()) {
+    while (timer.milliseconds() < length && isActive()) {
 //        telemetry.addData("please wait another${timer.seconds()} seconds")
 //        telemetry.update()
     }

@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
 abstract class MOEAuton : LinearOpMode(), OpModeInterface, MOEBotConstantsImpl {
     lateinit var robot: MOEBot
-    override fun iOpModeIsActive(): Boolean = opModeIsActive()
+    override fun isActive(): Boolean = opModeIsActive()
     override fun iRequestOpModeStop() = requestOpModeStop()
 
 

@@ -3,21 +3,24 @@ package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.MOEChassis
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOEGyro
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOEIMUGyro
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEGyro.MOEdometryGyro
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEIntake.MOEIntake
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPenCV.MOEPenCV
-import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEdometry.MOEdometrySystem
+import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEShooter.MOEShooter
 
 
 class MOEBot(config: MOEBotConstantsImpl) {
 
     //    val autonArms = MOEAutonArms()
     val robotConfig = config.getRobotSubSystemConfig()
-    lateinit var odometry: MOEdometrySystem
+
 
     //    val lift = MOESkystoneLift()
 //    val foundation = MOEFoundation()
 //    val outtake = MOEOuttake()
-    var chassis: MOEChassis = MOEChassis()
+    var chassis = MOEChassis()
+
+    val intake = MOEIntake()
+    val shooter = MOEShooter()
 
     //    var intake: MOEIntake = MOEIntake()
 //    var odometry = MOEdometrySystem(config)
@@ -27,7 +30,7 @@ class MOEBot(config: MOEBotConstantsImpl) {
 
     init {
         if (robotConfig.useGyro) {
-            gyro = if (robotConfig.useOdometry) MOEdometryGyro(config) else MOEIMUGyro()
+            gyro = MOEIMUGyro()
         }
         if (robotConfig.useOpenCV && robotConfig.useVuforia) throw IllegalStateException("Can't use both opencv and vuforia")
         if (robotConfig.useOpenCV) {
@@ -40,15 +43,20 @@ class MOEBot(config: MOEBotConstantsImpl) {
     fun offsetValues(constants: MOEBotConstantsImpl) {
 
         if (robotConfig.useGyro) {
-            gyro.config = constants.getGyroConfig()
+            gyro.angle = constants.getRobotInitialState().ang
         }
 
 
     }
 
     fun stop() {
-//        if (robotConfig.useOdometry) odometry.stop()
         if (robotConfig.useOpenCV) opencv.stop()
+        shooter.servoJob.cancel()
+        chassis.stop()
+        shooter.stop()
+        intake.stop()
+
+
     }
 
 }

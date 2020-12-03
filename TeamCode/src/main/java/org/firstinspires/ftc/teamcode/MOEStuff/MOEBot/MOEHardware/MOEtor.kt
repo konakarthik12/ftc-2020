@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.RADIANS
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEConfig.MOEHardware.MotorConfig
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.lerp
 
@@ -19,10 +20,8 @@ class MOEtor(val config: MotorConfig) {
     private val powRange = 0.0..config.maxPow
 
     init {
-//        mMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-//        mMotor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
-        setDirection(config.direction)
-        setZeroPowerBehavior(config.zeroPowerBehavior)
+        mMotor.direction = config.direction
+        mMotor.zeroPowerBehavior = config.zeroPowerBehavior
     }
 
     val position: Int
@@ -49,16 +48,13 @@ class MOEtor(val config: MotorConfig) {
         mMotor.mode = mode
     }
 
-    fun setDirection(direction: Direction) {
-        mMotor.direction = direction
-    }
 
-    fun setZeroPowerBehavior(zeroPowerBehavior: ZeroPowerBehavior) {
-        mMotor.zeroPowerBehavior = zeroPowerBehavior
-    }
+    var velocity: Double
+        get() = mMotor.velocity
+        set(velocity) {
+            mMotor.velocity = velocity
+        }
 
-    fun setVelocity(velocity: Double) = mMotor.setVelocity(velocity, AngleUnit.RADIANS)
-    fun getVelocity() = mMotor.velocity
     fun resetEncoder() {
         val oldMOde = mMotor.mode
         mMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER

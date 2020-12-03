@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEHardware.MOEtor
-import org.firstinspires.ftc.teamcode.constants.OldMOEHardwareConstants.DriveTrain.Motors.Configs
+import org.firstinspires.ftc.teamcode.constants.MOEHardwareConstants.DriveTrain.Motors.Configs
 import org.firstinspires.ftc.teamcode.constants.Ref.robot
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.PolarPoint
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.toNormalAngle
 
 
 class MOEChassis {
@@ -15,8 +14,8 @@ class MOEChassis {
     var backRightMotor = MOEtor(Configs.BackRight)
     val motors = listOf(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor)
 
-    fun getFrontVelocities() = Pair(frontLeftMotor.getVelocity(), frontRightMotor.getVelocity())
-    fun getBackVelocities() = Pair(backLeftMotor.getVelocity(), backRightMotor.getVelocity())
+    fun getFrontVelocities() = Pair(frontLeftMotor.velocity, frontRightMotor.velocity)
+    fun getBackVelocities() = Pair(backLeftMotor.velocity, backRightMotor.velocity)
 
     fun setPower(P: Double) = setPower(P, P)
     fun setVelocity(V: Double) = setVelocity(V, V)
@@ -35,16 +34,17 @@ class MOEChassis {
     }
 
     fun setVelocity(FLV: Double, FRV: Double, BLV: Double, BRV: Double) {
-        frontLeftMotor.setVelocity(FLV)
-        frontRightMotor.setVelocity(FRV)
-        backLeftMotor.setVelocity(BLV)
-        backRightMotor.setVelocity(BRV)
+        frontLeftMotor.velocity = (FLV)
+        frontRightMotor.velocity = (FRV)
+        backLeftMotor.velocity = (BLV)
+        backRightMotor.velocity = (BRV)
     }
 
-    fun turnPower(power: Double) = setPower(power, -power)
+    /** LEFT TURNS ARE POSITIVE*/
+    fun turnPower(power: Double) = setPower(-power, power)
 
-    fun turnRightPower(power: Double) = turnPower(power)
-    fun turnRightLeft(power: Double) = turnPower(-power)
+    fun turnLeftPower(power: Double) = turnPower(-power)
+    fun turnRightLeft(power: Double) = turnPower(power)
 
 
     fun turnVelocity(vel: Double) = setVelocity(vel, -vel)
@@ -54,11 +54,11 @@ class MOEChassis {
     }
 
     fun setFromMecanum(fwd: Double, str: Double, rot: Double, maxPower: Double = 1.0) {
-        robot.chassis.setPower(Powers.fromMechanum(fwd, str, rot, maxPower))
+        robot.chassis.setPower(Powers.fromMecanum(fwd, str, rot, maxPower))
     }
 
     fun setFromPolar(vector: PolarPoint, angle: Double, maxPower: Double = 1.0) {
-        robot.chassis.setPower(Powers.fromMechanum(vector.x, -vector.y, angle, maxPower))
+        robot.chassis.setPower(Powers.fromMecanum(vector.x, -vector.y, angle, maxPower))
     }
 
     fun stop() {
@@ -88,7 +88,7 @@ class MOEChassis {
 //        val pid = MOEPositionalSystemPid(MOE/Constants.PositionalPid.DefaultOptions)
 
     fun getVelocities(): List<Double> {
-        return motors.map { it.getVelocity() }
+        return motors.map { it.velocity }
     }
 
     //    fun turn(deg: Double) = pidChassisHandler.turn(deg)

@@ -4,12 +4,9 @@ import com.qualcomm.hardware.bosch.BNO055IMU
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.*
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
-import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.WrapperHandler
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.properties.Delegates
 import com.qualcomm.robotcore.util.ElapsedTime
+import kotlin.math.cos
+import kotlin.math.sin
 
 @TeleOp(name = "TestTeleop", group = "Teleop")
 class TestTeleop() : OpMode() {
@@ -20,23 +17,32 @@ class TestTeleop() : OpMode() {
     lateinit var intakeMotor: DcMotor
     lateinit var outerShooterMotor: DcMotorEx
     lateinit var innerShooterMotor: DcMotorEx
-//    lateinit var trigger: CRServo
+
+    //    lateinit var trigger: CRServo
     lateinit var trigger: Servo
-//    lateinit var ma3: AnalogInput
+
+    //    lateinit var ma3: AnalogInput
 //    var ma3_offset = 0.0
     var triggerTarget = 0.0
-//    var ma3Wrapped: WrapperHandler = WrapperHandler(5.0) {
+
+    //    var ma3Wrapped: WrapperHandler = WrapperHandler(5.0) {
 //        ma3.voltage-ma3_offset
 //    }
-
+    lateinit var imu: BNO055IMU
     override fun init() {
-        frontLeftMotor = hardwareMap.dcMotor["FLM20"] as DcMotorEx
-        frontRightMotor = hardwareMap.dcMotor["FRM22"] as DcMotorEx
-        backLeftMotor = hardwareMap.dcMotor["BLM21"] as DcMotorEx
-        backRightMotor = hardwareMap.dcMotor["BRM23"] as DcMotorEx
+        frontLeftMotor = hardwareMap.dcMotor["FLM20"]
+        frontLeftMotor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        frontRightMotor = hardwareMap.dcMotor["FRM22"]
+        frontRightMotor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+
+        backLeftMotor = hardwareMap.dcMotor["BLM21"]
+        backLeftMotor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+
+        backRightMotor = hardwareMap.dcMotor["BRM23"]
+        backRightMotor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         frontLeftMotor.direction = DcMotorSimple.Direction.REVERSE
         backLeftMotor.direction = DcMotorSimple.Direction.REVERSE
-        intakeMotor = hardwareMap.dcMotor["INM13"] as DcMotorEx
+        intakeMotor = hardwareMap.dcMotor["INM13"]
         outerShooterMotor = hardwareMap.dcMotor["OFM10"] as DcMotorEx
         innerShooterMotor = hardwareMap.dcMotor["IFM11"] as DcMotorEx
 //        ma3 = hardwareMap.analogInput["STE11"]
@@ -66,20 +72,27 @@ class TestTeleop() : OpMode() {
 //        else{
 //            var triggerTarget = 0.0
 //        }
+        imu = hardwareMap.get(BNO055IMU::class.java, "imu")
+        imu.initialize(BNO055IMU.Parameters())
+
+
     }
 
     val timer = ElapsedTime()
 
     override fun loop() {
 
-        var y = gamepad1.left_stick_y.toDouble()
-        var x = gamepad1.left_stick_x.toDouble()
+        var rawY = gamepad1.left_stick_y.toDouble()
+        var rawX = gamepad1.left_stick_x.toDouble()
         var rx = gamepad1.right_stick_x.toDouble()
 
-        frontLeftMotor.setPower((-y + x + rx) * 0.6)
-        backLeftMotor.setPower((-y - x + rx) * 0.6)
-        frontRightMotor.setPower((-y - x - rx) * 0.6)
-        backRightMotor.setPower((-y + x -rx) * 0.6)
+        val angle = imu.angularOrientation.firstAngle
+        val x = rawX * cos(angle) - rawY * sin(angle)
+        val y = rawX * sin(angle) + rawY * cos(angle)
+        frontLeftMotor.power = (-y + x + rx) * 0.6
+        backLeftMotor.power = (-y - x + rx) * 0.6
+        frontRightMotor.power = (-y - x - rx) * 0.6
+        backRightMotor.power = (-y + x - rx) * 0.6
 
 //        if(!previousX && gamepad1.x){
 //            triggerTarget -= 2.5
@@ -94,11 +107,11 @@ class TestTeleop() : OpMode() {
 //            trigger.setPower(0.0)
 //        }
 
-        if (!previousY && gamepad1.y){
+        if (!previousY && gamepad1.y) {
             timer.reset()
         }
 
-        when{
+        when {
             timer.time() > 1.75 -> trigger.setPosition(0.2)
             timer.time() > 1.4 -> trigger.setPosition(0.6)
             timer.time() > 1.05 -> trigger.setPosition(0.2)
@@ -140,12 +153,12 @@ class TestTeleop() : OpMode() {
 
 //        targetVelocity += gamepad1.right_trigger.toDouble() * speed
 //        targetVelocity -= gamepad1.left_trigger.toDouble() * speed
-        telemetry.addData("time",timer.seconds())
+        telemetry.addData("time", timer.seconds())
         telemetry.addData("target", trigger.getPosition())
         telemetry.addData("y", gamepad1.y)
 //        telemetry.addData("ma3Raw", ma3.voltage)
 //        telemetry.addData("ma3Wrapped", ma3Wrapped.getValue())
-        telemetry.addData("triggerTarget",triggerTarget)
+        telemetry.addData("triggerTarget", triggerTarget)
         telemetry.addData("FLP", frontLeftMotor.power)
         telemetry.addData("FRP", frontRightMotor.power)
         telemetry.addData("BLP", backLeftMotor.power)
@@ -162,16 +175,17 @@ class TestTeleop() : OpMode() {
     }
 
 
-        var targetVelocity = 0.0
-        val speed = 10
+    var targetVelocity = 0.0
+    val speed = 10
 
-        var previousA = false
-        var enabled = true
-        var previousB = false
-        var enabledB = true
-//        var previousX = false
+    var previousA = false
+    var enabled = true
+    var previousB = false
+    var enabledB = true
+
+    //        var previousX = false
 //        var enabledX = true
-        var previousY = false
-        var enabledY = true
+    var previousY = false
+    var enabledY = true
 
 }

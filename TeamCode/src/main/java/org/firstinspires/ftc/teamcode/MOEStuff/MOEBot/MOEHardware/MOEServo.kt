@@ -13,8 +13,8 @@ class MOEServo(config: ServoConfig) {
     private var mServo = config.getDevice()
 
     init {
-        setRange(config.min, config.max)
-        setDirection(config.direction)
+        mServo.scaleRange(config.min, config.max)
+        mServo.direction = (config.direction)
     }
 
     fun getPosition(): Double = mServo.position
@@ -28,7 +28,7 @@ class MOEServo(config: ServoConfig) {
         val launch = GlobalScope.launch {
             val time = ElapsedTime()
             val range = initialPosition..destPosition
-            while (time.seconds() < duration && moeOpMode.iOpModeIsActive()) {
+            while (time.seconds() < duration && moeOpMode.isActive()) {
                 setPosition(range.lerp(time.seconds() / duration))
             }
         }
@@ -38,11 +38,11 @@ class MOEServo(config: ServoConfig) {
         }
     }
 
-    fun setRange(min: Double, max: Double) {
-        mServo.scaleRange(min, max)
-    }
-
-    fun setDirection(direction: Servo.Direction) {
-        mServo.direction = direction
-    }
+//    fun setRange(min: Double, max: Double) {
+//        mServo.scaleRange(min, max)
+//    }
+//
+//    fun setDirection(direction: Servo.Direction) {
+//        mServo.direction = direction
+//    }
 }

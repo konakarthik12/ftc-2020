@@ -19,7 +19,7 @@ interface MOEPidStructure<I, O> {
             reset()
             var iteration = 0
 //            val startTime = System.currentTimeMillis()
-            while (moeOpMode.iOpModeIsActive()) {
+            while (moeOpMode.isActive()) {
                 val curInput = input()
                 val curSetPoint = setpoint()
                 val dActual = getAbsActualDiff()

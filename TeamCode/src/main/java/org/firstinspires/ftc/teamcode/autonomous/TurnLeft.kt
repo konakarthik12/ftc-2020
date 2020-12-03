@@ -22,7 +22,7 @@ class TurnLeft : MOEAuton() {
             telemetry.addData("waiting", timer.milliseconds())
             telemetry.update()
         }
-        robot.chassis.setPower(Powers.fromMechanum(0.0, -0.5, -0.5))
+        robot.chassis.setPower(Powers.fromMecanum(0.0, -0.5, -0.5))
         timer.reset()
         while (timer.seconds() < 2 && opModeIsActive()) {
             telemetry.addData("waiting", timer.milliseconds())

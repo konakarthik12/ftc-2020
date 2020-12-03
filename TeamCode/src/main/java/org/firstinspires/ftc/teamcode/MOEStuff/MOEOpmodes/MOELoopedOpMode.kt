@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes
 
+//import androidx.annotation.CallSuper
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBot
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEBotConstantsImpl
 import org.firstinspires.ftc.teamcode.constants.OpModeInterface
@@ -17,31 +19,26 @@ abstract class MOELoopedOpMode : OpMode(), OpModeInterface, MOEBotConstantsImpl 
 
     override fun iRequestOpModeStop() = requestOpModeStop()
 
-    override fun iOpModeIsActive(): Boolean = opModeIsActive && !iIsStopRequested
+    override fun isActive(): Boolean = opModeIsActive && !iIsStopRequested
 
     override val iIsStopRequested: Boolean
         get() = isStopRequested
 
     //    override fun iOpModeIsActive(): Boolean =
-
-    final override fun init() {
-
+//    @CallSuper
+    override fun init() {
+        telemetry.setDisplayFormat(Telemetry.DisplayFormat.MONOSPACE)
         opModeIsActive = false
-        moeDoubleInternalInit()
+        setRefs()
         initRobot()
         moeInternalInit()
         setRobotRef(robot)
         initOpMode()
-        moeInternalPostInit()
 
     }
 
     private fun initRobot() {
         robot = createRobot()
-    }
-
-    open fun initLoop(): Boolean {
-        return true
     }
 
     var needToLoop = true
@@ -54,17 +51,21 @@ abstract class MOELoopedOpMode : OpMode(), OpModeInterface, MOEBotConstantsImpl 
         }
     }
 
+    open fun initLoop(): Boolean {
+        return true
+    }
+
     private fun postInitLoop() {
         notifyInitFinished()
     }
 
-    //    open fun afterInit() {
-//        telemetry.update()
-//    }
     var firstTime = true
     var currTime = 0L
     override fun loop() {
         if (firstTime) {
+            while (opModeIsActive && !initLoop()) {
+                telemetry.addLine("Init is not complete, please wait")
+            }
             offsetRobotValues()
             firstTime = false
         }
@@ -76,16 +77,6 @@ abstract class MOELoopedOpMode : OpMode(), OpModeInterface, MOEBotConstantsImpl 
     }
 
     open fun internalLoop() {
-
-    }
-
-    open fun moeInternalPostInit() {
-
-    }
-
-
-    private fun moeDoubleInternalInit() {
-        setRefs()
 
     }
 
@@ -109,11 +100,7 @@ abstract class MOELoopedOpMode : OpMode(), OpModeInterface, MOEBotConstantsImpl 
     open fun initOpMode() {}
 
     override fun stop() {
-
         isStopRequested = true
-        @Suppress("SENSELESS_COMPARISON")
-        if (robot != null)
-            robot.stop()
-//        Log.e("stopped", "stop")
+        if (::robot.isInitialized) robot.stop()
     }
 }

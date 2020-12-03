@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEPid
 
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
-import org.firstinspires.ftc.teamcode.constants.Ref.robot
 import org.firstinspires.ftc.teamcode.constants.Ref.telemetry
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.MOEtion
 import org.firstinspires.ftc.teamcode.utilities.external.AdvancedMath.Point
@@ -63,7 +62,7 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
         val rawX = xPid.getOutput(input.pose.x, setpoint.pose.x)
         val rawY = yPid.getOutput(input.pose.y, setpoint.pose.y)
         val rawT = tPid.getOutput(input.degAng, setpoint.degAng)
-        val angle = input.radAng
+        val angle = input.ang
         val x = rawX * cos(angle) - rawY * sin(angle)
         val y = rawX * sin(angle) + rawY * cos(angle)
         telemetry.addData("pc.getPose", input)
@@ -71,14 +70,14 @@ class MOEPositionalSystemPid(val xPid: MOERawPid, val yPid: MOERawPid, val tPid:
         telemetry.addData("x", x)
         telemetry.addData("y", y)
         telemetry.addData("t", rawT)
-        telemetry.addData("forwardOdo", robot.odometry.rightForwardWheel.getValue())
-        telemetry.addData("strafeOdo", robot.odometry.strafeWheel.getValue())
+//        telemetry.addData("forwardOdo", robot.odometry.rightForwardWheel.getValue())
+//        telemetry.addData("strafeOdo", robot.odometry.strafeWheel.getValue())
         telemetry.update()
 
 //        Log.e("x", x.toString())
 //        Log.e("y", y.toString())
 //        Log.e("t", rawT.toString())
-        return Powers.fromMechanum(y, x, rawT, 0.4)
+        return Powers.fromMecanum(y, x, rawT, 0.4)
     }
 //
 //    override fun onFinish() {

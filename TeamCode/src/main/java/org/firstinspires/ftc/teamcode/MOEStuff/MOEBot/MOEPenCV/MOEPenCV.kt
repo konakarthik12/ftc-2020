@@ -13,8 +13,8 @@ import org.openftc.easyopencv.*
 
 class MOEPenCV(val config: MOEOpenCVConfig) {
     var webcam: OpenCvCamera
-    val pipeline = MOEPipeline(this)
-
+//    val pipeline = MOEPipeline(this)
+   val pipeline =  config.pipeline
     init {
         webcam = if (config.useInternalCamera) getInternalCamera() else getExternalCamera()
         webcam.setPipeline(pipeline)
@@ -51,13 +51,13 @@ class MOEPenCV(val config: MOEOpenCVConfig) {
 
     fun stop() {
         Log.e("isCalled", "opencv")
-//        webcam.stopStreaming()
-//        webcam.closeCameraDevice()
+        webcam.stopStreaming()
+        webcam.closeCameraDevice()
     }
 
     fun getBitmap(): Bitmap? {
         pipeline.requestFrame()
-        while (moeOpMode.iOpModeIsActive() && pipeline.lastFrame == null) {
+        while (moeOpMode.isActive() && pipeline.lastFrame == null) {
         }
         return pipeline.lastFrame!!.toBitMap()!!
     }

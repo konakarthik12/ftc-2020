@@ -27,7 +27,7 @@ android {
         isJniDebuggable = true
         isRenderscriptDebuggable = true
         ndk {
-            abiFilters(
+            abiFilters.add(
                     "armeabi-v7a"
             )
         }
@@ -51,7 +51,7 @@ dependencies {
     compileOnly("org.openftc:easyopencv:1.3.2")
     compileOnly("org.processing", "core", "3.3.7")
     compileOnly("org.apache.commons:commons-math3:3.6.1")
-    compileOnly("com.acmerobotics.dashboard:dashboard:0.3.9")
-    compileOnly("com.acmerobotics.roadrunner:core:0.5.1")
+    compileOnly("com.acmerobotics.dashboard:dashboard:0.3.10")
+    compileOnly("com.acmerobotics.roadrunner:core:0.5.2")
 
 }
