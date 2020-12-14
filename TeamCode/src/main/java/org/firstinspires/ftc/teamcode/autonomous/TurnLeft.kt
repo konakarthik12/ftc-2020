@@ -6,13 +6,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
-import org.firstinspires.ftc.teamcode.utilities.internal.addData
 
 @Autonomous
 class TurnLeft : MOEAuton() {
     override fun initOpMode() {
         Log.e("stuffe", "stuffe")
-        telemetry.addData("testagain")
+        telemetry.addLine("testagain".toString())
     }
 
     private val timer = ElapsedTime()
