@@ -26,7 +26,7 @@ class UDPTelemetry : MOEApp() {
     }
 
     override fun settings() {
-        size(1921, 941)
+        size(600, 400   )
 //        fullScreen(2)
     }
 
@@ -51,7 +51,6 @@ class UDPTelemetry : MOEApp() {
             if (i >= server.points.size) return
             val point = server.points[i]
             circle(point.x, point.y, 10.0)
-
         }
 
 
@@ -61,12 +60,16 @@ class UDPTelemetry : MOEApp() {
 }
 
 class UDPServer : Thread() {
-    private val socket: DatagramSocket = DatagramSocket(64308)
+    private val socket: DatagramSocket = DatagramSocket(54797)
     private var running = false
     val buf = ByteArray(42)
     val packet = DatagramPacket(buf, buf.size)
 
     var points = MutableList(30) { PPPoint(Random.nextInt(0, 1919).toDouble(), Random.nextInt(0, 941).toDouble()) }
+
+    init {
+//        points.add(PPPoint())
+    }
 
     override fun run() {
 
