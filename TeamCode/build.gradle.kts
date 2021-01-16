@@ -45,12 +45,12 @@ dependencies {
     implementation(name = "tfod-release", ext = "aar", group = "")
     implementation(name = "tensorflow-lite-0.0.0-nightly", ext = "aar", group = "")
     implementation(name = "t265lib-release", ext = "aar", group = "")
-//    kotlin("stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
+    implementation(kotlin("stdlib-jdk8","1.4.20"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
     implementation("org.openftc:easyopencv:1.4.1")
-    implementation("org.processing:core:3.3.7")
-    implementation("org.apache.commons:commons-math3:3.6.1")
-    implementation("com.acmerobotics.dashboard:dashboard:0.3.10")
-    implementation("com.acmerobotics.roadrunner:core:0.5.2")
+    compileOnly("org.processing:core:3.3.7")
+    compileOnly("org.apache.commons:commons-math3:3.6.1")
+    compileOnly("com.acmerobotics.dashboard:dashboard:0.3.10")
+    compileOnly("com.acmerobotics.roadrunner:core:0.5.2")
 
 }
