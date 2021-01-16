@@ -45,26 +45,26 @@ val Velocity = 2000
 
 
         val drive = SampleMecanumDrive(hardwareMap)
-        val startPose = Pose2d(48.0, 12.0, Math.toRadians(0.0))
+        val startPose = Pose2d(-60.0, 24.0, Math.toRadians(180.0))
 
         drive.poseEstimate = startPose
 
         val traj1: Trajectory = drive.trajectoryBuilder(startPose)
-                .splineTo(Vector2d(36.0, 36.0), Math.toRadians(0.0))
+                .splineTo(Vector2d(-24.0, 36.0), Math.toRadians(0.0))
                 //intake stacked rings
                 .build()
 
         val Configuration1: Trajectory = drive.trajectoryBuilder(traj1.end())
-                .splineTo(Vector2d(12.0, 84.0), Math.toRadians(0.0))
-                .splineTo(Vector2d(12.0, 72.0), Math.toRadians(0.0))
+                .splineTo(Vector2d(12.0, 60.0), Math.toRadians(180.0))
+                .splineTo(Vector2d(12.0, 72.0), Math.toRadians(180.0))
                 .build()
         val Configuration2: Trajectory = drive.trajectoryBuilder(traj1.end())
-                .splineTo(Vector2d(36.0, 108.0), Math.toRadians(0.0))
-                .splineTo(Vector2d(12.0, 72.0), Math.toRadians(0.0))
+                .splineTo(Vector2d(36.0, 36.0), Math.toRadians(180.0))
+                .splineTo(Vector2d(12.0, 36.0), Math.toRadians(180.0))
                 .build()
         val Configuration3: Trajectory = drive.trajectoryBuilder(traj1.end())
-                .splineTo(Vector2d(12.0, 132.0), Math.toRadians(0.0))
-                .splineTo(Vector2d(12.0, 72.0), Math.toRadians(0.0))
+                .splineTo(Vector2d(60.0, 60.0), Math.toRadians(180.0))
+                .splineTo(Vector2d(12.0, 60.0), Math.toRadians(180.0))
                 .build()
 
         waitForStart()
@@ -73,7 +73,7 @@ val Velocity = 2000
             return
         }
 
-//Start Turned
+//Start Turned 1.0
         outerShooterMotor.velocity = Velocity.toDouble()
         innerShooterMotor.velocity = Velocity.toDouble()
 
