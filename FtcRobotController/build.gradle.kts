@@ -11,9 +11,6 @@ android {
         buildToolsVersion("30.0.2")
     }
     compileSdkVersion(30)
-//this.
-
-
     compileOptions {
         sourceCompatibility = VERSION_1_8
         targetCompatibility = VERSION_1_8
@@ -23,16 +20,15 @@ android {
 
 
 dependencies {
-
-    implementation("org.firstinspires.ftc:Inspection:6.0.1")
-    implementation("org.firstinspires.ftc:Blocks:6.0.1")
-    implementation("org.firstinspires.ftc:RobotCore:6.0.1")
-    implementation("org.firstinspires.ftc:RobotServer:6.0.1")
-    implementation("org.firstinspires.ftc:OnBotJava:6.0.1")
-    implementation("org.firstinspires.ftc:Hardware:6.0.1")
-    implementation("org.firstinspires.ftc:FtcCommon:6.0.1")
+    val version = "6.1.1"
+    implementation("org.firstinspires.ftc:Inspection:$version")
+    implementation("org.firstinspires.ftc:Blocks:$version")
+    implementation("org.firstinspires.ftc:RobotCore:$version")
+    implementation("org.firstinspires.ftc:RobotServer:$version")
+    implementation("org.firstinspires.ftc:OnBotJava:$version")
+    implementation("org.firstinspires.ftc:Hardware:$version")
+    implementation("org.firstinspires.ftc:FtcCommon:$version")
     implementation("com.acmerobotics.dashboard:dashboard:0.3.9")
-    implementation(name = "WirelessP2p-release", ext = "aar", group = "")
     implementation("androidx.appcompat:appcompat:1.2.0")
 }
 

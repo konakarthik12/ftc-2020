@@ -95,7 +95,7 @@ class SampleMecanumDrive(hardwareMap: HardwareMap) : MecanumDrive(kV, kA, kStati
         mode = Mode.FOLLOW_TRAJECTORY
     }
 
-    fun followTrajectory(trajectory: Trajectory?) {
+    fun followTrajectory(trajectory: Trajectory) {
         followTrajectoryAsync(trajectory)
         waitForIdle()
     }
@@ -113,6 +113,7 @@ class SampleMecanumDrive(hardwareMap: HardwareMap) : MecanumDrive(kV, kA, kStati
         updatePoseEstimate()
         val currentPose = poseEstimate
 //        val lastError = lastError
+
         poseHistory.add(currentPose)
         if (POSE_HISTORY_LIMIT > -1 && poseHistory.size > POSE_HISTORY_LIMIT) {
             poseHistory.removeFirst()
