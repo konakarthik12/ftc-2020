@@ -3,10 +3,11 @@ package org.firstinspires.ftc.teamcode.autonomous
 //import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.opmodeutils.MOEGamePad.Button
 import android.util.Log
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEBot.MOEChassis.Powers
 import org.firstinspires.ftc.teamcode.MOEStuff.MOEOpmodes.MOEAuton
-
+@Disabled
 @Autonomous
 class TurnRight : MOEAuton() {
 
@@ -24,7 +25,7 @@ class TurnRight : MOEAuton() {
             telemetry.addData("waiting", timer.milliseconds())
             telemetry.update()
         }
-        robot.chassis.setPower(Powers.fromMecanum(0.0, 0.0, 0.0))
+        robot.chassis.setFromMecanum(0.0, 0.5, 0.5)
 //        robot.chassis.setPower(0.0 * power, 0.5 * power, 1.0 * power, -1.0 * power)
         timer.reset()
         while (timer.seconds() < 2 && opModeIsActive()) {
