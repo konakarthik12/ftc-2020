@@ -2,6 +2,6 @@
 MOE 365 FTC Autonomous Code for 2020-2021 season
 Control Document
 
-https://moeftc.org/controldoc
+You can read about the technical details of our robotics code here: https://moeftc.org/controldoc
 
-main kotlin code can be foudn in TeamCode/src/main/java/org/firstinspires/ftc/teamcode
+main kotlin source code can be found in folder [TeamCode/src/main/java/org/firstinspires/ftc/teamcode](https://github.com/konakarthik12/ftc-2020/tree/master/TeamCode/src/main/java/org/firstinspires/ftc/teamcode)
